@@ -22,8 +22,13 @@ public class TestController {
 
     private final TestService testService; // final 키워드 추가
 
+    /*
+    Backend JS 환경에서 Ajax 는  Post, Get 설정도 하고, Controller 에도 PostMapping, GetMapping 을 추가하여 연결했음
+    React 환경에서는 Js, Jsx 에서는 Post, Get 설정은 하지 않고 Controller 어노테이션 만으로 기능 구현이 가능
+    */
+
     @GetMapping
     public List<Test> getAllTests() {
-        return testService.getAllTests();
+        return testService.getAllTests(); // DB 데이터 불러오는 함수
     }
 }
