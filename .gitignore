@@ -10,6 +10,7 @@
 *.rej
 .DS_Store
 Thumbs.db
+/.idea
 
 # 환경 설정 파일 (Environment Files)
 .env

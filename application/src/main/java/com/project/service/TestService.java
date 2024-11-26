@@ -17,7 +17,7 @@ public class TestService {
     private final TestRepository testRepository;
 
     public Test test() {
-        testRepository.insertUser();
+        testRepository.save(new Test());  // JPA에 의해 자동생성된 insert 쿼리문
         return new Test();
     }
 }
