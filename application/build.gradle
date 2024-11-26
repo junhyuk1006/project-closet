@@ -32,11 +32,10 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client' // OAuth2 클라이언트
 
 
-
     // 이메일 인증 관련
     implementation 'org.springframework.boot:spring-boot-starter-mail' // 이메일 전송 기능
 
-
+    // MySQL 연동 관련 (수정 금지)
     runtimeOnly("com.mysql:mysql-connector-j")
 
     // Lombok

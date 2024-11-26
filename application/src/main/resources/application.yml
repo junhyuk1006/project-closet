@@ -28,7 +28,7 @@ spring:
     password: siasia0391 # DB 비밀번호 (환경 변수로 설정)
     url: jdbc:mysql://project-closet.ch4gqiu84fx0.ap-northeast-2.rds.amazonaws.com:3306/projectCloset?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     username: admin # DB 사용자 이름 (환경 변수로 설정)
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver # DB Driver Class Name
     hikari:
       idle-timeout: '300000' # 연결 풀에서 유휴 상태의 커넥션 유지 시간 (밀리초)
       pool-name: HikariCP # 연결 풀 이름

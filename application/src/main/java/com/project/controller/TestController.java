@@ -1,10 +1,11 @@
 package com.project.controller;
 
+import com.project.domain.Test;
 import com.project.service.TestService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  *  컨트롤러 객체가 생성될 디렉토리입니다.
@@ -14,14 +15,15 @@ import org.springframework.web.bind.annotation.RestController;
  *  경로: 카멜 표기법 ("/loginForm" 등)
  */
 
-@RestController  // React로 프론트단 구현 시 RestController (RESTful 방식)을 사용해야 합니다.
-@RequiredArgsConstructor  // Autowired 사용 x
+@RestController
+@RequestMapping("/api/test")
+@RequiredArgsConstructor // 생성자를 통해 의존성을 주입받도록 설정
 public class TestController {
-    private final TestService testService;
 
-    @GetMapping("/loginForm")  // 경로는 카멜 표기법을 사용합니다.
-    public ResponseEntity<String> loginForm() {
-        testService.hashCode();
-        return ResponseEntity.ok("로그인 성공");
+    private final TestService testService; // final 키워드 추가
+
+    @GetMapping
+    public List<Test> getAllTests() {
+        return testService.getAllTests();
     }
 }

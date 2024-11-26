@@ -5,6 +5,8 @@ import com.project.repository.TestRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  *  서비스 객체가 생성될 디렉토리입니다.
  *  테스트 파일이며, 서비스 파일을 생성했다면 지우시면 됩니다.
@@ -19,5 +21,9 @@ public class TestService {
     public Test test() {
         testRepository.save(new Test());  // JPA에 의해 자동생성된 insert 쿼리문
         return new Test();
+    }
+
+    public List<Test> getAllTests() {
+        return testRepository.findAll();
     }
 }

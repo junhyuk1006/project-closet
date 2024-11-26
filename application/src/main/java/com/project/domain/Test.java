@@ -17,9 +17,6 @@ public class Test {
     @GeneratedValue(strategy = GenerationType.IDENTITY)  // 자동 증가
     private int id;
 
-    @Column(nullable = false) // nullable=false는 NOT NULL 제약 조건
-    private String name;
-
-    @Column(unique = true) // unique=true는 UNIQUE 제약 조건
     private String email;
+    private String name;
 }

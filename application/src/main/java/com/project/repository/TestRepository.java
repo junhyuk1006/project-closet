@@ -12,9 +12,6 @@ import org.springframework.stereotype.Repository;
  */
 
 @Repository
-public interface TestRepository extends JpaRepository<Test, Integer> {
-    /**
-     *  기본적인 CRUD 쿼리문은 JPA에 의해 제공됩니다.
-     *  즉 간단한 insert, delete문 등은 작성하지 않아도 service 객체에서 사용할 수 있습니다.
-     */
+public interface TestRepository extends JpaRepository<Test, Long> {
+    // 기본적으로 findAll() 메서드 제공
 }
