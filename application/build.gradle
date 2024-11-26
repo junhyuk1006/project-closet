@@ -31,11 +31,13 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security' // 보안 관련 기능
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client' // OAuth2 클라이언트
 
+
+
     // 이메일 인증 관련
     implementation 'org.springframework.boot:spring-boot-starter-mail' // 이메일 전송 기능
 
-    // MySQL 드라이버
-    runtimeOnly 'com.mysql:mysql-connector-j' // MySQL 연결 드라이버
+
+    runtimeOnly("com.mysql:mysql-connector-j")
 
     // Lombok
     compileOnly 'org.projectlombok:lombok' // Lombok 사용(코드 간소화)
@@ -44,6 +46,7 @@ dependencies {
     // 테스트 의존성
     testImplementation 'org.springframework.boot:spring-boot-starter-test' // Spring Boot 테스트 지원
     testImplementation 'org.springframework.security:spring-security-test' // Spring Security 테스트 지원
+    testImplementation 'com.h2database:h2'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher' // JUnit 플랫폼 실행기
 }
 
