@@ -1,0 +1,29 @@
+# 빌드 디렉토리
+dist/
+build/
+
+# 의존성
+node_modules/
+
+# 환경 파일
+.env
+
+# 로그 파일
+*.log
+
+# 바이너리 파일
+*.png
+*.jpg
+*.gif
+*.svg
+
+# 압축된 파일
+*.min.js
+*.min.css
+
+# 기타
+.git/
+coverage/
+
+data/*.json
+src/main/webapp/WEB-INF/views/error/forbidden.jsp
