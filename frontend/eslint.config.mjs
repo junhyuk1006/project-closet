@@ -15,7 +15,12 @@ export default [
       prettier: pluginPrettier, // Prettier 플러그인 추가
     },
     rules: {
-      'prettier/prettier': 'error', // Prettier 규칙을 ESLint로 적용
+      'prettier/prettier': [
+        'error', // Prettier 규칙을 ESLint로 적용
+        {
+          endOfLine: 'auto', // ␍ 에러 방지 코드
+        },
+      ],
     },
     settings: {
       react: {
