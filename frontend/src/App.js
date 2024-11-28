@@ -1,6 +1,6 @@
 import React from "react";
-import TestList from "./pages/TestList";
-import TestList2 from "./pages/TestList2";
+import TestList from "./example/pages/TestList";
+import TestList2 from "./example/pages/TestList2";
 
 function App() {
   return (
