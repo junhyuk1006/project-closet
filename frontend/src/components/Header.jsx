@@ -1,0 +1,112 @@
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+
+function Header() {
+    const [isAtTop, setIsAtTop] = useState(true); // 스크롤 상단 여부를 관리
+
+    useEffect(() => {
+        const handleScroll = () => {
+            if (window.scrollY > 0) {
+                setIsAtTop(false); // 스크롤이 내려갔을 때
+            } else {
+                setIsAtTop(true); // 가장 상단에 있을 때
+            }
+        };
+
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
+
+    return (
+        <header className="header">
+            <div className="container-menu-desktop">
+                <div className="top-bar">
+                    <div className="content-topbar flex-sb-m h-full container">
+                        <div className="left-top-bar">
+                            Free shipping for standard order over $100
+                        </div>
+                        <div className="right-top-bar flex-w h-full">
+                            <Link to="/help" className="flex-c-m trans-04 p-lr-25">
+                                Help & FAQs
+                            </Link>
+                            <Link to="/account" className="flex-c-m trans-04 p-lr-25">
+                                My Account
+                            </Link>
+                            <a className="flex-c-m trans-04 p-lr-25">EN</a>
+                            <a className="flex-c-m trans-04 p-lr-25">USD</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    className="wrap-menu-desktop"
+                    style={{
+                        top: isAtTop ? "40px" : "0", // 가장 상단일 때와 아닐 때 top 값 변경
+                        backgroundColor: isAtTop ? "transparent" : "#fff", // 배경색 변경
+                        transition: "top 0.3s, background-color 0.3s",
+                    }}
+                >
+                    <nav className="limiter-menu-desktop container">
+                        <Link to="/" className="logo">
+                            <img
+                                src={`${process.env.PUBLIC_URL}/images/icons/logo-01.png`}
+                                alt="LOGO"
+                            />
+                        </Link>
+
+                        <div className="menu-desktop">
+                            <ul className="main-menu">
+                                <li className="active-menu">
+                                    <a href="/">Home</a>
+                                    <ul className="sub-menu">
+                                        <li>
+                                            <a href="/" className="animsition-link">Homepage 1</a>
+                                        </li>
+                                        <li>
+                                            <a href="/shop">Homepage 2</a>
+                                        </li>
+                                        <li>
+                                            <a href="/contact">Homepage 3</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="/shop">Shop</a>
+                                </li>
+                                <li className="label1" data-label1="hot">
+                                    <a href="/features">Features</a>
+                                </li>
+                                <li>
+                                    <a href="/blog">Blog</a>
+                                </li>
+                                <li>
+                                    <a href="/about">About</a>
+                                </li>
+                                <li>
+                                    <a href="/contact">Contact</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div className="wrap-icon-header flex-w flex-r-m">
+                            <div className="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
+                                <i className="zmdi zmdi-search"></i>
+                            </div>
+                            <div className="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti" data-notify="2">
+                                <i className="zmdi zmdi-shopping-cart"></i>
+                            </div>
+                            <a
+                                href="#"
+                                className="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti"
+                                data-notify="0"
+                            >
+                                <i className="zmdi zmdi-favorite-outline"></i>
+                            </a>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </header>
+    );
+}
+
+export default Header;

@@ -1,9 +1,6 @@
 export const fetchTests = async () => {
     try {
-        const response = await fetch("http://localhost:80/api/test"); // API 호출
-        if (!response.ok) {
-            throw new Error("Failed to fetch data");
-        }
+        const response = fetch("http://localhost:80/api/test"); // API 호출
         const data = await response.json(); // JSON 파싱
         return data; // 데이터를 반환
     } catch (error) {
