@@ -1,12 +1,13 @@
 package com.project.domain;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import lombok.Data;
+import jakarta.persistence.PrePersist;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -23,6 +24,13 @@ public class Item {
     private int item_price;
     private int item_count;
     private String item_status;
-    private Date created_at;
+
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime created_at;
+
+    @PrePersist
+    protected void onCreate() {
+        this.created_at = LocalDateTime.now();
+    }
 
 }

@@ -1,14 +1,15 @@
 import React from "react";
-import TestList from "./example/pages/TestList";
-import TestList2 from "./example/pages/TestList2";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import DetailItem from "./pages/DetailItem/DetailItem"
 
-function App() {
-  return (
-      <div>
-        <TestList />
-        <TestList2 />
-      </div>
-  );
-}
+const AppRoutes = () => (
+    <Router>
+        <Routes>
+            {/*<Route path="/" element={<Home />} />*/}
+            <Route path="/" element={<DetailItem />} />
+            {/* 추가 라우트 */}
+        </Routes>
+    </Router>
+);
 
-export default App;
+export default AppRoutes;
