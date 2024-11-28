@@ -41,9 +41,14 @@ function Header() {
                 <div
                     className="wrap-menu-desktop"
                     style={{
-                        top: isAtTop ? "40px" : "0", // 가장 상단일 때와 아닐 때 top 값 변경
-                        backgroundColor: isAtTop ? "transparent" : "#fff", // 배경색 변경
-                        transition: "top 0.3s, background-color 0.3s",
+                        top: isAtTop ? "40px" : "0",
+                        backgroundColor: isAtTop ? "transparent" : "#fff",
+                        height: isAtTop ? "84px" : "64px",
+                        boxShadow: isAtTop ? "none" : "0 4px 6px rgba(0, 0, 0, 0.1)",
+                        opacity: isAtTop ? "1" : "0.95",
+                        transition: isAtTop
+                            ? "top 0.2s ease-out, background-color 0.5s ease-in-out, height 0.5s ease-in-out, box-shadow 0.5s ease-in-out, opacity 0.5s ease-in-out"
+                            : "top 0.1s ease-in, background-color 0.5s ease-in-out, height 0.5s ease-in-out, box-shadow 0.5s ease-in-out, opacity 0.5s ease-in-out",
                     }}
                 >
                     <nav className="limiter-menu-desktop container">
