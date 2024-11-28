@@ -1,12 +1,9 @@
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import "../../assets/styles/main.css"
 import "../../assets/styles/util.css"
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import 'material-design-iconic-font/dist/css/material-design-iconic-font.min.css';
-import { useFixedHeader } from "../../hooks/useFixedHeader";
-import { Link } from "react-router-dom";
-import AnimsitionWrapper from "../../components/AnimsitionWrapper";
 import Header from "../../components/Header";
 
 
@@ -14,15 +11,10 @@ import Header from "../../components/Header";
 
 
 function Home() {
-    const isFixed = useFixedHeader(100);
     const [isCartOpen, setIsCartOpen] = useState(false);
 
-    const toggleCart = () => {
-        setIsCartOpen(!isCartOpen);
-    };
 
     return (
-<AnimsitionWrapper>
         <div className="animsition">
             {/* Header */}
             <Header />
@@ -1225,7 +1217,6 @@ function Home() {
                 </div>
             </footer>
         </div>
-</AnimsitionWrapper>
     );
 }
 
