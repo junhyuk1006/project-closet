@@ -17,7 +17,7 @@ const TestList = () => {
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
-        };
+        }
 
         fetchTests(); // 컴포넌트 로드 시 데이터 가져오기
     }, []);
