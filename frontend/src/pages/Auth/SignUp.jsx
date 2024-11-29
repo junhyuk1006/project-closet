@@ -23,7 +23,7 @@ const Checkout = () => {
         </div>
 
         <div className="row g-5">
-          <div className="col-md-5 col-lg-4 order-md-last">
+          {/* <div className="col-md-5 col-lg-4 order-md-last">
             <h4 className="d-flex justify-content-between align-items-center mb-3">
               <span className="text-primary">Your cart</span>
               <span className="badge bg-primary rounded-pill">3</span>
@@ -81,80 +81,78 @@ const Checkout = () => {
                 </button>
               </div>
             </form>
-          </div>
+          </div> */}
 
-          <div className="col-md-7 col-lg-8">
-            <h4 className="mb-3">입력 폼</h4>
-            <form className="needs-validation" noValidate>
-              <div className="row g-3">
-                <div className="col-sm-6">
-                  <label htmlFor="firstName" className="form-label">
-                    이름
-                  </label>
+          <h4 className="mb-3">입력 폼</h4>
+          <form className="needs-validation" noValidate>
+            <div className="row g-3">
+              <div className="col-sm-6">
+                <label htmlFor="firstName" className="form-label">
+                  이름
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="firstName"
+                  placeholder=""
+                  required
+                />
+                <div className="invalid-feedback">
+                  Valid first name is required.
+                </div>
+              </div>
+
+              <div className="col-sm-6">
+                <label htmlFor="lastName" className="form-label">
+                  성
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="lastName"
+                  placeholder=""
+                  required
+                />
+                <div className="invalid-feedback">
+                  Valid last name is required.
+                </div>
+              </div>
+
+              <div className="col-12">
+                <label htmlFor="username" className="form-label">
+                  닉네임
+                </label>
+                <div className="input-group has-validation">
+                  <span className="input-group-text">@</span>
                   <input
                     type="text"
                     className="form-control"
-                    id="firstName"
-                    placeholder=""
+                    id="username"
+                    placeholder="Username"
                     required
                   />
                   <div className="invalid-feedback">
-                    Valid first name is required.
+                    Your username is required.
                   </div>
                 </div>
+              </div>
 
-                <div className="col-sm-6">
-                  <label htmlFor="lastName" className="form-label">
-                    성
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="lastName"
-                    placeholder=""
-                    required
-                  />
-                  <div className="invalid-feedback">
-                    Valid last name is required.
-                  </div>
+              <div className="col-12">
+                <label htmlFor="email" className="form-label">
+                  이메일 <span className="text-body-secondary">(Optional)</span>
+                </label>
+                <input
+                  type="email"
+                  className="form-control"
+                  id="email"
+                  placeholder="you@example.com"
+                />
+                <div className="invalid-feedback">
+                  Please enter a valid email address for shipping updates.
                 </div>
+              </div>
 
-                <div className="col-12">
-                  <label htmlFor="username" className="form-label">
-                    닉네임
-                  </label>
-                  <div className="input-group has-validation">
-                    <span className="input-group-text">@</span>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="username"
-                      placeholder="Username"
-                      required
-                    />
-                    <div className="invalid-feedback">
-                      Your username is required.
-                    </div>
-                  </div>
-                </div>
-
-                <div className="col-12">
-                  <label htmlFor="email" className="form-label">
-                    이메일{' '}
-                    <span className="text-body-secondary">(Optional)</span>
-                  </label>
-                  <input
-                    type="email"
-                    className="form-control"
-                    id="email"
-                    placeholder="you@example.com"
-                  />
-                  <div className="invalid-feedback">
-                    Please enter a valid email address for shipping updates.
-                  </div>
-                </div>
-
-                {/* <div className="col-12">
+              {/* <div className="col-12">
                   <label htmlFor="address" className="form-label">
                     주소
                   </label>
@@ -183,79 +181,78 @@ const Checkout = () => {
                   />
                 </div> */}
 
-                <div className="col-md-5">
-                  <label htmlFor="country" className="form-label">
-                    출생연도
-                  </label>
-                  <select className="form-select" id="country" required>
-                    <option value="">Choose...</option>
-                    <option>United States</option>
-                  </select>
-                  <div className="invalid-feedback">
-                    Please select a valid country.
-                  </div>
-                </div>
-
-                <div className="col-md-4">
-                  <label htmlFor="state" className="form-label">
-                    월
-                  </label>
-                  <select className="form-select" id="state" required>
-                    <option value="">Choose...</option>
-                    <option>California</option>
-                  </select>
-                  <div className="invalid-feedback">
-                    Please provide a valid state.
-                  </div>
-                </div>
-
-                <div className="col-md-3">
-                  <label htmlFor="zip" className="form-label">
-                    일
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="zip"
-                    placeholder=""
-                    required
-                  />
-                  <div className="invalid-feedback">Zip code required.</div>
-                </div>
-              </div>
-
-              <hr className="my-4" />
-
-              <div className="form-check">
-                <input
-                  type="checkbox"
-                  className="form-check-input"
-                  id="same-address"
-                />
-                <label className="form-check-label" htmlFor="same-address">
-                  [필수] 개인정보 수집 및 이용 동의
-                  <p>
-                    1. 수집 항목: 이름, 이메일, 생년월일 <br></br>
-                    2. 수집 목적: 회원 관리, 서비스 제공, 고객 문의 처리, 마케팅
-                    및 이벤트 정보 제공<br></br>
-                    3. 보유기간: 회원 탈퇴 후 즉시 삭제 (단, 법령에 따라 보관이
-                    필요한 경우 제외)<br></br>
-                    <br></br>
-                    <p>
-                      * 위의 내용을 확인하였으며, 개인정보 수집 및이용에
-                      동의합니다.
-                    </p>
-                  </p>
+              <div className="col-md-5">
+                <label htmlFor="country" className="form-label">
+                  출생연도
                 </label>
+                <select className="form-select" id="country" required>
+                  <option value="">Choose...</option>
+                  <option>United States</option>
+                </select>
+                <div className="invalid-feedback">
+                  Please select a valid country.
+                </div>
               </div>
 
-              <hr className="my-4" />
+              <div className="col-md-4">
+                <label htmlFor="state" className="form-label">
+                  월
+                </label>
+                <select className="form-select" id="state" required>
+                  <option value="">Choose...</option>
+                  <option>California</option>
+                </select>
+                <div className="invalid-feedback">
+                  Please provide a valid state.
+                </div>
+              </div>
 
-              <button className="w-100 btn btn-primary btn-lg" type="submit">
-                회원가입
-              </button>
-            </form>
-          </div>
+              <div className="col-md-3">
+                <label htmlFor="zip" className="form-label">
+                  일
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="zip"
+                  placeholder=""
+                  required
+                />
+                <div className="invalid-feedback">Zip code required.</div>
+              </div>
+            </div>
+
+            <hr className="my-4" />
+
+            <div className="form-check">
+              <input
+                type="checkbox"
+                className="form-check-input"
+                id="same-address"
+              />
+              <label className="form-check-label" htmlFor="same-address">
+                [필수] 개인정보 수집 및 이용 동의
+                <p>
+                  1. 수집 항목: 이름, 이메일, 생년월일 <br></br>
+                  2. 수집 목적: 회원 관리, 서비스 제공, 고객 문의 처리, 마케팅
+                  및 이벤트 정보 제공<br></br>
+                  3. 보유기간: 회원 탈퇴 후 즉시 삭제 (단, 법령에 따라 보관이
+                  필요한 경우 제외)<br></br>
+                  <br></br>
+                  <p>
+                    * 위의 내용을 확인하였으며, 개인정보 수집 및이용에
+                    동의합니다.
+                  </p>
+                </p>
+              </label>
+            </div>
+
+            <hr className="my-4" />
+
+            <button className="w-100 btn btn-primary btn-lg" type="submit">
+              회원가입
+            </button>
+          </form>
         </div>
       </main>
 
