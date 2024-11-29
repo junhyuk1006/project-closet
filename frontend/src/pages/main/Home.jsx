@@ -7,18 +7,35 @@ import 'material-design-iconic-font/dist/css/material-design-iconic-font.min.css
 import Header from "../../components/Header";
 import Cart from "../cart/Cart";
 import useCartAndSidebar from "../../hooks/useCartAndSidebar";
-
-
-
+import Modal from "../../components/Modal";
+import { useNavigate } from "react-router-dom";
 
 
 function Home() {
     const { isCartOpen, toggleCart } = useCartAndSidebar();
+    const [isModalOpen, setModalOpen] = useState(false); // 모달 상태 관리
+    const navigate = useNavigate();
+
+
+    const handleQuickView = () => {
+        setModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setModalOpen(false);
+    };
+
+
+    const goToDetailPage = () => {
+        navigate('/Detail'); // '/target-page' 경로로 이동
+    }
 
     return (
         <div className="animsition">
             {/* Header */}
             <Header toggleCart={toggleCart}/>
+
+            {/*Cart*/}
             <Cart isCartOpen={isCartOpen} toggleCart={toggleCart}/>
 
             {/* Slider */}
@@ -400,17 +417,22 @@ function Home() {
                                 <div className="block2-pic hov-img0">
                                     <img src="images/product-01.jpg" alt="IMG-PRODUCT"/>
 
-                                    <a href="#"
-                                       className="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
+                                    <button
+                                        className="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04"
+                                        onClick={handleQuickView}
+                                    >
                                         Quick View
-                                    </a>
+                                    </button>
                                 </div>
 
                                 <div className="block2-txt flex-w flex-t p-t-14">
                                     <div className="block2-txt-child1 flex-col-l ">
-                                        <a href="../../../../../Downloads/cozastore-master/product-detail.html"
-                                           className="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-                                            Esprit Ruffle Shirt
+                                        <a
+                                            onClick={goToDetailPage} // 클릭 이벤트로 이동 처리
+                                            className="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6"
+                                            style={{cursor: "pointer"}} // 스타일로 클릭 가능함을 표시
+                                        >
+                                            Only Check Trouser
                                         </a>
 
                                         <span className="stext-105 cl3">
@@ -419,7 +441,7 @@ function Home() {
                                     </div>
 
                                     <div className="block2-txt-child2 flex-r p-t-3">
-                                        <a href="#" className="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
+                                    <a href="#" className="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
                                             <img className="icon-heart1 dis-block trans-04"
                                                  src="images/icons/icon-heart-01.png" alt="ICON"/>
                                             <img className="icon-heart2 dis-block trans-04 ab-t-l"
@@ -1127,6 +1149,7 @@ function Home() {
                     </div>
                 </div>
             </footer>
+            <Modal isOpen={isModalOpen} onClose={closeModal} />
         </div>
     );
 }

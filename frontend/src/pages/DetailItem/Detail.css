@@ -1,0 +1,51 @@
+.zoom-icon {
+    position: absolute;
+    top: 15px; /* Adjust the top distance */
+    right: 15px; /* Adjust the right distance */
+    font-size: 15px; /* Icon size */
+    color: black; /* Icon color */
+    background: rgba(255, 255, 255, 1); /* Semi-transparent dark background */
+    border-radius: 50%; /* Circular icon */
+    padding: 8px; /* Padding inside the circle */
+    cursor: pointer;
+    z-index: 2; /* Ensure it stays on top of the image */
+    transition: background 0.3s, color 0.3s;
+}
+
+.main-image {
+    width: 100%;
+    max-width: 700px;
+    height: auto;
+    display: block;
+}
+
+.zoom-icon:hover {
+    background: rgba(108, 122, 224, 1); /* Darker background on hover */
+    color: white; /* Change icon color on hover */
+}
+
+/* Main image container position relative */
+.main-image-container {
+    position: relative;
+}
+
+/* Thumbnail List */
+.thumbnail-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Thumbnail */
+.thumbnail {
+    width: 70px; /* 기존보다 넓게 설정 */
+    height: 90px; /* 기존보다 높게 설정 */
+    object-fit: cover;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color 0.3s, transform 0.3s;
+}
+
+.thumbnail-list.active {
+    border-color: #6c7ae0; /* 활성화 상태의 테두리 색상 */
+}
