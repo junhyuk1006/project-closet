@@ -11,6 +11,8 @@
 .DS_Store
 Thumbs.db
 .idea
+package.json
+package-lock.json
 cozastore-master
 
 # 환경 설정 파일 (Environment Files)
