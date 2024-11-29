@@ -13,13 +13,10 @@ import Header from "../../components/Header";
 function Home() {
     const [isCartOpen, setIsCartOpen] = useState(false);
 
-
     return (
         <div className="animsition">
             {/* Header */}
             <Header />
-
-
 
             {/*Cart*/}
             {isCartOpen && ( // 상태에 따라 장바구니 패널 표시

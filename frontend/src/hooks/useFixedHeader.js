@@ -1,16 +1,18 @@
-import { useEffect, useState } from "react";
+import {useState, useEffect} from "react";
 
-export function useFixedHeader(threshold = 100) {
-    const [isFixed, setIsFixed] = useState(false);
+function useFixedHeader() {
+    const [isAtTop, setIsAtTop] = useState(true);
 
     useEffect(() => {
         const handleScroll = () => {
-            setIsFixed(window.scrollY > threshold);
+            setIsAtTop(window.scrollY === 0);
         };
 
-        window.addEventListener("scroll", handleScroll);
-        return () => window.removeEventListener("scroll", handleScroll);
-    }, [threshold]);
+        window.addEventListener("scroll",handleScroll);
+        return () => window.removeEventListener("scroll",handleScroll);
+    }, []);
 
-    return isFixed;
+    return isAtTop;
 }
+
+export default useFixedHeader;
