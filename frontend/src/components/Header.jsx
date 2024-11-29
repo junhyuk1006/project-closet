@@ -2,7 +2,7 @@ import React from "react";
 import useFixedHeader from "../hooks/useFixedHeader";
 import { Link } from "react-router-dom";
 
-function Header() {
+function Header({ toggleCart }) {
     const isAtTop = useFixedHeader();
 
     return (
@@ -84,7 +84,15 @@ function Header() {
                             <div className="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
                                 <i className="zmdi zmdi-search"></i>
                             </div>
-                            <div className="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti" data-notify="2">
+                            <div
+                                className="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti"
+                                onClick={() => {
+                                    console.log("Cart icon clicked");
+                                    toggleCart(); // 장바구니 열림 상태 토글
+                                }}
+                                style={{cursor: "pointer"}}
+                                data-notify="2"
+                            >
                                 <i className="zmdi zmdi-shopping-cart"></i>
                             </div>
                             <a

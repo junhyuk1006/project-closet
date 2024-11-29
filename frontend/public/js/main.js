@@ -2,6 +2,7 @@
 (function ($) {
     "use strict";
 
+    // 보영
     /*[ Load page ]
     ===========================================================*/
     $(".animsition").animsition({
@@ -24,6 +25,7 @@
         transition: function(url){ window.location.href = url; }
     });
 
+    // 보영
     /*[ Back to top ]
     ===========================================================*/
     var windowH = $(window).height()/2;
@@ -76,6 +78,7 @@
 
 
     /*==================================================================
+    // 보영 (우선순위 나중)
     [ Menu mobile ]*/
     $('.btn-show-menu-mobile').on('click', function(){
         $(this).toggleClass('is-active');
@@ -110,6 +113,7 @@
 
 
     /*==================================================================
+    // 보영
     [ Show / hide modal search ]*/
     $('.js-show-modal-search').on('click', function(){
         $('.modal-search-header').addClass('show-modal-search');
@@ -127,6 +131,7 @@
 
 
     /*==================================================================
+    // 보영
     [ Isotope ]*/
     var $topeContainer = $('.isotope-grid');
     var $filter = $('.filter-tope-group');
@@ -168,6 +173,7 @@
     });
 
     /*==================================================================
+    // 보영
     [ Filter / Search product ]*/
     $('.js-show-filter').on('click',function(){
         $(this).toggleClass('show-filter');
@@ -192,8 +198,8 @@
 
 
 
-    /*==================================================================
-    [ Cart ]*/
+ /*   /!*==================================================================
+    [ Cart ]*!/
     $('.js-show-cart').on('click',function(){
         $('.js-panel-cart').addClass('show-header-cart');
     });
@@ -202,17 +208,18 @@
         $('.js-panel-cart').removeClass('show-header-cart');
     });
 
-    /*==================================================================
-    [ Cart ]*/
+    /!*==================================================================
+    [ Cart ]*!/
     $('.js-show-sidebar').on('click',function(){
         $('.js-sidebar').addClass('show-sidebar');
     });
 
     $('.js-hide-sidebar').on('click',function(){
         $('.js-sidebar').removeClass('show-sidebar');
-    });
+    });*/
 
     /*==================================================================
+    // 정민
     [ +/- num product ]*/
     $('.btn-num-product-down').on('click', function(){
         var numProduct = Number($(this).next().val());
@@ -225,6 +232,7 @@
     });
 
     /*==================================================================
+    // 정민
     [ Rating ]*/
     $('.wrap-rating').each(function(){
         var item = $(this).find('.item-rating');
@@ -267,6 +275,7 @@
     });
 
     /*==================================================================
+    // 정민
     [ Show modal1 ]*/
     $('.js-show-modal1').on('click',function(e){
         e.preventDefault();
