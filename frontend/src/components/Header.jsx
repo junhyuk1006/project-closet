@@ -1,21 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import useFixedHeader from "../hooks/useFixedHeader";
 import { Link } from "react-router-dom";
 
 function Header() {
-    const [isAtTop, setIsAtTop] = useState(true); // 스크롤 상단 여부를 관리
-
-    useEffect(() => {
-        const handleScroll = () => {
-            if (window.scrollY > 0) {
-                setIsAtTop(false); // 스크롤이 내려갔을 때
-            } else {
-                setIsAtTop(true); // 가장 상단에 있을 때
-            }
-        };
-
-        window.addEventListener("scroll", handleScroll);
-        return () => window.removeEventListener("scroll", handleScroll);
-    }, []);
+    const isAtTop = useFixedHeader();
 
     return (
         <header className="header">
