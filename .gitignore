@@ -10,7 +10,8 @@
 *.rej
 .DS_Store
 Thumbs.db
-/.idea
+.idea
+cozastore-master
 
 # 환경 설정 파일 (Environment Files)
 .env

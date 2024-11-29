@@ -1,37 +1,59 @@
+# ------------------------
+#  전역 파일
+# ------------------------
+*.log
+*.tmp
+*.bak
+*.swp
+*.swo
+*.orig
+*.rej
+.DS_Store
+Thumbs.db
+.idea
+
+# 환경 설정 파일 (Environment Files)
+.env
+.env.*
+
+# ------------------------
+#  Spring Boot
+# ------------------------
 HELP.md
-.gradle
+.gradle/
 build/
 !gradle/wrapper/gradle-wrapper.jar
-!**/src/main/**/build/
-!**/src/test/**/build/
+application-secret.properties
 
-### STS ###
-.apt_generated
+# IDE 및 빌드 관련 파일
 .classpath
-.factorypath
 .project
-.settings
+.settings/
+.factorypath
+.apt_generated
 .springBeans
 .sts4-cache
 bin/
-!**/src/main/**/bin/
-!**/src/test/**/bin/
-
-### IntelliJ IDEA ###
-.idea
+out/
+nbproject/private/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+.idea/
 *.iws
 *.iml
 *.ipr
-out/
-!**/src/main/**/out/
-!**/src/test/**/out/
+workspace-spring-tool-suite-4-*/
 
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
+# 특정 디렉토리의 빌드 및 바이너리 파일 제외
+!src/main/**/build/
+!src/test/**/build/
+!src/main/**/bin/
+!src/test/**/bin/
+!src/main/**/out/
+!src/test/**/out/
 
-### VS Code ###
-.vscode/
+# 패키지 락 파일
+package-lock.json
+yarn.lock
