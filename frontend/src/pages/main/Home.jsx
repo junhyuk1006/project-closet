@@ -13,6 +13,11 @@ import FilterSearch from '../../components/FilterSearch';
 
 function Home() {
   const { isCartOpen, toggleCart } = useCartAndSidebar();
+  const [activeFilter, setActiveFilter] = useState('*'); // 메인 화면의 카테고리 중 filter의 상태
+
+  const handleFilterChange = (filter) => {
+    setActiveFilter(filter);
+  };
 
   return (
     <>
@@ -144,7 +149,7 @@ function Home() {
           </div>
 
           <div className="flex-w flex-sb-m p-b-52">
-            <Category />
+            <Category onFilterChange={handleFilterChange} />
             <FilterSearch />
           </div>
 
