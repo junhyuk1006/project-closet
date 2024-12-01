@@ -118,7 +118,13 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
 
 
 /*//////////////////////////////////////////////////////////////////
+
+
 [ LOADDING ]*/
+
+a {
+  text-decoration: none; /* 밑줄 제거 */
+}
 .animsition-loading-1 {
   position: absolute;
   top: 50%;
@@ -1795,6 +1801,7 @@ button.mfp-close {
   height: 100%;
   cursor: pointer;
 }
+
 
 .num-product {
   width: calc(100% - 90px);

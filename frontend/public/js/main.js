@@ -221,6 +221,7 @@
     /*==================================================================
     // 정민
     [ +/- num product ]*/
+/*
     $('.btn-num-product-down').on('click', function(){
         var numProduct = Number($(this).next().val());
         if(numProduct > 0) $(this).next().val(numProduct - 1);
@@ -230,11 +231,12 @@
         var numProduct = Number($(this).prev().val());
         $(this).prev().val(numProduct + 1);
     });
+*/
 
     /*==================================================================
     // 정민
     [ Rating ]*/
-    $('.wrap-rating').each(function(){
+/*    $('.wrap-rating').each(function(){
         var item = $(this).find('.item-rating');
         var rated = -1;
         var input = $(this).find('input');
@@ -272,7 +274,7 @@
                 $(item[j]).removeClass('zmdi-star');
             }
         });
-    });
+    });*/
 
 /*    /!*==================================================================
     // 정민

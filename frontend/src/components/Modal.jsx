@@ -3,11 +3,14 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./Model.css"
+import useProductQuantity from "../hooks/useProductQuantity";
 // 필요한 경우 다른 스타일이나 스크립트도 import 해주세요.
 
 function Modal({ isOpen, onClose }) {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isZoomed, setIsZoomed] = useState(false); // 확대 보기 상태
+    const { quantity, increaseQuantity, decreaseQuantity } = useProductQuantity(1);
+
     const thumbnails = [
         "images/product-detail-01.jpg",
         "images/product-detail-02.jpg",
@@ -150,23 +153,37 @@ function Modal({ isOpen, onClose }) {
                                     <div className="flex-w flex-r-m p-b-10">
                                         <div className="size-204 flex-w flex-m respon6-next">
                                             <div className="wrap-num-product flex-w m-r-20 m-tb-10">
-                                                <div className="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
+                                                {/* 수량 감소 버튼 */}
+                                                <div
+                                                    className="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m"
+                                                    onClick={decreaseQuantity}
+                                                    style={{cursor: "pointer"}} // 버튼 클릭 가능 표시
+                                                >
                                                     <i className="fs-16 zmdi zmdi-minus"></i>
                                                 </div>
 
+                                                {/* 수량 표시 */}
                                                 <input
                                                     className="mtext-104 cl3 txt-center num-product"
                                                     type="number"
                                                     name="num-product"
-                                                    value="1"
+                                                    value={quantity}
+                                                    readOnly // 사용자가 직접 수정하지 못하도록 설정
+                                                    style={{textAlign: "center"}}
                                                 />
 
-                                                <div className="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
+                                                {/* 수량 증가 버튼 */}
+                                                <div
+                                                    className="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m"
+                                                    onClick={increaseQuantity}
+                                                    style={{cursor: "pointer"}} // 버튼 클릭 가능 표시
+                                                >
                                                     <i className="fs-16 zmdi zmdi-plus"></i>
                                                 </div>
                                             </div>
 
-                                            <button className="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
+                                            <button
+                                                className="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
                                                 Add to cart
                                             </button>
                                         </div>

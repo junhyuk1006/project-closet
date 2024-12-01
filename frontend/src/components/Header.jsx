@@ -49,20 +49,6 @@ function Header({ toggleCart }) {
 
                         <div className="menu-desktop">
                             <ul className="main-menu">
-                                <li className="active-menu">
-                                    <a href="/">Home</a>
-                                    <ul className="sub-menu">
-                                        <li>
-                                            <a href="/" className="animsition-link">Homepage 1</a>
-                                        </li>
-                                        <li>
-                                            <a href="/shop">Homepage 2</a>
-                                        </li>
-                                        <li>
-                                            <a href="/contact">Homepage 3</a>
-                                        </li>
-                                    </ul>
-                                </li>
                                 <li>
                                     <a href="/shop">Shop</a>
                                 </li>
@@ -70,7 +56,7 @@ function Header({ toggleCart }) {
                                     <a href="/features">Features</a>
                                 </li>
                                 <li>
-                                    <a href="/blog">Blog</a>
+                                    <a href="/recommend">1:1 Recommend</a>
                                 </li>
                                 <li>
                                     <a href="/about">About</a>
