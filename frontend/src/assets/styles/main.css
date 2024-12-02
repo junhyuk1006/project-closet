@@ -41,60 +41,60 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
 
 @font-face {
   font-family: Poppins-Regular;
-  src: url('../../../public/fonts/Poppins/Poppins-Regular.ttf');
+  src: url('../fonts/Poppins/Poppins-Regular.ttf');
 }
 
 @font-face {
   font-family: Poppins-Light;
-  src: url('../../../public/fonts/Poppins/Poppins-Light.ttf');
+  src: url('../fonts/Poppins/Poppins-Light.ttf');
 }
 
 @font-face {
   font-family: Poppins-ExtraLight;
-  src: url('../../../public/fonts/Poppins/Poppins-ExtraLight.ttf');
+  src: url('../fonts/Poppins/Poppins-ExtraLight.ttf');
 }
 
 @font-face {
   font-family: Poppins-Medium;
-  src: url('../../../public/fonts/Poppins/Poppins-Medium.ttf');
+  src: url('../fonts/Poppins/Poppins-Medium.ttf');
 }
 
 @font-face {
   font-family: Poppins-Italic;
-  src: url('../../../public/fonts/Poppins/Poppins-Italic.ttf');
+  src: url('../fonts/Poppins/Poppins-Italic.ttf');
 }
 
 @font-face {
   font-family: Poppins-Bold;
-  src: url('../../../public/fonts/Poppins/Poppins-Bold.ttf');
+  src: url('../fonts/Poppins/Poppins-Bold.ttf');
 }
 
 @font-face {
   font-family: Poppins-SemiBold;
-  src: url('../../../public/fonts/Poppins/Poppins-SemiBold.ttf');
+  src: url('../fonts/Poppins/Poppins-SemiBold.ttf');
 }
 
 
 /*---------------------------------------------*/
 @font-face {
   font-family: PlayfairDisplay-Regular;
-  src: url('../../../public/fonts/PlayfairDisplay/PlayfairDisplay-Regular.ttf');
+  src: url('../fonts/PlayfairDisplay/PlayfairDisplay-Regular.ttf');
 }
 
 @font-face {
   font-family: PlayfairDisplay-Bold;
-  src: url('../../../public/fonts/PlayfairDisplay/PlayfairDisplay-Bold.ttf');
+  src: url('../fonts/PlayfairDisplay/PlayfairDisplay-Bold.ttf');
 }
 
 /*---------------------------------------------*/
 @font-face {
   font-family: Montserrat-Regular;
-  src: url('../../../public/fonts/Montserrat/Montserrat-Regular.ttf');
+  src: url('../fonts/Montserrat/Montserrat-Regular.ttf');
 }
 
 @font-face {
   font-family: Montserrat-Bold;
-  src: url('../../../public/fonts/Montserrat/Montserrat-Bold.ttf');
+  src: url('../fonts/Montserrat/Montserrat-Bold.ttf');
 }
 
 
@@ -118,7 +118,13 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
 
 
 /*//////////////////////////////////////////////////////////////////
+
+
 [ LOADDING ]*/
+
+a {
+  text-decoration: none; /* 밑줄 제거 */
+}
 .animsition-loading-1 {
   position: absolute;
   top: 50%;
@@ -276,7 +282,7 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
   width: 100%;
   height: 84px;
   top: 40px;
-  left: 0;
+  left: 0px; 
 
   -webkit-transition: height 0.3s, background-color 0.3s;
   -o-transition: height 0.3s, background-color 0.3s;
@@ -909,7 +915,7 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
 [ Header cart ]*/
 .wrap-header-cart {
   position: fixed;
-  z-index: 1100;
+  z-index: 1111;
   width: 100%;
   height: 100vh;
   top: 0;
@@ -1529,13 +1535,13 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
 }
 
 button.mfp-arrow-right {
-  background-image: url(../../../public/images/icons/icon-next.png);
+  background-image: url('../../../public/images/icons/icon-next.png');
   background-position: center center;
   background-repeat: no-repeat;
 }
 
 button.mfp-arrow-left {
-  background-image: url(../../../public/images/icons/icon-prev.png);
+  background-image: url('../../../public/images/icons/icon-prev.png');
   background-position: center center;
   background-repeat: no-repeat;
 }
@@ -1548,7 +1554,7 @@ button.mfp-close {
   right: 0;
   top: 0;
   color: transparent !important;
-  background-image: url(../../../public/images/icons/icon-close.png);
+  background-image: url('../../../public/images/icons/icon-close.png');
   background-position: center center;
   background-repeat: no-repeat;
   cursor: pointer !important;
@@ -1796,6 +1802,7 @@ button.mfp-close {
   cursor: pointer;
 }
 
+
 .num-product {
   width: calc(100% - 90px);
   height: 100%;
@@ -1881,8 +1888,8 @@ input.num-product::-webkit-inner-spin-button {
   -moz-transition: all 0.4s;
   transition: all 0.4s;
 
-  visibility: hidden;
-  opacity: 0;
+  visibility: visible;
+  opacity: 1;
 }
 
 .overlay-modal1 {
@@ -2191,6 +2198,7 @@ input.num-product::-webkit-inner-spin-button {
 .stext-109 {
   font-family: Poppins-Regular;
   font-size: 12px;
+  margin-top: 80px;
   line-height: 1.833333;
 }
 
