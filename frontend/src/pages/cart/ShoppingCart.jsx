@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 
 // CSS Imports
-import "../../assets/styles/main.css"; // 메인 스타일
-import "../../assets/styles/util.css"; // 유틸리티 스타일
+import "../../assets/styles/components/main.css"; // 메인 스타일
+import "../../assets/styles/components/util.css"; // 유틸리티 스타일
 import "slick-carousel/slick/slick.css"; // 슬릭 캐러셀 스타일
 import "slick-carousel/slick/slick-theme.css"; // 슬릭 캐러셀 테마
 import "font-awesome/css/font-awesome.min.css"; // Font Awesome 아이콘

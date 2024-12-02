@@ -1,7 +1,7 @@
 import React, {useState} from "react";
-import "../../assets/styles/main.css"
-import "../../assets/styles/util.css"
-import "./Detail.css"
+import "../../assets/styles/components/main.css"
+import "../../assets/styles/components/util.css"
+import "../../assets/styles/DetailItem/Detail.css"
 import StarRating from "../../hooks/StarRating";
 import useProductQuantity from "../../hooks/useProductQuantity";
 

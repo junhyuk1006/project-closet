@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 
 
 // Import CSS
-import "../../assets/styles/main.css"
-import "../../assets/styles/util.css"
+import "../../assets/styles/components/main.css"
+import "../../assets/styles/components/util.css"
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import 'material-design-iconic-font/dist/css/material-design-iconic-font.min.css';
