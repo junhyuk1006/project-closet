@@ -6,23 +6,20 @@ import 'material-design-iconic-font/dist/css/material-design-iconic-font.min.css
 import Detail from "./pages/DetailItem/Detail";
 import Home from "./pages/main/Home";
 import Recommend from "./pages/comunity/recommend/Recommend";
+import Animsition from "./components/Animation";
 
 
 
 const AppRoutes = () => (
-
     <Router>
-        <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/Detail" element={<Detail />} />
-            <Route path="/Recommend" element={<Recommend/>}/>
-{/*
-            <Route path="/" element={<DetailItem/>} />
-*/}
-            {/* 추가 라우트 */}
-        </Routes>
+        <Animsition>
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/Detail" element={<Detail />} />
+                <Route path="/Recommend" element={<Recommend/>}/>
+            </Routes>
+        </Animsition>
     </Router>
-
 );
 
 export default AppRoutes;
