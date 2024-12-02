@@ -56,16 +56,21 @@ const AppRoutes = () => (
     <Router>
         <Animation>
             <Routes>
-                {/* 각 경로별 컴포넌트 연결 */}
                 {renderRoute("/", <Home />)} {/* 메인 페이지 */}
+
+                {/** ./pages/auth */}
+                {renderRoute("/Login", <Login />)} {/* 로그인 페이지 */}
+                {renderRoute("/SignUp", <SignUp />)} {/* 회원가입 페이지 */}
+
+                {/** ./pages/MyPage */}
+                {renderRoute("/MyPageHome", <MyPageHome />)} {/* 마이페이지 홈 */}
+                {renderRoute("/MyPoint", <MyPoint />)} {/* 포인트 페이지 */}
+                {renderRoute("/MemberInfo", <MemberInfo />)} {/* 회원정보 페이지 */}
+
+                {/** ./pages/Other  */}
                 {renderRoute("/Detail", <Detail />)} {/* 상품 상세 페이지 */}
                 {renderRoute("/Recommend", <Recommend />)} {/* 추천 페이지 */}
                 {renderRoute("/ShoppingCart", <ShoppingCart />)} {/* 장바구니 페이지 */}
-                {renderRoute("/MyPageHome", <MyPageHome />)} {/* 마이페이지 홈 */}
-                {renderRoute("/Login", <Login />)} {/* 로그인 페이지 */}
-                {renderRoute("/SignUp", <SignUp />)} {/* 회원가입 페이지 */}
-                {renderRoute("/MyPoint", <MyPoint />)} {/* 포인트 페이지 */}
-                {renderRoute("/MemberInfo", <MemberInfo />)} {/* 회원정보 페이지 */}
             </Routes>
         </Animation>
     </Router>
