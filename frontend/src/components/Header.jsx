@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import useFixedHeader from '../hooks/useFixedHeader';
 import Cart from '../pages/cart/Cart';
+import closetImage from '../assets/closet-removebg.png'
 
 function Header() {
     const isAtTop = useFixedHeader();
@@ -50,7 +51,7 @@ function Header() {
                     <nav className="limiter-menu-desktop container">
                         <Link to="/" className="logo">
                             <img
-                                src={`${process.env.PUBLIC_URL}/images/icons/logo-01.png`}
+                                src={closetImage}
                                 alt="LOGO"
                             />
                         </Link>
