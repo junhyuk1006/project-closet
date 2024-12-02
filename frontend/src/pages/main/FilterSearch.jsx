@@ -1,15 +1,35 @@
 import { useEffect, useState } from 'react';
 
-export default function Filter() {
+export default function FilterSearch({ activeFilter, handleFilterChange }) {
     const [isFiltering, setIsFiltering] = useState(false);
     const [isSearching, setIsSearching] = useState(false);
 
+    const filters = [
+        { label: '최신순', filterKey: 'sortByRecent' },
+        { label: '가격 높은순', filterKey: 'sortByPriceDesc' },
+        { label: '가격 낮은순', filterKey: 'sortByPriceAsc' },
+        { label: '평점', filterKey: 'sortByRating' },
+        { label: '리뷰', filterKey: 'sortByReviews' },
+    ];
+
+    const tags = [
+        { label: '가성비', filterKey: 'costEffectiveness' },
+        { label: '스트릿', filterKey: 'street' },
+        { label: '캐주얼', filterKey: 'casual' },
+        { label: '댄디', filterKey: 'dandy' },
+        { label: 'OOTD', filterKey: 'ootd' },
+    ];
+
     const toggleFilter = () => {
+        console.log('Filter 버튼을 클릭하였습니다.');
         setIsFiltering((prev) => !prev);
+        setIsSearching(false);
     };
 
     const toggleSearch = () => {
+        console.log('Search 버튼을 클릭하였습니다.');
         setIsSearching((prev) => !prev);
+        setIsFiltering(false);
     };
 
     return (
@@ -18,27 +38,31 @@ export default function Filter() {
                 {/* Filter button */}
                 <div
                     className={`flex-c-m stext-106 cl6 size-104 bor4 pointer hov-btn3 trans-04 m-r-8 m-tb-4 js-show-filter ${!isFiltering ? '' : 'show-filter'}`}
-                    onClick={toggleFilter}
+                    onClick={() => {
+                        toggleFilter();
+                    }}
                 >
                     {!isFiltering ? (
                         <i className="icon-filter cl2 m-r-6 fs-15 trans-04 zmdi zmdi-filter-list"></i>
                     ) : (
                         <i className="icon-close-filter cl2 m-r-6 fs-15 trans-04 zmdi zmdi-close"></i>
                     )}
-                    Filter
+                    필터
                 </div>
 
                 {/* Search button */}
                 <div
-                    className={`flex-c-m stext-106 cl6 size-105 bor4 pointer hov-btn3 trans-04 m-tb-4 js-show-search ${!isSearching ? '' : 'show-search'}`}
-                    onClick={toggleSearch}
+                    className={`flex-c-m stext-106 cl6 size-104 bor4 pointer hov-btn3 trans-04 m-tb-4 js-show-search ${!isSearching ? '' : 'show-search'}`}
+                    onClick={() => {
+                        toggleSearch();
+                    }}
                 >
                     {!isSearching ? (
                         <i className="icon-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-search"></i>
                     ) : (
                         <i className="icon-close-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-close"></i>
                     )}
-                    Search
+                    검색
                 </div>
             </div>
 
@@ -48,52 +72,35 @@ export default function Filter() {
             >
                 <div className="wrap-filter flex-w bg6 w-full p-lr-40 p-t-27 p-lr-15-sm">
                     <div className="filter-col1 p-r-15 p-b-27">
-                        <div className="mtext-102 cl2 p-b-15">Sort By</div>
+                        <div className="mtext-102 cl2 p-b-15">
+                            <b>정렬</b>
+                        </div>
 
                         <ul>
-                            <li className="p-b-6">
-                                <a href="#" className="filter-link stext-106 trans-04">
-                                    Default
-                                </a>
-                            </li>
-
-                            <li className="p-b-6">
-                                <a href="#" className="filter-link stext-106 trans-04">
-                                    Popularity
-                                </a>
-                            </li>
-
-                            <li className="p-b-6">
-                                <a href="#" className="filter-link stext-106 trans-04">
-                                    Average rating
-                                </a>
-                            </li>
-
-                            <li className="p-b-6">
-                                <a
-                                    href="#"
-                                    className="filter-link stext-106 trans-04 filter-link-active"
-                                >
-                                    Newness
-                                </a>
-                            </li>
-
-                            <li className="p-b-6">
-                                <a href="#" className="filter-link stext-106 trans-04">
-                                    Price: Low to High
-                                </a>
-                            </li>
-
-                            <li className="p-b-6">
-                                <a href="#" className="filter-link stext-106 trans-04">
-                                    Price: High to Low
-                                </a>
-                            </li>
+                            {filters.map((filter) => (
+                                <li key={filter.filterKey} className="p-b-6">
+                                    <a
+                                        href="#"
+                                        className={`filter-link stext-106 trans-04 ${activeFilter === filter.filterKey && 'filter-link-active'}`}
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            console.log(
+                                                `FilterSearch에서 클릭한 필터링 데이터: ${filter.filterKey}`
+                                            );
+                                            handleFilterChange(filter.filterKey);
+                                        }}
+                                    >
+                                        {filter.label}
+                                    </a>
+                                </li>
+                            ))}
                         </ul>
                     </div>
 
                     <div className="filter-col2 p-r-15 p-b-27">
-                        <div className="mtext-102 cl2 p-b-15">Price</div>
+                        <div className="mtext-102 cl2 p-b-15">
+                            <b>가격대</b>
+                        </div>
 
                         <ul>
                             <li className="p-b-6">
@@ -101,161 +108,137 @@ export default function Filter() {
                                     href="#"
                                     className="filter-link stext-106 trans-04 filter-link-active"
                                 >
-                                    All
+                                    전체
                                 </a>
                             </li>
 
                             <li className="p-b-6">
                                 <a href="#" className="filter-link stext-106 trans-04">
-                                    $0.00 - $50.00
+                                    - ￦50,000
                                 </a>
                             </li>
 
                             <li className="p-b-6">
                                 <a href="#" className="filter-link stext-106 trans-04">
-                                    $50.00 - $100.00
+                                    ￦50,000 - ￦100,000
                                 </a>
                             </li>
 
                             <li className="p-b-6">
                                 <a href="#" className="filter-link stext-106 trans-04">
-                                    $100.00 - $150.00
+                                    ￦100,000 - ￦150,000
                                 </a>
                             </li>
 
                             <li className="p-b-6">
                                 <a href="#" className="filter-link stext-106 trans-04">
-                                    $150.00 - $200.00
+                                    ￦150,000 - ￦200,000
                                 </a>
                             </li>
 
                             <li className="p-b-6">
                                 <a href="#" className="filter-link stext-106 trans-04">
-                                    $200.00+
+                                    ￦200,000 -
                                 </a>
                             </li>
                         </ul>
                     </div>
 
-                    <div className="filter-col3 p-r-15 p-b-27">
-                        <div className="mtext-102 cl2 p-b-15">Color</div>
+                    {/* Color 카테고리를 주석 처리 */}
+                    {/* <div className="filter-col3 p-r-15 p-b-27">
+            <div className="mtext-102 cl2 p-b-15">Color</div>
 
-                        <ul>
-                            <li className="p-b-6">
+            <ul>
+              <li className="p-b-6">
                 <span className="fs-15 lh-12 m-r-6" style={{ color: '#222' }}>
                   <i className="zmdi zmdi-circle"></i>
                 </span>
 
-                                <a href="#" className="filter-link stext-106 trans-04">
-                                    Black
-                                </a>
-                            </li>
+                <a href="#" className="filter-link stext-106 trans-04">
+                  Black
+                </a>
+              </li>
 
-                            <li className="p-b-6">
+              <li className="p-b-6">
                 <span
-                    className="fs-15 lh-12 m-r-6"
-                    style={{ color: '#4272d7' }}
+                  className="fs-15 lh-12 m-r-6"
+                  style={{ color: '#4272d7' }}
                 >
                   <i className="zmdi zmdi-circle"></i>
                 </span>
 
-                                <a
-                                    href="#"
-                                    className="filter-link stext-106 trans-04 filter-link-active"
-                                >
-                                    Blue
-                                </a>
-                            </li>
+                <a
+                  href="#"
+                  className="filter-link stext-106 trans-04 filter-link-active"
+                >
+                  Blue
+                </a>
+              </li>
 
-                            <li className="p-b-6">
+              <li className="p-b-6">
                 <span
-                    className="fs-15 lh-12 m-r-6"
-                    style={{ color: '#b3b3b3' }}
+                  className="fs-15 lh-12 m-r-6"
+                  style={{ color: '#b3b3b3' }}
                 >
                   <i className="zmdi zmdi-circle"></i>
                 </span>
 
-                                <a href="#" className="filter-link stext-106 trans-04">
-                                    Grey
-                                </a>
-                            </li>
+                <a href="#" className="filter-link stext-106 trans-04">
+                  Grey
+                </a>
+              </li>
 
-                            <li className="p-b-6">
+              <li className="p-b-6">
                 <span
-                    className="fs-15 lh-12 m-r-6"
-                    style={{ color: '#00ad5f' }}
+                  className="fs-15 lh-12 m-r-6"
+                  style={{ color: '#00ad5f' }}
                 >
                   <i className="zmdi zmdi-circle"></i>
                 </span>
 
-                                <a href="#" className="filter-link stext-106 trans-04">
-                                    Green
-                                </a>
-                            </li>
+                <a href="#" className="filter-link stext-106 trans-04">
+                  Green
+                </a>
+              </li>
 
-                            <li className="p-b-6">
+              <li className="p-b-6">
                 <span
-                    className="fs-15 lh-12 m-r-6"
-                    style={{ color: '#fa4251' }}
+                  className="fs-15 lh-12 m-r-6"
+                  style={{ color: '#fa4251' }}
                 >
                   <i className="zmdi zmdi-circle"></i>
                 </span>
 
-                                <a href="#" className="filter-link stext-106 trans-04">
-                                    Red
-                                </a>
-                            </li>
+                <a href="#" className="filter-link stext-106 trans-04">
+                  Red
+                </a>
+              </li>
 
-                            <li className="p-b-6">
+              <li className="p-b-6">
                 <span className="fs-15 lh-12 m-r-6" style={{ color: '#aaa' }}>
                   <i className="zmdi zmdi-circle-o"></i>
                 </span>
 
-                                <a href="#" className="filter-link stext-106 trans-04">
-                                    White
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+                <a href="#" className="filter-link stext-106 trans-04">
+                  White
+                </a>
+              </li>
+            </ul>
+          </div> */}
 
                     <div className="filter-col4 p-b-27">
-                        <div className="mtext-102 cl2 p-b-15">Tags</div>
+                        <div className="mtext-102 cl2 p-b-15">태그</div>
 
                         <div className="flex-w p-t-4 m-r--5">
-                            <a
-                                href="#"
-                                className="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5"
-                            >
-                                Fashion
-                            </a>
-
-                            <a
-                                href="#"
-                                className="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5"
-                            >
-                                Lifestyle
-                            </a>
-
-                            <a
-                                href="#"
-                                className="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5"
-                            >
-                                Denim
-                            </a>
-
-                            <a
-                                href="#"
-                                className="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5"
-                            >
-                                Streetstyle
-                            </a>
-
-                            <a
-                                href="#"
-                                className="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5"
-                            >
-                                Crafts
-                            </a>
+                            {tags.map((tag) => (
+                                <a
+                                    key={tag.filterKey}
+                                    href="#"
+                                    className="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-10 m-b-10"
+                                >
+                                    {tag.label}
+                                </a>
+                            ))}
                         </div>
                     </div>
                 </div>

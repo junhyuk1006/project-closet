@@ -1,14 +1,12 @@
 import React, {useState} from "react";
-import { useNavigate } from "react-router-dom";
-
 
 // Import CSS
 import "../../assets/styles/components/main.css"
 import "../../assets/styles/components/util.css"
+import "../../assets/styles/Home/Home.css"
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import 'material-design-iconic-font/dist/css/material-design-iconic-font.min.css';
-
 
 // Import Hooks
 import Product from '../main/Product';
@@ -20,12 +18,18 @@ import FilterSearch from '../main/FilterSearch';
 
 // Function Aria
 function Home() {
-    const navigate = useNavigate();
-    const [activeFilter, setActiveFilter] = useState('*'); // 메인 화면의 카테고리 중 filter의 상태
+    const [activeCategory, setActiveCategory] = useState('*'); // 카테고리 상태
+    const [activeFilter, setActiveFilter] = useState('sortByRecent'); // 필터 상태
+
+    const handleCategoryChange = (category) => {
+        setActiveCategory(category);
+    };
 
     const handleFilterChange = (filter) => {
         setActiveFilter(filter);
+        console.log(`handleFilterChange에 입력된 filter: ${filter}`);
     };
+
 
     const products = [
         {
@@ -256,7 +260,7 @@ function Home() {
                 </div>
             </div>
 
-
+            {/* Product Overview */}
             <section className="bg0 p-t-23 p-b-140">
                 <div className="container">
                     <div className="p-b-10">
@@ -265,12 +269,24 @@ function Home() {
                         </h3>
                     </div>
 
+                    {/* Category & Filter & Search */}
                     <div className="flex-w flex-sb-m p-b-52">
-                        <Category onFilterChange={handleFilterChange} />
-                        <FilterSearch />
+                        <Category
+                            activeCategory={activeCategory}
+                            handleCategoryChange={handleCategoryChange}
+                        />
+                        <FilterSearch
+                            activeFilter={activeFilter}
+                            handleFilterChange={handleFilterChange}
+                        />
                     </div>
 
-                    <Product products={products} activeFilter={activeFilter} />
+                    {/* Product */}
+                    <Product
+                        products={products}
+                        activeCategory={activeCategory}
+                        activeFilter={activeFilter}
+                    />
 
                     {/*Load more*/}
                     <div className="flex-c-m flex-w w-full p-t-45">
