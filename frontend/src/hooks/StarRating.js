@@ -1,5 +1,5 @@
 import React from "react";
-import useStarRating from "../hooks/useStarRating";
+import useStarRating from "./useStarRating";
 
 function StarRating({ totalStars = 5 }) {
     const {

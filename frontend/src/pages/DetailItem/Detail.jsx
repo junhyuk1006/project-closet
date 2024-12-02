@@ -5,7 +5,7 @@ import "./Detail.css"
 import Header from "../../components/Header";
 import Cart from "../cart/Cart";
 import useCartAndSidebar from "../../hooks/useCartAndSidebar";
-import StarRating from "../../components/StarRating";
+import StarRating from "../../hooks/StarRating";
 import useProductQuantity from "../../hooks/useProductQuantity";
 
 function Detail ({}) {
@@ -48,7 +48,7 @@ function Detail ({}) {
     };
 
     return (
-        <div className="animsition">
+        <>
             {/* Header */}
             <Header toggleCart={toggleCart}/>
 
@@ -574,9 +574,7 @@ function Detail ({}) {
                     </div>
                 </div>
             </footer>
-        </div>
-
-
+        </>
     )
 }
 

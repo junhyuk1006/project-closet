@@ -18,8 +18,8 @@ import useCartAndSidebar from "../../hooks/useCartAndSidebar";
 // Import Components
 import Header from "../../components/Header";
 import Modal from "../../components/Modal";
-import Category from '../../components/Category';
-import FilterSearch from '../../components/FilterSearch';
+import Category from '../../hooks/Category';
+import FilterSearch from '../../hooks/FilterSearch';
 
 
 // Function Aria
@@ -65,9 +65,9 @@ function Home() {
                         >
                             <div className="container h-full">
                                 <div className="flex-col-l-m h-full p-t-100 p-b-30 respon5">
-                      <span className="ltext-101 cl2 respon2">
-                        Women Collection 2018
-                      </span>
+                                      <span className="ltext-101 cl2 respon2">
+                                        Women Collection 2024
+                                      </span>
                                     <h2 className="ltext-201 cl2 p-t-19 p-b-43 respon1">
                                         NEW SEASON
                                     </h2>
