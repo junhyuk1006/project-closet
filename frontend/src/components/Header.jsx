@@ -20,12 +20,8 @@ function Header() {
                 <div className="top-bar">
                     <div className="content-topbar flex-sb-m h-full container">
                         <div className="left-top-bar">
-                            Free shipping for standard order over $100
                         </div>
                         <div className="right-top-bar flex-w h-full">
-                            <Link to="/help" className="flex-c-m trans-04 p-lr-25">
-                                Help & FAQs
-                            </Link>
                             <Link to="/MyPageHome" className="flex-c-m trans-04 p-lr-25">
                                 My Account
                             </Link>
