@@ -19,11 +19,6 @@
     display: block;
 }
 
-.zoom-icon:hover {
-    background: rgba(108, 122, 224, 1); /* Darker background on hover */
-    color: white; /* Change icon color on hover */
-}
-
 /* Main image container position relative */
 .main-image-container {
     position: relative;

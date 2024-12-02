@@ -1,24 +1,16 @@
 import React from "react";
 import "./Recommend.css";
-import Header from "../../../components/Header";
-import Cart from "../../cart/Cart";
-import useCartAndSidebar from "../../../hooks/useCartAndSidebar";
 
 function Recommend() {
-    const { isCartOpen, toggleCart } = useCartAndSidebar();
-
     return (
         <>
-            {/* Header */}
-            <Header toggleCart={toggleCart} />
-
-            {/* Cart */}
-            <Cart isCartOpen={isCartOpen} toggleCart={toggleCart} />
-
-            <div className="offers_area">
+            <div
+                className="offers_area"
+                style={{ marginBottom: "300px" }}
+            >
                 <div className="container">
                     <div className="recommend-title text-center">
-                        <h3>Top3 Coordinator</h3>
+                        <h3>Top Coordinator</h3>
                     </div>
                     <div className="row">
                         {[{

@@ -1,0 +1,6 @@
+.mypage-line {
+    height: 1px; /* 선의 두께 */
+    background-color: #e8e8e8; /* 선의 색상 */
+    width: 100%; /* 선의 너비 */
+    margin: 20px 0; /* 위아래 여백 */
+}

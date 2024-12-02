@@ -9,18 +9,14 @@ import "font-awesome/css/font-awesome.min.css"; // Font Awesome 아이콘
 import "material-design-iconic-font/dist/css/material-design-iconic-font.min.css"; // Material Design 아이콘
 
 // Component Imports
-import Header from "../../components/Header"; // 상단 헤더 컴포넌트
-import Cart from "./Cart"; // 장바구니 사이드바 컴포넌트
 import Footer from "../../components/Footer"; // 하단 푸터 컴포넌트
 
 // Hook Imports
-import useCartAndSidebar from "../../hooks/useCartAndSidebar"; // 장바구니 열기/닫기 상태 관리
 import useProductQuantity from "../../hooks/useProductQuantity"; // 상품 수량 증가/감소 관리 {이건 아직 DB 연결이 되어 있지 않아 사용 X}
 
 function ShoppingCart() {
 
     // 장바구니 열기/닫기 상태 관리
-    const { isCartOpen, toggleCart } = useCartAndSidebar();
 
     // 각 제품의 개별 수량 관리
     const [quantities, setQuantities] = useState({
@@ -46,12 +42,6 @@ function ShoppingCart() {
 
     return (
         <>
-            {/* Header: 상단 헤더 */}
-            <Header toggleCart={toggleCart} />
-
-            {/* Cart: 장바구니 사이드바 */}
-            <Cart isCartOpen={isCartOpen} toggleCart={toggleCart} />
-
             {/* ShoppingCart Main Container */}
             <form className="bg0 p-t-75 p-b-85">
                 <div className="container">
@@ -83,7 +73,8 @@ function ShoppingCart() {
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        {/* 첫 번째 상품 */}
+
+                                        {/* 첫 번째 상품 */} {/* 이 부분은 추후 DB 연동 하여 Map으로 구현할 예정*/}
                                         <tr className="table_row">
                                             <td className="column-1">
                                                 <div className="how-itemcart1">
@@ -93,27 +84,30 @@ function ShoppingCart() {
                                             <td className="column-2">Fresh Strawberries</td>
                                             <td className="column-3">$ 36.00</td>
                                             <td className="column-4">
+                                                {/* 여기서 부터가 제품 수량 선택하는 곳 */}
                                                 <div className="wrap-num-product flex-w m-l-auto m-r-0">
+
+                                                    {/* 수량 감소 */} {/* onClick -> decreaseQuantity 함수 호출 (return 위 함수 참조)*/}
                                                     <div
                                                         className="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m"
                                                         onClick={() => decreaseQuantity("product1")}
                                                         style={{ cursor: "pointer" }}
-                                                    >
-                                                        <i className="fs-16 zmdi zmdi-minus"></i>
-                                                    </div>
+                                                    > <i className="fs-16 zmdi zmdi-minus"></i> </div>
+
+                                                    {/* 양 버튼에 따른 숫자 반영 */} {/* 기본값: 1 */}
                                                     <input
                                                         className="mtext-104 cl3 txt-center num-product"
                                                         type="number"
                                                         value={quantities.product1}
                                                         readOnly
                                                     />
+
+                                                    {/* 수량 증가 */} {/* onClick -> increaseQuantity 함수 호출 (return 위 함수 참조)*/}
                                                     <div
                                                         className="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m"
                                                         onClick={() => increaseQuantity("product1")}
                                                         style={{ cursor: "pointer" }}
-                                                    >
-                                                        <i className="fs-16 zmdi zmdi-plus"></i>
-                                                    </div>
+                                                    > <i className="fs-16 zmdi zmdi-plus"></i> </div>
                                                 </div>
                                             </td>
                                             <td className="column-5">${quantities.product1 * 36.0}</td>
@@ -240,9 +234,6 @@ function ShoppingCart() {
                     </div>
                 </div>
             </form>
-
-            {/* Footer: 하단 푸터 */}
-            <Footer/>
         </>
     );
 }

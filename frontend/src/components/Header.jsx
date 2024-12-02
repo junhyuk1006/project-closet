@@ -1,12 +1,21 @@
-import React from "react";
-import useFixedHeader from "../hooks/useFixedHeader";
-import { Link } from "react-router-dom";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import useFixedHeader from '../hooks/useFixedHeader';
+import Cart from '../pages/cart/Cart';
 
-function Header({ toggleCart }) {
+function Header() {
     const isAtTop = useFixedHeader();
+    const [isCartOpen, setIsCartOpen] = useState(false);
+
+    // 장바구니 열기/닫기 토글
+    const toggleCart = (prev) => {
+        console.log(`장바구니 토글 (isCartOpen): ${isCartOpen}`);
+        setIsCartOpen(!prev);
+    };
 
     return (
         <header className="header">
+            <Cart isCartOpen={isCartOpen} toggleCart={toggleCart} />
             <div className="container-menu-desktop">
                 <div className="top-bar">
                     <div className="content-topbar flex-sb-m h-full container">
@@ -17,8 +26,11 @@ function Header({ toggleCart }) {
                             <Link to="/help" className="flex-c-m trans-04 p-lr-25">
                                 Help & FAQs
                             </Link>
-                            <Link to="/account" className="flex-c-m trans-04 p-lr-25">
+                            <Link to="/MyPageHome" className="flex-c-m trans-04 p-lr-25">
                                 My Account
+                            </Link>
+                            <Link to="/Login" className="flex-c-m trans-04 p-lr-25">
+                                Login
                             </Link>
                             <a className="flex-c-m trans-04 p-lr-25">EN</a>
                             <a className="flex-c-m trans-04 p-lr-25">USD</a>
@@ -29,14 +41,14 @@ function Header({ toggleCart }) {
                 <div
                     className="wrap-menu-desktop"
                     style={{
-                        top: isAtTop ? "40px" : "0",
-                        backgroundColor: isAtTop ? "transparent" : "#fff",
-                        height: isAtTop ? "84px" : "64px",
-                        boxShadow: isAtTop ? "none" : "0 4px 6px rgba(0, 0, 0, 0.1)",
-                        opacity: isAtTop ? "1" : "0.95",
+                        top: isAtTop ? '40px' : '0',
+                        backgroundColor: isAtTop ? 'transparent' : '#fff',
+                        height: isAtTop ? '84px' : '64px',
+                        boxShadow: isAtTop ? 'none' : '0 4px 6px rgba(0, 0, 0, 0.1)',
+                        opacity: isAtTop ? '1' : '0.95',
                         transition: isAtTop
-                            ? "top 0.2s ease-out, background-color 0.5s ease-in-out, height 0.5s ease-in-out, box-shadow 0.5s ease-in-out, opacity 0.5s ease-in-out"
-                            : "top 0.1s ease-in, background-color 0.5s ease-in-out, height 0.5s ease-in-out, box-shadow 0.5s ease-in-out, opacity 0.5s ease-in-out",
+                            ? 'top 0.2s ease-out, background-color 0.5s ease-in-out, height 0.5s ease-in-out, box-shadow 0.5s ease-in-out, opacity 0.5s ease-in-out'
+                            : 'top 0.1s ease-in, background-color 0.5s ease-in-out, height 0.5s ease-in-out, box-shadow 0.5s ease-in-out, opacity 0.5s ease-in-out',
                     }}
                 >
                     <nav className="limiter-menu-desktop container">
@@ -56,7 +68,10 @@ function Header({ toggleCart }) {
                                     <a href="/ShoppingCart">Features</a>
                                 </li>
                                 <li>
-                                    <a href="/recommend">1:1 Recommend</a>
+                                    <a href="/Recommend">1:1 Recommend</a>
+                                </li>
+                                <li>
+                                    <a href="/blog">Blog</a>
                                 </li>
                                 <li>
                                     <a href="/about">About</a>
@@ -73,10 +88,10 @@ function Header({ toggleCart }) {
                             <div
                                 className="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti"
                                 onClick={() => {
-                                    console.log("Cart icon clicked");
-                                    toggleCart(); // 장바구니 열림 상태 토글
+                                    console.log('Cart icon clicked');
+                                    toggleCart(isCartOpen); // 장바구니 열림 상태 토글
                                 }}
-                                style={{cursor: "pointer"}}
+                                style={{ cursor: 'pointer' }}
                                 data-notify="2"
                             >
                                 <i className="zmdi zmdi-shopping-cart"></i>

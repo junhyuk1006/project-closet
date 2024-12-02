@@ -1,12 +1,15 @@
-import React from "react";
+import React from 'react';
 
 function Cart({ isCartOpen, toggleCart }) {
     return (
         <>
-            {isCartOpen && ( // 상태에 따라 장바구니 패널 표시
+            {isCartOpen && (
                 <div className="wrap-header-cart js-panel-cart show-header-cart">
                     {/* 배경 클릭 시 장바구니 닫기 */}
-                    <div className="s-full js-hide-cart" onClick={toggleCart}></div>
+                    <div
+                        className="s-full js-hide-cart"
+                        onClick={() => toggleCart(isCartOpen)}
+                    ></div>
 
                     <div className="header-cart flex-col-l p-l-65 p-r-25">
                         {/* 장바구니 타이틀 */}
@@ -14,7 +17,7 @@ function Cart({ isCartOpen, toggleCart }) {
                             <span className="mtext-103 cl2">Your Cart</span>
                             <div
                                 className="fs-35 lh-10 cl2 p-lr-5 pointer hov-cl1 trans-04 js-hide-cart"
-                                onClick={toggleCart}
+                                onClick={() => toggleCart(isCartOpen)}
                             >
                                 <i className="zmdi zmdi-close"></i>
                             </div>
@@ -26,7 +29,10 @@ function Cart({ isCartOpen, toggleCart }) {
                                 {/* 상품 리스트 */}
                                 <li className="header-cart-item flex-w flex-t m-b-12">
                                     <div className="header-cart-item-img">
-                                        <img src="images/item-cart-01.jpg" alt="White Shirt Pleat" />
+                                        <img
+                                            src="images/item-cart-01.jpg"
+                                            alt="White Shirt Pleat"
+                                        />
                                     </div>
                                     <div className="header-cart-item-txt p-t-8">
                                         <a
@@ -41,7 +47,10 @@ function Cart({ isCartOpen, toggleCart }) {
 
                                 <li className="header-cart-item flex-w flex-t m-b-12">
                                     <div className="header-cart-item-img">
-                                        <img src="images/item-cart-02.jpg" alt="Converse All Star" />
+                                        <img
+                                            src="images/item-cart-02.jpg"
+                                            alt="Converse All Star"
+                                        />
                                     </div>
                                     <div className="header-cart-item-txt p-t-8">
                                         <a
