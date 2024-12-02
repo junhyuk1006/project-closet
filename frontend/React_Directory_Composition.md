@@ -1,4 +1,4 @@
-## React 디렉토리 기본 경로 디자인 (예시)
+## React 디렉토리 기본 경로 디자인 ()
 
 ```plaintext
 src/
@@ -28,24 +28,39 @@ src/
 │   └── ...                     # 기타 페이지별 API
 |
 ├── assets/                     # 정적 파일 (이미지, CSS 등)
+│   ├── fonts/                  폰트 파일
 │   ├── images/                 이미지 파일
 │   └── styles/                 전역 CSS 파일
 |
 ├── components/                 # 재사용 가능한 UI 컴포넌트
+│   ├── MyPage/                 # 마이페이지 디렉터리
+│   │   └── MyPageHeader.jsx    마이페이지 공통 헤더 
+│   │
+│   ├── Rating/                 # 평점 파일
+│   │   └── StarRating.jsx      Star 모양의 평점
+│   │
 │   ├── Header.jsx              헤더
 │   ├── Footer.jsx              푸터
 │   ├── Modal.jsx               모달 공통 컴포넌트
-│   ├── Button.jsx              공통 버튼 컴포넌트
 │   └── ...
 |
 ├── hooks/                      # 커스텀 훅
-│   ├── useAuth.js              인증 관련 훅
-│   ├── useFetch.js             데이터 fetch 훅
+│   ├── Animation/              # 애니메이션 디렉터리
+│   │   └── Animation.js        공통 애니메이션 
+│   │
+│   ├── Category/               # 카테고리 디렉터리
+│   │   └── Category.js         공통 카테고리
+│   │
+│   ├── useAuth.js              인증 관련 훅 (추가 필요)
+│   ├── useFetch.js             데이터 fetch 훅 (추가 필요)
+│   ├── StarRating.js
+│   ├── useFixedHeader.js
+│   ├── useProductQuantity.js
+│   ├── useStarRating.js
 │   └── ...
 |
 ├── layouts/                    # 레이아웃 컴포넌트
-│   ├── MainLayout.jsx          메인 레이아웃
-│   ├── AdminLayout.jsx         관리자 레이아웃
+│   ├── Layout.jsx              메인 레이아웃
 │   └── ...
 |
 ├── pages/                      # 페이지별 컴포넌트
@@ -55,12 +70,14 @@ src/
 |   |
 │   ├── Main/                   메인 페이지
 │   │   ├── Home.jsx            메인 페이지
-│   │   └── ItemList.jsx        상품 리스트 페이지
+│   │   ├── FilterSearch.jsx
+│   │   ├── Product.jsx
+│   │   └── Slider.jsx          상단 이미지 슬라이더
 |   |
 │   ├── MyPage/                 마이페이지
-│   │   ├── MyInfo.jsx          회원정보
-│   │   ├── MyOrders.jsx        구매내역
-│   │   ├── MyPoints.jsx        적립금 조회
+│   │   ├── MyPageHome.jsx      마이 홈 페이지
+│   │   ├── MemberInfo.jsx      회원정보
+│   │   ├── MyPoint.jsx         적립금 조회
 │   │   └── ...
 |   |
 │   ├── Admin/                  관리자 페이지
@@ -70,12 +87,12 @@ src/
 │   │   └── ...
 |   |
 │   ├── Cart/                   장바구니 페이지
-│   │   └── Cart.jsx            장바구니
-|   |
-│   ├── Checkout/               결제 페이지
-│   │   └── Checkout.jsx        결제창
+│   │   ├── Cart.jsx            장바구니 슬라이드
+│   │   ├── ShoppingCart.jsx    장바구니 페이지
+│   │   └── ...
 |   |
 │   ├── Community/              커뮤니티
+│   │ recommend
 │   │   ├── Board.jsx           일반 게시판
 │   │   └── CoordiBoard.jsx     코디 자랑 게시판
 │   └── ...

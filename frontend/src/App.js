@@ -24,10 +24,11 @@ import Detail from './pages/DetailItem/Detail';
 import Recommend from './pages/comunity/recommend/Recommend';
 import ShoppingCart from './pages/cart/ShoppingCart';
 
+import Admin from './pages/admin/Admin';
+
 // 공통 애니메이션과 레이아웃
-import Layout from './store/Layout'; // Header/Footer 포함 여부를 제어하는 레이아웃
-import Animation from './hooks/Animation';
-import Admin from './pages/admin/Admin'; // 페이지 전환 애니메이션 효과
+import Layout from './layouts/Layout'; // Header/Footer 포함 여부를 제어하는 레이아웃
+import Animation from './hooks/Animation/Animation'; // 페이지 전환 애니메이션 효과
 
 /**
  * 공통적으로 사용하는 Route 생성 함수
@@ -53,7 +54,6 @@ const renderRoute = (path, component, includeHeaderFooter = true) => (
 
 const AppRoutes = () => (
   <Router>
-    {/* 애니메이션으로 감싸 모든 페이지 전환에 효과 적용 */}
     <Animation>
       <Routes>
         {/* 각 경로별 컴포넌트 연결 */}
@@ -78,7 +78,11 @@ const AppRoutes = () => (
           '/MemberInfo',
           <MemberInfo />
         )} {/* 회원정보 페이지 */}
-        {renderRoute('/admin/*', <Admin />, false)}
+        {renderRoute(
+          '/admin/*',
+          <Admin />,
+          false
+        )} {/* 관리자 페이지 */}
       </Routes>
     </Animation>
   </Router>
