@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-export default function Product({ products, activeFilter }) {
+export default function Product({ products, activeCategory, activeFilter }) {
   const [isLiked, setIsLiked] = useState({});
 
   const toggleLike = (id) => {
@@ -16,8 +16,31 @@ export default function Product({ products, activeFilter }) {
     <div className="row isotope-grid">
       {products
         .filter(
-          (product) => activeFilter === '*' || product.category === activeFilter
+          (product) =>
+            activeCategory === '*' || product.category === activeCategory
         )
+        .sort((a, b) => {
+          if (activeFilter === 'sortByRecent') {
+            // return b.createdAt - a.createdAt; // 최신순
+            return 0; // 구현되지 않은 필터 조건은 정렬 처리하지 않음
+          } else if (activeFilter === 'sortByPriceDesc') {
+            return (
+              parseInt(b.price.replace(',', ''), 10) - // 높은 가격순
+              parseInt(a.price.replace(',', ''), 10)
+            );
+          } else if (activeFilter === 'sortByPriceAsc') {
+            return (
+              parseInt(a.price.replace(',', ''), 10) - // 낮은 가격순
+              parseInt(b.price.replace(',', ''), 10)
+            );
+          } else if (activeFilter === 'sortByRating') {
+            // return b.rating - a.rating; // 평점
+            return 0; // 구현되지 않은 필터 조건은 정렬 처리하지 않음
+          } else if (activeFilter === 'sortByReviews') {
+            // return b.reviews.length - a.reviews.length; // 리뷰
+            return 0; // 구현되지 않은 필터 조건은 정렬 처리하지 않음
+          }
+        })
         .map((product) => (
           <div
             key={product.id}

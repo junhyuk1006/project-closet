@@ -5,16 +5,23 @@ import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
 import '../../assets/styles/main.css';
 import '../../assets/styles/util.css';
+import '../../assets/styles/common/custom.css';
 import Category from '../../components/Category';
 import FilterSearch from '../../components/FilterSearch';
 import Product from '../../components/Product';
 
 function Home() {
   // const { isCartOpen, toggleCart } = useCartAndSidebar();
-  const [activeFilter, setActiveFilter] = useState('*'); // 메인 화면의 카테고리 중 filter의 상태
+  const [activeCategory, setActiveCategory] = useState('*'); // 카테고리 상태
+  const [activeFilter, setActiveFilter] = useState('sortByRecent'); // 필터 상태
+
+  const handleCategoryChange = (category) => {
+    setActiveCategory(category);
+  };
 
   const handleFilterChange = (filter) => {
     setActiveFilter(filter);
+    console.log(`handleFilterChange에 입력된 filter: ${filter}`);
   };
 
   // 임시 제품
@@ -261,14 +268,24 @@ function Home() {
 
           {/* Category & Filter & Search */}
           <div className="flex-w flex-sb-m p-b-52">
-            <Category handleFilterChange={handleFilterChange} />
-            <FilterSearch />
+            <Category
+              activeCategory={activeCategory}
+              handleCategoryChange={handleCategoryChange}
+            />
+            <FilterSearch
+              activeFilter={activeFilter}
+              handleFilterChange={handleFilterChange}
+            />
           </div>
 
           {/* 제품 */}
-          <Product products={products} activeFilter={activeFilter} />
+          <Product
+            products={products}
+            activeCategory={activeCategory}
+            activeFilter={activeFilter}
+          />
 
-          {/*Load more*/}
+          {/* Load more */}
           <div className="flex-c-m flex-w w-full p-t-45">
             <Link
               to="#"
@@ -279,159 +296,6 @@ function Home() {
           </div>
         </div>
       </section>
-
-      <footer className="bg3 p-t-75 p-b-32">
-        <div className="container">
-          <div className="row">
-            <div className="col-sm-6 col-lg-3 p-b-50">
-              <h4 className="stext-301 cl0 p-b-30">Categories</h4>
-
-              <ul>
-                <li className="p-b-10">
-                  <Link to="#" className="stext-107 cl7 hov-cl1 trans-04">
-                    Women
-                  </Link>
-                </li>
-
-                <li className="p-b-10">
-                  <Link to="#" className="stext-107 cl7 hov-cl1 trans-04">
-                    Men
-                  </Link>
-                </li>
-
-                <li className="p-b-10">
-                  <Link to="#" className="stext-107 cl7 hov-cl1 trans-04">
-                    Shoes
-                  </Link>
-                </li>
-
-                <li className="p-b-10">
-                  <Link to="#" className="stext-107 cl7 hov-cl1 trans-04">
-                    Watches
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
-            <div className="col-sm-6 col-lg-3 p-b-50">
-              <h4 className="stext-301 cl0 p-b-30">Help</h4>
-
-              <ul>
-                <li className="p-b-10">
-                  <Link to="#" className="stext-107 cl7 hov-cl1 trans-04">
-                    Track Order
-                  </Link>
-                </li>
-
-                <li className="p-b-10">
-                  <Link to="#" className="stext-107 cl7 hov-cl1 trans-04">
-                    Returns
-                  </Link>
-                </li>
-
-                <li className="p-b-10">
-                  <Link to="#" className="stext-107 cl7 hov-cl1 trans-04">
-                    Shipping
-                  </Link>
-                </li>
-
-                <li className="p-b-10">
-                  <Link to="#" className="stext-107 cl7 hov-cl1 trans-04">
-                    FAQs
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
-            <div className="col-sm-6 col-lg-3 p-b-50">
-              <h4 className="stext-301 cl0 p-b-30">GET IN TOUCH</h4>
-
-              <p className="stext-107 cl7 size-201">
-                Any questions? Let us know in store at 8th floor, 379 Hudson St,
-                New York, NY 10018 or call us on (+1) 96 716 6879
-              </p>
-
-              <div className="p-t-27">
-                <Link to="#" className="fs-18 cl7 hov-cl1 trans-04 m-r-16">
-                  <i className="fa fa-facebook"></i>
-                </Link>
-
-                <Link to="#" className="fs-18 cl7 hov-cl1 trans-04 m-r-16">
-                  <i className="fa fa-instagram"></i>
-                </Link>
-
-                <Link to="#" className="fs-18 cl7 hov-cl1 trans-04 m-r-16">
-                  <i className="fa fa-pinterest-p"></i>
-                </Link>
-              </div>
-            </div>
-
-            <div className="col-sm-6 col-lg-3 p-b-50">
-              <h4 className="stext-301 cl0 p-b-30">Newsletter</h4>
-
-              <form>
-                <div className="wrap-input1 w-full p-b-4">
-                  <input
-                    className="input1 bg-none plh1 stext-107 cl7"
-                    type="text"
-                    name="email"
-                    placeholder="email@example.com"
-                  />
-                  <div className="focus-input1 trans-04"></div>
-                </div>
-
-                <div className="p-t-18">
-                  <button className="flex-c-m stext-101 cl0 size-103 bg1 bor1 hov-btn2 p-lr-15 trans-04">
-                    Subscribe
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-
-          <div className="p-t-40">
-            <div className="flex-c-m flex-w p-b-18">
-              <Link to="#" className="m-all-1">
-                <img src="images/icons/icon-pay-01.png" alt="ICON-PAY" />
-              </Link>
-
-              <Link to="#" className="m-all-1">
-                <img src="images/icons/icon-pay-02.png" alt="ICON-PAY" />
-              </Link>
-
-              <Link to="#" className="m-all-1">
-                <img src="images/icons/icon-pay-03.png" alt="ICON-PAY" />
-              </Link>
-
-              <Link to="#" className="m-all-1">
-                <img src="images/icons/icon-pay-04.png" alt="ICON-PAY" />
-              </Link>
-
-              <Link to="#" className="m-all-1">
-                <img src="images/icons/icon-pay-05.png" alt="ICON-PAY" />
-              </Link>
-            </div>
-
-            <p className="stext-107 cl6 txt-center">
-              Copyright &copy;
-              <script>document.write(new Date().getFullYear());</script>
-              All rights reserved | Made with{' '}
-              <i className="fa fa-heart-o" aria-hidden="true"></i> by{' '}
-              <Link to="https://colorlib.com" target="_blank" rel="noreferrer">
-                Colorlib
-              </Link>{' '}
-              &amp; distributed by{' '}
-              <Link
-                to="https://themewagon.com"
-                target="_blank"
-                rel="noreferrer"
-              >
-                ThemeWagon
-              </Link>
-            </p>
-          </div>
-        </div>
-      </footer>
     </>
   );
 }

@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Home from './pages/main/Home';
 import Animsition from './components/Animsition';
 import Header from './components/Header';
+import Footer from './components/Footer';
 
 const AppRoutes = () => (
   <Router>
@@ -12,6 +13,7 @@ const AppRoutes = () => (
       <Routes>
         <Route path="/" element={<Home />} />
       </Routes>
+      <Footer />
     </Animsition>
   </Router>
 );
