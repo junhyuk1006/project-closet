@@ -10,6 +10,7 @@ import Cart from '../cart/Cart';
 import useCartAndSidebar from '../../hooks/useCartAndSidebar';
 import Category from '../../components/Category';
 import FilterSearch from '../../components/FilterSearch';
+import Product from '../../components/Product';
 
 function Home() {
   const { isCartOpen, toggleCart } = useCartAndSidebar();
@@ -18,6 +19,122 @@ function Home() {
   const handleFilterChange = (filter) => {
     setActiveFilter(filter);
   };
+
+  // 임시 제품
+  const products = [
+    {
+      id: 1,
+      name: 'Esprit Ruffle Shirt',
+      category: 'women',
+      price: '20,000',
+      image: 'images/product-01.jpg',
+    },
+    {
+      id: 2,
+      name: 'Herschel supply',
+      category: 'women',
+      price: '40,000',
+      image: 'images/product-02.jpg',
+    },
+    {
+      id: 3,
+      name: 'Only Check Trouser',
+      category: 'men',
+      price: '35,000',
+      image: 'images/product-03.jpg',
+    },
+    {
+      id: 4,
+      name: 'Classic Trench Coat',
+      category: 'women',
+      price: '90,000',
+      image: 'images/product-04.jpg',
+    },
+    {
+      id: 5,
+      name: 'Front Pocket Jumper',
+      category: 'women',
+      price: '45,000',
+      image: 'images/product-05.jpg',
+    },
+    {
+      id: 6,
+      name: 'Vintage Inspired Classic',
+      category: 'watches',
+      price: '120,000',
+      image: 'images/product-06.jpg',
+    },
+    {
+      id: 7,
+      name: 'Shirt in Stretch Cotton',
+      category: 'women',
+      price: '70,000',
+      image: 'images/product-07.jpg',
+    },
+    {
+      id: 8,
+      name: 'Pieces Metallic Printed',
+      category: 'women',
+      price: '25,000',
+      image: 'images/product-08.jpg',
+    },
+    {
+      id: 9,
+      name: 'Converse All Star Hi Plimsolls',
+      category: 'shoes',
+      price: '95,000',
+      image: 'images/product-09.jpg',
+    },
+    {
+      id: 10,
+      name: 'Femme T-Shirt In Stripe',
+      category: 'women',
+      price: '35,000',
+      image: 'images/product-10.jpg',
+    },
+    {
+      id: 11,
+      name: 'Herschel supply',
+      category: 'men',
+      price: '80,000',
+      image: 'images/product-11.jpg',
+    },
+    {
+      id: 12,
+      name: 'Herschel supply',
+      category: 'men',
+      price: '80,000',
+      image: 'images/product-12.jpg',
+    },
+    {
+      id: 13,
+      name: 'T-Shirt with Sleeve',
+      category: 'women',
+      price: '25,000',
+      image: 'images/product-13.jpg',
+    },
+    {
+      id: 14,
+      name: 'Pretty Little Thing',
+      category: 'women',
+      price: '70,000',
+      image: 'images/product-14.jpg',
+    },
+    {
+      id: 15,
+      name: 'Mini Silver Mesh Watch',
+      category: 'watches',
+      price: '110,000',
+      image: 'images/product-15.jpg',
+    },
+    {
+      id: 16,
+      name: 'Square Neck Back',
+      category: 'women',
+      price: '35,000',
+      image: 'images/product-16.jpg',
+    },
+  ];
 
   return (
     <>
@@ -142,770 +259,21 @@ function Home() {
         </div>
       </div>
 
+      {/* Product Overview */}
       <section className="bg0 p-t-23 p-b-140">
         <div className="container">
           <div className="p-b-10">
             <h3 className="ltext-103 cl5">Product Overview</h3>
           </div>
 
+          {/* Category & Filter & Search */}
           <div className="flex-w flex-sb-m p-b-52">
-            <Category onFilterChange={handleFilterChange} />
+            <Category handleFilterChange={handleFilterChange} />
             <FilterSearch />
           </div>
 
-          <div className="row isotope-grid">
-            <div className="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
-              {/*Block2*/}
-              <div className="block2">
-                <div className="block2-pic hov-img0">
-                  <img src="images/product-01.jpg" alt="IMG-PRODUCT" />
-
-                  <Link
-                    to="#"
-                    className="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1"
-                  >
-                    Quick View
-                  </Link>
-                </div>
-
-                <div className="block2-txt flex-w flex-t p-t-14">
-                  <div className="block2-txt-child1 flex-col-l ">
-                    <Link
-                      to="../../../../../Downloads/cozastore-master/product-detail.html"
-                      className="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6"
-                    >
-                      Esprit Ruffle Shirt
-                    </Link>
-
-                    <span className="stext-105 cl3">$16.64</span>
-                  </div>
-
-                  <div className="block2-txt-child2 flex-r p-t-3">
-                    <Link
-                      to="#"
-                      className="btn-addwish-b2 dis-block pos-relative js-addwish-b2"
-                    >
-                      <img
-                        className="icon-heart1 dis-block trans-04"
-                        src="images/icons/icon-heart-01.png"
-                        alt="ICON"
-                      />
-                      <img
-                        className="icon-heart2 dis-block trans-04 ab-t-l"
-                        src="images/icons/icon-heart-02.png"
-                        alt="ICON"
-                      />
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
-              {/*Block2*/}
-              <div className="block2">
-                <div className="block2-pic hov-img0">
-                  <img src="images/product-02.jpg" alt="IMG-PRODUCT" />
-
-                  <Link
-                    to="#"
-                    className="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1"
-                  >
-                    Quick View
-                  </Link>
-                </div>
-
-                <div className="block2-txt flex-w flex-t p-t-14">
-                  <div className="block2-txt-child1 flex-col-l ">
-                    <Link
-                      to="../../../../../Downloads/cozastore-master/product-detail.html"
-                      className="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6"
-                    >
-                      Herschel supply
-                    </Link>
-
-                    <span className="stext-105 cl3">$35.31</span>
-                  </div>
-
-                  <div className="block2-txt-child2 flex-r p-t-3">
-                    <Link
-                      to="#"
-                      className="btn-addwish-b2 dis-block pos-relative js-addwish-b2"
-                    >
-                      <img
-                        className="icon-heart1 dis-block trans-04"
-                        src="images/icons/icon-heart-01.png"
-                        alt="ICON"
-                      />
-                      <img
-                        className="icon-heart2 dis-block trans-04 ab-t-l"
-                        src="images/icons/icon-heart-02.png"
-                        alt="ICON"
-                      />
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item men">
-              {/*Block2*/}
-              <div className="block2">
-                <div className="block2-pic hov-img0">
-                  <img src="images/product-03.jpg" alt="IMG-PRODUCT" />
-
-                  <Link
-                    to="#"
-                    className="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1"
-                  >
-                    Quick View
-                  </Link>
-                </div>
-
-                <div className="block2-txt flex-w flex-t p-t-14">
-                  <div className="block2-txt-child1 flex-col-l ">
-                    <Link
-                      to="../../../../../Downloads/cozastore-master/product-detail.html"
-                      className="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6"
-                    >
-                      Only Check Trouser
-                    </Link>
-
-                    <span className="stext-105 cl3">$25.50</span>
-                  </div>
-
-                  <div className="block2-txt-child2 flex-r p-t-3">
-                    <Link
-                      to="#"
-                      className="btn-addwish-b2 dis-block pos-relative js-addwish-b2"
-                    >
-                      <img
-                        className="icon-heart1 dis-block trans-04"
-                        src="images/icons/icon-heart-01.png"
-                        alt="ICON"
-                      />
-                      <img
-                        className="icon-heart2 dis-block trans-04 ab-t-l"
-                        src="images/icons/icon-heart-02.png"
-                        alt="ICON"
-                      />
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
-              {/*Block2*/}
-              <div className="block2">
-                <div className="block2-pic hov-img0">
-                  <img src="images/product-04.jpg" alt="IMG-PRODUCT" />
-
-                  <Link
-                    to="#"
-                    className="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1"
-                  >
-                    Quick View
-                  </Link>
-                </div>
-
-                <div className="block2-txt flex-w flex-t p-t-14">
-                  <div className="block2-txt-child1 flex-col-l ">
-                    <Link
-                      to="../../../../../Downloads/cozastore-master/product-detail.html"
-                      className="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6"
-                    >
-                      Classic Trench Coat
-                    </Link>
-
-                    <span className="stext-105 cl3">$75.00</span>
-                  </div>
-
-                  <div className="block2-txt-child2 flex-r p-t-3">
-                    <Link
-                      to="#"
-                      className="btn-addwish-b2 dis-block pos-relative js-addwish-b2"
-                    >
-                      <img
-                        className="icon-heart1 dis-block trans-04"
-                        src="images/icons/icon-heart-01.png"
-                        alt="ICON"
-                      />
-                      <img
-                        className="icon-heart2 dis-block trans-04 ab-t-l"
-                        src="images/icons/icon-heart-02.png"
-                        alt="ICON"
-                      />
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
-              {/*Block2*/}
-              <div className="block2">
-                <div className="block2-pic hov-img0">
-                  <img src="images/product-05.jpg" alt="IMG-PRODUCT" />
-
-                  <Link
-                    to="#"
-                    className="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1"
-                  >
-                    Quick View
-                  </Link>
-                </div>
-
-                <div className="block2-txt flex-w flex-t p-t-14">
-                  <div className="block2-txt-child1 flex-col-l ">
-                    <Link
-                      to="../../../../../Downloads/cozastore-master/product-detail.html"
-                      className="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6"
-                    >
-                      Front Pocket Jumper
-                    </Link>
-
-                    <span className="stext-105 cl3">$34.75</span>
-                  </div>
-
-                  <div className="block2-txt-child2 flex-r p-t-3">
-                    <Link
-                      to="#"
-                      className="btn-addwish-b2 dis-block pos-relative js-addwish-b2"
-                    >
-                      <img
-                        className="icon-heart1 dis-block trans-04"
-                        src="images/icons/icon-heart-01.png"
-                        alt="ICON"
-                      />
-                      <img
-                        className="icon-heart2 dis-block trans-04 ab-t-l"
-                        src="images/icons/icon-heart-02.png"
-                        alt="ICON"
-                      />
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item watches">
-              {/*Block2*/}
-              <div className="block2">
-                <div className="block2-pic hov-img0">
-                  <img src="images/product-06.jpg" alt="IMG-PRODUCT" />
-
-                  <Link
-                    to="#"
-                    className="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1"
-                  >
-                    Quick View
-                  </Link>
-                </div>
-
-                <div className="block2-txt flex-w flex-t p-t-14">
-                  <div className="block2-txt-child1 flex-col-l ">
-                    <Link
-                      to="../../../../../Downloads/cozastore-master/product-detail.html"
-                      className="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6"
-                    >
-                      Vintage Inspired Classic
-                    </Link>
-
-                    <span className="stext-105 cl3">$93.20</span>
-                  </div>
-
-                  <div className="block2-txt-child2 flex-r p-t-3">
-                    <Link
-                      to="#"
-                      className="btn-addwish-b2 dis-block pos-relative js-addwish-b2"
-                    >
-                      <img
-                        className="icon-heart1 dis-block trans-04"
-                        src="images/icons/icon-heart-01.png"
-                        alt="ICON"
-                      />
-                      <img
-                        className="icon-heart2 dis-block trans-04 ab-t-l"
-                        src="images/icons/icon-heart-02.png"
-                        alt="ICON"
-                      />
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
-              {/*Block2*/}
-              <div className="block2">
-                <div className="block2-pic hov-img0">
-                  <img src="images/product-07.jpg" alt="IMG-PRODUCT" />
-
-                  <Link
-                    to="#"
-                    className="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1"
-                  >
-                    Quick View
-                  </Link>
-                </div>
-
-                <div className="block2-txt flex-w flex-t p-t-14">
-                  <div className="block2-txt-child1 flex-col-l ">
-                    <Link
-                      to="../../../../../Downloads/cozastore-master/product-detail.html"
-                      className="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6"
-                    >
-                      Shirt in Stretch Cotton
-                    </Link>
-
-                    <span className="stext-105 cl3">$52.66</span>
-                  </div>
-
-                  <div className="block2-txt-child2 flex-r p-t-3">
-                    <Link
-                      to="#"
-                      className="btn-addwish-b2 dis-block pos-relative js-addwish-b2"
-                    >
-                      <img
-                        className="icon-heart1 dis-block trans-04"
-                        src="images/icons/icon-heart-01.png"
-                        alt="ICON"
-                      />
-                      <img
-                        className="icon-heart2 dis-block trans-04 ab-t-l"
-                        src="images/icons/icon-heart-02.png"
-                        alt="ICON"
-                      />
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
-              {/*Block2*/}
-              <div className="block2">
-                <div className="block2-pic hov-img0">
-                  <img src="images/product-08.jpg" alt="IMG-PRODUCT" />
-
-                  <Link
-                    to="#"
-                    className="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1"
-                  >
-                    Quick View
-                  </Link>
-                </div>
-
-                <div className="block2-txt flex-w flex-t p-t-14">
-                  <div className="block2-txt-child1 flex-col-l ">
-                    <Link
-                      to="../../../../../Downloads/cozastore-master/product-detail.html"
-                      className="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6"
-                    >
-                      Pieces Metallic Printed
-                    </Link>
-
-                    <span className="stext-105 cl3">$18.96</span>
-                  </div>
-
-                  <div className="block2-txt-child2 flex-r p-t-3">
-                    <Link
-                      to="#"
-                      className="btn-addwish-b2 dis-block pos-relative js-addwish-b2"
-                    >
-                      <img
-                        className="icon-heart1 dis-block trans-04"
-                        src="images/icons/icon-heart-01.png"
-                        alt="ICON"
-                      />
-                      <img
-                        className="icon-heart2 dis-block trans-04 ab-t-l"
-                        src="images/icons/icon-heart-02.png"
-                        alt="ICON"
-                      />
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item shoes">
-              {/*Block2*/}
-              <div className="block2">
-                <div className="block2-pic hov-img0">
-                  <img src="images/product-09.jpg" alt="IMG-PRODUCT" />
-
-                  <Link
-                    to="#"
-                    className="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1"
-                  >
-                    Quick View
-                  </Link>
-                </div>
-
-                <div className="block2-txt flex-w flex-t p-t-14">
-                  <div className="block2-txt-child1 flex-col-l ">
-                    <Link
-                      to="../../../../../Downloads/cozastore-master/product-detail.html"
-                      className="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6"
-                    >
-                      Converse All Star Hi Plimsolls
-                    </Link>
-
-                    <span className="stext-105 cl3">$75.00</span>
-                  </div>
-
-                  <div className="block2-txt-child2 flex-r p-t-3">
-                    <Link
-                      to="#"
-                      className="btn-addwish-b2 dis-block pos-relative js-addwish-b2"
-                    >
-                      <img
-                        className="icon-heart1 dis-block trans-04"
-                        src="images/icons/icon-heart-01.png"
-                        alt="ICON"
-                      />
-                      <img
-                        className="icon-heart2 dis-block trans-04 ab-t-l"
-                        src="images/icons/icon-heart-02.png"
-                        alt="ICON"
-                      />
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
-              {/*Block2*/}
-              <div className="block2">
-                <div className="block2-pic hov-img0">
-                  <img src="images/product-10.jpg" alt="IMG-PRODUCT" />
-
-                  <Link
-                    to="#"
-                    className="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1"
-                  >
-                    Quick View
-                  </Link>
-                </div>
-
-                <div className="block2-txt flex-w flex-t p-t-14">
-                  <div className="block2-txt-child1 flex-col-l ">
-                    <Link
-                      to="../../../../../Downloads/cozastore-master/product-detail.html"
-                      className="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6"
-                    >
-                      Femme T-Shirt In Stripe
-                    </Link>
-
-                    <span className="stext-105 cl3">$25.85</span>
-                  </div>
-
-                  <div className="block2-txt-child2 flex-r p-t-3">
-                    <Link
-                      to="#"
-                      className="btn-addwish-b2 dis-block pos-relative js-addwish-b2"
-                    >
-                      <img
-                        className="icon-heart1 dis-block trans-04"
-                        src="images/icons/icon-heart-01.png"
-                        alt="ICON"
-                      />
-                      <img
-                        className="icon-heart2 dis-block trans-04 ab-t-l"
-                        src="images/icons/icon-heart-02.png"
-                        alt="ICON"
-                      />
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item men">
-              {/*Block2*/}
-              <div className="block2">
-                <div className="block2-pic hov-img0">
-                  <img src="images/product-11.jpg" alt="IMG-PRODUCT" />
-
-                  <Link
-                    to="#"
-                    className="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1"
-                  >
-                    Quick View
-                  </Link>
-                </div>
-
-                <div className="block2-txt flex-w flex-t p-t-14">
-                  <div className="block2-txt-child1 flex-col-l ">
-                    <Link
-                      to="../../../../../Downloads/cozastore-master/product-detail.html"
-                      className="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6"
-                    >
-                      Herschel supply
-                    </Link>
-
-                    <span className="stext-105 cl3">$63.16</span>
-                  </div>
-
-                  <div className="block2-txt-child2 flex-r p-t-3">
-                    <Link
-                      to="#"
-                      className="btn-addwish-b2 dis-block pos-relative js-addwish-b2"
-                    >
-                      <img
-                        className="icon-heart1 dis-block trans-04"
-                        src="images/icons/icon-heart-01.png"
-                        alt="ICON"
-                      />
-                      <img
-                        className="icon-heart2 dis-block trans-04 ab-t-l"
-                        src="images/icons/icon-heart-02.png"
-                        alt="ICON"
-                      />
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item men">
-              {/*Block2*/}
-              <div className="block2">
-                <div className="block2-pic hov-img0">
-                  <img src="images/product-12.jpg" alt="IMG-PRODUCT" />
-
-                  <Link
-                    to="#"
-                    className="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1"
-                  >
-                    Quick View
-                  </Link>
-                </div>
-
-                <div className="block2-txt flex-w flex-t p-t-14">
-                  <div className="block2-txt-child1 flex-col-l ">
-                    <Link
-                      to="../../../../../Downloads/cozastore-master/product-detail.html"
-                      className="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6"
-                    >
-                      Herschel supply
-                    </Link>
-
-                    <span className="stext-105 cl3">$63.15</span>
-                  </div>
-
-                  <div className="block2-txt-child2 flex-r p-t-3">
-                    <Link
-                      to="#"
-                      className="btn-addwish-b2 dis-block pos-relative js-addwish-b2"
-                    >
-                      <img
-                        className="icon-heart1 dis-block trans-04"
-                        src="images/icons/icon-heart-01.png"
-                        alt="ICON"
-                      />
-                      <img
-                        className="icon-heart2 dis-block trans-04 ab-t-l"
-                        src="images/icons/icon-heart-02.png"
-                        alt="ICON"
-                      />
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
-              {/*Block2*/}
-              <div className="block2">
-                <div className="block2-pic hov-img0">
-                  <img src="images/product-13.jpg" alt="IMG-PRODUCT" />
-
-                  <Link
-                    to="#"
-                    className="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1"
-                  >
-                    Quick View
-                  </Link>
-                </div>
-
-                <div className="block2-txt flex-w flex-t p-t-14">
-                  <div className="block2-txt-child1 flex-col-l ">
-                    <Link
-                      to="../../../../../Downloads/cozastore-master/product-detail.html"
-                      className="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6"
-                    >
-                      T-Shirt with Sleeve
-                    </Link>
-
-                    <span className="stext-105 cl3">$18.49</span>
-                  </div>
-
-                  <div className="block2-txt-child2 flex-r p-t-3">
-                    <Link
-                      to="#"
-                      className="btn-addwish-b2 dis-block pos-relative js-addwish-b2"
-                    >
-                      <img
-                        className="icon-heart1 dis-block trans-04"
-                        src="images/icons/icon-heart-01.png"
-                        alt="ICON"
-                      />
-                      <img
-                        className="icon-heart2 dis-block trans-04 ab-t-l"
-                        src="images/icons/icon-heart-02.png"
-                        alt="ICON"
-                      />
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
-              {/*Block2*/}
-              <div className="block2">
-                <div className="block2-pic hov-img0">
-                  <img src="images/product-14.jpg" alt="IMG-PRODUCT" />
-
-                  <Link
-                    to="#"
-                    className="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1"
-                  >
-                    Quick View
-                  </Link>
-                </div>
-
-                <div className="block2-txt flex-w flex-t p-t-14">
-                  <div className="block2-txt-child1 flex-col-l ">
-                    <Link
-                      to="../../../../../Downloads/cozastore-master/product-detail.html"
-                      className="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6"
-                    >
-                      Pretty Little Thing
-                    </Link>
-
-                    <span className="stext-105 cl3">$54.79</span>
-                  </div>
-
-                  <div className="block2-txt-child2 flex-r p-t-3">
-                    <Link
-                      to="#"
-                      className="btn-addwish-b2 dis-block pos-relative js-addwish-b2"
-                    >
-                      <img
-                        className="icon-heart1 dis-block trans-04"
-                        src="images/icons/icon-heart-01.png"
-                        alt="ICON"
-                      />
-                      <img
-                        className="icon-heart2 dis-block trans-04 ab-t-l"
-                        src="images/icons/icon-heart-02.png"
-                        alt="ICON"
-                      />
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item watches">
-              {/*Block2*/}
-              <div className="block2">
-                <div className="block2-pic hov-img0">
-                  <img src="images/product-15.jpg" alt="IMG-PRODUCT" />
-
-                  <Link
-                    to="#"
-                    className="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1"
-                  >
-                    Quick View
-                  </Link>
-                </div>
-
-                <div className="block2-txt flex-w flex-t p-t-14">
-                  <div className="block2-txt-child1 flex-col-l ">
-                    <Link
-                      to="../../../../../Downloads/cozastore-master/product-detail.html"
-                      className="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6"
-                    >
-                      Mini Silver Mesh Watch
-                    </Link>
-
-                    <span className="stext-105 cl3">$86.85</span>
-                  </div>
-
-                  <div className="block2-txt-child2 flex-r p-t-3">
-                    <Link
-                      to="#"
-                      className="btn-addwish-b2 dis-block pos-relative js-addwish-b2"
-                    >
-                      <img
-                        className="icon-heart1 dis-block trans-04"
-                        src="images/icons/icon-heart-01.png"
-                        alt="ICON"
-                      />
-                      <img
-                        className="icon-heart2 dis-block trans-04 ab-t-l"
-                        src="images/icons/icon-heart-02.png"
-                        alt="ICON"
-                      />
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
-              {/*Block2*/}
-              <div className="block2">
-                <div className="block2-pic hov-img0">
-                  <img src="images/product-16.jpg" alt="IMG-PRODUCT" />
-
-                  <Link
-                    to="#"
-                    className="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1"
-                  >
-                    Quick View
-                  </Link>
-                </div>
-
-                <div className="block2-txt flex-w flex-t p-t-14">
-                  <div className="block2-txt-child1 flex-col-l ">
-                    <Link
-                      to="../../../../../Downloads/cozastore-master/product-detail.html"
-                      className="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6"
-                    >
-                      Square Neck Back
-                    </Link>
-
-                    <span className="stext-105 cl3">$29.64</span>
-                  </div>
-
-                  <div className="block2-txt-child2 flex-r p-t-3">
-                    <Link
-                      to="#"
-                      className="btn-addwish-b2 dis-block pos-relative js-addwish-b2"
-                    >
-                      <img
-                        className="icon-heart1 dis-block trans-04"
-                        src="images/icons/icon-heart-01.png"
-                        alt="ICON"
-                      />
-                      <img
-                        className="icon-heart2 dis-block trans-04 ab-t-l"
-                        src="images/icons/icon-heart-02.png"
-                        alt="ICON"
-                      />
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          {/* 제품 */}
+          <Product products={products} activeFilter={activeFilter} />
 
           {/*Load more*/}
           <div className="flex-c-m flex-w w-full p-t-45">
