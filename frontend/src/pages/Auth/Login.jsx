@@ -1,7 +1,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../assets/login.css';
-import closetImage from '../../assets/closet.jpeg'; // 이미지 경로를 import
+import closetImage from '../../assets/closet.png'; // 이미지 경로를 import
 
 const SignIn = () => {
   return (
@@ -83,8 +83,8 @@ const SignIn = () => {
             className="mb-4"
             src={closetImage}
             alt="Bootstrap logo"
-            width="400"
-            height="200"
+            width="360"
+            height="160"
           />
           <h1 className="h3 mb-3 fw-normal">Please sign in</h1>
 
