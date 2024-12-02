@@ -1,19 +1,16 @@
+import 'material-design-iconic-font/dist/css/material-design-iconic-font.min.css';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import 'slick-carousel/slick/slick-theme.css';
+import 'slick-carousel/slick/slick.css';
 import '../../assets/styles/main.css';
 import '../../assets/styles/util.css';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-import 'material-design-iconic-font/dist/css/material-design-iconic-font.min.css';
-import Header from '../../components/Header';
-import Cart from '../cart/Cart';
-import useCartAndSidebar from '../../hooks/useCartAndSidebar';
 import Category from '../../components/Category';
 import FilterSearch from '../../components/FilterSearch';
 import Product from '../../components/Product';
 
 function Home() {
-  const { isCartOpen, toggleCart } = useCartAndSidebar();
+  // const { isCartOpen, toggleCart } = useCartAndSidebar();
   const [activeFilter, setActiveFilter] = useState('*'); // 메인 화면의 카테고리 중 filter의 상태
 
   const handleFilterChange = (filter) => {
@@ -138,10 +135,6 @@ function Home() {
 
   return (
     <>
-      {/* Header */}
-      <Header toggleCart={toggleCart} />
-      <Cart isCartOpen={isCartOpen} toggleCart={toggleCart} />
-
       {/* Slider */}
       <section className="section-slide">
         <div className="wrap-slick1">

@@ -1,12 +1,21 @@
-import React from 'react';
-import useFixedHeader from '../hooks/useFixedHeader';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import useFixedHeader from '../hooks/useFixedHeader';
+import Cart from '../pages/cart/Cart';
 
-function Header({ toggleCart }) {
+function Header() {
   const isAtTop = useFixedHeader();
+  const [isCartOpen, setIsCartOpen] = useState(false);
+
+  // 장바구니 열기/닫기 토글
+  const toggleCart = (prev) => {
+    console.log(`장바구니 토글 (isCartOpen): ${isCartOpen}`);
+    setIsCartOpen(!prev);
+  };
 
   return (
     <header className="header">
+      <Cart isCartOpen={isCartOpen} toggleCart={toggleCart} />
       <div className="container-menu-desktop">
         <div className="top-bar">
           <div className="content-topbar flex-sb-m h-full container">
@@ -90,7 +99,7 @@ function Header({ toggleCart }) {
                 className="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti"
                 onClick={() => {
                   console.log('Cart icon clicked');
-                  toggleCart(); // 장바구니 열림 상태 토글
+                  toggleCart(isCartOpen); // 장바구니 열림 상태 토글
                 }}
                 style={{ cursor: 'pointer' }}
                 data-notify="2"
