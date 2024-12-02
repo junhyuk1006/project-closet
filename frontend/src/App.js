@@ -6,35 +6,41 @@ import 'material-design-iconic-font/dist/css/material-design-iconic-font.min.css
 import Detail from './pages/DetailItem/Detail';
 import Home from './pages/main/Home';
 import Recommend from './pages/comunity/recommend/Recommend';
-import Animsition from './hooks/Animation';
 import ShoppingCart from './pages/cart/ShoppingCart';
 import Login from './pages/auth/Login';
 import SignUp from './pages/auth/SignUp';
 import MyPageHome from './pages/mypage/MyPageHome';
 import MemberInfo from './pages/mypage/MemberInfo';
 import MyPoint from './pages/mypage/MyPoint';
-import Header from './components/Header';
-import Footer from './components/Footer';
 import Admin from './pages/admin/Admin';
+import Layout from './store/Layout';
+import { Animation } from 'jquery';
+
+const renderRoute = (path, component, includeHeaderFooter = true) => (
+  <Route
+    path={path}
+    element={
+      <Layout includeHeaderFooter={includeHeaderFooter}>{component}</Layout>
+    }
+  />
+);
 
 const AppRoutes = () => (
   <Router>
-    <Animsition>
-      <Header />
+    <Animation>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/Detail" element={<Detail />} />
-        <Route path="/Recommend" element={<Recommend />} />
-        <Route path="/ShoppingCart" element={<ShoppingCart />} />
-        <Route path="/MyPageHome" element={<MyPageHome />} />
-        <Route path="/Login" element={<Login />} />
-        <Route path="/SignUp" element={<SignUp />} />
-        <Route path="/MyPoint" element={<MyPoint />} />
-        <Route path="/MemberInfo" element={<MemberInfo />} />
-        <Route path="/admin/*" element={<Admin />} />
+        {renderRoute('/', <Home />)}
+        {renderRoute('/Detail', <Detail />)}
+        {renderRoute('/Recommend', <Recommend />, false)}
+        {renderRoute('/ShoppingCart', <ShoppingCart />)}
+        {renderRoute('/MyPageHome', <MyPageHome />)}
+        {renderRoute('/Login', <Login />)}
+        {renderRoute('/SignUp', <SignUp />)}
+        {renderRoute('/MyPoint', <MyPoint />)}
+        {renderRoute('/MemberInfo', <MemberInfo />)}
+        {renderRoute('/admin/*', <Admin />, false)}
       </Routes>
-      <Footer />
-    </Animsition>
+    </Animation>
   </Router>
 );
 
