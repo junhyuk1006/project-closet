@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^13.5.0",
     "animsition": "^4.0.2",
     "bootstrap": "^5.3.3",
+    "bootstrap-icons": "^1.11.3",
     "font-awesome": "^4.7.0",
     "framer-motion": "^11.12.0",
     "jquery": "^3.7.1",
@@ -17,6 +18,7 @@
     "react-dom": "^18.3.1",
     "react-router-dom": "^7.0.1",
     "react-scripts": "^5.0.1",
+    "spoqa-han-sans": "^3.3.0",
     "test": "file:",
     "web-vitals": "^2.1.4"
   },
