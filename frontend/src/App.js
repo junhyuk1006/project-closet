@@ -14,7 +14,6 @@ import MemberInfo from './pages/mypage/MemberInfo';
 import MyPoint from './pages/mypage/MyPoint';
 import Admin from './pages/admin/Admin';
 import Layout from './store/Layout';
-import { Animation } from 'jquery';
 
 const renderRoute = (path, component, includeHeaderFooter = true) => (
   <Route
