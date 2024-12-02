@@ -2,10 +2,12 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
+
 // 외부 CSS 및 아이콘 라이브러리
 import 'bootstrap/dist/css/bootstrap.min.css'; // Bootstrap 스타일
 import 'font-awesome/css/font-awesome.min.css'; // Font Awesome 아이콘
 import 'material-design-iconic-font/dist/css/material-design-iconic-font.min.css'; // Material Design 아이콘
+
 
 // 페이지 컴포넌트 (Others 는 2개 이상일 경우 별도로 나눌 예정)
 import Home from "./pages/main/Home";
@@ -52,7 +54,6 @@ const renderRoute = (path, component, includeHeaderFooter = true) => (
 
 const AppRoutes = () => (
     <Router>
-        {/* 애니메이션으로 감싸 모든 페이지 전환에 효과 적용 */}
         <Animation>
             <Routes>
                 {/* 각 경로별 컴포넌트 연결 */}
