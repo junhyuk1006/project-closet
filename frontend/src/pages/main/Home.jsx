@@ -1,3 +1,4 @@
+import 'material-design-iconic-font/dist/css/material-design-iconic-font.min.css';
 import React, { useState } from 'react';
 
 // Import CSS
