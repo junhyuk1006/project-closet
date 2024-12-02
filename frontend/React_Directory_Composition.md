@@ -1,4 +1,4 @@
-## React 디렉토리 기본 경로 디자인 (예시)
+## React 디렉토리 기본 경로 디자인 ()
 
 ```plaintext
 src/
@@ -28,6 +28,7 @@ src/
 │   └── ...                     # 기타 페이지별 API
 |
 ├── assets/                     # 정적 파일 (이미지, CSS 등)
+│   ├── fonts/                  폰트 파일
 │   ├── images/                 이미지 파일
 │   └── styles/                 전역 CSS 파일
 |
@@ -35,10 +36,13 @@ src/
 │   ├── Header.jsx              헤더
 │   ├── Footer.jsx              푸터
 │   ├── Modal.jsx               모달 공통 컴포넌트
-│   ├── Button.jsx              공통 버튼 컴포넌트
 │   └── ...
 |
 ├── hooks/                      # 커스텀 훅
+│   ├── Animation/              # 애니메이션 디렉터리
+│   │   └── Animation.js        공통 애니메이션 
+│   ├── Category/ 
+│   │   └── Category.js  
 │   ├── useAuth.js              인증 관련 훅
 │   ├── useFetch.js             데이터 fetch 훅
 │   └── ...

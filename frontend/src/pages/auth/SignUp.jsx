@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../hooks/SignUp';
+import '../../utils/SignUp';
 import '../../assets/styles/Auth/signup.css'
 import closetImage from '../../assets/closet.jpeg'; // 이미지 경로를 import
 

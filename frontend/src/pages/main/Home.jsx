@@ -11,14 +11,11 @@ import 'material-design-iconic-font/dist/css/material-design-iconic-font.min.css
 
 
 // Import Hooks
-import useCartAndSidebar from "../../hooks/useCartAndSidebar";
-import Product from '../../hooks/Product';
-
+import Product from '../main/Product';
 
 // Import Components
-import Modal from "../../components/Modal";
-import Category from '../../hooks/Category';
-import FilterSearch from '../../hooks/FilterSearch';
+import Category from '../../hooks/Category/Category';
+import FilterSearch from '../main/FilterSearch';
 
 
 // Function Aria

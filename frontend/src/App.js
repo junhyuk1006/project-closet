@@ -26,8 +26,8 @@ import ShoppingCart from "./pages/cart/ShoppingCart";
 
 
 // 공통 애니메이션과 레이아웃
-import Layout from "./store/Layout"; // Header/Footer 포함 여부를 제어하는 레이아웃
-import Animation from "./hooks/Animation"; // 페이지 전환 애니메이션 효과
+import Layout from "./layouts/Layout"; // Header/Footer 포함 여부를 제어하는 레이아웃
+import Animation from "./hooks/Animation/Animation"; // 페이지 전환 애니메이션 효과
 
 
 /**

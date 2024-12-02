@@ -2,11 +2,10 @@ import React, {useState} from "react";
 import "../../assets/styles/components/main.css"
 import "../../assets/styles/components/util.css"
 import "../../assets/styles/DetailItem/Detail.css"
-import StarRating from "../../hooks/StarRating";
+import StarRating from "../../components/Rating/StarRating";
 import useProductQuantity from "../../hooks/useProductQuantity";
 
 function Detail ({}) {
-    const [mainImage, setMainImage] = useState("images/product-detail-01.jpg");
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isZoomed, setIsZoomed] = useState(false); // 확대 보기 상태
     const [activeTab, setActiveTab] = useState("description");
