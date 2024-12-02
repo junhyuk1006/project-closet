@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import '../../assets/vendor/animsition/css/animsition.css';
+
+// import CSS
+import '../../assets/styles/components/animation.css';
 
 export default function Animsition({ children }) {
   const [isVisible, setIsVisible] = useState(false); // fade-in 상태

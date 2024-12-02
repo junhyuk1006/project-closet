@@ -1,155 +1,232 @@
 import { Link } from 'react-router-dom';
-import '../assets/styles/components/footer.css'
+
+// import CSS
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import '../assets/styles/components/footer.css';
 
 export default function Footer() {
-    return (
-        <footer className="bg3 p-t-75 p-b-32">
-            <div className="container">
-                <div className="row">
-                    <div className="col-sm-6 col-lg-3 p-b-50">
-                        <h4 className="stext-301 cl0 p-b-30">Categories</h4>
+  return (
+    <footer className="bg3 p-t-75 p-b-32">
+      <div className="container">
+        <div className="row">
+          <div className="col-sm-6 col-lg-4 p-b-20">
+            <h4 className="stext-301 cl0 p-b-20 fs-4">About Closet</h4>
 
-                        <ul>
-                            <li className="p-b-10">
-                                <Link to="#" className="stext-107 cl7 hov-cl1 trans-04">
-                                    Women
-                                </Link>
-                            </li>
+            <ul>
+              <li className="p-b-10">
+                <span className="fw-bold">회사명&nbsp;</span> (주)클로젯
+              </li>
+              <li className="p-b-10">
+                <span className="fw-bold">대표자&nbsp;</span> 정보영 &nbsp;|
+                &nbsp;
+                <span className="fw-bold">전화&nbsp;</span> 1588-0000
+              </li>
+              <li className="p-b-10">
+                <span className="fw-bold">주소지&nbsp;</span> 서울특별시 강남구
+                에스코빌딩 7층, 703호
+              </li>
+              <li className="p-b-10">
+                <span className="fw-bold">통신판매업 신고&nbsp;</span>{' '}
+                2024-서울-0000
+              </li>
+              <li className="p-b-10">
+                <span className="fw-bold">사업자등록번호&nbsp;</span>{' '}
+                123-00-11111
+              </li>
+              <li className="p-b-10">
+                <span className="fw-bold">개인정보보호책임자&nbsp;</span>{' '}
+                123-00-11111
+              </li>
+              <li className="p-b-30">
+                <span className="fw-bold">제휴 문의&nbsp;</span>{' '}
+                closet@closet.com
+              </li>
 
-                            <li className="p-b-10">
-                                <Link to="#" className="stext-107 cl7 hov-cl1 trans-04">
-                                    Men
-                                </Link>
-                            </li>
+              <li>
+                <p className="stext-107 cl6">
+                  Copyright &copy; Closet. All rights reserved
+                </p>
+              </li>
+            </ul>
+          </div>
 
-                            <li className="p-b-10">
-                                <Link to="#" className="stext-107 cl7 hov-cl1 trans-04">
-                                    Shoes
-                                </Link>
-                            </li>
+          <div className="col-sm-6 col-lg-4 p-b-20">
+            <h4 className="stext-301 cl0 p-b-20 fs-4">Q&A</h4>
 
-                            <li className="p-b-10">
-                                <Link to="#" className="stext-107 cl7 hov-cl1 trans-04">
-                                    Watches
-                                </Link>
-                            </li>
-                        </ul>
-                    </div>
+            <li className="p-b-10">
+              <span className="fw-bold">
+                월-금&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              </span>
+              AM 9:00 - PM 6:00
+            </li>
+            <li className="p-b-10">
+              <span className="fw-bold">
+                토&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              </span>
+              AM 9:00 - PM 12:00
+            </li>
+            <li className="p-b-10">
+              <span className="fw-bold">점심시간&nbsp;&nbsp;</span>
+              PM 12:00 - PM 13:00
+            </li>
+            <li className="p-b-65">일요일, 공휴일 휴무</li>
 
-                    <div className="col-sm-6 col-lg-3 p-b-50">
-                        <h4 className="stext-301 cl0 p-b-30">Help</h4>
+            {/* 문의 버튼 */}
+            <h4 className="stext-301 cl0 p-b-20 fs-4">
+              <b>문의하기</b>
+            </h4>
+            <div className="qna-container">
+              <div className="qna-box">
+                <Link
+                  to="#"
+                  onClick={() => console.log('카카오톡 문의 버튼 클릭')}
+                >
+                  <span className="qna-elements">
+                    <img src="./images/icons/kakaotalk.png" />
+                    &nbsp;&nbsp;카카오톡 문의하기
+                  </span>
+                </Link>
+              </div>
 
-                        <ul>
-                            <li className="p-b-10">
-                                <Link to="#" className="stext-107 cl7 hov-cl1 trans-04">
-                                    Track Order
-                                </Link>
-                            </li>
-
-                            <li className="p-b-10">
-                                <Link to="#" className="stext-107 cl7 hov-cl1 trans-04">
-                                    Returns
-                                </Link>
-                            </li>
-
-                            <li className="p-b-10">
-                                <Link to="#" className="stext-107 cl7 hov-cl1 trans-04">
-                                    Shipping
-                                </Link>
-                            </li>
-
-                            <li className="p-b-10">
-                                <Link to="#" className="stext-107 cl7 hov-cl1 trans-04">
-                                    FAQs
-                                </Link>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div className="col-sm-6 col-lg-3 p-b-50">
-                        <h4 className="stext-301 cl0 p-b-30">GET IN TOUCH</h4>
-
-                        <p className="stext-107 cl7 size-201">
-                            Any questions? Let us know in store at 8th floor, 379 Hudson St,
-                            New York, NY 10018 or call us on (+1) 96 716 6879
-                        </p>
-
-                        <div className="p-t-27">
-                            <Link to="#" className="fs-18 cl7 hov-cl1 trans-04 m-r-16">
-                                <i className="fa fa-facebook"></i>
-                            </Link>
-
-                            <Link to="#" className="fs-18 cl7 hov-cl1 trans-04 m-r-16">
-                                <i className="fa fa-instagram"></i>
-                            </Link>
-
-                            <Link to="#" className="fs-18 cl7 hov-cl1 trans-04 m-r-16">
-                                <i className="fa fa-pinterest-p"></i>
-                            </Link>
-                        </div>
-                    </div>
-
-                    <div className="col-sm-6 col-lg-3 p-b-50">
-                        <h4 className="stext-301 cl0 p-b-30">Newsletter</h4>
-
-                        <form>
-                            <div className="wrap-input1 w-full p-b-4">
-                                <input
-                                    className="input1 bg-none plh1 stext-107 cl7"
-                                    type="text"
-                                    name="email"
-                                    placeholder="email@example.com"
-                                />
-                                <div className="focus-input1 trans-04"></div>
-                            </div>
-
-                            <div className="p-t-18">
-                                <button className="flex-c-m stext-101 cl0 size-103 bg1 bor1 hov-btn2 p-lr-15 trans-04">
-                                    Subscribe
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-
-                <div className="p-t-40">
-                    <div className="flex-c-m flex-w p-b-18">
-                        <Link to="#" className="m-all-1">
-                            <img src="images/icons/icon-pay-01.png" alt="ICON-PAY" />
-                        </Link>
-
-                        <Link to="#" className="m-all-1">
-                            <img src="images/icons/icon-pay-02.png" alt="ICON-PAY" />
-                        </Link>
-
-                        <Link to="#" className="m-all-1">
-                            <img src="images/icons/icon-pay-03.png" alt="ICON-PAY" />
-                        </Link>
-
-                        <Link to="#" className="m-all-1">
-                            <img src="images/icons/icon-pay-04.png" alt="ICON-PAY" />
-                        </Link>
-
-                        <Link to="#" className="m-all-1">
-                            <img src="images/icons/icon-pay-05.png" alt="ICON-PAY" />
-                        </Link>
-                    </div>
-
-                    <p className="stext-107 cl6 txt-center">
-                        Copyright &copy;
-                        <script>document.write(new Date().getFullYear());</script>
-                        All rights reserved | Made with{' '}
-                        <i className="fa fa-heart-o" aria-hidden="true"></i> by{' '}
-                        <Link to="https://colorlib.com" target="_blank" rel="noreferrer">
-                            Colorlib
-                        </Link>{' '}
-                        &amp; distributed by{' '}
-                        <Link to="https://themewagon.com" target="_blank" rel="noreferrer">
-                            ThemeWagon
-                        </Link>
-                    </p>
-                </div>
+              <div className="qna-box">
+                <Link
+                  to="#"
+                  onClick={() => console.log('네이버 문의 버튼 클릭')}
+                >
+                  <span className="qna-elements">
+                    <img src="./images/icons/naver_talktalk.png" />
+                    &nbsp;&nbsp;네이버 문의하기
+                  </span>
+                </Link>
+              </div>
             </div>
-        </footer>
-    );
+          </div>
+
+          <div className="col-sm-6 col-lg-4 p-b-20">
+            {/* Closet 설명 */}
+            <h4 className="stext-301 cl0 p-b-20 fs-4">Introduce Closet</h4>
+
+            <ul>
+              <li className="p-b-10">
+                🎁 오늘주문, 오늘배송
+                <br />
+                <p style={{ fontSize: '12px', color: '#777' }}>
+                  단, 18시 이전 주문에 해당
+                </p>
+              </li>
+              <li className="p-b-10">
+                🌙 저녁주문, 샛별배송
+                <br />
+                <p style={{ fontSize: '12px', color: '#777' }}>
+                  단, 23시 이전 주문에 해당
+                </p>
+              </li>
+              <li className="p-b-20">
+                ✨ 취향 맞춤 화상 코디네이션
+                <br />
+              </li>
+              <li className="p-b-10">
+                🛠 묻지도 따지지도 않는 당일교환 / 당일환불
+                <br />
+                <p
+                  className="p-b-30"
+                  style={{ fontSize: '12px', color: '#777' }}
+                >
+                  최대 월 2회, 연 10회
+                </p>
+              </li>
+            </ul>
+
+            {/* 소셜 */}
+            <h4 className="stext-301 cl0 p-b-5 fs-4">Social</h4>
+
+            <div>
+              <Link to="#" className="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+                <i className="fa fa-facebook"></i>
+              </Link>
+
+              <Link to="#" className="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+                <i className="fa fa-instagram"></i>
+              </Link>
+
+              <Link to="#" className="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+                <i className="fa fa-google"></i>
+              </Link>
+
+              <Link to="#" className="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+                <i className="fa fa-telegram"></i>
+              </Link>
+            </div>
+          </div>
+
+          {/* 이메일 문의 입력란 */}
+          {/* <div className="col-sm-6 col-lg-3 p-b-50">
+            <h4 className="stext-301 cl0 p-b-30">Newsletter</h4>
+
+            <form>
+              <div className="wrap-input1 w-full p-b-4">
+                <input
+                  className="input1 bg-none plh1 stext-107 cl7"
+                  type="text"
+                  name="email"
+                  placeholder="email@example.com"
+                />
+                <div className="focus-input1 trans-04"></div>
+              </div>
+
+              <div className="p-t-18">
+                <button className="flex-c-m stext-101 cl0 size-103 bg1 bor1 hov-btn2 p-lr-15 trans-04">
+                  Subscribe
+                </button>
+              </div>
+            </form>
+          </div> */}
+        </div>
+
+        {/* 카드사 리스트 */}
+        {/* <div className="p-t-40">
+          <div className="flex-c-m flex-w p-b-18">
+            <Link to="#" className="m-all-1">
+              <img src="images/icons/icon-pay-01.png" alt="ICON-PAY" />
+            </Link>
+
+            <Link to="#" className="m-all-1">
+              <img src="images/icons/icon-pay-02.png" alt="ICON-PAY" />
+            </Link>
+
+            <Link to="#" className="m-all-1">
+              <img src="images/icons/icon-pay-03.png" alt="ICON-PAY" />
+            </Link>
+
+            <Link to="#" className="m-all-1">
+              <img src="images/icons/icon-pay-04.png" alt="ICON-PAY" />
+            </Link>
+
+            <Link to="#" className="m-all-1">
+              <img src="images/icons/icon-pay-05.png" alt="ICON-PAY" />
+            </Link>
+          </div>
+        </div> */}
+      </div>
+      <div className="section"></div>
+      <div className="container">
+        <div style={{ display: 'flex' }}>
+          <ul>
+            <li>
+              <a href="#">이용안내</a>
+            </li>
+            <li>
+              <a href="#">이용약관</a>
+            </li>
+            <li>
+              <a href="#">고객센터</a>
+            </li>
+            <li>
+              <a href="#">개인정보처리방침</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+  );
 }
