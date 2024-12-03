@@ -13,7 +13,6 @@
     "framer-motion": "^11.12.0",
     "jquery": "^3.7.1",
     "material-design-iconic-font": "^2.2.0",
-    "material-design-icons": "^3.0.1",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.6",
     "react-dom": "^18.3.1",
@@ -21,6 +20,7 @@
     "react-scripts": "^5.0.1",
     "react-slick": "^0.30.2",
     "slick-carousel": "^1.8.1",
+    "spoqa-han-sans": "^3.3.0",
     "test": "file:",
     "web-vitals": "^2.1.4"
   },

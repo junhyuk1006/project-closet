@@ -10,10 +10,8 @@
 *.rej
 .DS_Store
 Thumbs.db
-.idea
-package.json
-package-lock.json
-cozastore-master
+/.idea
+node_modules
 
 # 환경 설정 파일 (Environment Files)
 .env
