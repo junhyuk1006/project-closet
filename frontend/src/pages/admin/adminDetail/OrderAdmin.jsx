@@ -1,22 +1,17 @@
 import React, { useState } from 'react';
-import { Container, Row, Col, Offcanvas } from 'react-bootstrap';
+import { Col, Container, Offcanvas, Row } from 'react-bootstrap';
 
 import CustomNavbar from '../../../components/admin/CustomNavbar';
 
+import Delivery from '../../../components/admin/content/order/Delivery';
+import Exchange from '../../../components/admin/content/order/Exchange';
+import Order from '../../../components/admin/content/order/Order';
+import Return from '../../../components/admin/content/order/Return';
+import Sales from '../../../components/admin/content/order/Sales';
 import Sidebar from '../../../components/admin/sidebar/OrderSidebar';
-import Ask from '../../../components/admin/content/Ask';
-import Dashboard from '../../../components/admin/content/Dashboard';
-import Exchange from '../../../components/admin/content/Exchange';
-import Notice from '../../../components/admin/content/Notice';
-import Order from '../../../components/admin/content/Order';
-import Point from '../../../components/admin/content/Point';
-import Review from '../../../components/admin/content/Review';
-import Sales from '../../../components/admin/content/Sales';
-import Stock from '../../../components/admin/content/Stock';
-import User from '../../../components/admin/content/User';
 const UserAdmin = () => {
   // 활성화된 메뉴를 추적하기 위한 상태
-  const [activeMenu, setActiveMenu] = useState('Dashboard');
+  const [activeMenu, setActiveMenu] = useState('Order');
   const [showSidebar, setShowSidebar] = useState(false); // 모바일 환경에서 사이드바 처리
 
   // 메뉴 클릭 핸들러
@@ -27,28 +22,18 @@ const UserAdmin = () => {
 
   const renderContent = () => {
     switch (activeMenu) {
-      case 'Dashboard':
-        return <Dashboard />;
-      case 'User':
-        return <User />;
-      case 'Notice':
-        return <Notice />;
-      case 'Stock':
-        return <Stock />;
       case 'Order':
         return <Order />;
+      case 'Delivery':
+        return <Delivery />;
       case 'Exchange':
         return <Exchange />;
+      case 'Return':
+        return <Return />;
       case 'Sales':
         return <Sales />;
-      case 'Review':
-        return <Review />;
-      case 'Ask':
-        return <Ask />;
-      case 'Point':
-        return <Point />;
       default:
-        return <Dashboard />;
+        return <Order />;
     }
   };
 
@@ -64,7 +49,7 @@ const UserAdmin = () => {
         className="bg-light"
       >
         <Offcanvas.Header closeButton>
-          <Offcanvas.Title>Sidebar</Offcanvas.Title>
+          <Offcanvas.Title>주문관리</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
           <Sidebar activeMenu={activeMenu} handleMenuClick={handleMenuClick} />
@@ -81,12 +66,9 @@ const UserAdmin = () => {
             className="d-none d-lg-flex flex-column flex-shrink-0 p-3 bg-light"
             style={{ height: '100vh' }}
           >
-            <a
-              href="/"
-              className="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none"
-            >
-              <span className="fs-4">Sidebar</span>
-            </a>
+            <div className="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+              <span className="fs-4">주문관리</span>
+            </div>
             <hr />
             <Sidebar
               activeMenu={activeMenu}

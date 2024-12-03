@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { Col, Container, Offcanvas, Row } from 'react-bootstrap';
-import CustomNavbar from '../../../components/admin/CustomNavbar';
 
-import Point from '../../../components/admin/content/user/Point';
-import User from '../../../components/admin/content/user/User';
-import UserDashboard from '../../../components/admin/content/user/UserDashboard';
-import UserLevel from '../../../components/admin/content/user/UserLevel';
-import Sidebar from '../../../components/admin/sidebar/UserSidebar';
-const UserAdmin = () => {
+import CustomNavbar from '../../../components/admin/CustomNavbar';
+import Sidebar from '../../../components/admin/sidebar/PageSidebar';
+import Notice from '../../../components/admin/content/page/Notice';
+import Event from '../../../components/admin/content/page/Event';
+import Advertisement from '../../../components/admin/content/page/Advertisement';
+
+const PageAdmin = () => {
   // 활성화된 메뉴를 추적하기 위한 상태
-  const [activeMenu, setActiveMenu] = useState('User');
+  const [activeMenu, setActiveMenu] = useState('Notice');
   const [showSidebar, setShowSidebar] = useState(false); // 모바일 환경에서 사이드바 처리
 
   // 메뉴 클릭 핸들러
@@ -20,16 +20,14 @@ const UserAdmin = () => {
 
   const renderContent = () => {
     switch (activeMenu) {
-      case 'User':
-        return <User />;
-      case 'UserLevel':
-        return <UserLevel />;
-      case 'UserDashboard':
-        return <UserDashboard />;
-      case 'Point':
-        return <Point />;
+      case 'Notice':
+        return <Notice />;
+      case 'Event':
+        return <Event />;
+      case 'Advertisement':
+        return <Advertisement />;
       default:
-        return <User />;
+        return <Notice />;
     }
   };
 
@@ -45,7 +43,7 @@ const UserAdmin = () => {
         className="bg-light"
       >
         <Offcanvas.Header closeButton>
-          <Offcanvas.Title>회원관리</Offcanvas.Title>
+          <Offcanvas.Title>페이지관리</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
           <Sidebar activeMenu={activeMenu} handleMenuClick={handleMenuClick} />
@@ -62,11 +60,8 @@ const UserAdmin = () => {
             className="d-none d-lg-flex flex-column flex-shrink-0 p-3 bg-light"
             style={{ height: '100vh' }}
           >
-            <div
-              href="#"
-              className="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none"
-            >
-              <span className="fs-4">회원관리</span>
+            <div className="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+              <span className="fs-4">페이지관리</span>
             </div>
             <hr />
             <Sidebar
@@ -84,4 +79,4 @@ const UserAdmin = () => {
   );
 };
 
-export default UserAdmin;
+export default PageAdmin;

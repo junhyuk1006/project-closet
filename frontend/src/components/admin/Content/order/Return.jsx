@@ -1,10 +1,9 @@
 import { Table } from 'react-bootstrap';
-
-const Notice = () => {
+const Return = () => {
   return (
     <div>
-      <h2>공지/이벤트</h2>
-      <p>공지/이벤트 페이지 입니다.</p>
+      <h2>반품</h2>
+      <p>반품 페이지 입니다.</p>
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -33,4 +32,4 @@ const Notice = () => {
   );
 };
 
-export default Notice;
+export default Return;

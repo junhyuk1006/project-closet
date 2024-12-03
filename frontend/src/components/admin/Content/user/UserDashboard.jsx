@@ -1,9 +1,11 @@
-import { Table } from 'react-bootstrap';
-const Order = () => {
+import React from 'react';
+import { Table, Form, Button } from 'react-bootstrap';
+
+const UserLevel = () => {
   return (
     <div>
-      <h2>주문/배송</h2>
-      <p>주문/배송 페이지 입니다.</p>
+      <h2>가입통계</h2>
+      <p>가입통계 페이지입니다.</p>
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -32,4 +34,4 @@ const Order = () => {
   );
 };
 
-export default Order;
+export default UserLevel;

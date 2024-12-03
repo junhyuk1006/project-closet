@@ -1,15 +1,10 @@
 import React from 'react';
 import {
-  FaHome,
-  FaShoppingCart,
-  FaExchangeAlt,
-  FaUsers,
-  FaBullhorn,
   FaChartBar,
-  FaBox,
-  FaMarker,
-  FaComments,
-  FaCoins,
+  FaExchangeAlt,
+  FaShoppingCart,
+  FaTruck,
+  FaUndoAlt,
 } from 'react-icons/fa';
 
 const OrderSidebar = ({ activeMenu, handleMenuClick }) => {
@@ -18,19 +13,19 @@ const OrderSidebar = ({ activeMenu, handleMenuClick }) => {
       <li>
         <a
           href="#"
-          className={`nav-link ${activeMenu === 'Dashboard' ? 'active' : 'link-dark'}`}
-          onClick={() => handleMenuClick('Dashboard')}
+          className={`nav-link ${activeMenu === 'Order' ? 'active' : 'link-dark'}`}
+          onClick={() => handleMenuClick('Order')}
         >
-          <FaChartBar className="me-2" /> Dashboard
+          <FaShoppingCart className="me-2" /> 주문
         </a>
       </li>
       <li>
         <a
           href="#"
-          className={`nav-link ${activeMenu === 'Order' ? 'active' : 'link-dark'}`}
-          onClick={() => handleMenuClick('Order')}
+          className={`nav-link ${activeMenu === 'Delivery' ? 'active' : 'link-dark'}`}
+          onClick={() => handleMenuClick('Delivery')}
         >
-          <FaShoppingCart className="me-2" /> 주문/배송
+          <FaTruck className="me-2" /> 배송
         </a>
       </li>
       <li>
@@ -39,7 +34,16 @@ const OrderSidebar = ({ activeMenu, handleMenuClick }) => {
           className={`nav-link ${activeMenu === 'Exchange' ? 'active' : 'link-dark'}`}
           onClick={() => handleMenuClick('Exchange')}
         >
-          <FaExchangeAlt className="me-2" /> 교환/반품
+          <FaExchangeAlt className="me-2" /> 교환
+        </a>
+      </li>
+      <li>
+        <a
+          href="#"
+          className={`nav-link ${activeMenu === 'Return' ? 'active' : 'link-dark'}`}
+          onClick={() => handleMenuClick('Return')}
+        >
+          <FaUndoAlt className="me-2" /> 반품
         </a>
       </li>
       <li>

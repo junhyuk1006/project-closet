@@ -1,15 +1,10 @@
 import React from 'react';
 import {
-  FaHome,
-  FaShoppingCart,
-  FaExchangeAlt,
-  FaUsers,
-  FaBullhorn,
-  FaChartBar,
   FaBox,
-  FaMarker,
   FaComments,
-  FaCoins,
+  FaMarker,
+  FaTshirt,
+  FaFileExcel,
 } from 'react-icons/fa';
 
 const ItemSidebar = ({ activeMenu, handleMenuClick }) => {
@@ -18,10 +13,10 @@ const ItemSidebar = ({ activeMenu, handleMenuClick }) => {
       <li>
         <a
           href="#"
-          className={`nav-link ${activeMenu === 'Dashboard' ? 'active' : 'link-dark'}`}
-          onClick={() => handleMenuClick('Dashboard')}
+          className={`nav-link ${activeMenu === 'Item' ? 'active' : 'link-dark'}`}
+          onClick={() => handleMenuClick('Item')}
         >
-          <FaChartBar className="me-2" /> Dashboard
+          <FaTshirt className="me-2" /> 상품
         </a>
       </li>
       <li>
@@ -51,6 +46,16 @@ const ItemSidebar = ({ activeMenu, handleMenuClick }) => {
           <FaComments className="me-2" /> 상품문의
         </a>
       </li>
+      <li>
+        <a
+          href="#"
+          className={`nav-link ${activeMenu === 'ExcelItem' ? 'active' : 'link-dark'}`}
+          onClick={() => handleMenuClick('ExcelItem')}
+        >
+          <FaFileExcel className="me-2" /> 엑셀등록
+        </a>
+      </li>
+      <li></li>
     </ul>
   );
 };
