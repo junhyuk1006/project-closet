@@ -1,8 +1,12 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
+import Modal from '../../components/Modal'
 
 export default function Product({ products, activeCategory, activeFilter }) {
     const [isLiked, setIsLiked] = useState({});
+    const [isModalOpen, setModalOpen] = useState(false); // 모달 상태 관리
+    const navigate = useNavigate()
+
 
     const toggleLike = (id) => {
         console.log(`${id}번의 Like를 클릭하였습니다.`);
@@ -12,8 +16,21 @@ export default function Product({ products, activeCategory, activeFilter }) {
         }));
     };
 
+    const handleQuickView = () => {
+        setModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setModalOpen(false);
+    };
+
+    const goToDetailPage = () => {
+        navigate('/Detail'); // '/target-page' 경로로 이동
+    }
     return (
         <div className="row isotope-grid">
+            <Modal isOpen={isModalOpen} onClose={closeModal} />
+
             {products
                 .filter(
                     (product) =>
@@ -48,24 +65,25 @@ export default function Product({ products, activeCategory, activeFilter }) {
                     >
                         <div className="block2">
                             <div className="block2-pic hov-img0">
-                                <img src={product.image} alt="IMG-PRODUCT" />
+                                <img src={product.image} alt="IMG-PRODUCT"/>
 
-                                <Link
-                                    to="#"
-                                    className="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1"
+                                <button
+                                    className="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04"
+                                    onClick={handleQuickView}
                                 >
                                     Quick View
-                                </Link>
+                                </button>
                             </div>
 
                             <div className="block2-txt flex-w flex-t p-t-14">
                                 <div className="block2-txt-child1 flex-col-l ">
-                                    <Link
-                                        to={`/product/${product.id}`}
+                                    <a
+                                        onClick={goToDetailPage} // 클릭 이벤트로 이동 처리
                                         className="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6"
+                                        style={{cursor: "pointer"}} // 스타일로 클릭 가능함을 표시
                                     >
                                         {product.name}
-                                    </Link>
+                                    </a>
 
                                     <span className="stext-105 cl3">￦{product.price}</span>
                                 </div>
