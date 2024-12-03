@@ -19,6 +19,9 @@ import MyPoint from './pages/mypage/MyPoint';
 import MyPageHome from './pages/mypage/MyPageHome';
 import MemberInfo from './pages/mypage/MemberInfo';
 
+/** ./pages/Admin  */
+import Admin from './pages/admin/Admin';
+
 /** ./pages/Other  */
 import Detail from './pages/DetailItem/Detail';
 import Recommend from './pages/comunity/recommend/Recommend';
@@ -69,6 +72,8 @@ const AppRoutes = () => (
         {renderRoute('/MyPageHome', <MyPageHome />)} {/* 마이페이지 홈 */}
         {renderRoute('/MyPoint', <MyPoint />)} {/* 포인트 페이지 */}
         {renderRoute('/MemberInfo', <MemberInfo />)} {/* 회원정보 페이지 */}
+        {/**./pages/admin */}
+        {renderRoute('/admin/*', <Admin />, false)} {/* 관리자 페이지 */}
         {/** ./pages/Other  */}
         {renderRoute('/Detail', <Detail />)} {/* 상품 상세 페이지 */}
         {renderRoute('/Recommend', <Recommend />)} {/* 추천 페이지 */}
