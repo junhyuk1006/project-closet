@@ -2,10 +2,12 @@ package com.project.controller;
 
 
 import com.project.domain.User;
+import com.project.security.TokenProvider;
 import com.project.service.UserService;
 import dto.ResponseDTO;
 import dto.UserDTO;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,12 +16,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.Timestamp;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/auth")
 public class UserController {
 
     final UserService userService;
+
+    final TokenProvider tokenProvider;
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@RequestBody UserDTO userDTO){
@@ -62,13 +67,14 @@ public class UserController {
                 userDTO.getPassword());
 
         if (user != null) {
-            // 인증 성공 시 응답 생성
-            final UserDTO responseUserDTO = UserDTO.builder()
+            // 토큰 생성
+            final String token = tokenProvider.create(user);
+            final UserDTO responserUserDTO = UserDTO.builder()
                     .username(user.getUsername())
-                    .id(user.getId())
+                    .token(token)
                     .build();
-            return ResponseEntity.ok().body(responseUserDTO);
-        } else {
+            return ResponseEntity.ok().body(responserUserDTO);
+        }else {
             // 인증 실패 시 에러 메시지 반환
             ResponseDTO responseDTO = ResponseDTO.builder()
                     .error("Login failed.")
