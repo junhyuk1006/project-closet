@@ -149,14 +149,14 @@ const Dashboard = () => {
         </Col>
       </Row>
 
-      <h4>오늘 가장 많이 방문한 상품</h4>
+      <h4>오늘 가장 많이 본 상품</h4>
       <Table striped bordered hover>
         <thead>
           <tr>
-            <th>#</th>
-            <th>Header</th>
-            <th>Header</th>
-            <th>Header</th>
+            <th>순위</th>
+            <th>상품명</th>
+            <th>분류</th>
+            <th>조회수</th>
           </tr>
         </thead>
         <tbody>
@@ -181,24 +181,17 @@ const Dashboard = () => {
       <Table striped bordered hover>
         <thead>
           <tr>
-            <th>#</th>
-            <th>Header</th>
-            <th>Header</th>
-            <th>Header</th>
+            <th colSpan="2">유저현황</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>1</td>
-            <td>Cell</td>
-            <td>Cell</td>
-            <td>Cell</td>
+            <td>회원가입 수</td>
+            <td>21</td>
           </tr>
           <tr>
-            <td>2</td>
-            <td>Cell</td>
-            <td>Cell</td>
-            <td>Cell</td>
+            <td>총 유저 수</td>
+            <td>2,623</td>
           </tr>
         </tbody>
       </Table>
