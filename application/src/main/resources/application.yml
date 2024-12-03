@@ -17,6 +17,9 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update # 스키마 자동 업데이트
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     properties:
       hibernate:
         format_sql: 'true' # 출력되는 SQL 포맷팅 활성화
@@ -38,7 +41,6 @@ spring:
       max-lifetime: '1500000' # 커넥션의 최대 수명 (밀리초)
       connection-test-query: SELECT 1 FROM DUAL # 커넥션 유효성 검사용 쿼리
       minimum-idle: '5' # 연결 풀 최소 유휴 커넥션 수
-
 
   # Spring Security OAuth2 설정
   security:

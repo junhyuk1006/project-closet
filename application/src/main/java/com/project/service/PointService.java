@@ -13,8 +13,12 @@ public class PointService {
 
     private final PointRepository pointRepository;
 
-
-    public List<Point> getAllPoint() {
+    public List<Point> findAll() {
         return pointRepository.findAll();
     }
+
+    public List<Point> findByUserId(Long userId) {
+        return pointRepository.findByUserId(userId);
+    }
+
 }

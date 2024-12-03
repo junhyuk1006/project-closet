@@ -14,15 +14,23 @@ public class Point {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private long id;
-    private long user_id;
-    private String point_reason;
+
+    @Column(name = "user_id")
+    private long userId;
+
+    @Column(name = "point_reason")
+    private String pointReason;
     private int point;
-    private String point_type;
+
+    @Column(name = "point_type")
+    private String pointType;
 
     @CreationTimestamp
-    private Timestamp created_at;
+    @Column(name = "created_at")
+    private Timestamp createdAt;
 
-    private Timestamp deleted_at;
+    @Column(name = "deleted_at")
+    private Timestamp deletedAt;
     private String status;
 
 }
