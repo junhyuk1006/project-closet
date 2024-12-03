@@ -39,4 +39,19 @@ footer .section::after {
   width: 100%;
   height: 1px;
   background-color: #ccc;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+footer .footer-links {
+  display: flex;
+  gap: 30px;
+}
+
+footer .footer-links a {
+  color: #ddd;
+}
+
+footer .footer-links a:hover {
+  color: #fff;
 }

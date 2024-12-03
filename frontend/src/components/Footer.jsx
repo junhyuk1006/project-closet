@@ -1,12 +1,11 @@
 import { Link } from 'react-router-dom';
 
 // import CSS
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import '../assets/styles/components/footer.css';
 
 export default function Footer() {
   return (
-    <footer className="bg3 p-t-75 p-b-32">
+    <footer className="bg3 p-t-50 p-b-32">
       <div className="container">
         <div className="row">
           <div className="col-sm-6 col-lg-4 p-b-20">
@@ -14,44 +13,45 @@ export default function Footer() {
 
             <ul>
               <li className="p-b-10">
-                <span className="fw-bold">회사명&nbsp;</span> (주)클로젯
+                <span className="fw-bold">회사명&nbsp;&nbsp;</span>(주)클로젯
               </li>
               <li className="p-b-10">
-                <span className="fw-bold">대표자&nbsp;</span> 정보영 &nbsp;|
-                &nbsp;
-                <span className="fw-bold">전화&nbsp;</span> 1588-0000
+                <span className="fw-bold">대표자&nbsp;&nbsp;</span>정보영
+                &nbsp;| &nbsp;
+                <span className="fw-bold">전화&nbsp;&nbsp;</span>1588-0000
               </li>
               <li className="p-b-10">
-                <span className="fw-bold">주소지&nbsp;</span> 서울특별시 강남구
-                에스코빌딩 7층, 703호
+                <span className="fw-bold">주소지&nbsp;&nbsp;</span>서울특별시
+                강남구 에스코빌딩 7층, 703호
               </li>
               <li className="p-b-10">
-                <span className="fw-bold">통신판매업 신고&nbsp;</span>{' '}
+                <span className="fw-bold">통신판매업 신고&nbsp;&nbsp;</span>
                 2024-서울-0000
               </li>
               <li className="p-b-10">
-                <span className="fw-bold">사업자등록번호&nbsp;</span>{' '}
+                <span className="fw-bold">사업자등록번호&nbsp;&nbsp;</span>
                 123-00-11111
               </li>
               <li className="p-b-10">
-                <span className="fw-bold">개인정보보호책임자&nbsp;</span>{' '}
-                123-00-11111
+                <span className="fw-bold">개인정보보호책임자&nbsp;&nbsp;</span>
+                이정민
               </li>
-              <li className="p-b-30">
-                <span className="fw-bold">제휴 문의&nbsp;</span>{' '}
+              <li className="p-b-50">
+                <span className="fw-bold">제휴 문의&nbsp;&nbsp;</span>
                 closet@closet.com
               </li>
 
               <li>
                 <p className="stext-107 cl6">
-                  Copyright &copy; Closet. All rights reserved
+                  Copyright &copy; 2024 Closet. All rights reserved
                 </p>
               </li>
             </ul>
           </div>
 
           <div className="col-sm-6 col-lg-4 p-b-20">
-            <h4 className="stext-301 cl0 p-b-20 fs-4">Q&A</h4>
+            {/* 고객센터 */}
+            <h4 className="stext-301 cl0 p-b-20 fs-4">Customer Service</h4>
 
             <li className="p-b-10">
               <span className="fw-bold">
@@ -210,22 +210,20 @@ export default function Footer() {
       </div>
       <div className="section"></div>
       <div className="container">
-        <div style={{ display: 'flex' }}>
-          <ul>
-            <li>
-              <a href="#">이용안내</a>
-            </li>
-            <li>
-              <a href="#">이용약관</a>
-            </li>
-            <li>
-              <a href="#">고객센터</a>
-            </li>
-            <li>
-              <a href="#">개인정보처리방침</a>
-            </li>
-          </ul>
-        </div>
+        <ul className="footer-links">
+          <li>
+            <Link to="/guide">이용안내</Link>
+          </li>
+          <li>
+            <Link to="/agreement">이용약관</Link>
+          </li>
+          <li>
+            <Link to="/privacy">개인정보처리방침</Link>
+          </li>
+          <li>
+            <Link to="/cs">고객센터</Link>
+          </li>
+        </ul>
       </div>
     </footer>
   );
