@@ -1,4 +1,5 @@
 /* 부트스트랩의 container 속성과 충돌하여 네이밍을 변경하였습니다. */
 .signup-container {
   max-width: 960px;
+  margin: 0 auto; /* container를 중앙으로 정렬하는 속성 */
 }
