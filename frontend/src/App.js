@@ -11,8 +11,8 @@ import 'material-design-iconic-font/dist/css/material-design-iconic-font.min.css
 import Home from './pages/main/Home';
 
 /** ./pages/auth  */
-import Login from './pages/auth/Login';
-import SignUp from './pages/auth/SignUp';
+import Login from './pages/Auth/Login';
+import SignUp from './pages/Auth/SignUp';
 
 /** ./pages/MyPage  */
 import MyPoint from './pages/mypage/MyPoint';

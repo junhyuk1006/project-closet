@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'; // Bootstrap JS
 import 'bootstrap/dist/css/bootstrap.min.css'; // Bootstrap CSS
 import 'bootstrap-icons/font/bootstrap-icons.css'; // Bootstrap Icons
@@ -6,6 +7,11 @@ import '../../assets/login.css'; // Custom CSS
 import closetImage from '../../assets/closet.png'; // 이미지 경로
 
 const SignIn = () => {
+  const navigator = useNavigate();
+  const goToSignUp = () => {
+    navigator('/SignUp');
+  };
+
   const [theme, setTheme] = useState('auto'); // Default theme state
 
   // 테마 변경 함수
@@ -130,6 +136,9 @@ const SignIn = () => {
           <button className="btn btn-secondary w-100 py-2" type="submit">
             Sign in
           </button>
+          <a onClick={goToSignUp} className="btn btn-secondary w-100 py-2">
+            Sign Up
+          </a>
           <p className="mt-5 mb-3 text-body-secondary">&copy; 2024</p>
         </form>
       </main>
