@@ -75,25 +75,25 @@ export default function Footer() {
             <h4 className="stext-301 cl0 p-b-20 fs-4">
               <b>문의하기</b>
             </h4>
-            <div className="qna-container">
-              <div className="qna-box">
+            <div className="btn-container">
+              <div className="btn-box">
                 <Link
                   to="#"
                   onClick={() => console.log('카카오톡 문의 버튼 클릭')}
                 >
-                  <span className="qna-elements">
+                  <span className="btn-elements">
                     <img src="./images/icons/kakaotalk.png" />
                     &nbsp;&nbsp;카카오톡 문의하기
                   </span>
                 </Link>
               </div>
 
-              <div className="qna-box">
+              <div className="btn-box">
                 <Link
                   to="#"
                   onClick={() => console.log('네이버 문의 버튼 클릭')}
                 >
-                  <span className="qna-elements">
+                  <span className="btn-elements">
                     <img src="./images/icons/naver_talktalk.png" />
                     &nbsp;&nbsp;네이버 문의하기
                   </span>
@@ -108,14 +108,14 @@ export default function Footer() {
 
             <ul>
               <li className="p-b-10">
-                🎁 오늘주문, 오늘배송
+                🎁 오늘주문, 오늘출고
                 <br />
                 <p style={{ fontSize: '12px', color: '#777' }}>
                   단, 18시 이전 주문에 해당
                 </p>
               </li>
               <li className="p-b-10">
-                🌙 저녁주문, 샛별배송
+                🌙 저녁주문, 샛별출고
                 <br />
                 <p style={{ fontSize: '12px', color: '#777' }}>
                   단, 23시 이전 주문에 해당
@@ -126,7 +126,7 @@ export default function Footer() {
                 <br />
               </li>
               <li className="p-b-10">
-                🛠 묻지도 따지지도 않는 당일교환 / 당일환불
+                🛠 묻지도 따지지도 않는 교환/환불
                 <br />
                 <p
                   className="p-b-30"
