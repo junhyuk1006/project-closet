@@ -1,36 +1,35 @@
 // React 기본 및 라우팅 관련 라이브러리
-import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 // 외부 CSS 및 아이콘 라이브러리
 import 'bootstrap/dist/css/bootstrap.min.css'; // Bootstrap 스타일
 import 'font-awesome/css/font-awesome.min.css'; // Font Awesome 아이콘
 import 'material-design-iconic-font/dist/css/material-design-iconic-font.min.css'; // Material Design 아이콘
 
-
 // 페이지 컴포넌트 (Others 는 2개 이상일 경우 별도로 나눌 예정)
-import Home from "./pages/main/Home";
+import Home from './pages/main/Home';
 
 /** ./pages/auth  */
-import Login from "./pages/auth/Login";
-import SignUp from "./pages/auth/SignUp";
+import Login from './pages/auth/Login';
+import SignUp from './pages/auth/SignUp';
 
 /** ./pages/MyPage  */
-import MyPoint from "./pages/mypage/MyPoint";
-import MyPageHome from "./pages/mypage/MyPageHome";
-import MemberInfo from "./pages/mypage/MemberInfo";
+import MyPoint from './pages/mypage/MyPoint';
+import MyPageHome from './pages/mypage/MyPageHome';
+import MemberInfo from './pages/mypage/MemberInfo';
 
 /** ./pages/Other  */
-import Detail from "./pages/DetailItem/Detail";
-import Recommend from "./pages/comunity/recommend/Recommend";
-import ShoppingCart from "./pages/cart/ShoppingCart";
-
+import Detail from './pages/DetailItem/Detail';
+import Recommend from './pages/comunity/recommend/Recommend';
+import ShoppingCart from './pages/cart/ShoppingCart';
 
 // 공통 애니메이션과 레이아웃
-import Layout from "./layouts/Layout"; // Header/Footer 포함 여부를 제어하는 레이아웃
-import Animation from "./hooks/Animation/Animation"; // 페이지 전환 애니메이션 효과
-
+import Layout from './layouts/Layout'; // Header/Footer 포함 여부를 제어하는 레이아웃
+import Animation from './hooks/Animation/Animation'; // 페이지 전환 애니메이션 효과
+import Guide from './pages/main/Guide';
+import Agreement from './pages/main/Agreement';
+import Privacy from './pages/main/Privacy';
 
 /**
  * 공통적으로 사용하는 Route 생성 함수
@@ -41,10 +40,12 @@ import Animation from "./hooks/Animation/Animation"; // 페이지 전환 애니�
  */
 
 const renderRoute = (path, component, includeHeaderFooter = true) => (
-    <Route
-        path={path}
-        element={<Layout includeHeaderFooter={includeHeaderFooter}>{component}</Layout>}
-    />
+  <Route
+    path={path}
+    element={
+      <Layout includeHeaderFooter={includeHeaderFooter}>{component}</Layout>
+    }
+  />
 );
 
 /**
@@ -53,27 +54,28 @@ const renderRoute = (path, component, includeHeaderFooter = true) => (
  */
 
 const AppRoutes = () => (
-    <Router>
-        <Animation>
-            <Routes>
-                {renderRoute("/", <Home />)} {/* 메인 페이지 */}
-
-                {/** ./pages/auth */}
-                {renderRoute("/Login", <Login />)} {/* 로그인 페이지 */}
-                {renderRoute("/SignUp", <SignUp />)} {/* 회원가입 페이지 */}
-
-                {/** ./pages/MyPage */}
-                {renderRoute("/MyPageHome", <MyPageHome />)} {/* 마이페이지 홈 */}
-                {renderRoute("/MyPoint", <MyPoint />)} {/* 포인트 페이지 */}
-                {renderRoute("/MemberInfo", <MemberInfo />)} {/* 회원정보 페이지 */}
-
-                {/** ./pages/Other  */}
-                {renderRoute("/Detail", <Detail />)} {/* 상품 상세 페이지 */}
-                {renderRoute("/Recommend", <Recommend />)} {/* 추천 페이지 */}
-                {renderRoute("/ShoppingCart", <ShoppingCart />)} {/* 장바구니 페이지 */}
-            </Routes>
-        </Animation>
-    </Router>
+  <Router>
+    <Animation>
+      <Routes>
+        {/** ./pages/main */}
+        {renderRoute('/', <Home />)} {/* 메인 페이지 */}
+        {renderRoute('/guide', <Guide />)} {/* 이용안내 페이지 */}
+        {renderRoute('/agreement', <Agreement />)} {/* 이용약관 페이지 */}
+        {renderRoute('/privacy', <Privacy />)} {/* 개인정보처리방침 페이지 */}
+        {/** ./pages/auth */}
+        {renderRoute('/Login', <Login />)} {/* 로그인 페이지 */}
+        {renderRoute('/SignUp', <SignUp />)} {/* 회원가입 페이지 */}
+        {/** ./pages/MyPage */}
+        {renderRoute('/MyPageHome', <MyPageHome />)} {/* 마이페이지 홈 */}
+        {renderRoute('/MyPoint', <MyPoint />)} {/* 포인트 페이지 */}
+        {renderRoute('/MemberInfo', <MemberInfo />)} {/* 회원정보 페이지 */}
+        {/** ./pages/Other  */}
+        {renderRoute('/Detail', <Detail />)} {/* 상품 상세 페이지 */}
+        {renderRoute('/Recommend', <Recommend />)} {/* 추천 페이지 */}
+        {renderRoute('/ShoppingCart', <ShoppingCart />)} {/* 장바구니 페이지 */}
+      </Routes>
+    </Animation>
+  </Router>
 );
 
 export default AppRoutes;
