@@ -1,9 +1,34 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import '../../components/SignUp';
 import '../../assets/signup.css';
 import closetImage from '../../assets/closet.png'; // 이미지 경로를 import
 
 const Checkout = () => {
+  const formRef = useRef(null); // 폼 참조
+
+  const handleSubmit = (event) => {
+    event.preventDefault(); // 기본 동작 중단
+    event.stopPropagation(); // 이벤트 전파 중단
+
+    const form = event.target;
+
+    if (form.checkValidity()) {
+      // 모든 필드가 유효하면 콘솔 출력 후 초기화
+      console.log('폼 제출 성공!', {
+        username: form.username.value,
+        password: form.password.value,
+        nickname: form.nickname.value,
+        email: form.email.value,
+      });
+
+      form.reset(); // 폼 데이터 초기화
+      form.classList.remove('was-validated'); // 유효성 검사 스타일 초기화
+    } else {
+      form.classList.add('was-validated'); // 유효성 검사 스타일 추가
+      console.log('유효성 검사 실패');
+    }
+  };
+
   return (
     <div className="container">
       <main>
@@ -17,7 +42,12 @@ const Checkout = () => {
           />
         </div>
 
-        <form className="needs-validation" noValidate>
+        <form
+          ref={formRef}
+          className="needs-validation"
+          noValidate
+          onSubmit={handleSubmit} // 제출 이벤트 연결
+        >
           <div className="row g-3">
             <div className="col-12">
               <label htmlFor="username" className="form-label">
@@ -27,59 +57,41 @@ const Checkout = () => {
                 type="text"
                 className="form-control"
                 id="username"
+                name="username"
                 placeholder="ID"
                 required
               />
-              <div className="invalid-feedback">
-                Valid first name is required.
-              </div>
+              <div className="invalid-feedback">아이디를 입력해주세요.</div>
             </div>
 
             <div className="col-6">
-              <label htmlFor="username" className="form-label">
+              <label htmlFor="password" className="form-label">
                 비밀번호
               </label>
               <input
-                type="text"
+                type="password"
                 className="form-control"
-                id="username"
-                placeholder="ID"
+                id="password"
+                name="password"
+                placeholder="Password"
                 required
               />
-              <div className="invalid-feedback">
-                Valid first name is required.
-              </div>
+              <div className="invalid-feedback">비밀번호를 입력해주세요.</div>
             </div>
 
             <div className="col-6">
-              <label htmlFor="username" className="form-label">
-                비빌번호 확인
+              <label htmlFor="confirmPassword" className="form-label">
+                비밀번호 확인
               </label>
               <input
-                type="text"
+                type="password"
                 className="form-control"
-                id="username"
-                placeholder="ID"
+                id="confirmPassword"
+                placeholder="Password"
                 required
               />
-              <div className="invalid-feedback">
-                Valid first name is required.
-              </div>
+              <div className="invalid-feedback">비밀번호를 확인해주세요.</div>
             </div>
-
-            {/* <div className="col-12">
-              <label htmlFor="name" className="form-label">
-                이름
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="name"
-                placeholder="이름"
-                required
-              />
-              <div className="invalid-feedback">Zip code required.</div>
-            </div> */}
 
             <div className="col-12">
               <label htmlFor="nickname" className="form-label">
@@ -90,12 +102,11 @@ const Checkout = () => {
                   type="text"
                   className="form-control"
                   id="nickname"
+                  name="nickname"
                   placeholder="닉네임"
                   required
                 />
-                <div className="invalid-feedback">
-                  Your username is required.
-                </div>
+                <div className="invalid-feedback">닉네임을 입력해주세요.</div>
               </div>
             </div>
 
@@ -107,10 +118,12 @@ const Checkout = () => {
                 type="email"
                 className="form-control"
                 id="email"
+                name="email"
                 placeholder="you@example.com"
+                required
               />
               <div className="invalid-feedback">
-                Please enter a valid email address for shipping updates.
+                유효한 이메일 주소를 입력해주세요.
               </div>
             </div>
 
@@ -134,7 +147,6 @@ const Checkout = () => {
               </div>
             </div>
 
-            {/* 월 */}
             <div className="col-md-4">
               <label htmlFor="birthMonth" className="form-label">
                 월
@@ -153,7 +165,6 @@ const Checkout = () => {
               <div className="invalid-feedback">올바른 월을 선택해주세요.</div>
             </div>
 
-            {/* 일 */}
             <div className="col-md-4">
               <label htmlFor="birthDay" className="form-label">
                 일
@@ -177,22 +188,24 @@ const Checkout = () => {
             <input
               type="checkbox"
               className="form-check-input"
-              id="same-address"
+              id="privacy"
+              required
             />
-            <label className="form-check-label" htmlFor="same-address">
+            <label className="form-check-label" htmlFor="privacy">
               [필수] 개인정보 수집 및 이용 동의
-              <p>
-                1. 수집 항목: 이름, 이메일, 생년월일 <br></br>
-                2. 수집 목적: 회원 관리, 서비스 제공, 고객 문의 처리, 마케팅 및
-                이벤트 정보 제공<br></br>
-                3. 보유기간: 회원 탈퇴 후 즉시 삭제 (단, 법령에 따라 보관이
-                필요한 경우 제외)<br></br>
-                <br></br>
-                <p>
-                  * 위의 내용을 확인하였으며, 개인정보 수집 및이용에 동의합니다.
-                </p>
+              <p className="mt-2">
+                <strong>1. 수집 항목:</strong> 이름, 이메일, 생년월일
+                <br />
+                <strong>2. 수집 목적:</strong> 회원 관리, 서비스 제공, 고객 문의
+                처리, 마케팅 및 이벤트 정보 제공
+                <br />
+                <strong>3. 보유기간:</strong> 회원 탈퇴 후 즉시 삭제 (단, 법령에
+                따라 보관이 필요한 경우 제외)
               </p>
             </label>
+            <div className="invalid-feedback">
+              개인정보 수집 및 이용에 동의해주세요.
+            </div>
           </div>
 
           <hr className="my-4" />
