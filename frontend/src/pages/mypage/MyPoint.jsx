@@ -4,31 +4,50 @@ import '../../assets/styles/MyPage/MyPage.css';
 
 const MyPoint = () => {
   const [point, setPoint] = useState([]);
+  const [totalPoint, setTotalPoint] = useState([]);
+  const [expirePoint, setExpirePoint] = useState([]);
 
   useEffect(() => {
-    const fetchPoint = async () => {
+    const fetchData = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:80/api/point/getPointByUserid?userId=1`
-        );
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        setPoint(data); // 데이터를 상태에 저장
+        const [pointResponse, totalResponse, expireResponse] =
+          await Promise.all([
+            fetch('http://localhost:80/api/point/getPointByUserid?userId=1'),
+            fetch(
+              'http://localhost:80/api/point/getTotalPointByUserid?userId=1'
+            ),
+            fetch(
+              'http://localhost:80/api/point/getExpirePointByUserid?userId=1'
+            ),
+          ]);
+
+        const point = await pointResponse.json(); // 적립 내역
+        const totalPoint = await totalResponse.json(); // 총 적립금
+        const expirePoint = await expireResponse.json(); // 소멸 예정 적립금
+
+        setPoint(point);
+        setTotalPoint(totalPoint);
+        setExpirePoint(expirePoint);
       } catch (error) {
-        console.error('Error fetching points:', error);
+        console.error('Error fetching data:', error);
       }
     };
 
-    fetchPoint();
+    fetchData();
   }, []);
 
   return (
     <div>
-      <MyPageHeader title="적립금 조회" description="내 적립금을 확인하세요." />
-      <div className="point-label">나의 적립금 : </div>
-      <div className="point-label">소멸예정 적립금 : </div>
+      <MyPageHeader
+        title="적립금 조회"
+        description="적립금은 적립일 기준 1년간 사용 가능하며, 만료 기간이 한 달 이내로 남은 포인트는 소멸 예정 포인트에 표시됩니다."
+      />
+      <div className="point-label1">
+        나의 적립금 : <strong>{totalPoint}p</strong>
+      </div>
+      <div className="point-label2">
+        소멸예정 적립금 : <strong>{expirePoint}p</strong>
+      </div>
 
       <div className="mypage-line" />
       <div className="point-list">

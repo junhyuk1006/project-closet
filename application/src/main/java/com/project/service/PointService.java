@@ -21,4 +21,11 @@ public class PointService {
         return pointRepository.findByUserId(userId);
     }
 
+    public int getTotalPointByUserid(long userId) {
+        return pointRepository.getTotalPointByUserId(userId);
+    }
+
+    public int getExpirePointByUserid(long userId) {
+        return pointRepository.getExpirePointByUserid(userId);
+    }
 }
