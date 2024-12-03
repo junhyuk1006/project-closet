@@ -35,8 +35,6 @@ function Header() {
               <Link to="/Login" className="flex-c-m trans-04 p-lr-25">
                 Login
               </Link>
-              <a className="flex-c-m trans-04 p-lr-25">EN</a>
-              <a className="flex-c-m trans-04 p-lr-25">USD</a>
             </div>
           </div>
         </div>
