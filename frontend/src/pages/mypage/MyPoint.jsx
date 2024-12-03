@@ -51,7 +51,7 @@ const MyPoint = () => {
             >
               {point.pointType === '적립'
                 ? `+${point.point}p`
-                : `-${point.point}`}
+                : `-${point.point}p`}
             </div>
           </div>
         ))}
