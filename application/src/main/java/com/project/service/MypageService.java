@@ -14,7 +14,14 @@ public class MypageService {
 
     private final AddressRepository addressRepository;
 
-    public List<Address> getAddressByUserid(@RequestParam("userId") long userId) {
-        return addressRepository.getAddressByUserid(userId);
+    // userId로 등록된 배송지 조회( 대표 배송지 + 일반 배송지)
+    public List<Address> findByUserId(@RequestParam("userId") long userId) {
+        return addressRepository.findByUserId(userId);
     }
+
+
+
+
+
 }
+

@@ -1,5 +1,6 @@
 package com.project.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -8,15 +9,13 @@ import lombok.Data;
 @Table(name="address")
 public class Address {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name="user_id")
     private long userId;
     private String address;
 
-
-    @Column(name = "isRepresent", columnDefinition = "TINYINT(1)")
-    private Integer isRepresent; // Integer로 변경
+    @JsonProperty("isRepresent")
+    private boolean isRepresent;
 
 }

@@ -2,20 +2,23 @@ import React, { useState, useEffect } from 'react';
 import MyPageHeader from '../../components/myPage/MyPageHeader';
 
 const MemberInfo = () => {
-  const [representativeAddress, setRepresentativeAddress] = useState([]);
+  const [representativeAddress, setRepresentativeAddress] = useState(null);
   const [generalAddresses, setGeneralAddresses] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [addressResponse] = await Promise.all([
-          fetch('http://localhost:80/api/mypage/getAddress?userId=1'),
-        ]);
+        const addressResponse = await fetch(
+          'http://localhost:80/api/mypage/getAddress?userId=1'
+        );
 
         const address = await addressResponse.json();
 
-        const representative = address.find((addr) => addr.isRepresent === 1); // 대표 주소
-        const general = address.filter((addr) => addr.isRepresent !== 1); // 일반 주소
+        const representative = address.find(
+          (addr) => addr.isRepresent === true
+        ); // 대표 주소
+
+        const general = address.filter((addr) => addr.isRepresent !== true); // 일반 주소
 
         setRepresentativeAddress(representative);
         setGeneralAddresses(general);
@@ -45,7 +48,7 @@ const MemberInfo = () => {
             <div className="address-block">
               <div className="represent-address">대표주소지</div>
               <div className="other-address">
-                {representativeAddress.address}
+                {representativeAddress?.address || '대표주소지가 없습니다.'}
               </div>
               <div className="address-buttons">
                 <button>삭제</button>
