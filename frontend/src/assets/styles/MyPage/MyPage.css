@@ -122,7 +122,7 @@
   align-items: center; /* 세로 방향 중앙 정렬 */
   font-weight: bold;
   margin-bottom: 50px;
-  margin-top: 50px;
+  margin-top: 20px;
 }
 
 @media (max-width: 768px) {
@@ -196,7 +196,6 @@
   }
 }
 
-/* 회원정보 배송지 목록*/
 /* 회원정보 배송지 목록 */
 .delivery-rounded-box {
   width: 80%;
@@ -208,7 +207,7 @@
   box-sizing: border-box;
   border: 2px solid #b0b0b0;
   margin: 0 auto;
-  margin-bottom: 50px;
+  margin-bottom: 10px;
 }
 
 .address-block {
@@ -307,4 +306,27 @@ button:hover {
   .address-buttons {
     flex-direction: column; /* 버튼을 세로로 배치 */
   }
+}
+
+.delivery-button {
+  cursor: pointer;
+  margin-top: 12px;
+  background-color: black;
+  color: white;
+}
+
+/* 문의내역 css */
+.mypage-label1 {
+  padding-left: 20px;
+  font-size: 20px;
+  display: flex;
+  justify-content: center; /* 가로 방향 중앙 정렬 */
+  align-items: center; /* 세로 방향 중앙 정렬 */
+  font-weight: bold;
+  margin-bottom: 50px;
+  margin-top: 20px;
+}
+
+.mypage-label2 {
+  text-align: center; /* 가운데 정렬 */
 }
