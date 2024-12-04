@@ -221,7 +221,7 @@ export default function Footer() {
             <Link to="/privacy">개인정보처리방침</Link>
           </li>
           <li>
-            <Link to="/cs">고객센터</Link>
+            <Link to="/about">회사정보</Link>
           </li>
         </ul>
       </div>
