@@ -9,16 +9,22 @@
     "animsition": "^4.0.2",
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",
+    "chart.js": "^4.4.7",
+    "chartjs-plugin-datalabels": "^2.2.0",
     "font-awesome": "^4.7.0",
     "framer-motion": "^11.12.0",
     "jquery": "^3.7.1",
     "material-design-iconic-font": "^2.2.0",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.6",
+    "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.3.1",
+    "react-icons": "^5.3.0",
+    "react-router-bootstrap": "^0.26.3",
     "react-router-dom": "^7.0.1",
     "react-scripts": "^5.0.1",
     "react-slick": "^0.30.2",
+    "react-transition-group": "^4.4.5",
     "slick-carousel": "^1.8.1",
     "spoqa-han-sans": "^3.3.0",
     "test": "file:",
@@ -53,11 +59,14 @@
   "devDependencies": {
     "@eslint/js": "^9.15.0",
     "concurrently": "^9.1.0",
+    "css-loader": "^7.1.2",
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-react": "^7.37.2",
     "globals": "^15.12.0",
-    "prettier": "^3.3.3"
+    "postcss-loader": "^8.1.1",
+    "prettier": "^3.3.3",
+    "source-map-loader": "^5.0.0"
   }
 }

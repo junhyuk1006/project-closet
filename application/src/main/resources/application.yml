@@ -17,6 +17,9 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update # 스키마 자동 업데이트
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     properties:
       hibernate:
         format_sql: "true" # 출력되는 SQL 포맷팅 활성화
