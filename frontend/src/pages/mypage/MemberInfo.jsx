@@ -28,6 +28,44 @@ const MemberInfo = () => {
     };
     fetchData();
   }, []);
+  const DeleteRepresentativeAddress = (id) => {
+    if (generalAddresses.length === 0) {
+      // '==' 대신 '==='을 사용하는 것이 좋습니다.
+      fetch(`http://localhost:80/api/mypage/deleteAddress/${id}`, {
+        method: 'DELETE',
+      })
+        .then((response) => {
+          if (response.ok) {
+            console.log('삭제 완료');
+          } else {
+            console.error('삭제 실패', response.status);
+          }
+        })
+        .catch((error) => console.error('에러 발생:', error));
+    } else {
+      alert(
+        '대표 주소지는 일반 주소지가 없을 경우에만 삭제가 가능합니다.\n 대표 주소지를 다른 주소지로 변경 후 해당 주소를 삭제해주세요.'
+      );
+    }
+  };
+
+  const DeleteGeneralAddress = (id) => {
+    fetch(`http://localhost:80/api/mypage/deleteAddress/${id}`, {
+      method: 'DELETE',
+    })
+      .then((response) => {
+        if (response.ok) {
+          console.log('일반 주소 삭제 완료');
+          // 삭제 성공 시 화면에서 제거 (state 업데이트)
+          setGeneralAddresses((prevAddresses) =>
+            prevAddresses.filter((address) => address.id !== id)
+          );
+        } else {
+          console.error('일반 주소 삭제 실패');
+        }
+      })
+      .catch((error) => console.error('삭제 요청 중 에러 발생:', error));
+  };
 
   return (
     <div>
@@ -51,7 +89,13 @@ const MemberInfo = () => {
                 {representativeAddress?.address || '대표주소지가 없습니다.'}
               </div>
               <div className="address-buttons">
-                <button>삭제</button>
+                <button
+                  onClick={() =>
+                    DeleteRepresentativeAddress(representativeAddress?.id)
+                  }
+                >
+                  삭제
+                </button>
               </div>
             </div>
 
@@ -62,7 +106,9 @@ const MemberInfo = () => {
                 <div className="other-address">{address.address}</div>
                 <div className="address-buttons">
                   <button>대표주소지 등록</button>
-                  <button>삭제</button>
+                  <button onClick={() => DeleteGeneralAddress(address?.id)}>
+                    삭제
+                  </button>
                 </div>
               </div>
             ))}

@@ -4,6 +4,7 @@ import com.project.domain.Address;
 import com.project.repository.AddressRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -19,9 +20,9 @@ public class MypageService {
         return addressRepository.findByUserId(userId);
     }
 
-
-
-
-
+    // address의 id 정보값으로 주소값 삭제
+    public void deleteById(@PathVariable("id") long id) {
+        addressRepository.deleteById(id);
+    }
 }
 

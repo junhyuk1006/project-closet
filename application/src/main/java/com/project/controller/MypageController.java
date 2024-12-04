@@ -3,10 +3,7 @@ package com.project.controller;
 import com.project.domain.Address;
 import com.project.service.MypageService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,7 +20,10 @@ public class MypageController {
         return mypageService.findByUserId(userId);  // Address 테이블의 모든 데이터 조회
     }
 
-
+    @DeleteMapping("/deleteAddress/{id}")
+    public void deleteByUserId(@PathVariable("id") long id) {
+        mypageService.deleteById(id);
+    }
 
 
 
