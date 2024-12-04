@@ -33,6 +33,7 @@ import Animation from './hooks/Animation/Animation'; // 페이지 전환 애니�
 import Guide from './pages/main/Guide';
 import Agreement from './pages/main/Agreement';
 import Privacy from './pages/main/Privacy';
+import Page404 from './components/main/Page404';
 
 /**
  * 공통적으로 사용하는 Route 생성 함수
@@ -78,6 +79,7 @@ const AppRoutes = () => (
         {renderRoute('/Detail/*', <Detail />)} {/* 상품 상세 페이지 */}
         {renderRoute('/Recommend', <Recommend />)} {/* 추천 페이지 */}
         {renderRoute('/ShoppingCart', <ShoppingCart />)} {/* 장바구니 페이지 */}
+        {renderRoute('/*', <Page404 />, false)} {/* 에러 페이지 */}
       </Routes>
     </Animation>
   </Router>
