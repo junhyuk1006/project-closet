@@ -15,6 +15,7 @@ import org.hibernate.annotations.DynamicInsert;
 @Builder
 @DynamicInsert
 @Data
+@Table(name = "user")
 public class User {
 
     @Id
