@@ -70,10 +70,10 @@ const Notice = () => {
       <Table striped bordered hover>
         <thead>
           <tr>
-            <th>#</th>
-            <th>Header</th>
-            <th>Header</th>
-            <th>Header</th>
+            <th>번호</th>
+            <th>내용</th>
+            <th>생성날짜</th>
+            <th>만료날짜</th>
           </tr>
         </thead>
         <tbody>
