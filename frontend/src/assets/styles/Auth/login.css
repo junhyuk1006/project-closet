@@ -1,84 +1,82 @@
-.signin-container {
-    height: 100%;
-    margin-top: 150px;
-    margin-bottom: 200px;
-    background-color: #ffffff !important; /* 우선순위를 강제로 높임 */
+html,
+body {
+  height: 100%;
 }
 
-.signin-container .container {
-    max-width: 600px;
+/* 부트스트랩의 container 속성과 충돌하여 네이밍을 변경하였습니다. */
+.login-container {
+  max-width: 600px;
 }
 
-.signin-container .form-signin {
-    max-width: 330px;
-    padding: 1rem;
-    margin: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.form-signin {
+  max-width: 330px;
+  padding: 1rem;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.signin-container .form-signin .form-floating:focus-within {
-    z-index: 2;
+.form-signin .form-floating:focus-within {
+  z-index: 2;
 }
 
-.signin-container .form-signin input[type='email'] {
-    margin-bottom: -1px;
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
+.form-signin input[type='email'] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
 }
 
-.signin-container .form-signin input[type='password'] {
-    margin-bottom: 10px;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
+.form-signin input[type='password'] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
 }
 
 /* 모바일 (768px 이하) */
 @media (max-width: 768px) {
-    .signin-container .form-signin {
-        max-width: 100%;
-        padding: 2rem;
-        margin: 1rem;
-    }
+  .form-signin {
+    max-width: 100%; /* 화면 크기에 맞게 폼 확장 */
+    padding: 2rem; /* 여백 추가 */
+    margin: 1rem; /* 모바일 화면에서 폼 주변에 여백 */
+  }
 
-    .signin-container .form-signin input[type='email'],
-    .signin-container .form-signin input[type='password'] {
-        font-size: 1rem;
-        padding: 0.75rem;
-    }
+  .form-signin input[type='email'],
+  .form-signin input[type='password'] {
+    font-size: 1rem; /* 입력 필드 텍스트 크기 조정 */
+    padding: 0.75rem; /* 내부 여백 확대 */
+  }
 
-    .signin-container .form-signin button {
-        font-size: 1rem;
-        padding: 0.75rem;
-    }
-
-    .signin-container .inputform {
-        flex: 0 0 auto;
-        width: 58.33333333%;
-        margin-left: 160px;
-    }
+  .form-signin button {
+    font-size: 1rem; /* 버튼 텍스트 크기 조정 */
+    padding: 0.75rem; /* 버튼 내부 여백 확대 */
+  }
+  .inputform {
+    flex: 0 0 auto;
+    width: 58.33333333%;
+    margin-left: 160px;
+  }
 }
 
 /* 작은 모바일 (480px 이하) */
 @media (max-width: 480px) {
-    .signin-container .form-signin {
-        padding: 1rem;
-        margin: 0.5rem;
-    }
+  .form-signin {
+    padding: 1rem; /* 더 작은 여백 */
+    margin: 0.5rem; /* 주변 여백 축소 */
+  }
 
-    .signin-container .form-signin h1 {
-        font-size: 1.5rem;
-    }
+  .form-signin h1 {
+    font-size: 1.5rem; /* 제목 크기 축소 */
+  }
 
-    .signin-container .form-signin input[type='email'],
-    .signin-container .form-signin input[type='password'] {
-        font-size: 0.9rem;
-        padding: 0.5rem;
-    }
+  .form-signin input[type='email'],
+  .form-signin input[type='password'] {
+    font-size: 0.9rem; /* 입력 필드 텍스트 크기 축소 */
+    padding: 0.5rem; /* 내부 여백 축소 */
+  }
 
-    .signin-container .form-signin button {
-        font-size: 0.9rem;
-        padding: 0.5rem;
-    }
+  .form-signin button {
+    font-size: 0.9rem; /* 버튼 텍스트 크기 축소 */
+    padding: 0.5rem; /* 버튼 내부 여백 축소 */
+  }
 }

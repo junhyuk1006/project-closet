@@ -1,7 +1,6 @@
 import React, { useRef } from 'react';
 import '../../components/SignUp';
-import '../../assets/signup.css';
-// import '../../assets/styles/Auth/signup.css';
+import '../../assets/styles/Auth/signup.css';
 import closetImage from '../../assets/closet.png'; // 이미지 경로를 import
 
 const Checkout = () => {

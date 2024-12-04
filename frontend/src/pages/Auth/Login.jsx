@@ -1,10 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import 'bootstrap/dist/js/bootstrap.bundle.min.js'; // Bootstrap JS
-import 'bootstrap/dist/css/bootstrap.min.css'; // Bootstrap CSS
-import 'bootstrap-icons/font/bootstrap-icons.css'; // Bootstrap Icons
-import '../../assets/login.css'; // Custom CSS
-// import '../../assets/styles/Auth/login.css';
+import '../../assets/styles/Auth/login.css';
 import closetImage from '../../assets/closet.png'; // 이미지 경로
 
 const SignIn = () => {
