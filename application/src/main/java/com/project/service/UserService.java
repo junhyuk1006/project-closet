@@ -4,6 +4,7 @@ import com.project.domain.User;
 import com.project.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Slf4j // 로깅 객체 자동 생성 (log 변수 사용 가능)
@@ -30,8 +31,15 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User getByCredentials(final String username, final String password) {
-        // 사용자 이름과 비밀번호로 조회
-        return userRepository.findByUsernameAndPassword(username, password);
+    public User getByCredentials(final String username, final String password,
+                                 final PasswordEncoder encoder) {
+
+        final User originalUser = userRepository.findByUsername(username);
+
+        // matches 메소드를 이용해 패스워드가 같은지 확인
+        if(originalUser != null && encoder.matches(password, originalUser.getPassword())) {
+            return originalUser;
+        }
+        return null;
     }
 }

@@ -214,6 +214,20 @@ const Checkout = () => {
           회원가입
         </button>
       </form>
+      <div className="my-5 pt-5 text-body-secondary text-center text-small">
+        <p className="mb-1">&copy; 2024 CLOSET</p>
+        <ul className="list-inline">
+          <li className="list-inline-item">
+            <a href="#">개인정보처리방침</a>
+          </li>
+          <li className="list-inline-item">
+            <a href="#">이용약관</a>
+          </li>
+          <li className="list-inline-item">
+            <a href="#">고객센터</a>
+          </li>
+        </ul>
+      </div>
     </div>
   );
 };
