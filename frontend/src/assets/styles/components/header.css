@@ -81,12 +81,24 @@
 .menu-mobile {
   width: 100%;
   background-color: white;
+  position: absolute;
+  z-index: 2000;
 }
 
 .menu-mobile ul {
   padding-left: 0;
 }
 
+/* 모바일 Topbar */
+.left-top-bar {
+  justify-content: flex-start;
+}
+
+.right-top-bar {
+  justify-content: flex-end;
+}
+
+/* 모바일 드롭다운 메뉴 */
 .main-menu-m {
   padding-top: 10px;
   padding-bottom: 10px;
@@ -196,6 +208,9 @@
     display: none;
   }
 }
+
+/*[ Header Mobile end ]
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
 
 .logo img {
   width: auto !important;
