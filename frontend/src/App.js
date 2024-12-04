@@ -75,7 +75,7 @@ const AppRoutes = () => (
         {/**./pages/admin */}
         {renderRoute('/admin/*', <Admin />, false)} {/* 관리자 페이지 */}
         {/** ./pages/Other  */}
-        {renderRoute('/Detail', <Detail />)} {/* 상품 상세 페이지 */}
+        {renderRoute('/Detail/*', <Detail />)} {/* 상품 상세 페이지 */}
         {renderRoute('/Recommend', <Recommend />)} {/* 추천 페이지 */}
         {renderRoute('/ShoppingCart', <ShoppingCart />)} {/* 장바구니 페이지 */}
       </Routes>

@@ -33,113 +33,113 @@ function Home() {
   const products = [
     {
       id: 1,
-      name: 'Esprit Ruffle Shirt',
-      category: 'women',
+      name: '[CL86] 스탠다드핏 라운드넥 무지 티셔츠',
+      category: 'top',
       price: '20,000',
       image: 'images/product-01.jpg',
     },
     {
       id: 2,
-      name: 'Herschel supply',
-      category: 'women',
+      name: '[CL12] 케이트 레이어드 셔츠',
+      category: 'top',
       price: '40,000',
       image: 'images/product-02.jpg',
     },
     {
       id: 3,
-      name: 'Only Check Trouser',
-      category: 'men',
+      name: '[CL91] 프리미엄 체크 셔츠',
+      category: 'top',
       price: '35,000',
       image: 'images/product-03.jpg',
     },
     {
       id: 4,
-      name: 'Classic Trench Coat',
-      category: 'women',
+      name: '[CL2] 헨더슨 소프트 캐시미어 겨울 코트',
+      category: 'outer',
       price: '90,000',
       image: 'images/product-04.jpg',
     },
     {
       id: 5,
-      name: 'Front Pocket Jumper',
-      category: 'women',
+      name: '[CL51] 디토 H라인 스커트',
+      category: 'skirt',
       price: '45,000',
       image: 'images/product-05.jpg',
     },
     {
       id: 6,
-      name: 'Vintage Inspired Classic',
-      category: 'watches',
+      name: '[CL49] TimeQuartz 가죽 손목 패션시계',
+      category: 'accessory',
       price: '120,000',
       image: 'images/product-06.jpg',
     },
     {
       id: 7,
-      name: 'Shirt in Stretch Cotton',
-      category: 'women',
+      name: '[CL102] 멜버른 체크 셔츠',
+      category: 'outer',
       price: '70,000',
       image: 'images/product-07.jpg',
     },
     {
       id: 8,
-      name: 'Pieces Metallic Printed',
-      category: 'women',
+      name: '[CL62] 뮬리 프린팅 루즈핏 셔츠',
+      category: 'top',
       price: '25,000',
       image: 'images/product-08.jpg',
     },
     {
       id: 9,
-      name: 'Converse All Star Hi Plimsolls',
+      name: '[CL52] 컨버스 하이탑 스니커즈',
       category: 'shoes',
       price: '95,000',
       image: 'images/product-09.jpg',
     },
     {
       id: 10,
-      name: 'Femme T-Shirt In Stripe',
-      category: 'women',
+      name: '[CL92] 슬림핏 세미크롭 반팔티',
+      category: 'top',
       price: '35,000',
       image: 'images/product-10.jpg',
     },
     {
       id: 11,
-      name: 'Herschel supply',
-      category: 'men',
+      name: '[CL102] 모노 인생 클래식 체크셔츠',
+      category: 'top',
       price: '80,000',
       image: 'images/product-11.jpg',
     },
     {
       id: 12,
-      name: 'Herschel supply',
-      category: 'men',
+      name: '[CL45] 맨즈 가죽 벨트',
+      category: 'accessory',
       price: '80,000',
       image: 'images/product-12.jpg',
     },
     {
       id: 13,
-      name: 'T-Shirt with Sleeve',
-      category: 'women',
+      name: '[CL97] 데이진 히든밴딩 슬림 일자 팬츠',
+      category: 'pants',
       price: '25,000',
       image: 'images/product-13.jpg',
     },
     {
       id: 14,
-      name: 'Pretty Little Thing',
-      category: 'women',
+      name: '[CL23] 러브유 오프넥 셔츠',
+      category: 'top',
       price: '70,000',
       image: 'images/product-14.jpg',
     },
     {
       id: 15,
-      name: 'Mini Silver Mesh Watch',
-      category: 'watches',
+      name: '[CL71] TimeQuartz 메탈 클래식 시계',
+      category: 'accessory',
       price: '110,000',
       image: 'images/product-15.jpg',
     },
     {
       id: 16,
-      name: 'Square Neck Back',
-      category: 'women',
+      name: '[CL36] 니브 투웨이 밴딩 팬츠',
+      category: 'pants',
       price: '35,000',
       image: 'images/product-16.jpg',
     },
@@ -193,7 +193,7 @@ function Home() {
                     </span>
 
                     <span className="block1-info stext-102 trans-04">
-                      Spring 2018
+                      Spring 2024
                     </span>
                   </div>
 
@@ -221,7 +221,7 @@ function Home() {
                     </span>
 
                     <span className="block1-info stext-102 trans-04">
-                      Spring 2018
+                      Spring 2024
                     </span>
                   </div>
 

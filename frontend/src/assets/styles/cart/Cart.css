@@ -1,0 +1,4 @@
+/* 부트스트랩 버전 차이로 잘못된 padding 스타일이 적용되어 있습니다. (padding-left: 2rem) */
+.header-cart-content ul {
+  padding-left: 0;
+}

@@ -141,7 +141,7 @@ function Header() {
                   <Link to="/shop">상의</Link>
                 </li>
                 <li>
-                  <Link to="/shop">하의</Link>
+                  <Link to="/shop">바지</Link>
                 </li>
                 <li>
                   <Link to="/shop">치마</Link>
