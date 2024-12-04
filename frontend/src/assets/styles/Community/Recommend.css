@@ -1,4 +1,4 @@
-@import "~spoqa-han-sans/css/SpoqaHanSansNeo.css";
+@import url('../../../../node_modules/spoqa-han-sans/css/SpoqaHanSansNeo.css');
 
 body {
     font-family: 'Spoqa Han Sans Neo', sans-serif;

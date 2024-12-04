@@ -11,22 +11,28 @@ import 'material-design-iconic-font/dist/css/material-design-iconic-font.min.css
 import Home from './pages/main/Home';
 
 /** ./pages/auth  */
-import Login from './pages/auth/Login';
-import SignUp from './pages/auth/SignUp';
+import Login from './pages/Auth/Login';
+import SignUp from './pages/Auth/SignUp';
 
 /** ./pages/MyPage  */
 import MyPoint from './pages/mypage/MyPoint';
 import MyPageHome from './pages/mypage/MyPageHome';
 import MemberInfo from './pages/mypage/MemberInfo';
-import MyInquirement from './pages/mypage/MyInquirement';
+
+/** ./pages/Admin  */
+import Admin from './pages/admin/Admin';
+
 /** ./pages/Other  */
 import Detail from './pages/DetailItem/Detail';
 import Recommend from './pages/comunity/recommend/Recommend';
 import ShoppingCart from './pages/cart/ShoppingCart';
 
 // 공통 애니메이션과 레이아웃
-import Layout from './store/Layout'; // Header/Footer 포함 여부를 제어하는 레이아웃
-import Animation from './hooks/Animation'; // 페이지 전환 애니메이션 효과
+import Layout from './layouts/Layout'; // Header/Footer 포함 여부를 제어하는 레이아웃
+import Animation from './hooks/Animation/Animation'; // 페이지 전환 애니메이션 효과
+import Guide from './pages/main/Guide';
+import Agreement from './pages/main/Agreement';
+import Privacy from './pages/main/Privacy';
 
 /**
  * 공통적으로 사용하는 Route 생성 함수
@@ -52,35 +58,26 @@ const renderRoute = (path, component, includeHeaderFooter = true) => (
 
 const AppRoutes = () => (
   <Router>
-    {/* 애니메이션으로 감싸 모든 페이지 전환에 효과 적용 */}
     <Animation>
       <Routes>
-        {/* 각 경로별 컴포넌트 연결 */}
+        {/** ./pages/main */}
         {renderRoute('/', <Home />)} {/* 메인 페이지 */}
-        {renderRoute('/Detail', <Detail />)} {/* 상품 상세 페이지 */}
-        {renderRoute(
-          '/Recommend',
-          <Recommend />
-        )} {/* 추천 페이지 */}
-        {renderRoute(
-          '/ShoppingCart',
-          <ShoppingCart />
-        )} {/* 장바구니 페이지 */}
-        {renderRoute(
-          '/MyPageHome',
-          <MyPageHome />
-        )} {/* 마이페이지 홈 */}
+        {renderRoute('/guide', <Guide />)} {/* 이용안내 페이지 */}
+        {renderRoute('/agreement', <Agreement />)} {/* 이용약관 페이지 */}
+        {renderRoute('/privacy', <Privacy />)} {/* 개인정보처리방침 페이지 */}
+        {/** ./pages/auth */}
         {renderRoute('/Login', <Login />)} {/* 로그인 페이지 */}
         {renderRoute('/SignUp', <SignUp />)} {/* 회원가입 페이지 */}
+        {/** ./pages/MyPage */}
+        {renderRoute('/MyPageHome', <MyPageHome />)} {/* 마이페이지 홈 */}
         {renderRoute('/MyPoint', <MyPoint />)} {/* 포인트 페이지 */}
-        {renderRoute(
-          '/MemberInfo',
-          <MemberInfo />
-        )} {/* 포인트 페이지 */}
-        {renderRoute(
-          '/MyInquirement',
-          <MyInquirement />
-        )} {/* 포인트 페이지 */}
+        {renderRoute('/MemberInfo', <MemberInfo />)} {/* 회원정보 페이지 */}
+        {/**./pages/admin */}
+        {renderRoute('/admin/*', <Admin />, false)} {/* 관리자 페이지 */}
+        {/** ./pages/Other  */}
+        {renderRoute('/Detail', <Detail />)} {/* 상품 상세 페이지 */}
+        {renderRoute('/Recommend', <Recommend />)} {/* 추천 페이지 */}
+        {renderRoute('/ShoppingCart', <ShoppingCart />)} {/* 장바구니 페이지 */}
       </Routes>
     </Animation>
   </Router>

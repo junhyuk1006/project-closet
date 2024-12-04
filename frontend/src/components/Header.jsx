@@ -1,5 +1,13 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+
+// import CSS
+import '../assets/styles/components/header.css';
+
+// import Image
+import closetImage from '../assets/closet-removebg.png';
+
+// import Hooks
 import useFixedHeader from '../hooks/useFixedHeader';
 import Cart from '../pages/cart/Cart';
 
@@ -27,8 +35,6 @@ function Header() {
               <Link to="/Login" className="flex-c-m trans-04 p-lr-25">
                 Login
               </Link>
-              <a className="flex-c-m trans-04 p-lr-25">EN</a>
-              <a className="flex-c-m trans-04 p-lr-25">USD</a>
             </div>
           </div>
         </div>
@@ -48,10 +54,7 @@ function Header() {
         >
           <nav className="limiter-menu-desktop container">
             <Link to="/" className="logo">
-              <img
-                src={`${process.env.PUBLIC_URL}/images/icons/logo-01.png`}
-                alt="LOGO"
-              />
+              <img src={closetImage} alt="LOGO" />
             </Link>
 
             <div className="menu-desktop">
