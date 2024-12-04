@@ -4,6 +4,23 @@ import MyPageHeader from '../../components/myPage/MyPageHeader';
 const MemberInfo = () => {
   const [address, setAddress] = useState([]);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [addressResponse] = await Promise.all([
+          fetch('http://localhost:80/api/mypage/getAddress?userId=1'),
+        ]);
+
+        const address = await addressResponse.json();
+
+        setAddress(address);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
     <div>
       <div>
@@ -11,14 +28,21 @@ const MemberInfo = () => {
       </div>
       <div className="inquirement-label">회원정보</div>
       <div className="rounded-box"></div>
+
       <div className="inquirement-label">배송지 관리</div>
-      <div className="rounded-box">
-        <div className="represent-address">대표</div>
-        <div className="other-address">상세주소</div>
-        <div className="address-buttons">
-          <button>수정</button>
-          <button>삭제</button>
-        </div>
+      <div className="delivery-rounded-box">
+        {address.map((address) => (
+          <div key={address.id} className="address-block">
+            <div className="represent-address">
+              {address.isRepresent ? '대표' : '일반'}
+            </div>
+            <div className="other-address">{address.address}</div>
+            <div className="address-buttons">
+              <button>대표주소지 등록</button>
+              <button>삭제</button>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
