@@ -35,7 +35,7 @@ const MyPageHome = () => {
       icon: 'bi-search',
       title: '문의내역',
       text: '나의 문의내역 조회',
-      link: '/Inquiries',
+      link: '/MyInquirement',
     },
     {
       icon: 'bi-piggy-bank',
