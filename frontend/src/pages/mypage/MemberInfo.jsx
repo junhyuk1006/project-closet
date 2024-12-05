@@ -30,13 +30,13 @@ const MemberInfo = () => {
   }, []);
   const DeleteRepresentativeAddress = (id) => {
     if (generalAddresses.length === 0) {
-      // '==' 대신 '==='을 사용하는 것이 좋습니다.
       fetch(`http://localhost:80/api/mypage/deleteAddress/${id}`, {
         method: 'DELETE',
       })
         .then((response) => {
           if (response.ok) {
-            console.log('삭제 완료');
+            // representativeAddress 는 단일 객체이므로 삭제 시 ,바로 null처리해서 상태 update하면 됨
+            setRepresentativeAddress(null);
           } else {
             console.error('삭제 실패', response.status);
           }
@@ -56,9 +56,12 @@ const MemberInfo = () => {
       .then((response) => {
         if (response.ok) {
           console.log('일반 주소 삭제 완료');
-          // 삭제 성공 시 화면에서 제거 (state 업데이트)
-          setGeneralAddresses((prevAddresses) =>
-            prevAddresses.filter((address) => address.id !== id)
+          // prevGeneralAddresses은 삭제 이전의 배열을 저장하고 있고 삭제하고자 한 id와 이전 배열id가 일치하지않아야만 setGeneralAddress에 저장
+          // 삭제한 id가 2라면 이전 데이터에서 id가 2와 같은 데이터(삭제 요청된 데이터)만 빼고 prevGeneralAddresses에 담아서 출력.
+          setGeneralAddresses((prevGeneralAddresses) =>
+            prevGeneralAddresses.filter(
+              (GeneralAddresses) => GeneralAddresses.id !== id
+            )
           );
         } else {
           console.error('일반 주소 삭제 실패');
@@ -82,7 +85,7 @@ const MemberInfo = () => {
           <div className="mypage-label2">등록된 배송지가 없습니다.</div>
         ) : (
           <>
-            {/* 대표 주소 */}
+            {/* 대표 주소 -> 단일 객체*/}
             <div className="address-block">
               <div className="represent-address">대표주소지</div>
               <div className="other-address">
@@ -100,16 +103,16 @@ const MemberInfo = () => {
               </div>
             </div>
 
-            {/* 일반 주소 */}
-            {generalAddresses.map((address) => (
-              <div key={address.id} className="address-block">
+            {/* 일반 주소  -> 배열로 반환*/}
+            {generalAddresses.map((generalAddresses) => (
+              <div key={generalAddresses.id} className="address-block">
                 <div className="represent-address">일반</div>
-                <div className="other-address">{address.address}</div>
+                <div className="other-address">{generalAddresses.address}</div>
                 <div className="address-buttons">
                   <button className="mypage-button">대표주소지 등록</button>
                   <button
                     className="mypage-button"
-                    onClick={() => DeleteGeneralAddress(address?.id)}
+                    onClick={() => DeleteGeneralAddress(generalAddresses?.id)}
                   >
                     삭제
                   </button>
