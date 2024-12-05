@@ -1,6 +1,332 @@
 .mypage-line {
-    height: 1px; /* 선의 두께 */
-    background-color: #e8e8e8; /* 선의 색상 */
-    width: 100%; /* 선의 너비 */
-    margin: 20px 0; /* 위아래 여백 */
+  height: 1px; /* 선의 두께 */
+  background-color: #e8e8e8; /* 선의 색상 */
+  width: 100%; /* 선의 너비 */
+  margin: 20px 0; /* 위아래 여백 */
+}
+
+.point-label1 {
+  padding-left: 20px;
+  font-size: 20px;
+  display: flex;
+  justify-content: center; /* 가로 방향 중앙 정렬 */
+  align-items: center; /* 세로 방향 중앙 정렬 */
+}
+
+@media (max-width: 768px) {
+  .point-label1 {
+    padding-left: 10px; /* 좁은 화면에서는 여백 */
+    flex-direction: column; /* 세로 정렬로 변경 */
+    justify-content: center; /* 세로 정렬 상태에서도 가로 중앙 정렬 유지 */
+    align-items: center; /* 세로 방향 중앙 정렬 */
+  }
+}
+
+@media (max-width: 480px) {
+  .point-label1 {
+    padding-left: 5px; /* 여백 줄임 */
+    font-size: 18px; /* 텍스트 크기 줄임 */
+    justify-content: center; /* 가로 중앙 정렬 */
+    align-items: center; /* 세로 중앙 정렬 */
+  }
+}
+
+.point-label2 {
+  padding-left: 20px;
+  font-size: 20px;
+  display: flex;
+  justify-content: center; /* 가로 방향 중앙 정렬 */
+  align-items: center; /* 세로 방향 중앙 정렬 */
+}
+
+@media (max-width: 768px) {
+  .point-label2 {
+    padding-left: 10px; /* 좁은 화면에서는 여백 */
+    flex-direction: column; /* 세로 정렬로 변경 */
+    justify-content: center; /* 세로 정렬 상태에서도 가로 중앙 정렬 유지 */
+    align-items: center; /* 세로 방향 중앙 정렬 */
+  }
+}
+
+@media (max-width: 480px) {
+  .point-label2 {
+    padding-left: 5px; /* 여백 줄임 */
+    font-size: 18px; /* 텍스트 크기 줄임 */
+    justify-content: center; /* 가로 중앙 정렬 */
+    align-items: center; /* 세로 중앙 정렬 */
+  }
+}
+
+.point-list {
+  width: 100%;
+  max-width: 500px; /* 최대 너비 설정 */
+  margin: 0 auto; /* 가운데 정렬 */
+  padding: 10px;
+  background-color: #f9f9f9; /* 배경색 */
+  border-radius: 8px; /* 둥근 모서리 */
+}
+
+/* 각 항목 스타일 */
+.point-item {
+  display: flex;
+  justify-content: space-between; /* 좌우로 정렬 */
+  align-items: center; /* 수직 가운데 정렬 */
+  padding: 10px 0;
+  border-bottom: 1px solid #e0e0e0; /* 구분선 */
+}
+
+.point-item:last-child {
+  border-bottom: none; /* 마지막 항목은 구분선 제거 */
+}
+
+/* 왼쪽 정보 (날짜와 텍스트) */
+.point-info {
+  display: flex;
+  flex-direction: column; /* 세로 정렬 */
+}
+
+.date {
+  font-size: 14px; /* 날짜 글씨 크기 */
+  color: #999; /* 회색 */
+  margin-bottom: 4px;
+}
+
+.description {
+  font-size: 16px; /* 텍스트 크기 */
+  color: #333; /* 진한 색상 */
+}
+
+/* 오른쪽 포인트 */
+.points {
+  font-size: 18px; /* 포인트 글씨 크기 */
+  font-weight: bold; /* 강조 */
+  color: #007bff; /* 파란색 */
+}
+
+.point-label1 strong {
+  margin-left: 10px; /* 원하는 만큼 공백을 조정 */
+  color: #007bff;
+}
+
+.point-label2 strong {
+  margin-left: 10px; /* 원하는 만큼 공백을 조정 */
+  color: #ed623d;
+}
+
+/* 문의내역 css */
+.inquirement-label {
+  padding-left: 20px;
+  font-size: 20px;
+  display: flex;
+  justify-content: center; /* 가로 방향 중앙 정렬 */
+  align-items: center; /* 세로 방향 중앙 정렬 */
+  font-weight: bold;
+  margin-bottom: 50px;
+  margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+  .inquirement-label {
+    padding-left: 10px; /* 좁은 화면에서는 여백 */
+    flex-direction: column; /* 세로 정렬로 변경 */
+    justify-content: center; /* 세로 정렬 상태에서도 가로 중앙 정렬 유지 */
+    align-items: center; /* 세로 방향 중앙 정렬 */
+    font-weight: bold;
+  }
+}
+
+@media (max-width: 480px) {
+  .inquirement-label {
+    padding-left: 5px; /* 여백 줄임 */
+    font-size: 18px; /* 텍스트 크기 줄임 */
+    justify-content: center; /* 가로 중앙 정렬 */
+    align-items: center; /* 세로 중앙 정렬 */
+    font-weight: bold;
+  }
+}
+
+/* 각 박스를 화면 중앙에 위치시키는 스타일 */
+.rounded-box {
+  width: 80%; /* 화면 크기에 비례하여 크기 조정 */
+  max-width: 800px; /* 최대 너비 */
+  height: 50%; /* 높이 비율 */
+  background-color: white; /* 배경색을 하얀색으로 설정 */
+  border-radius: 15px; /* 모서리 둥글기 */
+  padding: 20px;
+  color: black; /* 글자 색상 */
+  box-sizing: border-box; /* padding을 포함한 크기 계산 */
+  text-align: center; /* 글자를 중앙에 배치 */
+  border: 2px solid #b0b0b0; /* 회색 테두리 */
+
+  /* 화면 중앙에 위치시키기 위한 flexbox 스타일 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto; /* 수평 중앙 정렬 */
+  margin-bottom: 50px;
+
+  /* 텍스트가 박스 밖으로 삐져나가지 않도록 설정 */
+  overflow-wrap: break-word; /* 긴 단어를 줄바꿈 */
+  word-wrap: break-word; /* 구형 브라우저 지원 */
+  word-break: break-word; /* 긴 텍스트 강제 줄바꿈 */
+  overflow: hidden; /* 내용이 박스를 넘지 않도록 */
+}
+
+/* 화면 크기가 768px 이상일 때 (태블릿 이상) */
+@media (min-width: 768px) {
+  .rounded-box {
+    width: 70%; /* 화면 크기에 비례하여 크기 조정 */
+    max-width: 600px; /* 최대 너비 */
+    height: 40%; /* 높이 비율 */
+    max-height: 300px; /* 최대 높이 */
+    border-radius: 20px; /* 둥글기 증가 */
+    margin-bottom: 50px;
+  }
+}
+
+/* 화면 크기가 1024px 이상일 때 (데스크탑 이상) */
+@media (min-width: 1024px) {
+  .rounded-box {
+    width: 60%; /* 화면 크기에 비례하여 크기 조정 */
+    max-width: 1000px; /* 최대 너비 */
+    height: 60%; /* 높이 비율 */
+    max-height: 00px; /* 최대 높이 */
+    border-radius: 25px; /* 둥글기 증가 */
+    margin-bottom: 50px;
+  }
+}
+
+/* 회원정보 배송지 목록 */
+.delivery-rounded-box {
+  width: 80%;
+  max-width: 800px;
+  background-color: white;
+  border-radius: 15px;
+  padding: 20px;
+  color: black;
+  box-sizing: border-box;
+  border: 2px solid #b0b0b0;
+  margin: 0 auto;
+  margin-bottom: 10px;
+}
+
+.address-block {
+  display: flex; /* 가로 정렬 (기본) */
+  flex-direction: row; /* 한 줄에 나란히 배치 */
+  justify-content: space-between; /* 좌우 공간 분배 */
+  align-items: center; /* 세로 가운데 정렬 */
+  border-bottom: 1px solid #ccc; /* 각 블록 구분선 */
+  padding: 10px 0; /* 위아래 여백 */
+}
+
+.represent-address {
+  flex: 1; /* 왼쪽 */
+  text-align: left; /* 왼쪽 정렬 */
+  font-weight: bold;
+}
+
+.other-address {
+  flex: 2; /* 가운데 */
+  text-align: center; /* 가운데 정렬 */
+  overflow-wrap: break-word; /* 긴 단어 줄바꿈 */
+  word-wrap: break-word; /* 구형 브라우저 지원 */
+  word-break: break-word; /* 강제 줄바꿈 */
+}
+
+.address-buttons {
+  flex: 1; /* 오른쪽 */
+  display: flex; /* 가로 정렬 */
+  justify-content: flex-end; /* 오른쪽 정렬 */
+  gap: 10px; /* 버튼 간격 */
+}
+
+button {
+  padding: 5px 10px;
+  margin: 0;
+  background-color: #ebebeb;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #d4d4d4;
+}
+
+/* 반응형 - 화면 너비가 768px 이하일 때 */
+@media (max-width: 768px) {
+  .address-block {
+    flex-direction: column; /* 세로 정렬 */
+    align-items: flex-start; /* 왼쪽 정렬 */
+    gap: 10px; /* 각 요소 간 간격 */
+    padding: 15px 0;
+  }
+
+  .represent-address {
+    text-align: left; /* 텍스트 왼쪽 정렬 */
+    width: 100%; /* 줄바꿈을 위해 전체 너비 사용 */
+    margin-bottom: 5px; /* 아래 여백 */
+  }
+
+  .other-address {
+    text-align: left; /* 텍스트 왼쪽 정렬 */
+    width: 100%; /* 줄바꿈을 위해 전체 너비 사용 */
+    margin-bottom: 5px; /* 아래 여백 */
+  }
+
+  .address-buttons {
+    justify-content: flex-start; /* 버튼을 왼쪽 정렬 */
+    width: 100%; /* 줄바꿈을 위해 전체 너비 사용 */
+    gap: 10px; /* 버튼 간 간격 */
+  }
+
+  button {
+    width: auto; /* 버튼 크기를 자동으로 조정 */
+  }
+}
+
+/* 반응형 - 화면 너비가 480px 이하일 때 */
+@media (max-width: 480px) {
+  .address-block {
+    gap: 8px; /* 요소 간 간격 줄임 */
+    padding: 10px 0; /* 위아래 여백 줄임 */
+  }
+
+  .represent-address,
+  .other-address,
+  .address-buttons {
+    margin-bottom: 8px; /* 요소 간 여백 조정 */
+  }
+
+  button {
+    width: 100%; /* 버튼을 가로 전체 크기로 확장 */
+    margin-bottom: 5px; /* 버튼 간 여백 */
+  }
+
+  .address-buttons {
+    flex-direction: column; /* 버튼을 세로로 배치 */
+  }
+}
+
+.delivery-button {
+  cursor: pointer;
+  margin-top: 12px;
+  background-color: black;
+  color: white;
+}
+
+/* 문의내역 css */
+.mypage-label1 {
+  padding-left: 20px;
+  font-size: 20px;
+  display: flex;
+  justify-content: center; /* 가로 방향 중앙 정렬 */
+  align-items: center; /* 세로 방향 중앙 정렬 */
+  font-weight: bold;
+  margin-bottom: 50px;
+  margin-top: 20px;
+}
+
+.mypage-label2 {
+  text-align: center; /* 가운데 정렬 */
 }

@@ -1,111 +1,193 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+
+// import CSS
+import '../assets/styles/components/header.css';
+import '../assets/vendor/css-hamburgers/hamburgers.min.css';
+
+// import Image
+import closetImage from '../assets/closet-removebg.png';
+
+// import Hooks
 import useFixedHeader from '../hooks/useFixedHeader';
 import Cart from '../pages/cart/Cart';
-import closetImage from '../assets/closet-removebg.png'
+import MobileMenu from './main/MobileMenu';
 
 function Header() {
-    const isAtTop = useFixedHeader();
-    const [isCartOpen, setIsCartOpen] = useState(false);
+  const isAtTop = useFixedHeader();
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-    // 장바구니 열기/닫기 토글
-    const toggleCart = (prev) => {
-        console.log(`장바구니 토글 (isCartOpen): ${isCartOpen}`);
-        setIsCartOpen(!prev);
-    };
+  // 장바구니 열기/닫기 토글
+  const toggleCart = (prev) => {
+    console.log(`장바구니 토글 (isCartOpen): ${isCartOpen}`);
+    setIsCartOpen(!prev);
+  };
 
-    return (
-        <header className="header">
-            <Cart isCartOpen={isCartOpen} toggleCart={toggleCart} />
-            <div className="container-menu-desktop">
-                <div className="top-bar">
-                    <div className="content-topbar flex-sb-m h-full container">
-                        <div className="left-top-bar">
-                        </div>
-                        <div className="right-top-bar flex-w h-full">
-                            <Link to="/MyPageHome" className="flex-c-m trans-04 p-lr-25">
-                                My Account
-                            </Link>
-                            <Link to="/Login" className="flex-c-m trans-04 p-lr-25">
-                                Login
-                            </Link>
-                            <a className="flex-c-m trans-04 p-lr-25">EN</a>
-                            <a className="flex-c-m trans-04 p-lr-25">USD</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div
-                    className="wrap-menu-desktop"
-                    style={{
-                        top: isAtTop ? '40px' : '0',
-                        backgroundColor: isAtTop ? 'transparent' : '#fff',
-                        height: isAtTop ? '84px' : '64px',
-                        boxShadow: isAtTop ? 'none' : '0 4px 6px rgba(0, 0, 0, 0.1)',
-                        opacity: isAtTop ? '1' : '0.95',
-                        transition: isAtTop
-                            ? 'top 0.2s ease-out, background-color 0.5s ease-in-out, height 0.5s ease-in-out, box-shadow 0.5s ease-in-out, opacity 0.5s ease-in-out'
-                            : 'top 0.1s ease-in, background-color 0.5s ease-in-out, height 0.5s ease-in-out, box-shadow 0.5s ease-in-out, opacity 0.5s ease-in-out',
-                    }}
-                >
-                    <nav className="limiter-menu-desktop container">
-                        <Link to="/" className="logo">
-                            <img
-                                src={closetImage}
-                                alt="LOGO"
-                            />
-                        </Link>
-
-                        <div className="menu-desktop">
-                            <ul className="main-menu">
-                                <li>
-                                    <a href="/shop">Shop</a>
-                                </li>
-                                <li className="label1" data-label1="hot">
-                                    <a href="/ShoppingCart">Features</a>
-                                </li>
-                                <li>
-                                    <a href="/Recommend">1:1 Recommend</a>
-                                </li>
-                                <li>
-                                    <a href="/blog">Blog</a>
-                                </li>
-                                <li>
-                                    <a href="/about">About</a>
-                                </li>
-                                <li>
-                                    <a href="/contact">Contact</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div className="wrap-icon-header flex-w flex-r-m">
-                            <div className="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
-                                <i className="zmdi zmdi-search"></i>
-                            </div>
-                            <div
-                                className="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti"
-                                onClick={() => {
-                                    console.log('Cart icon clicked');
-                                    toggleCart(isCartOpen); // 장바구니 열림 상태 토글
-                                }}
-                                style={{ cursor: 'pointer' }}
-                                data-notify="2"
-                            >
-                                <i className="zmdi zmdi-shopping-cart"></i>
-                            </div>
-                            <a
-                                href="#"
-                                className="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti"
-                                data-notify="0"
-                            >
-                                <i className="zmdi zmdi-favorite-outline"></i>
-                            </a>
-                        </div>
-                    </nav>
-                </div>
-            </div>
-        </header>
+  // 모바일 메뉴 열기/닫기 토글
+  const toggleMobileMenu = (prev) => {
+    setIsMenuOpen((prev) => !prev);
+    console.log(
+      `모바일 화면의 햄버거 버튼을 클릭하였습니다. (현재 상태: ${isMenuOpen})`
     );
+  };
+
+  return (
+    <header className="header">
+      <Cart isCartOpen={isCartOpen} toggleCart={toggleCart} />
+
+      {/* 모바일 헤더 ( 화면 너비가 991px보다 작을 때 ) */}
+      <div className="wrap-header-mobile">
+        <div className="logo-mobile">
+          <Link to="/">
+            <img src={closetImage} alt="LOGO" />
+          </Link>
+        </div>
+
+        <div className="wrap-icon-header flex-w flex-r-m m-r-15">
+          <div className="icon-header-item cl2 hov-cl1 trans-04 p-r-11 js-show-modal-search">
+            <i className="zmdi zmdi-search"></i>
+          </div>
+
+          <div
+            className="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti js-show-cart"
+            data-notify="2"
+          >
+            <i className="zmdi zmdi-shopping-cart"></i>
+          </div>
+
+          <a
+            href="#"
+            className="dis-block icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti"
+            data-notify="0"
+          >
+            <i className="zmdi zmdi-favorite-outline"></i>
+          </a>
+        </div>
+
+        <div
+          className={`btn-show-menu-mobile hamburger hamburger--squeeze ${isMenuOpen ? 'is-active' : ''}`}
+        >
+          <div className="hamburger-box" onClick={toggleMobileMenu}>
+            <div className="hamburger-inner"></div>
+          </div>
+        </div>
+      </div>
+
+      {/* 모바일 메뉴 */}
+      <MobileMenu isMenuOpen={isMenuOpen} />
+
+      {/* Modal Search */}
+      <div className="modal-search-header flex-c-m trans-04 js-hide-modal-search">
+        <div className="container-search-header">
+          <button className="flex-c-m btn-hide-modal-search trans-04 js-hide-modal-search">
+            <img src="images/icons/icon-close2.png" alt="CLOSE" />
+          </button>
+
+          <form className="wrap-search-header flex-w p-l-15">
+            <button className="flex-c-m trans-04">
+              <i className="zmdi zmdi-search"></i>
+            </button>
+            <input
+              className="plh3"
+              type="text"
+              name="search"
+              placeholder="Search..."
+            />
+          </form>
+        </div>
+      </div>
+
+      {/* 데스크탑 헤더 ( 화면 너비가 992px보다 클 때 ) */}
+      <div className="container-menu-desktop">
+        <div className="top-bar">
+          <div className="content-topbar flex-sb-m h-full container">
+            <div className="left-top-bar"></div>
+            <div className="right-top-bar flex-w h-full">
+              <Link to="/MyPageHome" className="flex-c-m trans-04 p-lr-25">
+                My Account
+              </Link>
+              <Link to="/Login" className="flex-c-m trans-04 p-lr-25">
+                Login
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        <div
+          className="wrap-menu-desktop"
+          style={{
+            top: isAtTop ? '40px' : '0',
+            backgroundColor: isAtTop ? 'transparent' : '#fff',
+            height: isAtTop ? '84px' : '64px',
+            boxShadow: isAtTop ? 'none' : '0 4px 6px rgba(0, 0, 0, 0.1)',
+            opacity: isAtTop ? '1' : '0.95',
+            transition: isAtTop
+              ? 'top 0.2s ease-out, background-color 0.5s ease-in-out, height 0.5s ease-in-out, box-shadow 0.5s ease-in-out, opacity 0.5s ease-in-out'
+              : 'top 0.1s ease-in, background-color 0.5s ease-in-out, height 0.5s ease-in-out, box-shadow 0.5s ease-in-out, opacity 0.5s ease-in-out',
+          }}
+        >
+          <nav className="limiter-menu-desktop container">
+            <Link to="/" className="logo">
+              <img src={closetImage} alt="LOGO" />
+            </Link>
+
+            <div className="menu-desktop">
+              <ul className="main-menu">
+                <li>
+                  <Link to="/shop">아우터</Link>
+                </li>
+                <li>
+                  <Link to="/shop">상의</Link>
+                </li>
+                <li>
+                  <Link to="/shop">바지</Link>
+                </li>
+                <li>
+                  <Link to="/shop">치마</Link>
+                </li>
+                <li>
+                  <Link to="/shop">신발</Link>
+                </li>
+                <li>
+                  <Link to="/shop">악세서리</Link>
+                </li>
+                {/* <li>
+                 <Link to="/ShoppingCart">장바구니</Link>
+                </li> */}
+                <li className="label1" data-label1="hot">
+                  <Link to="/Recommend">스타일링</Link>
+                </li>
+              </ul>
+            </div>
+            <div className="wrap-icon-header flex-w flex-r-m">
+              <div className="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
+                <i className="zmdi zmdi-search"></i>
+              </div>
+              <div
+                className="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti"
+                onClick={() => {
+                  console.log('Cart icon clicked');
+                  toggleCart(isCartOpen); // 장바구니 열림 상태 토글
+                }}
+                style={{ cursor: 'pointer' }}
+                data-notify="2"
+              >
+                <i className="zmdi zmdi-shopping-cart"></i>
+              </div>
+              <Link
+                to="#"
+                className="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti"
+                data-notify="0"
+              >
+                <i className="zmdi zmdi-favorite-outline"></i>
+              </Link>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </header>
+  );
 }
 
 export default Header;
