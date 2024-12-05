@@ -1,6 +1,6 @@
 import React from 'react';
 import MyPageHeader from '../../components/myPage/MyPageHeader';
-import '../../assets/styles/MyPage/MyPage.css';
+import '../../assets/styles/mypage/MyPage.css';
 
 const MyInquirement = () => {
   return (
