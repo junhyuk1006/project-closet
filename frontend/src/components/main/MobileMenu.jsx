@@ -2,7 +2,9 @@ import { Link } from 'react-router-dom';
 
 export default function MobileMenu({ isMenuOpen }) {
   return (
-    <div className={`menu-mobile ${isMenuOpen ? 'dis-block' : 'dis-none'}`}>
+    <div
+      className={`menu-mobile ${isMenuOpen ? 'dis-block show-menu-mobile' : ''}`}
+    >
       <ul className="topbar-mobile">
         <li>
           <div className="right-top-bar flex-w h-full">
