@@ -96,24 +96,36 @@ const Delivery = () => {
       <Table striped bordered hover>
         <thead>
           <tr>
-            <th>#</th>
-            <th>Header</th>
-            <th>Header</th>
-            <th>Header</th>
+            <th>번호</th>
+            <th>주문날짜</th>
+            <th>주문번호</th>
+            <th>상품이미지</th>
+            <th>상품이름</th>
+            <th>배송정보</th>
+            <th>배송조회</th>
+            <th>총주문액</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td>1</td>
-            <td>Cell</td>
-            <td>Cell</td>
-            <td>Cell</td>
+            <td>2024/12/04</td>
+            <td>24120410080576</td>
+            <td>cell</td>
+            <td>선인장 자수패치 반팔T</td>
+            <td>CJ대한통운</td>
+            <td>배송중</td>
+            <td>40,000</td>
           </tr>
           <tr>
             <td>2</td>
-            <td>Cell</td>
-            <td>Cell</td>
-            <td>Cell</td>
+            <td>2024/12/05</td>
+            <td>24120510052475</td>
+            <td>cell</td>
+            <td>우븐 숄 머플러 인디라 와인 SA-2HW362WI</td>
+            <td>CJ대한통운</td>
+            <td>배송완료</td>
+            <td>34,000</td>
           </tr>
         </tbody>
       </Table>
