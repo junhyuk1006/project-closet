@@ -16,15 +16,15 @@ spring:
   # JPA 및 Hibernate 설정
   jpa:
     hibernate:
-      ddl-auto: update # 스키마 자동 업데이트
+      ddl-auto: validate # 스키마 자동 업데이트
       naming:
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     properties:
       hibernate:
         format_sql: "true" # 출력되는 SQL 포맷팅 활성화
         dialect: org.hibernate.dialect.MySQLDialect # Hibernate가 사용할 MySQL 방언
     show-sql: "true" # 실행된 SQL 쿼리 로깅 활성화
+
 
   # 데이터 소스 및 HikariCP(DB 연결 풀) 설정
   datasource:

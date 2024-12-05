@@ -18,6 +18,7 @@ import SignUp from './pages/Auth/SignUp';
 import MyPoint from './pages/mypage/MyPoint';
 import MyPageHome from './pages/mypage/MyPageHome';
 import MemberInfo from './pages/mypage/MemberInfo';
+import MyInquirement from './pages/mypage/MyInquirement';
 
 /** ./pages/Admin  */
 import Admin from './pages/admin/Admin';
@@ -73,6 +74,8 @@ const AppRoutes = () => (
         {renderRoute('/MyPageHome', <MyPageHome />)} {/* 마이페이지 홈 */}
         {renderRoute('/MyPoint', <MyPoint />)} {/* 포인트 페이지 */}
         {renderRoute('/MemberInfo', <MemberInfo />)} {/* 회원정보 페이지 */}
+        {renderRoute('/MyInquirement', <MyInquirement />)}{' '}
+        {/* 문의내역 페이지 */}
         {/**./pages/admin */}
         {renderRoute('/admin/*', <Admin />, false)} {/* 관리자 페이지 */}
         {/** ./pages/Other  */}

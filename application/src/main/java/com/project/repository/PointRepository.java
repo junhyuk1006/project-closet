@@ -11,7 +11,7 @@
     @Repository
     public interface PointRepository  extends JpaRepository<Point, Long> {
 
-        @Query("SELECT p FROM Point p WHERE p.userId = :userId")
+        @Query("SELECT p FROM Point p WHERE p.userId = :userId ORDER BY p.createdAt DESC")
         List<Point> findByUserId(@Param("userId") long userId);
 
         @Query("SELECT SUM(CASE " +
