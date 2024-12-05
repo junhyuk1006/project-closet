@@ -19,11 +19,14 @@ public class MypageController {
     public List<Address> findByUserId(@RequestParam("userId") long userId) {
         return mypageService.findByUserId(userId);  // Address 테이블의 모든 데이터 조회
     }
-
+    
+    // 회원 주소 삭제
     @DeleteMapping("/deleteAddress/{id}")
     public void deleteByUserId(@PathVariable("id") long id) {
         mypageService.deleteById(id);
     }
+
+
 
 
 
