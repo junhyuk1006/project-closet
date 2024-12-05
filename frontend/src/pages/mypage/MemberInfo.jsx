@@ -90,6 +90,7 @@ const MemberInfo = () => {
               </div>
               <div className="address-buttons">
                 <button
+                  className="mypage-button"
                   onClick={() =>
                     DeleteRepresentativeAddress(representativeAddress?.id)
                   }
@@ -105,8 +106,11 @@ const MemberInfo = () => {
                 <div className="represent-address">일반</div>
                 <div className="other-address">{address.address}</div>
                 <div className="address-buttons">
-                  <button>대표주소지 등록</button>
-                  <button onClick={() => DeleteGeneralAddress(address?.id)}>
+                  <button className="mypage-button">대표주소지 등록</button>
+                  <button
+                    className="mypage-button"
+                    onClick={() => DeleteGeneralAddress(address?.id)}
+                  >
                     삭제
                   </button>
                 </div>
