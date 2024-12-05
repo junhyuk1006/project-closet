@@ -69,5 +69,4 @@ public class User {
 
     private String role; // 역할
 
-    private String grade; // 등급
 }
