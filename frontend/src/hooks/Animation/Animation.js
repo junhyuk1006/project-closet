@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import '../../assets/vendor/animsition/css/animsition.css';
-import { useNavigate } from 'react-router-dom';
+import '../../assets/styles/components/Animation.css';
 
 export default function Animation({ children }) {
     const [isVisible, setIsVisible] = useState(false); // fade-in 상태
     const [fadeOut, setFadeOut] = useState(false); // fade-out 상태
-    const navigate = useNavigate();
 
     useEffect(() => {
         // 컴포넌트가 렌더링된 직후 fade-in 시작
