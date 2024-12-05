@@ -29,6 +29,7 @@ public class SecurityConfig {
             // URL별 접근 권한 설정
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/", "/**", "/MyPoint","/login", "/login/oauth2/**", "/auth/signup", "/auth/signin").permitAll() // 메인 홈 및 로그인 경로 접근 허용
+                .requestMatchers("/api/itemDetail/**").permitAll() // 특정 경로 인증 없이 접근 허용
                 .requestMatchers("/admin/**").hasRole("admin") // 관리자 전용
                 .anyRequest().authenticated() // 그 외 요청은 인증 필요
             );

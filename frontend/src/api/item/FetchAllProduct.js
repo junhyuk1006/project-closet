@@ -1,8 +1,8 @@
 import React, {useEffect} from "react";
 
-function DetailAllItem ({ onItemFetch }) {
+function FetchAllProduct ({ onItemFetch }) {
     useEffect(() => {
-        fetch("http://localhost:80/api/item").then((response) => {
+        fetch("http://localhost:80/api/itemAll").then((response) => {
             if (!response.ok) {
                 throw new Error("Network response was not ok")
             }
@@ -10,6 +10,7 @@ function DetailAllItem ({ onItemFetch }) {
         }).then((data) => {
                 if(onItemFetch){
                     onItemFetch(data)
+                    console.log("data: ", data)
                 }
         }).catch((error) =>
             console.log("Error fetching item data:", error)
@@ -18,4 +19,4 @@ function DetailAllItem ({ onItemFetch }) {
     return null;
 }
 
-export default DetailAllItem;
+export default FetchAllProduct;

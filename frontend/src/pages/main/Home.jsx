@@ -15,11 +15,13 @@ import Product from '../main/Product';
 // Import Components
 import Category from '../../hooks/Category/Category';
 import FilterSearch from '../main/FilterSearch';
+import FetchAllProduct from "../../api/item/FetchAllProduct";
 
 // Function Aria
 function Home() {
   const [activeCategory, setActiveCategory] = useState('*'); // 카테고리 상태
   const [activeFilter, setActiveFilter] = useState('sortByRecent'); // 필터 상태
+  const [products, setProducts] = useState([]);
 
   const handleCategoryChange = (category) => {
     setActiveCategory(category);
@@ -29,121 +31,6 @@ function Home() {
     setActiveFilter(filter);
     console.log(`handleFilterChange에 입력된 filter: ${filter}`);
   };
-
-  const products = [
-    {
-      id: 1,
-      name: '[CL86] 스탠다드핏 라운드넥 무지 티셔츠',
-      category: 'top',
-      price: '20,000',
-      image: 'images/product-01.jpg',
-    },
-    {
-      id: 2,
-      name: '[CL12] 케이트 레이어드 셔츠',
-      category: 'top',
-      price: '40,000',
-      image: 'images/product-02.jpg',
-    },
-    {
-      id: 3,
-      name: '[CL91] 프리미엄 체크 셔츠',
-      category: 'top',
-      price: '35,000',
-      image: 'images/product-03.jpg',
-    },
-    {
-      id: 4,
-      name: '[CL2] 헨더슨 소프트 캐시미어 겨울 코트',
-      category: 'outer',
-      price: '90,000',
-      image: 'images/product-04.jpg',
-    },
-    {
-      id: 5,
-      name: '[CL51] 디토 H라인 스커트',
-      category: 'skirt',
-      price: '45,000',
-      image: 'images/product-05.jpg',
-    },
-    {
-      id: 6,
-      name: '[CL49] TimeQuartz 가죽 손목 패션시계',
-      category: 'accessory',
-      price: '120,000',
-      image: 'images/product-06.jpg',
-    },
-    {
-      id: 7,
-      name: '[CL102] 멜버른 체크 셔츠',
-      category: 'outer',
-      price: '70,000',
-      image: 'images/product-07.jpg',
-    },
-    {
-      id: 8,
-      name: '[CL62] 뮬리 프린팅 루즈핏 셔츠',
-      category: 'top',
-      price: '25,000',
-      image: 'images/product-08.jpg',
-    },
-    {
-      id: 9,
-      name: '[CL52] 컨버스 하이탑 스니커즈',
-      category: 'shoes',
-      price: '95,000',
-      image: 'images/product-09.jpg',
-    },
-    {
-      id: 10,
-      name: '[CL92] 슬림핏 세미크롭 반팔티',
-      category: 'top',
-      price: '35,000',
-      image: 'images/product-10.jpg',
-    },
-    {
-      id: 11,
-      name: '[CL102] 모노 인생 클래식 체크셔츠',
-      category: 'top',
-      price: '80,000',
-      image: 'images/product-11.jpg',
-    },
-    {
-      id: 12,
-      name: '[CL45] 맨즈 가죽 벨트',
-      category: 'accessory',
-      price: '80,000',
-      image: 'images/product-12.jpg',
-    },
-    {
-      id: 13,
-      name: '[CL97] 데이진 히든밴딩 슬림 일자 팬츠',
-      category: 'pants',
-      price: '25,000',
-      image: 'images/product-13.jpg',
-    },
-    {
-      id: 14,
-      name: '[CL23] 러브유 오프넥 셔츠',
-      category: 'top',
-      price: '70,000',
-      image: 'images/product-14.jpg',
-    },
-    {
-      id: 15,
-      name: '[CL71] TimeQuartz 메탈 클래식 시계',
-      category: 'accessory',
-      price: '110,000',
-      image: 'images/product-15.jpg',
-    },
-    {
-      id: 16,
-      name: '[CL36] 니브 투웨이 밴딩 팬츠',
-      category: 'pants',
-      price: '35,000',
-      image: 'images/product-16.jpg',
-    },
-  ];
 
   return (
     <>
@@ -267,6 +154,7 @@ function Home() {
       {/* Product Overview */}
       <section className="bg0 p-t-23 p-b-140">
         <div className="container">
+          <FetchAllProduct onItemFetch={ setProducts }/>
           <div className="p-b-10">
             <h3 className="ltext-103 cl5">Product Overview</h3>
           </div>
@@ -285,7 +173,10 @@ function Home() {
 
           {/* Product */}
           <Product
-            products={products}
+              products={(() => {
+                console.log("Passing products to Product:", products);
+                return products;
+              })()}
             activeCategory={activeCategory}
             activeFilter={activeFilter}
           />
