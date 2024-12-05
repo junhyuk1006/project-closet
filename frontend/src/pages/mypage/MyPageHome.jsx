@@ -1,7 +1,7 @@
 import React from 'react';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { useNavigate } from 'react-router-dom';
-import MyPageHeader from '../../components/myPage/MyPageHeader';
+import MyPageHeader from '../../components/mypage/MyPageHeader';
 
 const MyPageHome = () => {
   const navigate = useNavigate();
