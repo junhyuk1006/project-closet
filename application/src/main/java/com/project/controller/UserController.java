@@ -41,22 +41,22 @@ public class UserController {
                     .build();
 
             // UserService를 통해 사용자 저장
-            Users registerdUser = userService.create(user);
+            Users registeredUser = userService.create(user);
 
             // 응답용 DTO 생성
             UserDTO responseUserDTO = UserDTO.builder()
-                    .username(registerdUser.getUsername())
-                    .nickname(registerdUser.getNickname())
-                    .id(registerdUser.getId())
-                    .email(registerdUser.getEmail())
-                    .birth(registerdUser.getBirth())
+                    .username(registeredUser.getUsername())
+                    .nickname(registeredUser.getNickname())
+                    .id(registeredUser.getId())
+                    .email(registeredUser.getEmail())
+                    .birth(registeredUser.getBirth())
                     .build();
 
             // 성공 응답 반환
             return ResponseEntity.ok().body(responseUserDTO);
         } catch (Exception e) {
             // 에러 응답 반환
-            ResponseDTO responseDTO = ResponseDTO.builder().error(e.getMessage()).build();
+            ResponseDTO<Object> responseDTO = ResponseDTO.builder().error(e.getMessage()).build();
             return ResponseEntity
                     .badRequest()
                     .body(responseDTO);
@@ -73,14 +73,23 @@ public class UserController {
         if (user != null) {
             // 토큰 생성
             final String token = tokenProvider.create(user);
+
+            // 사용자 정보를 담은 DTO 생성
             final UserDTO responserUserDTO = UserDTO.builder()
+                    .id(user.getId())
+                    .password(user.getPassword())
+                    .createdAt(user.getCreatedAt())
                     .username(user.getUsername())
+                    .nickname(user.getNickname())
+                    .email(user.getEmail())
+                    .birth(user.getBirth())
                     .token(token)
                     .build();
+
             return ResponseEntity.ok().body(responserUserDTO);
         }else {
             // 인증 실패 시 에러 메시지 반환
-            ResponseDTO responseDTO = ResponseDTO.builder()
+            ResponseDTO<Object> responseDTO = ResponseDTO.builder()
                     .error("Login failed.")
                     .build();
 
