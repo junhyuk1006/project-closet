@@ -9,6 +9,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import lombok.Data;
 import org.hibernate.annotations.DynamicInsert;
 
+import java.util.List;
+
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -69,5 +71,11 @@ public class User {
 
     private String role; // 역할
 
-    private String grade; // 등급
+    //private String grade; // 등급
+
+    @OneToMany(mappedBy = "userId" , cascade = CascadeType.ALL)
+    private List<Point> point;
+
+    @OneToMany(mappedBy = "userId")
+    private List<OrderList> orderList;
 }

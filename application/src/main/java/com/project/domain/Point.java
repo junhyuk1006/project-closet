@@ -33,4 +33,6 @@ public class Point {
     private Timestamp deletedAt;
     private String status;
 
+
+
 }

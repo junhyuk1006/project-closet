@@ -1,5 +1,15 @@
+import { useEffect, useState } from 'react';
 import { Form, Button, Row, Col, Table } from 'react-bootstrap';
+import { getAllUsers } from '../../../../api/admin/user/user';
 const User = () => {
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    getAllUsers()
+      .then(setUsers)
+      .catch((error) => console.error(error));
+  }, []);
+
   return (
     <div>
       <h2>회원관리</h2>
@@ -117,28 +127,19 @@ const User = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>Cell</td>
-            <td>Cell</td>
-            <td>Cell</td>
-            <td>Cell</td>
-            <td>Cell</td>
-            <td>Cell</td>
-            <td>Cell</td>
-            <td>Cell</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Cell</td>
-            <td>Cell</td>
-            <td>Cell</td>
-            <td>Cell</td>
-            <td>Cell</td>
-            <td>Cell</td>
-            <td>Cell</td>
-            <td>Cell</td>
-          </tr>
+          {users.map((user, index) => (
+            <tr key={user.id}>
+              <td>{index + 1}</td>
+              <td>{user.username}</td>
+              <td>{user.nickname}</td>
+              <td>등급</td>
+              <td>{user.birth}</td>
+              <td>포인트</td>
+              <td>구매수</td>
+              <td>{user.createAt}</td>
+              <td>status</td>
+            </tr>
+          ))}
         </tbody>
       </Table>
     </div>
