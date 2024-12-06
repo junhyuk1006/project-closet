@@ -1,30 +1,73 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import '../../components/SignUp';
 import '../../assets/styles/Auth/signup.css';
 import closetImage from '../../assets/closet.png'; // 이미지 경로를 import
+import { useNavigate } from 'react-router-dom';
 
 const Checkout = () => {
   const formRef = useRef(null); // 폼 참조
+  const navigate = useNavigate(); // 페이지 네비게이션 훅
+  const [isSubmitting, setIsSumitting] = useState(false); // 제출상태 관리
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault(); // 기본 동작 중단
     event.stopPropagation(); // 이벤트 전파 중단
 
     const form = event.target;
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+
+    // 생년월일 처리
+    const birthYear = form.birthYear.value;
+    const birthMonth = form.birthMonth.value.padStart(2, '0'); // 1~9월을 01~09로 패딩
+    const birthDay = form.birthDay.value.padStart(2, '0'); // 1~9일을 01~09로 패딩
+    const birth = `${birthYear}-${birthMonth}-${birthDay}`; // YYYY-MM-DD 형식으로 결합
+
+    // 비밀번호 확인
+    if (data.password != form.confirmPassword.value) {
+      alert('비밀번호가 일치하지 않습니다.');
+      form.confirmPassword.classList.add('is-invaild');
+      return;
+    } else {
+      form.confirmPassword.classList.remove('is-invalid');
+    }
 
     if (form.checkValidity()) {
-      // 모든 필드가 유효하면 콘솔 출력 후 초기화
-      console.log('폼 제출 성공!', {
-        username: form.username.value,
-        password: form.password.value,
-        nickname: form.nickname.value,
-        email: form.email.value,
-      });
+      setIsSumitting(true); // 제출시작
 
-      form.reset(); // 폼 데이터 초기화
-      form.classList.remove('was-validated'); // 유효성 검사 스타일 초기화
+      try {
+        // 회원가입 API 호출
+        const response = await fetch('http://localhost:80/auth/signup', {
+          method: 'post',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            username: data.username,
+            password: data.password,
+            nickname: data.nickname,
+            email: data.email,
+            birth,
+          }),
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || '회원가입에 실패했습니다.');
+        }
+
+        const result = await response.json();
+        alert('회원가입에 성공했습니다! 로그인페이지로 이동합니다.');
+        navigate('/Login'); // 로그인 페이지로 이동
+      } catch (error) {
+        console.error('회원가입 실패:', error);
+        alert(error.message);
+      } finally {
+        setIsSumitting(false); // 제출 종료
+      }
     } else {
       form.classList.add('was-validated'); // 유효성 검사 스타일 추가
+      alert('모든 필드를 올바르게 입력해주세요.');
       console.log('유효성 검사 실패');
     }
   };
@@ -210,8 +253,12 @@ const Checkout = () => {
 
         <hr className="my-4" />
 
-        <button className="w-100 btn btn-secondary btn-lg" type="submit">
-          회원가입
+        <button
+          className="w-100 btn btn-secondary btn-lg"
+          type="submit"
+          disabled={isSubmitting} // 제출 중일 때 버튼 비활성화
+        >
+          {isSubmitting ? '가입 중...' : '회원가입'}
         </button>
       </form>
       <div className="my-5 pt-5 text-body-secondary text-center text-small">

@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
+import java.util.Map;
 
 @Slf4j
 @Component
@@ -37,10 +38,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             log.info("Filter is running...");
             // 토큰 검사하기. JWT이므로 인가 서버에 요청하지 않고도 검증 가능
             if (token != null && !token.equalsIgnoreCase("null")) {
+
                 // userId 가져오기. 위조된 경우 예외 처리된다.
-                String userId = tokenProvider.validateAndGetUserId(token);
+                Map<String, Object> userInfo = tokenProvider.validateAndGetUserId(token);
+                Long userId = (Long) userInfo.get("id"); // ID 가져오기
+                String username = (String) userInfo.get("username"); // Username 가져오기
+
                 log.info("Authenticated user ID : {}", userId);
-                //인증 완료. SecurithContextHolder에 등록해야 인증도니 사용자라고 생각한다.
+                //인증 완료. SecurithContextHolder에 등록해야 인증된 사용자라고 생각한다.
                 AbstractAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                         userId, // 인증된 사용자의 정보, 문자열이 아니어도 아무것이나 넣을 수 있다.
                         null,   // 보통 UserDetails라는 오브젝트를 넣는데 우리는 넣지 않았다.
