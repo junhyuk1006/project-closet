@@ -11,8 +11,8 @@ import 'material-design-iconic-font/dist/css/material-design-iconic-font.min.css
 import Home from './pages/main/Home';
 
 /** ./pages/auth  */
-import Login from './pages/Auth/Login';
-import SignUp from './pages/Auth/SignUp';
+import Login from './pages/auth/Login';
+import SignUp from './pages/auth/SignUp';
 
 /** ./pages/MyPage  */
 import MyPoint from './pages/mypage/MyPoint';
@@ -30,7 +30,7 @@ import ShoppingCart from './pages/cart/ShoppingCart';
 
 // 공통 애니메이션과 레이아웃
 import Layout from './layouts/Layout'; // Header/Footer 포함 여부를 제어하는 레이아웃
-import Animation from './hooks/Animation/Animation'; // 페이지 전환 애니메이션 효과
+import Animation from './hooks/animation/Animation'; // 페이지 전환 애니메이션 효과
 import Guide from './pages/main/Guide';
 import Agreement from './pages/main/Agreement';
 import Privacy from './pages/main/Privacy';
@@ -62,26 +62,22 @@ const AppRoutes = () => (
   <Router>
     <Animation>
       <Routes>
-
         {/** ./pages/main */}
         {renderRoute('/', <Home />)} {/* 메인 페이지 */}
         {renderRoute('/guide', <Guide />)} {/* 이용안내 페이지 */}
         {renderRoute('/agreement', <Agreement />)} {/* 이용약관 페이지 */}
         {renderRoute('/privacy', <Privacy />)} {/* 개인정보처리방침 페이지 */}
-
         {/** ./pages/auth */}
         {renderRoute('/Login', <Login />)} {/* 로그인 페이지 */}
         {renderRoute('/SignUp', <SignUp />)} {/* 회원가입 페이지 */}
-
         {/** ./pages/MyPage */}
         {renderRoute('/MyPageHome', <MyPageHome />)} {/* 마이페이지 홈 */}
         {renderRoute('/MyPoint', <MyPoint />)} {/* 포인트 페이지 */}
         {renderRoute('/MemberInfo', <MemberInfo />)} {/* 회원정보 페이지 */}
-        {renderRoute('/MyInquirement', <MyInquirement />)}{' '}{/* 문의내역 페이지 */}
-
+        {renderRoute('/MyInquirement', <MyInquirement />)}{' '}
+        {/* 문의내역 페이지 */}
         {/**./pages/admin */}
         {renderRoute('/admin/*', <Admin />, false)} {/* 관리자 페이지 */}
-
         {/** ./pages/Other  */}
         {renderRoute('/Detail/*', <Detail />)} {/* 상품 상세 페이지 */}
         {renderRoute('/Recommend', <Recommend />)} {/* 추천 페이지 */}
