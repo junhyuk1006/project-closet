@@ -34,6 +34,8 @@ export default function Product({ products, activeCategory, activeFilter }) {
   const handleNavigate  = (product) => {
     navigate(`/Detail`, {state: { productId : product.id}})
   };
+
+
   return (
     <div className="row isotope-grid">
       <Modal isOpen={isModalOpen} onClose={closeModal} />
@@ -41,21 +43,21 @@ export default function Product({ products, activeCategory, activeFilter }) {
       {uniqueProducts
         .filter(
           (product) =>
-            activeCategory === '*' || product.category === activeCategory
+            activeCategory === '*' || product.item_category === activeCategory
         )
         .sort((a, b) => {
           if (activeFilter === 'sortByRecent') {
-            // return b.createdAt - a.createdAt; // 최신순
-            return 0; // 구현되지 않은 필터 조건은 정렬 처리하지 않음
+            return b.created_at - a.created_at; // 최신순
+            /*return 0;*/ // 구현되지 않은 필터 조건은 정렬 처리하지 않음
           } else if (activeFilter === 'sortByPriceDesc') {
             return (
-              parseInt(b.price.replace(',', ''), 10) - // 높은 가격순
-              parseInt(a.price.replace(',', ''), 10)
+              parseInt(b.item_price, 10) - // 높은 가격순
+              parseInt(a.item_price, 10)
             );
           } else if (activeFilter === 'sortByPriceAsc') {
             return (
-              parseInt(a.price.replace(',', ''), 10) - // 낮은 가격순
-              parseInt(b.price.replace(',', ''), 10)
+              parseInt(a.item_price, 10) - // 낮은 가격순
+              parseInt(b.item_price, 10)
             );
           } else if (activeFilter === 'sortByRating') {
             // return b.rating - a.rating; // 평점

@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 public class ItemDetailItemDTO {
+
     // Item 필드
     private Long itemId;
     private int itemCount;

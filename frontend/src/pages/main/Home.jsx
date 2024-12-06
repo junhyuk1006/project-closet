@@ -12,9 +12,13 @@ import 'material-design-iconic-font/dist/css/material-design-iconic-font.min.css
 // Import Hooks
 import Product from '../main/Product';
 
+
 // Import Components
 import Category from '../../hooks/Category/Category';
 import FilterSearch from '../main/FilterSearch';
+
+
+// Import API
 import FetchAllProduct from "../../api/item/FetchAllProduct";
 
 // Function Aria

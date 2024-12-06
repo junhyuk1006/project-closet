@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 export default function FilterSearch({ activeFilter, handleFilterChange }) {
     const [isFiltering, setIsFiltering] = useState(false);
