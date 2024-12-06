@@ -39,7 +39,6 @@ public class UserDTO {
     private java.sql.Timestamp reactiveDate; // 차단해제일자
     private java.sql.Timestamp deletedAt; // 탈퇴일자
     private String role; // 역할
-    private String grade; // 등급
 
     private String token;
 }

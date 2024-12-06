@@ -19,35 +19,45 @@ export default function Product({ products, activeCategory, activeFilter }) {
     setModalOpen(true);
   };
 
+  const uniqueProducts = products.reduce((acc, product) => {
+    const existing = acc.find((p) => p.item_name === product.item_name);
+    if (!existing || product.id < existing.id) {
+      return [...acc.filter((p) => p.item_name !== product.item_name), product];
+    }
+    return acc;
+  }, []);
+
   const closeModal = () => {
     setModalOpen(false);
   };
 
-  const goToDetailPage = () => {
-    navigate('/Detail'); // '/target-page' 경로로 이동
+  const handleNavigate  = (product) => {
+    navigate(`/Detail`, {state: { productId : product.id}})
   };
+
+
   return (
     <div className="row isotope-grid">
       <Modal isOpen={isModalOpen} onClose={closeModal} />
 
-      {products
+      {uniqueProducts
         .filter(
           (product) =>
-            activeCategory === '*' || product.category === activeCategory
+            activeCategory === '*' || product.item_category === activeCategory
         )
         .sort((a, b) => {
           if (activeFilter === 'sortByRecent') {
-            // return b.createdAt - a.createdAt; // 최신순
-            return 0; // 구현되지 않은 필터 조건은 정렬 처리하지 않음
+            return b.created_at - a.created_at; // 최신순
+            /*return 0;*/ // 구현되지 않은 필터 조건은 정렬 처리하지 않음
           } else if (activeFilter === 'sortByPriceDesc') {
             return (
-              parseInt(b.price.replace(',', ''), 10) - // 높은 가격순
-              parseInt(a.price.replace(',', ''), 10)
+              parseInt(b.item_price, 10) - // 높은 가격순
+              parseInt(a.item_price, 10)
             );
           } else if (activeFilter === 'sortByPriceAsc') {
             return (
-              parseInt(a.price.replace(',', ''), 10) - // 낮은 가격순
-              parseInt(b.price.replace(',', ''), 10)
+              parseInt(a.item_price, 10) - // 낮은 가격순
+              parseInt(b.item_price, 10)
             );
           } else if (activeFilter === 'sortByRating') {
             // return b.rating - a.rating; // 평점
@@ -60,11 +70,11 @@ export default function Product({ products, activeCategory, activeFilter }) {
         .map((product) => (
           <div
             key={product.id}
-            className={`col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item ${product.category}`}
+            className={`col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item ${product.item_category}`}
           >
             <div className="block2">
               <div className="block2-pic hov-img0">
-                <img src={product.image} alt="IMG-PRODUCT" />
+                <img src={`images/${product.main_image}`} alt="IMG-PRODUCT" />
 
                 <button
                   className="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04"
@@ -76,22 +86,20 @@ export default function Product({ products, activeCategory, activeFilter }) {
 
               <div className="block2-txt flex-w flex-t p-t-14">
                 <div className="block2-txt-child1 flex-col-l ">
-                  <a
-                    // to={`/Detail/${product.id}`} // 각 제품의 id에 맞는 상세 페이지로 이동
-                    onClick={goToDetailPage} // 클릭 이벤트로 이동 처리
-                    className="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6"
-                    style={{ cursor: 'pointer' }} // 스타일로 클릭 가능함을 표시
+                  <button
+                      className="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6"
+                      onClick={() => handleNavigate(product)}
                   >
-                    {product.name}
-                  </a>
+                    {product.item_name}
+                  </button>
 
-                  <span className="stext-105 cl3">{product.price}원</span>
+                  <span className="stext-105 cl3">{product.item_price}원</span>
                 </div>
 
                 <div className="block2-txt-child2 flex-r p-t-3">
                   <Link
-                    to="#"
-                    className="btn-addwish-b2 dis-block pos-relative js-addwish-b2"
+                      to="#"
+                      className="btn-addwish-b2 dis-block pos-relative js-addwish-b2"
                     onClick={() => toggleLike(product.id)}
                   >
                     <img

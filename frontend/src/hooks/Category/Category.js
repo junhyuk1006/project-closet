@@ -1,10 +1,10 @@
 export default function Category({ activeCategory, handleCategoryChange }) {
   const categories = [
     { label: 'All', category: '*' },
-    { label: '아우터', category: 'outer' },
-    { label: '상의', category: 'top' },
-    { label: '바지', category: 'pants' },
-    { label: '치마', category: 'skirt' },
+    { label: '아우터', category: 'Outerwear' },
+    { label: '상의', category: 'Tops' },
+    { label: '바지', category: 'Bottoms' },
+    { label: '치마', category: 'Skirts' },
     { label: '신발', category: 'shoes' },
     { label: '악세서리', category: 'accessory' },
   ];

@@ -1,11 +1,17 @@
 package com.project.service;
 
 import com.project.domain.Item;
+import com.project.domain.ItemDetail;
+import com.project.dto.ItemAllDTO;
+import com.project.dto.ItemDetailItemDTO;
+import com.project.repository.ItemDetailRepository;
 import com.project.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  *  서비스 객체가 생성될 디렉토리입니다.
@@ -18,8 +24,26 @@ import java.util.List;
 public class ItemService {
 
     private final ItemRepository itemRepository;
+    private final ItemDetailRepository itemDetailRepository;
 
-    public List<Item> getAllItems() {
-        return itemRepository.findAll();
+    public List<ItemAllDTO> getAllItems() {
+        return itemRepository.findAll()
+                .stream()
+                .map(item -> new ItemAllDTO(
+                        item.getId(),
+                        item.getItem_name(),
+                        item.getItem_category(),
+                        item.getItem_price(),
+                        item.getMain_image(),
+                        item.getDetail_image(),
+                        item.getViews(),
+                        item.getStatus()
+                ))
+                .collect(Collectors.toList());
+    }
+
+    public List<ItemDetailItemDTO> getItemsByItemDetailId(Long itemDetailId) {
+        System.out.print("asdasdasd" + itemDetailRepository.findItemDetailWithItem(itemDetailId));
+        return itemDetailRepository.findItemDetailWithItem(itemDetailId);
     }
 }

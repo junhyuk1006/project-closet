@@ -1,11 +1,10 @@
 package com.project.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.PrePersist;
+
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -15,19 +14,19 @@ import java.time.LocalDateTime;
 public class Item {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private int item_count;
 
     private String color;
     private String size;
-    private int item_count;
     private String status;
 
-    @Column(nullable = false, updatable = false)
+    @CreationTimestamp
     private LocalDateTime created_at;
 
-    @PrePersist
-    protected void onCreate() {
-        this.created_at = LocalDateTime.now();
-    }
+    @ManyToOne
+    @JoinColumn(name = "item_detail_id")
+    private ItemDetail itemDetail;
 
 }

@@ -5,5 +5,5 @@
 해당 파일의 제작 의도를 직접적으로 파악하기 위해 만들었으니 js 생성 후 작정 부탁드립니다.
 
 
- DetailAllItem.js
+ FetchAllProduct.js
  - 상품 상세페이지에 해당하는 Item 의 전체데이터를 가져오기 위한 API JS 파일 입니다.

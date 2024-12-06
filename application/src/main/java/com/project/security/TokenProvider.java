@@ -35,15 +35,18 @@ public class TokenProvider {
         claims.put("id", user.getId()); // 사용자 id 추가
         claims.put("username", user.getUsername()); // 사용자 username 추가
 
+        Claims claims = Jwts.claims();
+        claims.put("id", user.getId()); // 사용자 id 추가
+        claims.put("username", user.getUsername()); // 사용자 username 추가
+
         // JWT Token 생성
         return Jwts.builder()
                 .setClaims(claims) // Payload에 추가된 Claims 설정
                 // Header에 들어갈 내용 및 서명을 위한 SECRET_KEY
-                .signWith(getSigningKey(), SignatureAlgorithm.HS256) // 서명 알고리즘과 키 설정
-                // Payload에 들어갈 내용
-                .setIssuer("demo app") // iss (발급자)
-                .setIssuedAt(new Date()) // iat (발급 시간)
-                .setExpiration(new Date(System.currentTimeMillis() + expiryDate)) // exp (만료 시간)
+                .setIssuer("demo app") // 발급자
+                .setIssuedAt(new Date()) // 발급 시간
+                .setExpiration(new Date(System.currentTimeMillis() + expiryDate)) // 만료 시간
+                .signWith(getSigningKey(), SignatureAlgorithm.HS256) // 서명
                 .compact();
     }
 
@@ -61,11 +64,11 @@ public class TokenProvider {
                     .build()
                     .parseClaimsJws(token)
                     .getBody();
+
             Map<String, Object> userInfo = new HashMap<>();
             userInfo.put("id", claims.get("id", Long.class));
             userInfo.put("username", claims.get("username", String.class));
 
             return userInfo;
-
         }
     }
