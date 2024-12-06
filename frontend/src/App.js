@@ -11,8 +11,8 @@ import 'material-design-iconic-font/dist/css/material-design-iconic-font.min.css
 import Home from './pages/main/Home';
 
 /** ./pages/auth  */
-import Login from './pages/Auth/Login';
-import SignUp from './pages/Auth/SignUp';
+import Login from './pages/auth/Login';
+import SignUp from './pages/auth/SignUp';
 
 /** ./pages/MyPage  */
 import MyPoint from './pages/mypage/MyPoint';
@@ -30,10 +30,11 @@ import ShoppingCart from './pages/cart/ShoppingCart';
 
 // 공통 애니메이션과 레이아웃
 import Layout from './layouts/Layout'; // Header/Footer 포함 여부를 제어하는 레이아웃
-import Animation from './hooks/Animation/Animation'; // 페이지 전환 애니메이션 효과
+import Animation from './hooks/animation/Animation'; // 페이지 전환 애니메이션 효과
 import Guide from './pages/main/Guide';
 import Agreement from './pages/main/Agreement';
 import Privacy from './pages/main/Privacy';
+import Page404 from './components/main/Page404';
 
 /**
  * 공통적으로 사용하는 Route 생성 함수
@@ -78,9 +79,10 @@ const AppRoutes = () => (
         {/**./pages/admin */}
         {renderRoute('/admin/*', <Admin />, false)} {/* 관리자 페이지 */}
         {/** ./pages/Other  */}
-        {renderRoute('/Detail', <Detail />)} {/* 상품 상세 페이지 */}
+        {renderRoute('/Detail/*', <Detail />)} {/* 상품 상세 페이지 */}
         {renderRoute('/Recommend', <Recommend />)} {/* 추천 페이지 */}
         {renderRoute('/ShoppingCart', <ShoppingCart />)} {/* 장바구니 페이지 */}
+        {renderRoute('/*', <Page404 />, false)} {/* 에러 페이지 */}
       </Routes>
     </Animation>
   </Router>

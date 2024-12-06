@@ -12,14 +12,20 @@ import 'material-design-iconic-font/dist/css/material-design-iconic-font.min.css
 // Import Hooks
 import Product from '../main/Product';
 
+
 // Import Components
 import Category from '../../hooks/Category/Category';
 import FilterSearch from '../main/FilterSearch';
+
+
+// Import API
+import FetchAllProduct from "../../api/item/FetchAllProduct";
 
 // Function Aria
 function Home() {
   const [activeCategory, setActiveCategory] = useState('*'); // 카테고리 상태
   const [activeFilter, setActiveFilter] = useState('sortByRecent'); // 필터 상태
+  const [products, setProducts] = useState([]);
 
   const handleCategoryChange = (category) => {
     setActiveCategory(category);
@@ -29,121 +35,6 @@ function Home() {
     setActiveFilter(filter);
     console.log(`handleFilterChange에 입력된 filter: ${filter}`);
   };
-
-  const products = [
-    {
-      id: 1,
-      name: 'Esprit Ruffle Shirt',
-      category: 'women',
-      price: '20,000',
-      image: 'images/product-01.jpg',
-    },
-    {
-      id: 2,
-      name: 'Herschel supply',
-      category: 'women',
-      price: '40,000',
-      image: 'images/product-02.jpg',
-    },
-    {
-      id: 3,
-      name: 'Only Check Trouser',
-      category: 'men',
-      price: '35,000',
-      image: 'images/product-03.jpg',
-    },
-    {
-      id: 4,
-      name: 'Classic Trench Coat',
-      category: 'women',
-      price: '90,000',
-      image: 'images/product-04.jpg',
-    },
-    {
-      id: 5,
-      name: 'Front Pocket Jumper',
-      category: 'women',
-      price: '45,000',
-      image: 'images/product-05.jpg',
-    },
-    {
-      id: 6,
-      name: 'Vintage Inspired Classic',
-      category: 'watches',
-      price: '120,000',
-      image: 'images/product-06.jpg',
-    },
-    {
-      id: 7,
-      name: 'Shirt in Stretch Cotton',
-      category: 'women',
-      price: '70,000',
-      image: 'images/product-07.jpg',
-    },
-    {
-      id: 8,
-      name: 'Pieces Metallic Printed',
-      category: 'women',
-      price: '25,000',
-      image: 'images/product-08.jpg',
-    },
-    {
-      id: 9,
-      name: 'Converse All Star Hi Plimsolls',
-      category: 'shoes',
-      price: '95,000',
-      image: 'images/product-09.jpg',
-    },
-    {
-      id: 10,
-      name: 'Femme T-Shirt In Stripe',
-      category: 'women',
-      price: '35,000',
-      image: 'images/product-10.jpg',
-    },
-    {
-      id: 11,
-      name: 'Herschel supply',
-      category: 'men',
-      price: '80,000',
-      image: 'images/product-11.jpg',
-    },
-    {
-      id: 12,
-      name: 'Herschel supply',
-      category: 'men',
-      price: '80,000',
-      image: 'images/product-12.jpg',
-    },
-    {
-      id: 13,
-      name: 'T-Shirt with Sleeve',
-      category: 'women',
-      price: '25,000',
-      image: 'images/product-13.jpg',
-    },
-    {
-      id: 14,
-      name: 'Pretty Little Thing',
-      category: 'women',
-      price: '70,000',
-      image: 'images/product-14.jpg',
-    },
-    {
-      id: 15,
-      name: 'Mini Silver Mesh Watch',
-      category: 'watches',
-      price: '110,000',
-      image: 'images/product-15.jpg',
-    },
-    {
-      id: 16,
-      name: 'Square Neck Back',
-      category: 'women',
-      price: '35,000',
-      image: 'images/product-16.jpg',
-    },
-  ];
 
   return (
     <>
@@ -193,7 +84,7 @@ function Home() {
                     </span>
 
                     <span className="block1-info stext-102 trans-04">
-                      Spring 2018
+                      Spring 2024
                     </span>
                   </div>
 
@@ -221,7 +112,7 @@ function Home() {
                     </span>
 
                     <span className="block1-info stext-102 trans-04">
-                      Spring 2018
+                      Spring 2024
                     </span>
                   </div>
 
@@ -267,6 +158,7 @@ function Home() {
       {/* Product Overview */}
       <section className="bg0 p-t-23 p-b-140">
         <div className="container">
+          <FetchAllProduct onItemFetch={ setProducts }/>
           <div className="p-b-10">
             <h3 className="ltext-103 cl5">Product Overview</h3>
           </div>
@@ -285,7 +177,10 @@ function Home() {
 
           {/* Product */}
           <Product
-            products={products}
+              products={(() => {
+                console.log("Passing products to Product:", products);
+                return products;
+              })()}
             activeCategory={activeCategory}
             activeFilter={activeFilter}
           />

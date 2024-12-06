@@ -1,14 +1,11 @@
 package com.project.domain;
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import lombok.Data;
 import org.hibernate.annotations.DynamicInsert;
 
@@ -18,6 +15,7 @@ import org.hibernate.annotations.DynamicInsert;
 @Builder
 @DynamicInsert
 @Data
+@Table(name = "user")
 public class User {
 
     @Id
@@ -70,6 +68,4 @@ public class User {
     private java.sql.Timestamp deletedAt; // 탈퇴일자
 
     private String role; // 역할
-
-    private String grade; // 등급
 }

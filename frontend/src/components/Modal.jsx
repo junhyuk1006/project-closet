@@ -106,14 +106,14 @@ function Modal({ isOpen, onClose }) {
             <div className="col-md-6 col-lg-5 p-b-30">
               <div className="p-r-50 p-t-5 p-lr-0-lg">
                 <h4 className="mtext-105 cl2 js-name-detail p-b-14">
-                  Lightweight Jacket
+                  [CL33] 경량 재킷
                 </h4>
 
-                <span className="mtext-106 cl2">$58.79</span>
+                <span className="mtext-106 cl2">75,000원</span>
 
                 <p className="stext-102 cl3 p-t-23">
-                  Nulla eget sem vitae eros pharetra viverra. Nam vitae luctus
-                  ligula. Mauris consequat ornare feugiat.
+                  무난하게 입기 좋은 재킷입니다. 소매에 스트라이프 패턴을
+                  추가하여 포인트를 주었습니다.
                 </p>
 
                 <div className="p-t-33">
@@ -122,7 +122,7 @@ function Modal({ isOpen, onClose }) {
 
                     <div className="size-204 flex-w flex-m respon6-next">
                       <select className="custom-select">
-                        <option>Choose an option</option>
+                        <option>사이즈 선택</option>
                         <option>Size S</option>
                         <option>Size M</option>
                         <option>Size L</option>
@@ -136,7 +136,7 @@ function Modal({ isOpen, onClose }) {
 
                     <div className="size-204 flex-w flex-m respon6-next">
                       <select className="custom-select">
-                        <option>Choose an option</option>
+                        <option>색상 선택</option>
                         <option>Red</option>
                         <option>Blue</option>
                         <option>White</option>
@@ -178,7 +178,7 @@ function Modal({ isOpen, onClose }) {
                       </div>
 
                       <button className="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
-                        Add to cart
+                        장바구니
                       </button>
                     </div>
                   </div>

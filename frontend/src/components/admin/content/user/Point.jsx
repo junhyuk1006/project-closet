@@ -69,24 +69,33 @@ const Point = () => {
       <Table striped bordered hover>
         <thead>
           <tr>
-            <th>#</th>
-            <th>Header</th>
-            <th>Header</th>
-            <th>Header</th>
+            <th>번호</th>
+            <th>아이디</th>
+            <th>포인트내용</th>
+            <th>지급날짜</th>
+            <th>만료날짜</th>
+            <th>포인트</th>
+            <th>상태</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td>1</td>
-            <td>Cell</td>
-            <td>Cell</td>
-            <td>Cell</td>
+            <td>asdf1234</td>
+            <td>회원가입</td>
+            <td>2024/09/06</td>
+            <td>2025/03/06</td>
+            <td>1000</td>
+            <td>active</td>
           </tr>
           <tr>
             <td>2</td>
-            <td>Cell</td>
-            <td>Cell</td>
-            <td>Cell</td>
+            <td>qwer1234</td>
+            <td>상품구매</td>
+            <td>2024/09/06</td>
+            <td>2025/03/06</td>
+            <td>200</td>
+            <td>inactive</td>
           </tr>
         </tbody>
       </Table>

@@ -9,6 +9,8 @@ import com.project.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +28,8 @@ public class UserController {
 
     final TokenProvider tokenProvider;
 
+    final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@RequestBody UserDTO userDTO){
         try{
@@ -33,7 +37,8 @@ public class UserController {
             User user = User.builder()
                     .username(userDTO.getUsername())
                     .nickname(userDTO.getNickname())
-                    .password(userDTO.getPassword())
+                    .password(passwordEncoder.encode(userDTO.getPassword()))
+                    .email(userDTO.getEmail())
                     .birth(userDTO.getBirth())
                     .build();
 
@@ -45,6 +50,7 @@ public class UserController {
                     .username(registerdUser.getUsername())
                     .nickname(registerdUser.getNickname())
                     .id(registerdUser.getId())
+                    .email(registerdUser.getEmail())
                     .birth(registerdUser.getBirth())
                     .build();
 
@@ -64,7 +70,7 @@ public class UserController {
         // 자격 증명 확인
         User user = userService.getByCredentials(
                 userDTO.getUsername(),
-                userDTO.getPassword());
+                userDTO.getPassword(),passwordEncoder);
 
         if (user != null) {
             // 토큰 생성

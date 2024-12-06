@@ -70,24 +70,39 @@ const Exchange = () => {
       <Table striped bordered hover>
         <thead>
           <tr>
-            <th>#</th>
-            <th>Header</th>
-            <th>Header</th>
-            <th>Header</th>
+            <th>번호</th>
+            <th>주문일</th>
+            <th>교환일</th>
+            <th>주문번호</th>
+            <th>상품이미지</th>
+            <th>상품이름</th>
+            <th>교환사유</th>
+            <th>총주문액</th>
+            <th>교환정보</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td>1</td>
-            <td>Cell</td>
-            <td>Cell</td>
-            <td>Cell</td>
+            <td>2024/12/04</td>
+            <td>2024/12/10</td>
+            <td>24120410080576</td>
+            <td>cell</td>
+            <td>선인장 자수패치 반팔T</td>
+            <td>사이즈 안맞음</td>
+            <td>40,000</td>
+            <td>교환대기</td>
           </tr>
           <tr>
             <td>2</td>
-            <td>Cell</td>
-            <td>Cell</td>
-            <td>Cell</td>
+            <td>2024/12/04</td>
+            <td>2024/12/10</td>
+            <td>24120410080576</td>
+            <td>cell</td>
+            <td>선인장 자수패치 반팔T</td>
+            <td>사이즈 안맞음</td>
+            <td>40,000</td>
+            <td>교환대기</td>
           </tr>
         </tbody>
       </Table>

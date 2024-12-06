@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import lombok.extern.slf4j.Slf4j;
 import java.security.Key;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j
 @Service
@@ -29,20 +31,23 @@ public class TokenProvider {
     // JWT 생성 메서드
     public String create(User user) {
 
+        Claims claims = Jwts.claims();
+        claims.put("id", user.getId()); // 사용자 id 추가
+        claims.put("username", user.getUsername()); // 사용자 username 추가
+
         // JWT Token 생성
         return Jwts.builder()
+                .setClaims(claims) // Payload에 추가된 Claims 설정
                 // Header에 들어갈 내용 및 서명을 위한 SECRET_KEY
-                .signWith(getSigningKey(), SignatureAlgorithm.HS256) // 서명 알고리즘과 키 설정
-                // Payload에 들어갈 내용
-                .setSubject(user.getUsername()) // sub (사용자 ID)
-                .setIssuer("demo app") // iss (발급자)
-                .setIssuedAt(new Date()) // iat (발급 시간)
-                .setExpiration(new Date(System.currentTimeMillis() + expiryDate)) // exp (만료 시간)
+                .setIssuer("demo app") // 발급자
+                .setIssuedAt(new Date()) // 발급 시간
+                .setExpiration(new Date(System.currentTimeMillis() + expiryDate)) // 만료 시간
+                .signWith(getSigningKey(), SignatureAlgorithm.HS256) // 서명
                 .compact();
     }
 
         // JWT 검증 및 사용자 ID 반환 메서드
-        public String validateAndGetUserId (String token){
+        public Map<String, Object> validateAndGetUserId (String token){
             // Signing key 생성
             Key key = getSigningKey();
 
@@ -56,6 +61,10 @@ public class TokenProvider {
                     .parseClaimsJws(token)
                     .getBody();
 
-            return claims.getSubject();
+            Map<String, Object> userInfo = new HashMap<>();
+            userInfo.put("id", claims.get("id", Long.class));
+            userInfo.put("username", claims.get("username", String.class));
+
+            return userInfo;
         }
     }
