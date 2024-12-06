@@ -35,10 +35,6 @@ public class TokenProvider {
         claims.put("id", user.getId()); // 사용자 id 추가
         claims.put("username", user.getUsername()); // 사용자 username 추가
 
-        Claims claims = Jwts.claims();
-        claims.put("id", user.getId()); // 사용자 id 추가
-        claims.put("username", user.getUsername()); // 사용자 username 추가
-
         // JWT Token 생성
         return Jwts.builder()
                 .setClaims(claims) // Payload에 추가된 Claims 설정
