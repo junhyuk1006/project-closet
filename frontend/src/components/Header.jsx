@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 // import CSS
@@ -17,6 +17,12 @@ function Header() {
   const isAtTop = useFixedHeader();
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isSearching, setIsSearching] = useState(false);
+  const [inputValue, setInputValue] = useState('');
+
+  useEffect(() => {
+    setInputValue('');
+  }, [isSearching]);
 
   // 장바구니 열기/닫기 토글
   const toggleCart = (prev) => {
@@ -25,11 +31,27 @@ function Header() {
   };
 
   // 모바일 메뉴 열기/닫기 토글
-  const toggleMobileMenu = (prev) => {
+  const toggleMobileMenu = () => {
     setIsMenuOpen((prev) => !prev);
     console.log(
       `모바일 화면의 햄버거 버튼을 클릭하였습니다. (현재 상태: ${isMenuOpen})`
     );
+  };
+
+  const submitSearchForm = () => {
+    fetch('http://localhost:80/product?key=' + inputValue, {
+      method: 'POST',
+      body: JSON.stringify({ key: inputValue }),
+    }).then((res) => {
+      console.log(res);
+    });
+  };
+
+  //
+  const toggleSearch = (prev) => {
+    const newState = !prev;
+    console.log(`검색 버튼 클릭 (현재상태: ${newState})`);
+    setIsSearching(newState);
   };
 
   return (
@@ -73,6 +95,14 @@ function Header() {
           </div>
         </div>
       </div>
+
+      {/* 메뉴 패널 open 시 배경 클릭을 막는 오버레이 */}
+      {isMenuOpen && (
+        <div
+          className="overlay"
+          onClick={() => setIsMenuOpen(false)} // 배경 클릭 시 메뉴 닫기
+        ></div>
+      )}
 
       {/* 모바일 메뉴 */}
       <MobileMenu isMenuOpen={isMenuOpen} />
@@ -161,8 +191,25 @@ function Header() {
               </ul>
             </div>
             <div className="wrap-icon-header flex-w flex-r-m">
+              <input
+                className={`header-search ${isSearching ? '' : 'dis-none'}`}
+                type="text"
+                onChange={(e) => {
+                  setInputValue(e.target.value);
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    console.log(`${e.key} 입력 (검색)`);
+                    submitSearchForm();
+                  }
+                }}
+                value={inputValue}
+              />
               <div className="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
-                <i className="zmdi zmdi-search"></i>
+                <i
+                  className="zmdi zmdi-search"
+                  onClick={() => toggleSearch(isSearching)}
+                ></i>
               </div>
               <div
                 className="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti"
