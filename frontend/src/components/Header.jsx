@@ -12,17 +12,27 @@ import closetImage from '../assets/closet-removebg.png';
 import useFixedHeader from '../hooks/useFixedHeader';
 import Cart from '../pages/cart/Cart';
 import MobileMenu from './main/MobileMenu';
+import isValidJwtToken from '../api/auth/isValidJwtToken';
 
 function Header() {
-  const isAtTop = useFixedHeader();
-  const [isCartOpen, setIsCartOpen] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isSearching, setIsSearching] = useState(false);
-  const [inputValue, setInputValue] = useState('');
+  const isAtTop = useFixedHeader(); // 현재 페이지 스크롤의 최상단 여부
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false); // 데스크탑 장바구니의 open 상태
+  const [isMenuOpen, setIsMenuOpen] = useState(false); // 모바일 메뉴의 open 상태
+  const [isSearching, setIsSearching] = useState(false); // 데스크탑의 검색창 open 상태
+  const [inputValue, setInputValue] = useState(''); // 검색창 입력값 상태
 
+  // 검색창 상태가 변경될 때마다 입력값을 초기화
   useEffect(() => {
     setInputValue('');
   }, [isSearching]);
+
+  // 모든 상태가 변할 때마다 해당 로직이 호출 (2번째 인자를 비워둠)
+  // 페이지를 새로고침시키는 등 적절한 상황에만 호출하도록 수정 필요
+  useEffect(() => {
+    setIsAuthenticated(isValidJwtToken());
+    console.log(`isAuthenticated ${isAuthenticated}`);
+  });
 
   // 장바구니 열기/닫기 토글
   const toggleCart = (prev) => {
@@ -134,12 +144,40 @@ function Header() {
           <div className="content-topbar flex-sb-m h-full container">
             <div className="left-top-bar"></div>
             <div className="right-top-bar flex-w h-full">
-              <Link to="/MyPageHome" className="flex-c-m trans-04 p-lr-25">
-                My Account
+              <Link
+                to="/MyPageHome"
+                className="flex-c-m trans-04 p-lr-25"
+                onClick={(e) => {
+                  if (!isAuthenticated) {
+                    alert('로그인이 필요합니다.');
+                    console.log(
+                      `로그인 상태 (isAuthenticated): ${isAuthenticated}`
+                    );
+                    e.preventDefault();
+                  }
+                }}
+              >
+                마이페이지
               </Link>
-              <Link to="/Login" className="flex-c-m trans-04 p-lr-25">
-                Login
-              </Link>
+
+              {isAuthenticated ? (
+                <Link
+                  to="/Logout"
+                  className="flex-c-m trans-04 p-lr-25"
+                  onClick={(e) => {
+                    localStorage.removeItem('token');
+                    alert('정상적으로 로그아웃되었습니다.');
+                    setIsAuthenticated(false);
+                    e.preventDefault();
+                  }}
+                >
+                  로그아웃
+                </Link>
+              ) : (
+                <Link to="/Login" className="flex-c-m trans-04 p-lr-25">
+                  로그인
+                </Link>
+              )}
             </div>
           </div>
         </div>
@@ -182,11 +220,14 @@ function Header() {
                 <li>
                   <Link to="/shop">악세서리</Link>
                 </li>
-                {/* <li>
-                 <Link to="/ShoppingCart">장바구니</Link>
-                </li> */}
+                <li>
+                  <Link to="/ShoppingCart">장바구니</Link>
+                </li>
                 <li className="label1" data-label1="hot">
                   <Link to="/Recommend">스타일링</Link>
+                </li>
+                <li className="label1" data-label1="hot">
+                  <Link to="/Community">커뮤니티</Link>
                 </li>
               </ul>
             </div>
