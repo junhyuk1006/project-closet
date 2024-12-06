@@ -25,7 +25,7 @@ import Admin from './pages/admin/Admin';
 
 /** ./pages/Other  */
 import Detail from './pages/DetailItem/Detail';
-import Recommend from './pages/comunity/recommend/Recommend';
+import Recommend from './pages/community/recommend/Recommend';
 import ShoppingCart from './pages/cart/ShoppingCart';
 
 // 공통 애니메이션과 레이아웃

@@ -1,11 +1,25 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { useNavigate } from 'react-router-dom';
 import MyPageHeader from '../../components/mypage/MyPageHeader';
+import { verifyToken } from '../../api/auth/verifyToken'; 
 
 const MyPageHome = () => {
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const authenticate = async () => {
+      const isAuthenticated = await verifyToken(navigate); // verifyToken 호출
+      if (!isAuthenticated) {
+        console.log('인증 실패로 인해 로그인 페이지로 이동');
+      }
+    };
+
+    authenticate(); // 인증 함수 호출
+  }, [navigate]);
+
+  
+  
   const features = [
     {
       icon: 'bi-info-circle',

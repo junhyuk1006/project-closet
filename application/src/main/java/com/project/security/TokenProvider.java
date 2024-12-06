@@ -1,6 +1,6 @@
 package com.project.security;
 
-import com.project.domain.User;
+import com.project.domain.Users;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -29,7 +29,7 @@ public class TokenProvider {
     }
 
     // JWT 생성 메서드
-    public String create(User user) {
+    public String create(Users user) {
 
         Claims claims = Jwts.claims();
         claims.put("id", user.getId()); // 사용자 id 추가
