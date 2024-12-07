@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { useNavigate } from 'react-router-dom';
-import MyPageHeader from '../../components/mypage/MyPageHeader';
+import MyPageHeader from '../../components/myPage/MyPageHeader';
 import { verifyToken } from '../../api/auth/verifyToken'; 
 
 const MyPageHome = () => {

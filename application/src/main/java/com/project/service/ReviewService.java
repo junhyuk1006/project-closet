@@ -4,7 +4,7 @@ import com.project.domain.ItemReview;
 import com.project.dto.ReviewDTO;
 import com.project.dto.UserItemReviewDTO;
 import com.project.repository.ReviewRepository;
-import com.project.repository.UserRepository;
+import com.project.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ReviewService {
     private final ReviewRepository reviewRepository;
-    private final UserRepository userRepository;
+    private final UsersRepository usersRepository;
 
 /*    public ReviewDTO saveReview(ReviewDTO reviews) {
         return reviewDTORepository.save(reviews);
@@ -36,7 +36,7 @@ public class ReviewService {
         review.setStatus(reviewDTO.getStatus() != null ? reviewDTO.getStatus() : "active");
 
         // 유저 설정
-        review.setUsers(userRepository.findById(reviewDTO.getUser_id())
+        review.setUsers(usersRepository.findById(reviewDTO.getUser_id())
                 .orElseThrow(() -> new RuntimeException("User not found")));
 
         // 엔티티 저장

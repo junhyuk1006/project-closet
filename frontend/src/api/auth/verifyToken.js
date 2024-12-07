@@ -18,11 +18,8 @@ export const verifyToken = async (navigate) => {
     if (!response.ok) {
       throw new Error('Invalid token');
     }
-
-    console.log('JWT 인증 성공');
     return true; // 인증 성공
   } catch (error) {
-    console.error('JWT 인증 실패:', error);
     alert('세션이 만료되었습니다. 다시 로그인해주세요.');
     navigate('/Login'); // 인증 실패 시 로그인 페이지로 리다이렉트
     return false; // 인증 실패

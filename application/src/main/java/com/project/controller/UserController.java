@@ -6,6 +6,7 @@ import com.project.security.TokenProvider;
 import com.project.service.UsersService;
 import com.project.dto.ResponseDTO;
 import com.project.dto.UserDTO;
+import com.project.service.UsersService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/auth")
 public class UserController {
 
-    final UsersService usersService;
+    final UsersService userService;
 
     final TokenProvider tokenProvider;
 
@@ -41,7 +42,7 @@ public class UserController {
                     .build();
 
             // UserService를 통해 사용자 저장
-            Users registerdUser = usersService.create(user);
+            Users registeredUser = userService.create(user);
 
             // 응답용 DTO 생성
             UserDTO responseUserDTO = UserDTO.builder()
@@ -66,7 +67,7 @@ public class UserController {
     @PostMapping("/signin")
     public ResponseEntity<?> authenticate(@RequestBody UserDTO userDTO){
         // 자격 증명 확인
-        Users user = usersService.getByCredentials(
+        Users user = userService.getByCredentials(
                 userDTO.getUsername(),
                 userDTO.getPassword(),passwordEncoder);
 
@@ -78,7 +79,7 @@ public class UserController {
             final UserDTO responserUserDTO = UserDTO.builder()
                     .id(user.getId())
                     .password(user.getPassword())
-                    .createdAt(user.getCreatedAt())
+                    .createdAt(user.getCreated_at())
                     .username(user.getUsername())
                     .nickname(user.getNickname())
                     .email(user.getEmail())

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import MyPageHeader from '../../components/mypage/MyPageHeader';
+import MyPageHeader from '../../components/myPage/MyPageHeader';
 
 const MemberInfo = () => {
   const [representativeAddress, setRepresentativeAddress] = useState(null);
