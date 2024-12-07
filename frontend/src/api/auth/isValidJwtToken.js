@@ -4,7 +4,6 @@
 export default function isValidJWT() {
   const token = localStorage.getItem('token');
   if (!token) {
-    console.log('토큰이 존재하지 않습니다.');
     return false; // token이 존재하지 않으면 false 반환
   }
 

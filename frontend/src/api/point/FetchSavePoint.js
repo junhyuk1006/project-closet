@@ -11,9 +11,7 @@ export const savePoint = async (PointData) => {
         if (!response.ok) {
             throw new Error("Failed to save point");
         }
-
         const result = await response.text();
-        console.log("Save point result", result);
     } catch (error) {
         console.error("Error saving point:", error);
     }

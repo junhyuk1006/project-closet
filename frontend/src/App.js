@@ -27,7 +27,7 @@ import Admin from './pages/admin/Admin';
 import Detail from './pages/DetailItem/Detail';
 import Recommend from './pages/community/recommend/Recommend';
 import ShoppingCart from './pages/cart/ShoppingCart';
-import Board from './pages/comunity/board';
+import Board from './pages/community/board';
 
 // 공통 애니메이션과 레이아웃
 import Layout from './layouts/Layout'; // Header/Footer 포함 여부를 제어하는 레이아웃

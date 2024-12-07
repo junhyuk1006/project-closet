@@ -12,7 +12,6 @@ function FetchAllReview ({ item_id, onReviewFetch }) {
             .then((data) => {
                 if(data) {
                     onReviewFetch(data);
-                    console.log(data)
                 }
             })
             .catch((error) =>
