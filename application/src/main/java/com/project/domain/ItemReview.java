@@ -16,9 +16,10 @@ public class ItemReview {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long item_id;
-    private int score;
+    @Column(name = "item_id") // DB 컬럼과 매핑
+    private Long itemId;
 
+    private int score;
     private String review_image;
     private String review_content;
     private String status = "active";
@@ -28,6 +29,6 @@ public class ItemReview {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private Users Users;
+    private Users users;
 
 }

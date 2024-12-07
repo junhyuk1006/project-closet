@@ -30,7 +30,7 @@ import ShoppingCart from './pages/cart/ShoppingCart';
 
 // 공통 애니메이션과 레이아웃
 import Layout from './layouts/Layout'; // Header/Footer 포함 여부를 제어하는 레이아웃
-import Animation from './hooks/animation/Animation'; // 페이지 전환 애니메이션 효과
+import Animation from './hooks/Animation/Animation'; // 페이지 전환 애니메이션 효과
 import Guide from './pages/main/Guide';
 import Agreement from './pages/main/Agreement';
 import Privacy from './pages/main/Privacy';

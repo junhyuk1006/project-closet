@@ -20,5 +20,6 @@ public class UserItemReviewDTO {
     private int score;
     private String review_image;
     private String review_content;
+    private String status;
     private LocalDateTime created_at;
 }

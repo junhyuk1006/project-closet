@@ -12,11 +12,13 @@ import java.util.List;
 @Repository
 public interface ReviewRepository extends JpaRepository<ItemReview, Long> {
 
+    boolean existsByUsersIdAndItemId(Long userId, Long itemId);
+
     @Query("SELECT new com.project.dto.UserItemReviewDTO(" +
             "u.id, u.username, u.nickname, u.profileImage, " +
-            "ir.id, ir.score, ir.review_image, ir.review_content, ir.created_at) " +
+            "ir.id, ir.score, ir.review_image, ir.review_content, ir.status, ir.created_at) " +
             "FROM ItemReview ir " +
-            "JOIN ir.Users u " +
-            "WHERE ir.item_id = :itemId")
+            "JOIN ir.users u " +
+            "WHERE ir.itemId = :itemId")
     List<UserItemReviewDTO> findUserItemReviewDTOByItemId(@Param("itemId") Long itemId);
 }

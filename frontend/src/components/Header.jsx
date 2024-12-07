@@ -31,21 +31,16 @@ function Header() {
   // 페이지를 새로고침시키는 등 적절한 상황에만 호출하도록 수정 필요
   useEffect(() => {
     setIsAuthenticated(isValidJwtToken());
-    console.log(`isAuthenticated ${isAuthenticated}`);
   });
 
   // 장바구니 열기/닫기 토글
   const toggleCart = (prev) => {
-    console.log(`장바구니 토글 (isCartOpen): ${isCartOpen}`);
     setIsCartOpen(!prev);
   };
 
   // 모바일 메뉴 열기/닫기 토글
   const toggleMobileMenu = () => {
     setIsMenuOpen((prev) => !prev);
-    console.log(
-      `모바일 화면의 햄버거 버튼을 클릭하였습니다. (현재 상태: ${isMenuOpen})`
-    );
   };
 
   const submitSearchForm = () => {
@@ -60,7 +55,6 @@ function Header() {
   //
   const toggleSearch = (prev) => {
     const newState = !prev;
-    console.log(`검색 버튼 클릭 (현재상태: ${newState})`);
     setIsSearching(newState);
   };
 

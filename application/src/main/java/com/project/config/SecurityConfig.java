@@ -1,6 +1,4 @@
 package com.project.config;
-
-
 import com.project.security.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -10,6 +8,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
 
 @Configuration
 @RequiredArgsConstructor
@@ -22,9 +21,16 @@ public class SecurityConfig {
 
         http
             .csrf(AbstractHttpConfigurer::disable)  // CSRF비활성화(JWT 사용시 필요없음)
-
+            .cors(cors -> cors.configurationSource(request -> {
+                CorsConfiguration configuration = new CorsConfiguration();
+                configuration.addAllowedOrigin("http://localhost:3000"); // React 개발 서버 URL
+                configuration.addAllowedMethod("*"); // 모든 HTTP 메서드 허용
+                configuration.addAllowedHeader("*"); // 모든 헤더 허용
+                configuration.setAllowCredentials(true); // 인증 정보(Cookie, Authorization 헤더) 허용
+                return configuration;
+            }))
             .sessionManagement(session -> session   // 세션 정책: 무상태(JWT 인증이므로 세션 사용 안함)
-                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
             // URL별 접근 권한 설정
             .authorizeHttpRequests(auth -> auth
