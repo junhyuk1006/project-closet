@@ -15,8 +15,8 @@ import org.hibernate.annotations.DynamicInsert;
 @Builder
 @DynamicInsert
 @Data
-@Table(name = "user")
-public class User {
+@Table(name = "users")
+public class Users {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -59,7 +59,7 @@ public class User {
     private Boolean isReleased; // 공개여부
 
     @CreationTimestamp
-    private java.sql.Timestamp createAt; // 가입일자
+    private java.sql.Timestamp createdAt; // 가입일자
 
     private java.sql.Timestamp inactiveDate; // 비활성화일자
 
