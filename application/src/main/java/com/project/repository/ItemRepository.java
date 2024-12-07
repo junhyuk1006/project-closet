@@ -1,14 +1,20 @@
 package com.project.repository;
 
-import com.project.domain.ItemDetail;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import com.project.domain.ItemDetail;
+import com.project.dto.ItemAllDTO;
 
 @Repository
 public interface ItemRepository extends JpaRepository<ItemDetail, Long> {
-    // 기본적으로 findAll() 메서드 제공
+    @Query("SELECT new com.project.dto.ItemAllDTO(i.id, i.item_name, i.item_category, i.item_price, i.main_image, i.detail_image, i.views, i.status) " +
+            "FROM ItemDetail i " +
+            "WHERE i.status = 'active' ")
+    Page<ItemAllDTO> findAllByStatusActive(Pageable pageable);
 
 }
 

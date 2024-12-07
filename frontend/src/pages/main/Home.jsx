@@ -12,14 +12,13 @@ import 'material-design-iconic-font/dist/css/material-design-iconic-font.min.css
 // Import Hooks
 import Product from '../main/Product';
 
-
 // Import Components
 import Category from '../../hooks/Category/Category';
 import FilterSearch from '../main/FilterSearch';
 
-
 // Import API
-import FetchAllProduct from "../../api/item/FetchAllProduct";
+import FetchAllProduct from '../../api/item/FetchAllProduct';
+import TopRankedItems from '../../components/main/TopRankedItems';
 
 // Function Aria
 function Home() {
@@ -67,98 +66,13 @@ function Home() {
         </div>
       </section>
 
-      <div className="sec-banner bg0 p-t-80 p-b-50">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-6 col-xl-4 p-b-30 m-lr-auto">
-              <div className="block1 wrap-pic-w">
-                <img src="images/banner-01.jpg" alt="IMG-BANNER" />
-
-                <a
-                  href="../../../../../Downloads/cozastore-master/product.html"
-                  className="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3"
-                >
-                  <div className="block1-txt-child1 flex-col-l">
-                    <span className="block1-name ltext-102 trans-04 p-b-8">
-                      Women
-                    </span>
-
-                    <span className="block1-info stext-102 trans-04">
-                      Spring 2024
-                    </span>
-                  </div>
-
-                  <div className="block1-txt-child2 p-b-4 trans-05">
-                    <div className="block1-link stext-101 cl0 trans-09">
-                      Shop Now
-                    </div>
-                  </div>
-                </a>
-              </div>
-            </div>
-
-            {/*Banner*/}
-            <div className="col-md-6 col-xl-4 p-b-30 m-lr-auto">
-              <div className="block1 wrap-pic-w">
-                <img src="images/banner-02.jpg" alt="IMG-BANNER" />
-
-                <a
-                  href="../../../../../Downloads/cozastore-master/product.html"
-                  className="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3"
-                >
-                  <div className="block1-txt-child1 flex-col-l">
-                    <span className="block1-name ltext-102 trans-04 p-b-8">
-                      Men
-                    </span>
-
-                    <span className="block1-info stext-102 trans-04">
-                      Spring 2024
-                    </span>
-                  </div>
-
-                  <div className="block1-txt-child2 p-b-4 trans-05">
-                    <div className="block1-link stext-101 cl0 trans-09">
-                      Shop Now
-                    </div>
-                  </div>
-                </a>
-              </div>
-            </div>
-
-            <div className="col-md-6 col-xl-4 p-b-30 m-lr-auto">
-              <div className="block1 wrap-pic-w">
-                <img src="images/banner-03.jpg" alt="IMG-BANNER" />
-
-                <a
-                  href="../../../../../Downloads/cozastore-master/product.html"
-                  className="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3"
-                >
-                  <div className="block1-txt-child1 flex-col-l">
-                    <span className="block1-name ltext-102 trans-04 p-b-8">
-                      Accessories
-                    </span>
-
-                    <span className="block1-info stext-102 trans-04">
-                      New Trend
-                    </span>
-                  </div>
-
-                  <div className="block1-txt-child2 p-b-4 trans-05">
-                    <div className="block1-link stext-101 cl0 trans-09">
-                      Shop Now
-                    </div>
-                  </div>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      {/* Banner */}
+      <TopRankedItems />
 
       {/* Product Overview */}
       <section className="bg0 p-t-23 p-b-140">
         <div className="container">
-          <FetchAllProduct onItemFetch={ setProducts }/>
+          <FetchAllProduct onItemFetch={setProducts} />
           <div className="p-b-10">
             <h3 className="ltext-103 cl5">Product Overview</h3>
           </div>
@@ -177,10 +91,10 @@ function Home() {
 
           {/* Product */}
           <Product
-              products={(() => {
-                console.log("Passing products to Product:", products);
-                return products;
-              })()}
+            products={(() => {
+              console.log('Passing products to Product:', products);
+              return products;
+            })()}
             activeCategory={activeCategory}
             activeFilter={activeFilter}
           />
