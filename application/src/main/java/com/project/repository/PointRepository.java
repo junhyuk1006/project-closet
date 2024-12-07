@@ -11,6 +11,8 @@
     @Repository
     public interface PointRepository  extends JpaRepository<Point, Long> {
 
+        /** save() 사용 중 */
+
         @Query("SELECT p FROM Point p WHERE p.userId = :userId ORDER BY p.createdAt DESC")
         List<Point> findByUserId(@Param("userId") long userId);
 
@@ -23,6 +25,5 @@
 
         @Query(value = "SELECT SUM(p.point) FROM point p WHERE p.user_id = :userId AND p.deleted_at BETWEEN NOW() AND DATE_ADD(NOW(), INTERVAL 30 DAY)", nativeQuery = true)
         int getExpirePointByUserid(@Param("userId") long userId);
-
 
     }

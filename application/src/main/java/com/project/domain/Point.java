@@ -16,21 +16,19 @@ public class Point {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-
     private long userId;
+    private String status = "active";
 
-
-    private String pointReason;
     private int point;
-
+    private String pointReason;
     private String pointType;
+
+
 
     @CreationTimestamp
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul") // 날짜 포맷 지정
     private Timestamp createdAt;
 
-
     private Timestamp deletedAt;
-    private String status;
 
 }

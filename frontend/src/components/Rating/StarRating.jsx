@@ -1,15 +1,15 @@
-import React from "react";
-import useStarRating from "../../hooks/useStarRating";
+import React, {useState } from "react";
 
-function StarRating({ totalStars = 5 }) {
-    const {
-        rating,
-        handleClick,
-    } = useStarRating();
+function StarRating({ totalStars = 5, onRatingChange}) {
+    const [rating, setRating] = useState(0);
+
+    const handleClick = (starIndex) => {
+        setRating(starIndex);
+        if(onRatingChange) onRatingChange(starIndex);
+    }
 
     const getStarType = (index) => {
         if (rating >= index) return "zmdi-star"; // 선택된 별
-        if (rating + 0.5 === index) return "zmdi-star-half"; // 반쯤 선택된 별
         return "zmdi-star-outline"; // 선택되지 않은 별
     };
 

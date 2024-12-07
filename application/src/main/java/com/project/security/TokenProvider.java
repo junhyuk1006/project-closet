@@ -1,6 +1,6 @@
 package com.project.security;
 
-import com.project.domain.User;
+import com.project.domain.Users;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -29,7 +29,7 @@ public class TokenProvider {
     }
 
     // JWT 생성 메서드
-    public String create(User user) {
+    public String create(Users user) {
 
         Claims claims = Jwts.claims();
         claims.put("id", user.getId()); // 사용자 id 추가
@@ -51,10 +51,6 @@ public class TokenProvider {
             // Signing key 생성
             Key key = getSigningKey();
 
-            // parserClaimJws 메서드 Base64로 디코딩 및 파싱
-            // 헤더와 페이로드를 setSingingKey로 넘어온 시크릿을 이용해 서명한 후 token의 서명과 비교
-            // 위조되지 않았다다면 페이로드(Claims) 리턴, 위조라면 예외를 날림
-            // 그중 우리는 userId가 필요하므로 getBody를 부른다.
             Claims claims = Jwts.parserBuilder()
                     .setSigningKey(key)
                     .build()

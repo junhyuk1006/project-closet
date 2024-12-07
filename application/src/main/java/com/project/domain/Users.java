@@ -9,14 +9,16 @@ import org.hibernate.annotations.CreationTimestamp;
 import lombok.Data;
 import org.hibernate.annotations.DynamicInsert;
 
+import com.project.domain.ItemReview;
+
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @DynamicInsert
 @Data
-@Table(name = "user")
-public class User {
+@Table(name = "users")
+public class Users {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -59,7 +61,7 @@ public class User {
     private Boolean isReleased; // 공개여부
 
     @CreationTimestamp
-    private java.sql.Timestamp createAt; // 가입일자
+    private java.sql.Timestamp created_at; // 가입일자
 
     private java.sql.Timestamp inactiveDate; // 비활성화일자
 
@@ -68,4 +70,5 @@ public class User {
     private java.sql.Timestamp deletedAt; // 탈퇴일자
 
     private String role; // 역할
+
 }

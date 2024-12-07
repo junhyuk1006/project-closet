@@ -2,15 +2,16 @@ import React, { useState } from "react";
 import "../../assets/styles/components/main.css";
 import "../../assets/styles/components/util.css";
 import "../../assets/styles/DetailItem/Detail.css";
-import StarRating from '../../components/Rating/StarRating';
 import useProductQuantity from "../../hooks/useProductQuantity";
 import FetchIdProduct from "../../api/item/FetchIdProduct";
 import { useLocation } from "react-router-dom";
+import ReviewInput from "./ReviewInput"
 
 function Detail() {
   const location = useLocation();
   const productId = location.state?.productId || "";
   const [idProducts, setIdProducts] = useState([]); // Fetch된 데이터 저장
+  const [userId, setUserId] = useState(null)
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isZoomed, setIsZoomed] = useState(false);
   const [activeTab, setActiveTab] = useState("description");
@@ -20,6 +21,11 @@ function Detail() {
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
+
+  const handleFetch = (data) => {
+    setIdProducts(data.items);
+    setUserId(data.userId);
+  }
 
   const handleThumbnailClick = (index) => {
     setCurrentIndex(index);
@@ -46,7 +52,7 @@ function Detail() {
         <div className="container">
           <div className="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
             {/* Fetch 컴포넌트 */}
-            <FetchIdProduct id={productId} onItemFetch={setIdProducts} />
+            <FetchIdProduct id={productId} onItemFetch={handleFetch} />
 
             {/* 크럼브 데이터 */}
             <a href="/" className="stext-109 cl8 hov-cl1 trans-04">
@@ -264,7 +270,15 @@ function Detail() {
                         className={`nav-link ${activeTab === 'reviews' ? 'active' : ''}`}
                         onClick={() => handleTabClick('reviews')}
                     >
-                      리뷰 (1)
+                      리뷰
+                    </button>
+                  </li>
+                  <li className="nav-item p-b-10">
+                    <button
+                        className={`nav-link ${activeTab === 'QnA' ? 'active' : ''}`}
+                        onClick={() => handleTabClick('reviews')}
+                    >
+                      문의 사항
                     </button>
                   </li>
                 </ul>
@@ -339,94 +353,7 @@ function Detail() {
                   </div>
 
                   {/* Reviews Tab */}
-                  <div
-                      className={`tab-pane fade ${activeTab === 'reviews' ? 'show active' : ''}`}
-                      id="reviews"
-                      role="tabpanel"
-                  >
-                    <div className="row">
-                      <div className="col-sm-10 col-md-8 col-lg-6 m-lr-auto">
-                        <div className="p-b-30 m-lr-15-sm">
-                          <div className="flex-w flex-t p-b-68">
-                            <div className="wrap-pic-s size-109 bor0 of-hidden m-r-18 m-t-6">
-                              <img
-                                  src="../../../public/images/avatar-01.jpg"
-                                  alt="AVATAR"
-                              />
-                            </div>
-                            <div className="size-207">
-                              <div className="flex-w flex-sb-m p-b-17">
-                              <span className="mtext-107 cl2 p-r-20">
-                                Ariana Grande
-                              </span>
-                                <span className="fs-18 cl11">
-                                <i className="zmdi zmdi-star"></i>
-                                <i className="zmdi zmdi-star"></i>
-                                <i className="zmdi zmdi-star"></i>
-                                <i className="zmdi zmdi-star"></i>
-                                <i className="zmdi zmdi-star-half"></i>
-                              </span>
-                              </div>
-                              <p className="stext-102 cl6">
-                                Quod autem in homine praestantissimum atque
-                                optimum est, id deseruit. Apud ceteros autem
-                                philosophos
-                              </p>
-                            </div>
-                          </div>
-                          <form className="w-full">
-                            <h5 className="mtext-108 cl2 p-b-7">Add a review</h5>
-                            <p className="stext-102 cl6">
-                              Your email address will not be published. Required
-                              fields are marked *
-                            </p>
-                            <div className="flex-w flex-m p-t-50 p-b-23">
-                              <span className="stext-102 cl3 m-r-16">별점</span>
-                              <StarRating totalStars={5}/>
-                            </div>
-                            <div className="row p-b-25">
-                              <div className="col-12 p-b-5">
-                                <label className="stext-102 cl3" htmlFor="review">
-                                  리뷰
-                                </label>
-                                <textarea
-                                    className="size-110 bor8 stext-102 cl2 p-lr-20 p-tb-10"
-                                    id="review"
-                                    name="review"
-                                ></textarea>
-                              </div>
-                              <div className="col-sm-6 p-b-5">
-                                <label className="stext-102 cl3" htmlFor="name">
-                                  이름
-                                </label>
-                                <input
-                                    className="size-111 bor8 stext-102 cl2 p-lr-20"
-                                    id="name"
-                                    type="text"
-                                    name="name"
-                                />
-                              </div>
-                              <div className="col-sm-6 p-b-5">
-                                <label className="stext-102 cl3" htmlFor="email">
-                                  이메일
-                                </label>
-                                <input
-                                    className="size-111 bor8 stext-102 cl2 p-lr-20"
-                                    id="email"
-                                    type="text"
-                                    name="email"
-                                />
-                              </div>
-                            </div>
-                            <button
-                                className="flex-c-m stext-101 cl0 size-112 bg7 bor11 hov-btn3 p-lr-15 trans-04 m-b-10">
-                              리뷰 작성
-                            </button>
-                          </form>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  <ReviewInput activeTab={activeTab} userId={userId} productId={productId}/>
                 </div>
               </div>
             </div>

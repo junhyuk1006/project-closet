@@ -1,7 +1,7 @@
 package com.project.controller;
 
 
-import com.project.domain.User;
+import com.project.domain.Users;
 import com.project.security.TokenProvider;
 import com.project.service.UserService;
 import com.project.dto.ResponseDTO;
@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.sql.Timestamp;
 
 @Slf4j
 @RestController
@@ -34,7 +32,7 @@ public class UserController {
     public ResponseEntity<?> registerUser(@RequestBody UserDTO userDTO){
         try{
             // 요청 데이터를 사용해 User 엔티티 생성
-            User user = User.builder()
+            Users user = Users.builder()
                     .username(userDTO.getUsername())
                     .nickname(userDTO.getNickname())
                     .password(passwordEncoder.encode(userDTO.getPassword()))
@@ -43,7 +41,7 @@ public class UserController {
                     .build();
 
             // UserService를 통해 사용자 저장
-            User registerdUser = userService.create(user);
+            Users registerdUser = userService.create(user);
 
             // 응답용 DTO 생성
             UserDTO responseUserDTO = UserDTO.builder()
@@ -68,7 +66,7 @@ public class UserController {
     @PostMapping("/signin")
     public ResponseEntity<?> authenticate(@RequestBody UserDTO userDTO){
         // 자격 증명 확인
-        User user = userService.getByCredentials(
+        Users user = userService.getByCredentials(
                 userDTO.getUsername(),
                 userDTO.getPassword(),passwordEncoder);
 
@@ -76,6 +74,7 @@ public class UserController {
             // 토큰 생성
             final String token = tokenProvider.create(user);
             final UserDTO responserUserDTO = UserDTO.builder()
+                    .id(user.getId())
                     .username(user.getUsername())
                     .token(token)
                     .build();
