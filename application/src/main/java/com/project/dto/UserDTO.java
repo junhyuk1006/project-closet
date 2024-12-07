@@ -34,7 +34,7 @@ public class UserDTO {
     private Boolean isReleased; // 공개여부
 
     @CreationTimestamp
-    private java.sql.Timestamp createAt; // 가입일자
+    private java.sql.Timestamp createdAt; // 가입일자
     private java.sql.Timestamp inactiveDate; // 비활성화일자
     private java.sql.Timestamp reactiveDate; // 차단해제일자
     private java.sql.Timestamp deletedAt; // 탈퇴일자

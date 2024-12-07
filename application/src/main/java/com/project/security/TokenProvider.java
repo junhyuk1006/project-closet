@@ -38,7 +38,6 @@ public class TokenProvider {
         // JWT Token 생성
         return Jwts.builder()
                 .setClaims(claims) // Payload에 추가된 Claims 설정
-                // Header에 들어갈 내용 및 서명을 위한 SECRET_KEY
                 .setIssuer("demo app") // 발급자
                 .setIssuedAt(new Date()) // 발급 시간
                 .setExpiration(new Date(System.currentTimeMillis() + expiryDate)) // 만료 시간
