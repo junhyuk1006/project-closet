@@ -26,6 +26,12 @@ public class MypageController {
         mypageService.deleteById(id);
     }
 
+    // 대표 주소 변경
+    @PutMapping("/switchRepresentativeAddress/{id}")
+    public void switchRepresentativeAddress(@PathVariable("id") long id,
+                                                                     @RequestParam("userId") long userId) {
+        mypageService.switchRepresentativeAddress(id,userId);
+    }
 
 
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import MyPageHeader from '../../components/myPage/MyPageHeader';
+import MyPageHeader from '../../components/mypage/MyPageHeader';
 import '../../assets/styles/mypage/MyPage.css';
 
 const MyPoint = () => {
