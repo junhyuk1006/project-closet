@@ -24,7 +24,6 @@ public class PointController {
         return ResponseEntity.ok("success");
     }
 
-
     // 전체 포인트 조회
     @GetMapping("/getAllPoint")
     public ResponseEntity<List<Point>> findAll() {
