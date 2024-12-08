@@ -1,15 +1,82 @@
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 2000;
+/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+[ Header Desktop ]*/
+.logo img {
+  width: auto !important;
+  height: 41.6px;
 }
+
+/*------------------------------------------------------------------
+[ 카테고리 ]*/
+.main-menu > li:hover > a {
+  text-decoration: none;
+  color: #333;
+}
+
+.main-menu > li a:hover {
+  text-decoration: none;
+  color: #6c7ae0;
+}
+
+/* dropdown 컴포넌트의 버튼 스타일 */
+.dropdown button {
+  margin: 0;
+  padding: 0;
+  background-color: initial !important; /* 기본 스타일로 되돌리기 */
+  color: initial !important;
+  border: initial !important;
+  cursor: default;
+}
+
+/* dropdown 컴포넌트의 링크 스타일 */
+.dropdown button > a {
+  font-family: Poppins-Medium;
+  font-size: 14px;
+  color: #333;
+  padding: 5px 0px;
+  cursor: default;
+  transition: all 0.4s;
+  -webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+}
+.dropdown a.dropdown-item {
+  font-size: 14px;
+}
+.dropdown-menu:active {
+  --bs-dropdown-link-active-bg: #efefff;
+}
+
+/* dropdown 화살표 제거 */
+.dropdown-toggle::after {
+  content: none;
+}
+.btn.show {
+}
+
+/*------------------------------------------------------------------
+[ 검색창 ]*/
+.header-search {
+  background-color: #eee;
+  opacity: 0.7;
+  width: 50%;
+  height: 70%;
+  color: #232323;
+  padding: 5px 10px;
+  border-radius: 7px;
+}
+
+.label1::after {
+  top: 7px;
+}
+
+/*[ Header Desktop end ]
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
+
+/*================================================================*/
 
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 [ Header Mobile ]*/
+
 .wrap-header-mobile {
   display: -webkit-box;
   display: -webkit-flex;
@@ -55,6 +122,16 @@
 
 /*------------------------------------------------------------------
 [ btn show menu ]*/
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 2000;
+}
+
 .hamburger {
   display: -webkit-box;
   display: -webkit-flex;
@@ -188,7 +265,7 @@
 
   display: block;
   position: absolute;
-  top: 1px;
+  top: -5px;
   left: 65px;
   height: 15px;
   min-width: 32px;
@@ -231,20 +308,3 @@
 
 /*[ Header Mobile end ]
 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
-
-.logo img {
-  width: auto !important;
-  height: 41.6px;
-}
-
-/**/
-
-.header-search {
-  background-color: #eee;
-  opacity: 0.7;
-  width: 50%;
-  height: 70%;
-  color: #232323;
-  padding: 5px 10px;
-  border-radius: 7px;
-}

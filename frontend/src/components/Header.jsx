@@ -13,6 +13,7 @@ import useFixedHeader from '../hooks/useFixedHeader';
 import Cart from '../pages/cart/Cart';
 import MobileMenu from './main/MobileMenu';
 import isValidJwtToken from '../api/auth/isValidJwtToken';
+import Dropdown from 'react-bootstrap/Dropdown';
 
 function Header() {
   const isAtTop = useFixedHeader(); // 현재 페이지 스크롤의 최상단 여부
@@ -21,6 +22,11 @@ function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false); // 모바일 메뉴의 open 상태
   const [isSearching, setIsSearching] = useState(false); // 데스크탑의 검색창 open 상태
   const [inputValue, setInputValue] = useState(''); // 검색창 입력값 상태
+  const [show, setShow] = useState(false); // 카테고리의 열림 상태
+
+  // 카테고리 dropdown 열기/닫기 토글
+  const toggleMouseEnter = () => setShow(true);
+  const toggleMouseLeave = () => setShow(false);
 
   // 검색창 상태가 변경될 때마다 입력값을 초기화
   useEffect(() => {
@@ -48,6 +54,14 @@ function Header() {
     );
   };
 
+  // 검색창 열기/닫기 토글
+  const toggleSearch = (prev) => {
+    const newState = !prev;
+    console.log(`검색 버튼 클릭 (현재상태: ${newState})`);
+    setIsSearching(newState);
+  };
+
+  // 검색 폼 제출
   const submitSearchForm = () => {
     fetch('http://localhost:80/product?key=' + inputValue, {
       method: 'POST',
@@ -55,13 +69,6 @@ function Header() {
     }).then((res) => {
       console.log(res);
     });
-  };
-
-  //
-  const toggleSearch = (prev) => {
-    const newState = !prev;
-    console.log(`검색 버튼 클릭 (현재상태: ${newState})`);
-    setIsSearching(newState);
   };
 
   return (
@@ -191,8 +198,8 @@ function Header() {
             boxShadow: isAtTop ? 'none' : '0 4px 6px rgba(0, 0, 0, 0.1)',
             opacity: isAtTop ? '1' : '0.95',
             transition: isAtTop
-              ? 'top 0.2s ease-out, background-color 0.5s ease-in-out, height 0.5s ease-in-out, box-shadow 0.5s ease-in-out, opacity 0.5s ease-in-out'
-              : 'top 0.1s ease-in, background-color 0.5s ease-in-out, height 0.5s ease-in-out, box-shadow 0.5s ease-in-out, opacity 0.5s ease-in-out',
+              ? 'top 0.3s cubic-bezier(0.1, 0.6, 0.1, 1), background-color 0.3s ease-in-out, height 0.3s ease-in-out, box-shadow 0.3s ease-in-out, opacity 0.3s ease-in-out'
+              : 'top 0.2s cubic-bezier(0.25, 0.7, 1, 1), background-color 0.5s ease-in-out, height 0.5s ease-in-out, box-shadow 0.5s ease-in-out, opacity 0.5s ease-in-out',
           }}
         >
           <nav className="limiter-menu-desktop container">
@@ -203,22 +210,26 @@ function Header() {
             <div className="menu-desktop">
               <ul className="main-menu">
                 <li>
-                  <Link to="/shop">아우터</Link>
-                </li>
-                <li>
-                  <Link to="/shop">상의</Link>
-                </li>
-                <li>
-                  <Link to="/shop">바지</Link>
-                </li>
-                <li>
-                  <Link to="/shop">치마</Link>
-                </li>
-                <li>
-                  <Link to="/shop">신발</Link>
-                </li>
-                <li>
-                  <Link to="/shop">악세서리</Link>
+                  <Dropdown
+                    onMouseEnter={toggleMouseEnter}
+                    onMouseLeave={toggleMouseLeave}
+                    show={show}
+                  >
+                    <Dropdown.Toggle variant="" id="">
+                      <Link to="#">카테고리</Link>
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu>
+                      <Dropdown.Item href="/shop">아우터</Dropdown.Item>
+                      <Dropdown.Item href="/shop">상의</Dropdown.Item>
+                      <Dropdown.Item href="/shop">바지</Dropdown.Item>
+                      <Dropdown.Item href="/shop">치마</Dropdown.Item>
+                      <Dropdown.Item href="/shop">신발</Dropdown.Item>
+                      <Dropdown.Item href="/shop">악세서리</Dropdown.Item>
+                      <Dropdown.Divider />
+                      <Dropdown.Item href="/shop">전체</Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
                 </li>
                 <li>
                   <Link to="/ShoppingCart">장바구니</Link>
@@ -226,7 +237,7 @@ function Header() {
                 <li className="label1" data-label1="hot">
                   <Link to="/Recommend">스타일링</Link>
                 </li>
-                <li className="label1" data-label1="hot">
+                <li>
                   <Link to="/Community">커뮤니티</Link>
                 </li>
               </ul>
