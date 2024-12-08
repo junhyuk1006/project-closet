@@ -5,8 +5,11 @@ img[alt='logo'] {
   margin-bottom: 20px;
   align-items: start;
 }
+.container-fluid {
+  height: 100vh;
+}
 .error-page {
-  width: 60%;
+  width: 90%;
 }
 .error-page h1 {
   font-size: 6rem;
@@ -18,34 +21,23 @@ img[alt='logo'] {
   font-size: 1.25rem;
   color: #6c757d;
 }
+.flex {
+  justify-content: space-between;
+}
 @media (min-width: 1001px) {
-  .error-page {
-    width: 90%;
-  }
   .max-width {
     max-width: 300px;
   }
 }
 @media (max-width: 1000px) {
-  .error-page {
-    width: 80%;
-  }
   .max-width {
     max-width: calc(300px);
   }
 }
 @media (max-width: 768px) {
-  .error-page {
-    width: 90%;
-  }
   .max-width {
     max-width: 250px;
   }
-  .error-page p {
-    font-size: 1.1rem;
-  }
-}
-@media (max-width: 500px) {
   .error-page p {
     font-size: 1rem;
   }
@@ -57,8 +49,6 @@ img[alt='logo'] {
 }
 .search-wrapper {
   display: flex;
-  flex-direction: row-reverse;
-  gap: 20px;
 }
 .w-85p {
   width: 85%;

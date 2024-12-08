@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import '../../assets/styles/main/Page404.css';
 import Logo from '../../assets/closet-removebg.png';
 
+import Search from '../../api/main/Search';
+
 export default function Page404() {
   const [isSearching, setIsSearching] = useState(false);
   const [inputValue, setInputValue] = useState('');
@@ -42,25 +44,8 @@ export default function Page404() {
           />
         </div>
 
-        <div className="search-wrapper m-t-20">
-          <div
-            className={`flex-c-m stext-106 cl6 bor4 pointer hov-btn3 trans-04 js-show-search search-button`}
-            style={{ height: '50px' }}
-            onClick={() => {
-              toggleSearch();
-            }}
-          >
-            {!isSearching ? (
-              <i className="icon-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-search"></i>
-            ) : (
-              <i className="icon-close-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-close"></i>
-            )}
-            검색
-          </div>
-
-          <div
-            className={`${!isSearching ? 'dis-none' : 'dis-block'} panel-search w-85p`}
-          >
+        <div className="search-wrapper m-t-40">
+          <div className="panel-search w-85p">
             <div className="bor8 dis-flex" style={{ height: '50px' }}>
               <div className="flex-c-m fs-16 cl2 hov-cl1 trans-04 p-l-15">
                 <i className="zmdi zmdi-search"></i>
@@ -75,6 +60,22 @@ export default function Page404() {
                 onKeyDown={handleKeyDown}
               />
             </div>
+          </div>
+          <div
+            className={`flex-c-m stext-106 cl6 bor4 pointer hov-btn3 trans-04 js-show-search search-button`}
+            style={{ height: '50px' }}
+            onClick={(e) => {
+              if (inputValue === '' || inputValue === null) {
+                alert('검색어를 입력하세요.');
+                e.preventDefault();
+              } else {
+                console.log(`검색 버튼 클릭: ${inputValue}`);
+                <Search inputValue={inputValue} />;
+              }
+            }}
+          >
+            <i className="icon-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-search"></i>
+            검색
           </div>
         </div>
       </div>

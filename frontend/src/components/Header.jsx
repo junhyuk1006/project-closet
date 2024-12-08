@@ -8,6 +8,8 @@ import '../assets/vendor/css-hamburgers/hamburgers.min.css';
 // import Image
 import closetImage from '../assets/closet-removebg.png';
 
+import Search from '../api/main/Search';
+
 // import Hooks
 import useFixedHeader from '../hooks/useFixedHeader';
 import Cart from '../pages/cart/Cart';
@@ -252,7 +254,7 @@ function Header() {
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') {
                     console.log(`${e.key} 입력 (검색)`);
-                    submitSearchForm();
+                    <Search inputValue={inputValue} />;
                   }
                 }}
                 value={inputValue}
