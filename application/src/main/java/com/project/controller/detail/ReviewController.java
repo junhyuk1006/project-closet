@@ -1,4 +1,4 @@
-package com.project.controller;
+package com.project.controller.detail;
 
 import com.project.dto.ReviewDTO;
 import com.project.dto.UserItemReviewDTO;

@@ -1,6 +1,6 @@
 package com.project.repository;
 
-import com.project.domain.Item;
+import com.project.domain.detail.Item;
 import com.project.dto.ItemDetailItemDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -16,5 +16,4 @@ public interface ItemDetailRepository extends JpaRepository<Item, Long> {
             "d.id, d.item_price, d.views, d.item_name, d.item_category, d.main_image, d.detail_image, d.status, d.created_at) " +
             "FROM Item i JOIN i.itemDetail d WHERE d.id = :itemDetailId")
     List<ItemDetailItemDTO> findItemDetailWithItem(@Param("itemDetailId") Long itemDetailId);
-
 }

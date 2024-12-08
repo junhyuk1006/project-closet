@@ -9,8 +9,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import lombok.Data;
 import org.hibernate.annotations.DynamicInsert;
 
-import com.project.domain.ItemReview;
-
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor

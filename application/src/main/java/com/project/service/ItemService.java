@@ -1,7 +1,5 @@
 package com.project.service;
 
-import com.project.domain.Item;
-import com.project.domain.ItemDetail;
 import com.project.dto.ItemAllDTO;
 import com.project.dto.ItemDetailItemDTO;
 import com.project.repository.ItemDetailRepository;
@@ -10,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -43,7 +40,6 @@ public class ItemService {
     }
 
     public List<ItemDetailItemDTO> getItemsByItemDetailId(Long itemDetailId) {
-        System.out.print("asdasdasd" + itemDetailRepository.findItemDetailWithItem(itemDetailId));
         return itemDetailRepository.findItemDetailWithItem(itemDetailId);
     }
 }

@@ -1,7 +1,7 @@
-package com.project.domain;
+package com.project.domain.detail;
 
+import com.project.domain.Users;
 import jakarta.persistence.*;
-import lombok.Builder;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 

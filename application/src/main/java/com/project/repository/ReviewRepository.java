@@ -1,6 +1,6 @@
 package com.project.repository;
 
-import com.project.domain.ItemReview;
+import com.project.domain.detail.ItemReview;
 import com.project.dto.UserItemReviewDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

@@ -1,3 +1,8 @@
+/* ============================ */
+/* 1. Pagination 스타일 */
+/* ============================ */
+
+/* Pagination 컨테이너 */
 .pagination {
     display: flex;
     justify-content: center;
@@ -5,6 +10,7 @@
     margin-bottom: 25px;
 }
 
+/* Pagination 버튼 스타일 */
 .pagination button {
     margin: 0 5px;
     padding: 5px 10px;
@@ -13,16 +19,22 @@
     cursor: pointer;
 }
 
+/* Pagination 활성화된 버튼 스타일 */
 .pagination button.active {
     background-color: #f1f1f1;
     color: black;
 }
+
+/* ============================ */
+/* 2. 버튼 스타일 */
+/* ============================ */
 
 /* 수정 버튼 스타일 */
 .btn-update {
     background-color: #4CAF50; /* 녹색 */
 }
 
+/* 수정 버튼 hover 스타일 */
 .btn-update:hover {
     background-color: #45a049; /* 더 밝은 녹색 */
 }
@@ -32,6 +44,7 @@
     background-color: #f44336; /* 빨간색 */
 }
 
+/* 비활성화 버튼 hover 스타일 */
 .btn-deactivate:hover {
     background-color: #e53935; /* 더 어두운 빨간색 */
 }
@@ -40,28 +53,6 @@
 .btn-update:active, .btn-deactivate:active {
     transform: scale(0.95); /* 살짝 눌리는 효과 */
     opacity: 0.8; /* 투명도 조정 */
-}
-/* 리뷰 카드 컨테이너 */
-.flex-w.flex-t {
-    display: flex;
-    align-items: center;
-    justify-content: space-between; /* content와 버튼이 양쪽 끝에 배치되도록 설정 */
-    width: 100%;
-}
-
-/* 리뷰 내용 영역 */
-.size-207 {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
-
-.review-content-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: space-between; /* content와 버튼이 양쪽 끝에 배치되도록 설정 */
-    width: 100%;
 }
 
 /* 활성화 버튼 스타일 */
@@ -76,11 +67,12 @@
     margin-left: auto; /* 가장 오른쪽으로 이동 */
 }
 
+/* 활성화 버튼 hover 스타일 */
 .btn-activate:hover {
     background-color: #45a049;
 }
 
-/* 수정, 비활성화 버튼 스타일 */
+/* 수정, 비활성화 버튼 기본 스타일 */
 .btn-update,
 .btn-deactivate {
     padding: 5px 10px;
@@ -93,16 +85,47 @@
     margin-left: 10px; /* 가장 오른쪽으로 이동 */
 }
 
+/* 수정 버튼 hover 스타일 */
 .btn-update:hover {
     background-color: #e57300;
 }
 
+/* 비활성화 버튼 스타일 */
 .btn-deactivate {
     background-color: #d32f2f;
 }
 
+/* 비활성화 버튼 hover 스타일 */
 .btn-deactivate:hover {
     background-color: #c62828;
+}
+
+/* ============================ */
+/* 3. 리뷰 카드 레이아웃 */
+/* ============================ */
+
+/* 리뷰 카드 컨테이너 */
+.flex-w-review {
+    display: flex;
+    align-items: center; /* 세로 중앙 정렬 */
+    justify-content: space-between; /* 좌우 양끝 정렬 */
+    width: 100%; /* 전체 너비 사용 */
+}
+
+/* 리뷰 내용 영역 */
+.size-207 {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+/* 리뷰 텍스트 스타일 */
+.review-content-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* content와 버튼이 양쪽 끝에 배치되도록 설정 */
+    width: 100%;
 }
 
 /* 비활성화 텍스트 스타일 */
@@ -112,6 +135,14 @@
     color: #777;
     flex-grow: 1;
 }
+
+.p-b-17-review {
+    padding-bottom: 10px;
+}
+
+/* ============================ */
+/* 4. 드롭다운 메뉴 스타일 */
+/* ============================ */
 
 /* 드롭다운 메뉴 컨테이너 */
 .dropdown-menu {
@@ -140,6 +171,7 @@
     text-align: center;
 }
 
+/* 드롭다운 마지막 아이템 */
 .dropdown-item:last-child {
     border-bottom: none; /* 마지막 항목은 선 제거 */
 }
@@ -157,9 +189,9 @@
     cursor: pointer;
 }
 
-.p-bst-68{
-    margin-bottom: 40px;
-}
+/* ============================ */
+/* 5. 이미지 박스 스타일 */
+/* ============================ */
 
 /* 이미지 박스 컨테이너 */
 .image-container {
@@ -190,17 +222,9 @@
     fill: #ccc; /* 기본 이미지를 표시할 때 회색 톤 */
 }
 
-.menu-icon-wrapper {
-    margin-left: auto; /* 아이콘을 가장 오른쪽으로 이동 */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.flex-wde {
-    display: flex;
-    align-items: center;
-    justify-content: space-between; /* 자식 요소를 양쪽 끝으로 배치 */
-}
+/* ============================ */
+/* 6. 기타 레이아웃 스타일 */
+/* ============================ */
 
 /* 부모 컨테이너 */
 .review-header {
@@ -209,13 +233,6 @@
     justify-content: space-between; /* 자식 요소를 양쪽 끝으로 정렬 */
     padding-bottom: 10px; /* 하단 여백 */
     border-bottom: 1px solid #ddd; /* 하단 구분선(optional) */
-}
-
-/* 왼쪽 영역: 이름과 별점 */
-.review-left {
-    display: flex; /* 이름과 별점을 한 줄로 배치 */
-    align-items: center; /* 세로 정렬 가운데 */
-    gap: 10px; /* 이름과 별점 간격 */
 }
 
 /* 닉네임 스타일 */
@@ -232,27 +249,71 @@
     font-size: 18px;
 }
 
-/* 오른쪽 메뉴 아이콘 */
-.review-menu {
-    margin-left: auto; /* 오른쪽 끝으로 배치 */
-    cursor: pointer; /* 클릭 가능한 포인터 스타일 */
-}
-
-.flex-w-review {
-    display: flex;
-    align-items: center; /* 세로 중앙 정렬 */
-    justify-content: space-between; /* 좌우 양끝 정렬 */
-    width: 100%; /* 전체 너비 사용 */
-}
-
-.p-b-17-review {
-    padding-bottom: 10px;
-}
-
-
 /* 메뉴 아이콘 */
 .menu-icon-wrapper {
     margin-left: auto; /* 부모 요소의 왼쪽 공간을 채워 오른쪽 끝으로 이동 */
     cursor: pointer;
     padding: 0 !important;
 }
+
+/* 하단 여백 */
+.p-bst-68 {
+    margin-bottom: 40px;
+}
+
+
+/* 문의 유형 드롭다운 스타일 */
+.inquiry-type-dropdown {
+    display: flex;
+    align-items: center; /* 세로 중앙 정렬 */
+    margin-top: 10px;
+}
+
+/* 드롭다운 라벨 스타일 */
+.inquiry-type-dropdown label {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    margin-right: 10px; /* 드롭다운과 간격 */
+}
+
+/* 드롭다운 셀렉트 박스 스타일 */
+.inquiry-type-dropdown select {
+    max-width: 300px; /* 최대 너비 제한 */
+    padding: 10px 15px;
+    font-size: 14px;
+    color: #333;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+    transition: border-color 0.3s;
+    outline: none; /* 포커스 시 외곽선 제거 */
+}
+
+/* 드롭다운 hover 및 focus 효과 */
+.inquiry-type-dropdown select:hover,
+.inquiry-type-dropdown select:focus {
+    border-color: #007bff; /* 파란색 테두리 */
+}
+
+.inquiry-type-badge {
+    display: inline-block;
+    padding: 3px 8px;
+    font-size: 0.9rem;
+    background-color: #f2f2f2;
+    border-radius: 5px;
+    color: #333;
+}
+
+.inquiry-answerStatus-badge {
+    display: inline-block;
+    padding: 3px 8px;
+    font-size: 0.9rem;
+    background-color: #f2f2f2;
+    border-radius: 5px;
+    color: #333;
+    margin-left: 5px;
+}
+
+
+

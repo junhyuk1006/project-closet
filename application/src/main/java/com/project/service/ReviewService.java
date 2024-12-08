@@ -1,6 +1,6 @@
 package com.project.service;
 
-import com.project.domain.ItemReview;
+import com.project.domain.detail.ItemReview;
 import com.project.dto.ReviewDTO;
 import com.project.dto.UserItemReviewDTO;
 import com.project.repository.ReviewRepository;
@@ -52,7 +52,6 @@ public class ReviewService {
                 .orElseThrow(() -> new IllegalStateException("Review not found"));
 
         // 기존 리뷰 내용 업데이트
-        review.setScore(reviewDTO.getScore());
         review.setReview_content(reviewDTO.getReview_content());
         review.setReview_image(reviewDTO.getReview_image());
 

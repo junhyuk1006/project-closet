@@ -23,8 +23,6 @@ public class Point {
     private String pointReason;
     private String pointType;
 
-
-
     @CreationTimestamp
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul") // 날짜 포맷 지정
     private Timestamp createdAt;

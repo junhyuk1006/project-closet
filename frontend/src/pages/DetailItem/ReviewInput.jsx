@@ -1,11 +1,19 @@
-import StarRating from "../../components/Rating/StarRating";
 import React, { useState, useEffect } from "react";
-import FetchAllReview from "../../api/Review/FetchAllReview";
-import "./ReviewInput.css";
 import { savePoint } from "../../api/point/FetchSavePoint";
+
+/** custom css 및 react icon   */
+import "../../assets/styles/DetailItem/ReviewInput.css";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 
+/** components */
+import StarRating from "../../components/Rating/StarRating";
+
+/** api */
+import FetchAllReview from "../../api/Review/FetchAllReview";
+
+
 function ReviewInput({ activeTab, userId, productId }) {
+
     /** 리뷰, 드롭다운 상태, 폼 입력 상태를 관리하기 위한 state */
     const [reviews, setReviews] = useState([]);
     const [dropdownStates, setDropdownStates] = useState({});

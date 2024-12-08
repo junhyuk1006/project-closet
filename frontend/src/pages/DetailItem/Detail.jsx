@@ -6,6 +6,7 @@ import useProductQuantity from "../../hooks/useProductQuantity";
 import FetchIdProduct from "../../api/item/FetchIdProduct";
 import { useLocation } from "react-router-dom";
 import ReviewInput from "./ReviewInput"
+import ItemInquiry from "./ItemInquiry";
 
 function Detail() {
   const location = useLocation();
@@ -276,7 +277,7 @@ function Detail() {
                   <li className="nav-item p-b-10">
                     <button
                         className={`nav-link ${activeTab === 'QnA' ? 'active' : ''}`}
-                        onClick={() => handleTabClick('reviews')}
+                        onClick={() => handleTabClick('inquiry')}
                     >
                       문의 사항
                     </button>
@@ -354,6 +355,7 @@ function Detail() {
 
                   {/* Reviews Tab */}
                   <ReviewInput activeTab={activeTab} userId={userId} productId={productId}/>
+                  <ItemInquiry activeTab={activeTab} userId={userId} productId={productId}/>
                 </div>
               </div>
             </div>
