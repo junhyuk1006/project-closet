@@ -14,8 +14,12 @@ public interface ItemInquiryRepository extends JpaRepository<ItemInquiry, Long> 
 
     @Query("SELECT new com.project.dto.UserItemInquiryDTO(" +
             "u.id, u.username, u.nickname, u.profileImage, " +
-            "ir.id, ir.content, ir.inquiryType, ir.answerStatus, ir.status, ir.createdAt) " +
+            "ir.id, ir.content, ir.inquiryType, ir.answerStatus, ir.status, ir.createdAt, " +
+            "a.id, a.answer, a.createdAt" +
+            ") " +
             "FROM ItemInquiry ir " +
             "JOIN ir.users u " +
+            "LEFT JOIN ItemInquiryAnswer a ON a.itemInquiry = ir " +
             "WHERE ir.itemDetailId = :itemDetailId")
-    List<UserItemInquiryDTO> findByUserId(@Param("itemDetailId") Long itemDetailId);}
+    List<UserItemInquiryDTO> findByUserId(@Param("itemDetailId") Long itemDetailId);
+}

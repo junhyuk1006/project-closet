@@ -16,10 +16,7 @@ public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final UsersRepository usersRepository;
 
-/*    public ReviewDTO saveReview(ReviewDTO reviews) {
-        return reviewDTORepository.save(reviews);
-    }*/
-
+    public Long getReviewCountByItemId(Long itemId) {return reviewRepository.countInquiry(itemId);}
     public void saveReview(ReviewDTO reviewDTO) {
         // 중복 확인
         if (reviewRepository.existsByUsersIdAndItemId(reviewDTO.getUser_id(), reviewDTO.getItem_id())) {

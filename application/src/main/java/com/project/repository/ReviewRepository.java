@@ -21,4 +21,7 @@ public interface ReviewRepository extends JpaRepository<ItemReview, Long> {
             "JOIN ir.users u " +
             "WHERE ir.itemId = :itemId")
     List<UserItemReviewDTO> findUserItemReviewDTOByItemId(@Param("itemId") Long itemId);
+
+    @Query("SELECT count(i) from ItemReview i where i.itemId = :itemId")
+    Long countInquiry(@Param("itemId") Long itemId);
 }

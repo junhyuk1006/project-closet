@@ -7,6 +7,7 @@ import FetchIdProduct from "../../api/item/FetchIdProduct";
 import { useLocation } from "react-router-dom";
 import ReviewInput from "./ReviewInput"
 import ItemInquiry from "./ItemInquiry";
+import FetchCountReview from "../../api/Review/FetchCountReview";
 
 function Detail() {
   const location = useLocation();
@@ -16,7 +17,7 @@ function Detail() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isZoomed, setIsZoomed] = useState(false);
   const [activeTab, setActiveTab] = useState("description");
-
+  const [countReview, setCountReview] = useState(0);
   const { quantity, increaseQuantity, decreaseQuantity } = useProductQuantity(1);
 
   const handleTabClick = (tab) => {
@@ -267,11 +268,12 @@ function Detail() {
                     </button>
                   </li>
                   <li className="nav-item p-b-10">
+                    <FetchCountReview itemId={productId} onCountFetch={setCountReview}/>
                     <button
                         className={`nav-link ${activeTab === 'reviews' ? 'active' : ''}`}
                         onClick={() => handleTabClick('reviews')}
                     >
-                      리뷰
+                      리뷰( {countReview} )
                     </button>
                   </li>
                   <li className="nav-item p-b-10">

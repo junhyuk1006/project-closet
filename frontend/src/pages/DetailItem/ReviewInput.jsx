@@ -10,6 +10,8 @@ import StarRating from "../../components/Rating/StarRating";
 
 /** api */
 import FetchAllReview from "../../api/Review/FetchAllReview";
+import LockIcon from "@mui/icons-material/Lock";
+import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 
 
 function ReviewInput({ activeTab, userId, productId }) {
@@ -85,6 +87,7 @@ function ReviewInput({ activeTab, userId, productId }) {
             if (!response.ok) throw new Error("리뷰 업데이트 실패");
             alert("리뷰가 성공적으로 업데이트되었습니다.");
             fetchReviews();
+            setDropdownStates({});
         } catch (error) {
             console.error("리뷰 업데이트 중 오류 발생:", error);
         }
@@ -102,6 +105,7 @@ function ReviewInput({ activeTab, userId, productId }) {
             if (!response.ok) throw new Error("리뷰 비활성화 실패");
             alert("리뷰가 성공적으로 비활성화되었습니다.");
             fetchReviews();
+            setDropdownStates({});
         } catch (error) {
             console.error("리뷰 비활성화 중 오류 발생:", error);
         }
@@ -119,6 +123,7 @@ function ReviewInput({ activeTab, userId, productId }) {
             if (!response.ok) throw new Error("리뷰 활성화 실패");
             alert("리뷰가 성공적으로 활성화되었습니다.");
             fetchReviews();
+            setDropdownStates({});
         } catch (error) {
             console.error("리뷰 활성화 중 오류 발생:", error);
         }
@@ -251,7 +256,7 @@ function ReviewInput({ activeTab, userId, productId }) {
                                         </div>
                                         <div className="review-content-wrapper">
                                             {review.status === "inactive" ? (
-                                                <p className="stext-102 cl6">해당 리뷰는 유저의 요청에 의해 비활성화되었습니다.</p>
+                                                <p className="stext-102 cl6"><LockIcon />해당 리뷰는 유저의 요청에 의해 비활성화되었습니다.</p>
                                             ) : (
                                                 <p className="stext-102 cl6">{review.review_content}</p>
                                             )}
@@ -277,7 +282,7 @@ function ReviewInput({ activeTab, userId, productId }) {
                             <form onSubmit={handleSubmit} className="w-full">
                                 <h5 className="mtext-108 cl2 p-b-7">Review Info</h5>
                                 <p className="stext-102 cl6">
-                                    리뷰 작성을 하여도 리뷰 박스 오른쪽 상단 메뉴를 통해 비활성화가 가능합니다.
+                                    <ArrowRightIcon/>리뷰 작성을 하여도 리뷰 박스 오른쪽 상단 메뉴를 통해 비활성화가 가능합니다.
                                 </p>
                                 <input type="hidden" value={userId || ""} name="userId"/>
                                 <input type="hidden" value={productId || ""} name="productId"/>

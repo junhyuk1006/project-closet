@@ -16,11 +16,16 @@ public class UserItemInquiryDTO {
     private String nickname;
     private String profileImage;
 
-    //Review 필드
+    //Inquiry 필드
     private Long InquiryId;
     private String InquiryContent;
     private ItemInquiry.InquiryType inquiryType;
     private ItemInquiry.AnswerStatus answerStatus;
     private ItemInquiry.Status status;
     private LocalDateTime createdAt;
+
+    //Inquiry_Answer 필드
+    private Long answerId;
+    private String answer;
+    private LocalDateTime answerCreateAt;
 }

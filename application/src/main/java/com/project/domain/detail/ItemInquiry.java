@@ -47,7 +47,7 @@ public class ItemInquiry {
     @CreationTimestamp
     private LocalDateTime createdAt;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private Users users;
 }

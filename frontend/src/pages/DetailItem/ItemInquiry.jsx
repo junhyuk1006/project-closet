@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 /** custom css 및 react icon   */
 import "../../assets/styles/DetailItem/ReviewInput.css";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import ArrowRightIcon from '@mui/icons-material/ArrowRight';
+import LockIcon from '@mui/icons-material/Lock';
 
 /** api */
 import FetchIdProduct from "../../api/item/FetchIdProduct";
@@ -16,12 +18,13 @@ function ItemInquiry({ activeTab, userId, productId }) {
     const [currentPage, setCurrentPage] = useState(1);
     const [inquiryContent, setInquiryContent] = useState(""); // 문의 내용
     const [inquiryType, setInquiryType] = useState("ProductInquiry"); // Default inquiry type
+    const [showAnswers, setShowAnswers] = useState({}); // 각 문의의 답변 노출 상태 관리
 
     /** 페이지 당 리뷰 수 */
     const inquiriesPerPage = 4;
 
 
-    /** 특정 리뷰의 드롭다운을 토글 */
+    /** 특정 상품 문의의 드롭다운을 토글 */
     const toggleDropdown = (inquiryId) => {
         setDropdownStates((prevState) => ({
             ...prevState,
@@ -48,14 +51,14 @@ function ItemInquiry({ activeTab, userId, productId }) {
     useEffect(() => {
 
         fetchInquiries();
-
+        setShowAnswers({});
         const handleClickOutside = () => {
             setDropdownStates({});
         };
 
         document.addEventListener("click", handleClickOutside);
         return () => document.removeEventListener("click", handleClickOutside);
-    }, [productId]);
+    }, [productId, activeTab]);
 
     /** 드롭다운 내부 클릭 시 이벤트 전파를 막음 */
     const handleDropdownClick = (event) => {
@@ -73,7 +76,7 @@ function ItemInquiry({ activeTab, userId, productId }) {
         setCurrentPage(pageNumber);
     };
 
-    /** 리뷰 비활성화 핸들러 */
+    /** 상품 문의 비활성화 핸들러 */
     const handleDeactivate = async (reviewId) => {
         try {
             const response = await fetch(`http://localhost:80/api/inquiry/deactivateInquiry/${reviewId}`, {
@@ -82,15 +85,17 @@ function ItemInquiry({ activeTab, userId, productId }) {
                 credentials: "include",
             });
 
-            if (!response.ok) throw new Error("리뷰 비활성화 실패");
-            alert("리뷰가 성공적으로 비활성화되었습니다.");
+            if (!response.ok) throw new Error("상품 문의 비활성화 실패");
+            alert("상품 문의가 성공적으로 비활성화되었습니다.");
             fetchInquiries();
+            setDropdownStates({});
+            setShowAnswers({});
         } catch (error) {
-            console.error("리뷰 비활성화 중 오류 발생:", error);
+            console.error("상품 문의 비활성화 중 오류 발생:", error);
         }
     };
 
-    /** 리뷰 활성화 핸들러 */
+    /** 상품 문의 활성화 핸들러 */
     const handleActivate = async (reviewId) => {
         try {
             const response = await fetch(`http://localhost:80/api/inquiry/activateInquiry/${reviewId}`, {
@@ -99,15 +104,17 @@ function ItemInquiry({ activeTab, userId, productId }) {
                 credentials: "include",
             });
 
-            if (!response.ok) throw new Error("리뷰 활성화 실패");
-            alert("리뷰가 성공적으로 활성화되었습니다.");
+            if (!response.ok) throw new Error("상품 문의 활성화 실패");
+            alert("상품 문의가 성공적으로 활성화되었습니다.");
             fetchInquiries();
+            setDropdownStates({});
+            setShowAnswers({});
         } catch (error) {
-            console.error("리뷰 활성화 중 오류 발생:", error);
+            console.error("상품 문의 활성화 중 오류 발생:", error);
         }
     };
 
-    /** 리뷰 작성 폼 제출 핸들러 */
+    /** 상품 문의 작성 폼 제출 핸들러 */
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!userId) {
@@ -124,9 +131,7 @@ function ItemInquiry({ activeTab, userId, productId }) {
                 content: inquiryContent,
             };
 
-            console.log("inquiryData:",inquiryData)
-
-            /** 리뷰 저장 API */
+            /** 상품 문의 저장 API */
             const response = await fetch('http://localhost:80/api/inquiry/saveInquiry', {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -144,15 +149,24 @@ function ItemInquiry({ activeTab, userId, productId }) {
 
         } catch (error) {
             console.error("상품 문의 저장 중 오류 발생:", error);
-            alert("상품 저장 실패");
+            alert("상품 문의 저장 실패");
         }
     };
 
     const handleInquiryTypeChange = (e) => {
         const selectedValue = e.target.value; // Ensure correct value is captured
-        console.log("Selected inquiryType value:", selectedValue);
         setInquiryType(selectedValue);
     };
+
+    /** 문의 박스 클릭 핸들러: Answered 상태일 경우 답변 토글 */
+    const handleInquiryClick = (inquiryId, answerStatus) => {
+        if (answerStatus === "Answered") {
+            setShowAnswers(prev => ({
+                ...prev,
+                [inquiryId]: !prev[inquiryId]
+            }));
+        }
+    }
 
     return (
         <>
@@ -163,90 +177,97 @@ function ItemInquiry({ activeTab, userId, productId }) {
                         <div className="p-b-30 m-lr-15-sm">
                             {/** 리뷰 목록 렌더링 */}
                             {currentInquires.map((inquiry) => (
-                                <div key={inquiry.inquiryId} className="flex-w-review flex-t p-bst-68">
-                                    <div className="wrap-pic-s size-109 bor0 of-hidden m-r-18 m-t-6">
-                                        <img src={`images/${inquiry.profileImage}`} alt={inquiry.nickname}/>
-                                    </div>
-                                    <div className="size-207">
-                                        <div className="flex-w-review flex-sb-m p-b-17-review">
-                                            <span className="mtext-107 cl2 p-r-20">{inquiry.nickname}</span>
-                                            {inquiry.inquiryType && (
-                                                <span className="inquiry-type-badge">
-                                                    {(() => {
-                                                        switch (inquiry.inquiryType) {
-                                                            case "ProductInquiry":
-                                                                return "상품문의";
-                                                            case "ExchangeInquiry":
-                                                                return "교환문의";
-                                                            case "ReturnInquiry":
-                                                                return "반품문의";
-                                                            case "OtherInquiry":
-                                                                return "기타문의";
-                                                            default:
-                                                                return inquiry.inquiryType;
-                                                        }
-                                                    })()}
-                                                </span>
-                                            )}
-                                            {inquiry.answerStatus && (
-                                                <span className="inquiry-answerStatus-badge">
-                                                    {(() => {
-                                                        switch (inquiry.answerStatus) {
-                                                            case "Pending":
-                                                                return "답변 중";
-                                                            case "Answered":
-                                                                return "답변 완료";
-                                                            case "Closed":
-                                                                return "문의 종료";
-                                                            default:
-                                                                return inquiry.answerStatus;
-                                                        }
-                                                    })()}
-                                                </span>
-                                            )}
-                                            <div className="menu-icon-wrapper">
-                                                {userId && inquiry.userId === userId && (
-                                                    <>
-                                                        <MoreHorizIcon
-                                                            style={{ fontSize: 25, cursor: "pointer" }}
-                                                            onClick={(e) => {
-                                                                e.stopPropagation();
-                                                                toggleDropdown(inquiry.inquiryId);
-                                                            }}
-                                                        />
-                                                        {dropdownStates[inquiry.inquiryId] && (
-                                                            <div className="dropdown-menu" onClick={handleDropdownClick}>
-                                                                {inquiry.status === "inactive" ? (
-                                                                    <button
-                                                                        onClick={() => handleActivate(inquiry.inquiryId)}
-                                                                        className="dropdown-item"
-                                                                    >
-                                                                        활성화
-                                                                    </button>
-                                                                ) : (
-                                                                    <>
+                                <div key={inquiry.inquiryId} className="inquiry-container">
+                                    <div
+                                        className="inquiry-main flex-w-review flex-t p-bst-68"
+                                        style={{cursor: inquiry.answerStatus === "Answered" ? "pointer" : "default"}}
+                                        onClick={() => handleInquiryClick(inquiry.inquiryId, inquiry.answerStatus)}
+                                    >
+                                        <div className="wrap-pic-s size-109 bor0 of-hidden m-r-18 m-t-6">
+                                            <img src={`images/${inquiry.profileImage}`} alt={inquiry.nickname}/>
+                                        </div>
+                                        <div className="size-207">
+                                            <div className="flex-w-review flex-sb-m p-b-17-review">
+                                                <span className="mtext-107 cl2 p-r-20">{inquiry.nickname}</span>
+                                                {inquiry.inquiryType && (
+                                                    <span className="inquiry-type-badge">
+                                                        {(() => {
+                                                            switch (inquiry.inquiryType) {
+                                                                case "ProductInquiry":
+                                                                    return "상품문의";
+                                                                case "ExchangeInquiry":
+                                                                    return "교환문의";
+                                                                case "ReturnInquiry":
+                                                                    return "반품문의";
+                                                                case "OtherInquiry":
+                                                                    return "기타문의";
+                                                                default:
+                                                                    return inquiry.inquiryType;
+                                                            }
+                                                        })()}
+                                                    </span>
+                                                )}
+                                                {inquiry.answerStatus && (
+                                                    <span className="inquiry-answerStatus-badge">
+                                                        {(() => {
+                                                            switch (inquiry.answerStatus) {
+                                                                case "Pending":
+                                                                    return "답변 대기";
+                                                                case "Answered":
+                                                                    return "답변 완료";
+                                                                default:
+                                                                    return inquiry.answerStatus;
+                                                            }
+                                                        })()}
+                                                    </span>
+                                                )}
+                                                <div className="menu-icon-wrapper" onClick={(e) => e.stopPropagation()}>
+                                                    {userId && inquiry.userId === userId && (
+                                                        <>
+                                                            <MoreHorizIcon
+                                                                style={{ fontSize: 25, cursor: "pointer" }}
+                                                                onClick={() => toggleDropdown(inquiry.inquiryId)}
+                                                            />
+                                                            {dropdownStates[inquiry.inquiryId] && (
+                                                                <div className="dropdown-menu">
+                                                                    {inquiry.status === "inactive" ? (
+                                                                        <button
+                                                                            onClick={() => handleActivate(inquiry.inquiryId)}
+                                                                            className="dropdown-item"
+                                                                        >
+                                                                            활성화
+                                                                        </button>
+                                                                    ) : (
                                                                         <button
                                                                             onClick={() => handleDeactivate(inquiry.inquiryId)}
                                                                             className="dropdown-item"
                                                                         >
                                                                             비활성화
                                                                         </button>
-                                                                    </>
-                                                                )}
-                                                            </div>
-                                                        )}
-                                                    </>
+                                                                    )}
+                                                                </div>
+                                                            )}
+                                                        </>
+                                                    )}
+                                                </div>
+                                            </div>
+                                            <div className="review-content-wrapper">
+                                                {inquiry.status === "inactive" ? (
+                                                    <p className="stext-102 cl6"><LockIcon /> 해당 상품 문의는 유저의 요청에 의해 비활성화되었습니다.</p>
+                                                ) : (
+                                                    <p className="stext-102 cl6">{inquiry.inquiryContent}</p>
                                                 )}
                                             </div>
                                         </div>
-                                        <div className="review-content-wrapper">
-                                            {inquiry.status === "inactive" ? (
-                                                <p className="stext-102 cl6">해당 상품 문의는 유저의 요청에 의해 비활성화되었습니다.</p>
-                                            ) : (
-                                                <p className="stext-102 cl6">{inquiry.inquiryContent}</p>
-                                            )}
-                                        </div>
                                     </div>
+
+                                    {/** 여기서 inquiry-main 아래에 조건부로 답변 영역을 출력 */}
+                                    {inquiry.status === "active" && inquiry.answerStatus === "Answered" && showAnswers[inquiry.inquiryId] && (
+                                        <div className="answer-content">
+                                            <h6>관리자 답변:</h6>
+                                            <p>{inquiry.answer ? inquiry.answer : "답변 내용이 없습니다."}</p>
+                                        </div>
+                                    )}
                                 </div>
                             ))}
 
@@ -266,9 +287,10 @@ function ItemInquiry({ activeTab, userId, productId }) {
                             {/** 리뷰 작성 폼 */}
                             <form onSubmit={handleSubmit} className="w-full">
                                 <h5 className="mtext-108 cl2 p-b-7">Inquiry Info</h5>
-                                <p className="stext-102 cl6">
-                                    문의 작성 후 문의 목록 박스 오른쪽 상단 메뉴를 통해 비활성화가 가능합니다.
-                                </p>
+                                <div className="stext-102 cl6">
+                                    <p className="inquiry-info-text"><ArrowRightIcon/> 문의 작성 후 문의 목록 박스 오른쪽 상단 메뉴를 통해 비활성화가 가능합니다.</p>
+                                    <ArrowRightIcon/>  답변 완료일 경우 문의를 클릭하시면 답변 확인이 가능합니다.
+                                </div>
                                 <input type="hidden" value={userId || ""} name="userId"/>
                                 <input type="hidden" value={productId || ""} name="productId"/>
                                 <div className="flex-w flex-m p-t-50 p-b-23">
