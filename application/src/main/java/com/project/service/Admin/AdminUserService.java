@@ -18,6 +18,6 @@ public class AdminUserService {
     }
 
     public List<AdminUserDTO> getAllUsersAdmin() {
-        return adminUserRepository.findAllAdmin();
+        return adminUserRepository.findAllAdminUsers();
     }
 }

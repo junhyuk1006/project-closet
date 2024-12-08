@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Form, Button, Row, Col, Table } from 'react-bootstrap';
-import { getAllUsers } from '../../../../api/admin/user/user';
+import { getAllUserAdmin } from '../../../../api/admin/user/user';
 const User = () => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    getAllUsers()
+    getAllUserAdmin()
       .then(setUsers)
       .catch((error) => console.error(error));
   }, []);
@@ -132,10 +132,10 @@ const User = () => {
               <td>{index + 1}</td>
               <td>{user.username}</td>
               <td>{user.nickname}</td>
-              <td>등급</td>
+              <td>{user.grade}</td>
               <td>{user.birth}</td>
-              <td>포인트</td>
-              <td>구매수</td>
+              <td>{user.point}</td>
+              <td>{user.buy}</td>
               <td>{user.createAt}</td>
               <td>status</td>
             </tr>

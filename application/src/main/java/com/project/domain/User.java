@@ -1,5 +1,6 @@
 package com.project.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,12 +18,12 @@ import java.util.List;
 @Builder
 @DynamicInsert
 @Data
-@Table(name = "user")
+@Table(name = "users")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; // 아이디
+    private Long id; // 아이디 -> userId로
 
     private String username; // 계정
 
@@ -61,7 +62,7 @@ public class User {
     private Boolean isReleased; // 공개여부
 
     @CreationTimestamp
-    private java.sql.Timestamp createAt; // 가입일자
+    private java.sql.Timestamp createdAt; // 가입일자
 
     private java.sql.Timestamp inactiveDate; // 비활성화일자
 
@@ -71,11 +72,15 @@ public class User {
 
     private String role; // 역할
 
-    //private String grade; // 등급
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "grade_id" ,referencedColumnName = "id", nullable = false)
+    private Grade grade; // 등급
 
-    @OneToMany(mappedBy = "userId" , cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user" , cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Point> point;
 
-    @OneToMany(mappedBy = "userId")
+    @OneToMany(mappedBy = "user" , cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<OrderList> orderList;
 }

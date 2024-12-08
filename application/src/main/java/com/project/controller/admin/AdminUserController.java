@@ -1,6 +1,7 @@
 package com.project.controller.admin;
 
 import com.project.domain.User;
+import com.project.dto.AdminUserDTO;
 import com.project.service.Admin.AdminUserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,8 +18,13 @@ import java.util.List;
 public class AdminUserController {
     private final AdminUserService adminUserService;
 
-    @GetMapping
-    public List<User> getUsers() {
+    @GetMapping("all")
+    public List<User> getAllUsers() {
         return adminUserService.getAllUsers();
+    }
+
+    @GetMapping("user")
+    public List<AdminUserDTO> getAllUser(){
+        return adminUserService.getAllUsersAdmin();
     }
 }

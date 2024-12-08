@@ -16,13 +16,12 @@ public class Point {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-
-    private long userId;
-
+    @ManyToOne(fetch = FetchType.LAZY) // (fetch = FetchType.LAZY) -> 성능
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false) // 기존 외래 키와 참조 키
+    private User user; // Users 테이블의 ID와 매핑
 
     private String pointReason;
     private int point;
-
     private String pointType;
 
     @CreationTimestamp
@@ -32,7 +31,4 @@ public class Point {
 
     private Timestamp deletedAt;
     private String status;
-
-
-
 }

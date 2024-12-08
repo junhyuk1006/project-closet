@@ -23,7 +23,7 @@ spring:
       hibernate:
         format_sql: "true" # 출력되는 SQL 포맷팅 활성화
         dialect: org.hibernate.dialect.MySQLDialect # Hibernate가 사용할 MySQL 방언
-    show-sql: "true" # 실행된 SQL 쿼리 로깅 활성화
+    show-sql: "false" # 실행된 SQL 쿼리 로깅 활성화
 
 
   # 데이터 소스 및 HikariCP(DB 연결 풀) 설정

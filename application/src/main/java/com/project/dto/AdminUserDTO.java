@@ -14,10 +14,10 @@ public class AdminUserDTO {
     private String nickname;
     private String grade;
     private String birth;
-    private String point;
-    private String buy;
+    private Long point;
+    private Long buy;
     private String status;
 
     @CreationTimestamp
-    private Timestamp createAt;
+    private Timestamp createdAt;
 }
