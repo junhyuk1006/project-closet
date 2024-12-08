@@ -68,10 +68,10 @@ function ItemInquiry({ activeTab, userId, productId }) {
                     throw new Error(`Error: ${response.statusText}`);
                 }
                 const data = await response.json();
-                setInquiries(Array.isArray(data) ? data : []); // 데이터가 배열인지 확인 후 설정
+                setInquiries(Array.isArray(data) ? data : []);
             } catch (error) {
                 console.error("문의 데이터를 가져오는 중 오류 발생:", error);
-                setInquiries([]); // 오류 발생 시 빈 배열로 설정
+                setInquiries([]);
             }
         };
 
@@ -105,7 +105,7 @@ function ItemInquiry({ activeTab, userId, productId }) {
                 }
 
                 alert(result.message);
-                setInquiryContent(""); // 입력 필드 초기화
+                setInquiryContent("");
                 await fetchInquiries(); // 최신 데이터 불러오기
 
             } catch (error) {
@@ -125,9 +125,9 @@ function ItemInquiry({ activeTab, userId, productId }) {
 
                 if (!response.ok) throw new Error("문의 비활성화 실패");
                 alert("문의가 성공적으로 비활성화되었습니다.");
-                fetchInquiries(); // 최신 데이터 불러오기
+                fetchInquiries();
                 setDropdownStates({}); // 드롭다운 상태 초기화
-                setShowAnswers({}); // 답변 상태 초기화
+                setShowAnswers({});
             } catch (error) {
                 console.error("문의 비활성화 중 오류 발생:", error);
             }
@@ -144,8 +144,8 @@ function ItemInquiry({ activeTab, userId, productId }) {
 
                 if (!response.ok) throw new Error("문의 활성화 실패");
                 alert("문의가 성공적으로 활성화되었습니다.");
-                fetchInquiries(); // 최신 데이터 불러오기
-                setDropdownStates({}); // 드롭다운 상태 초기화
+                fetchInquiries();
+                setDropdownStates({});
                 setShowAnswers({}); // 답변 상태 초기화
             } catch (error) {
                 console.error("문의 활성화 중 오류 발생:", error);
