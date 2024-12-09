@@ -16,6 +16,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -51,7 +54,7 @@ public class UserController {
                     .build();
 
             // UserService를 통해 사용자 저장
-            Users registeredUser = userService.create(user);
+            Users registeredUser = usersService.create(user);
 
             // 응답용 DTO 생성
             UserDTO responseUserDTO = UserDTO.builder()
@@ -76,7 +79,7 @@ public class UserController {
     @PostMapping("/signin")
     public ResponseEntity<?> authenticate(@RequestBody UserDTO userDTO){
         // 자격 증명 확인
-        Users user = userService.getByCredentials(
+        Users user = usersService.getByCredentials(
                 userDTO.getUsername(),
                 userDTO.getPassword(),passwordEncoder);
 
