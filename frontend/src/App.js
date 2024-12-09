@@ -35,6 +35,7 @@ import Guide from './pages/main/Guide';
 import Agreement from './pages/main/Agreement';
 import Privacy from './pages/main/Privacy';
 import Page404 from './components/main/Page404';
+import ScrollToTop from './components/ScrollToTop';
 
 /**
  * 공통적으로 사용하는 Route 생성 함수
@@ -60,6 +61,7 @@ const renderRoute = (path, component, includeHeaderFooter = true) => (
 
 const AppRoutes = () => (
   <Router>
+    <ScrollToTop />
     <Animation>
       <Routes>
         {/** ./pages/main */}
