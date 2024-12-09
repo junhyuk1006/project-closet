@@ -67,5 +67,6 @@ public class Users {
 
     private java.sql.Timestamp deletedAt; // 탈퇴일자
 
-    private String role; // 역할
+
+
 }

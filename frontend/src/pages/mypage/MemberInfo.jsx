@@ -1,16 +1,64 @@
 import React, { useState, useEffect } from 'react';
 import MyPageHeader from '../../components/mypage/MyPageHeader';
+import { useNavigate } from 'react-router-dom';
+import { tokenCheck } from '../../api/auth/tokenCheck';
 
 const MemberInfo = () => {
+  // 토큰 인증
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log(process.env.REACT_APP_API_BASE_URL);
+    const authenticate = async () => {
+      const data = await tokenCheck(navigate); // tokenCheck 호출
+      if (!data) {
+        // 인증 실패 시 navigate 함수로 로그인 페이지로 이동
+        navigate('/Login');
+      } else {
+        console.log('인증 성공:', data); // 성공 시 필요한 작업 수행
+
+      }
+    };
+
+    authenticate(); // 인증 함수 호출
+  }, [navigate]);
+
   const [representativeAddress, setRepresentativeAddress] = useState(null);
   const [generalAddresses, setGeneralAddresses] = useState([]);
+  const [userInfo, setUserInfo] = useState(null); // 사용자 정보 상태 추가
+
+  // 사용자 정보 가져오기 함수
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      try {
+        const response = await fetch('http://localhost:80/api/auth/userInfo', {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`, // 토큰을 헤더에 포함
+          },
+        });
+        if (response.ok) {
+          
+          const data = await response.json();
+          setUserInfo(data); // 사용자 정보 저장
+          console.log(data); 
+        } else {
+          console.error('Failed to fetch user info');
+        }
+      } catch (error) {
+        console.error('Error fetching user info:', error);
+      }
+    };
+
+    fetchUserInfo();
+  }, []);
 
   // 데이터 가져오기 함수
   const fetchData = async () => {
     try {
       const addressResponse = await fetch(
-        'http://localhost:80/api/mypage/getAddress?userId=1',
+        'http://localhost:80/api/mypage/getAddress?userId=23',
         {
+          
           cache: 'no-store',
         }
       );
@@ -36,7 +84,7 @@ const MemberInfo = () => {
   // 대표 주소지 등록
   const switchRepresentativeAddress = (id) => {
     fetch(
-      `http://localhost:80/api/mypage/switchRepresentativeAddress/${id}?userId=1`,
+      `http://localhost:80/api/mypage/switchRepresentativeAddress/${id}?userId=23`,
       {
         method: 'PUT',
         headers: {
@@ -86,6 +134,7 @@ const MemberInfo = () => {
       .then((response) => {
         if (response.ok) {
           fetchData(); // 변경 후 데이터를 다시 가져와 상태 업데이트
+          
         } else {
           console.error('일반 주소 삭제 실패');
         }
@@ -94,12 +143,26 @@ const MemberInfo = () => {
   };
 
   return (
+
+    
     <div>
       <div>
         <MyPageHeader title="회원정보" description="회원정보 등록 및 수정" />
       </div>
       <div className="mypage-label1">회원정보</div>
-      <div className="rounded-box"></div>
+      <div className="rounded-box">
+     
+        {userInfo ? (
+          <div>
+            <p>닉네임: {userInfo.nickname}</p>
+            <p>이메일: {userInfo.email}</p>
+
+            <p>생일: {userInfo.birth}</p>
+          </div>
+        ) : (
+          <p>회원 정보를 불러오는 중...</p>
+        )}
+      </div>
 
       <div className="mypage-label1">배송지 관리</div>
 

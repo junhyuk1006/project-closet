@@ -1,5 +1,7 @@
 package com.project.security;
 
+import com.project.domain.Users;
+import com.project.service.UsersService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,9 +25,11 @@ import java.util.Map;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final TokenProvider tokenProvider;
+    private final UsersService usersService;  // 사용자 정보 조회용 서비스
 
-    public JwtAuthenticationFilter(TokenProvider tokenProvider) {
+    public JwtAuthenticationFilter(TokenProvider tokenProvider, UsersService usersService) {
         this.tokenProvider = tokenProvider;
+        this.usersService = usersService;
     }
 
     @Override
@@ -33,43 +37,55 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                     @NonNull HttpServletResponse response,
                                     @NonNull FilterChain filterChain) throws ServletException, IOException {
         try {
-            // 요청에서 토큰 가져오기
+            // 토큰을 가져옵니다.
             String token = parseBearerToken(request);
             log.info("Filter is running...");
-            // 토큰 검사하기. JWT이므로 인가 서버에 요청하지 않고도 검증 가능
-            if (token != null && !token.equalsIgnoreCase("null")) {
 
-                // userId 가져오기. 위조된 경우 예외 처리된다.
+            if (token != null && !token.equalsIgnoreCase("null")) {
+                // JWT 토큰에서 인증에 필요한 정보만 추출합니다.
                 Map<String, Object> userInfo = tokenProvider.validateAndGetUserId(token);
-                Long userId = (Long) userInfo.get("id"); // ID 가져오기
                 String username = (String) userInfo.get("username"); // Username 가져오기
 
-                log.info("Authenticated user ID : {}", userId);
-                //인증 완료. SecurithContextHolder에 등록해야 인증도니 사용자라고 생각한다.
+                log.info("Authenticated user: {}", username);
+
+                // 데이터베이스에서 사용자 정보를 조회합니다. userId를 사용하여 조회합니다.
+                Users user = usersService.getUserByUsername(username);  // 사용자 정보를 username으로 조회
+
+                // CustomUserDetails 객체 생성
+                CustomUserDetails customUserDetails = CustomUserDetails.builder()
+                        .id(user.getId())  // DB에서 가져온 userId
+                        .username(user.getUsername())  // DB에서 가져온 username
+                        .nickname(user.getNickname())  // DB에서 조회한 닉네임
+                        .email(user.getEmail())        // DB에서 조회한 이메일
+                        .profileImage(user.getProfileImage())  // DB에서 조회한 프로필 이미지
+                        .phone(user.getPhone())         // DB에서 조회한 전화번호
+                        .birth(user.getBirth())         // DB에서 조회한 생년월일
+                        .build();
+
+                // 인증 완료 후, SecurityContext에 사용자 정보 등록
                 AbstractAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                        userId, // 인증된 사용자의 정보, 문자열이 아니어도 아무것이나 넣을 수 있다.
-                        null,   // 보통 UserDetails라는 오브젝트를 넣는데 우리는 넣지 않았다.
-                        AuthorityUtils.NO_AUTHORITIES);
+                        customUserDetails, // 인증된 사용자 정보
+                        null,   // JWT 인증에서는 패스워드가 필요 없으므로 null
+                        AuthorityUtils.NO_AUTHORITIES); // 권한은 사용하지 않음 (필요시 추가 가능)
 
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
                 securityContext.setAuthentication(authentication);
-                SecurityContextHolder.setContext(securityContext);
+                SecurityContextHolder.setContext(securityContext);  // SecurityContext에 설정
             }
         } catch (Exception ex) {
-            logger.error("Could not user authenticate in security context", ex);
+            logger.error("Could not authenticate user in security context", ex);
         }
-        filterChain.doFilter(request, response);
+        filterChain.doFilter(request, response);  // 필터 체인 계속 진행
     }
 
+    // Authorization 헤더에서 Bearer 토큰을 파싱합니다.
     private String parseBearerToken(HttpServletRequest request) {
-        // http 요청의 헤더를 파싱해 Bearer 토큰을 리턴한다.
         String bearerToken = request.getHeader("Authorization");
 
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer")) {
-            return bearerToken.substring(7);
+            return bearerToken.substring(7);  // "Bearer " 부분을 제거하고 토큰만 반환
         }
         return null;
     }
 }
-

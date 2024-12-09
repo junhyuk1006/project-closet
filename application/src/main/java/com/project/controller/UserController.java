@@ -2,6 +2,7 @@ package com.project.controller;
 
 
 import com.project.domain.Users;
+import com.project.security.CustomUserDetails;
 import com.project.security.TokenProvider;
 import com.project.service.UsersService;
 import com.project.dto.ResponseDTO;
@@ -11,15 +12,20 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/auth")
+@RequestMapping("/api/auth")
 public class UserController {
 
     final UsersService usersService;
@@ -89,4 +95,22 @@ public class UserController {
                     .body(responseDTO);
         }
     }
+
+    @GetMapping("/protected-resource")
+    public ResponseEntity<Map<String, String>> getProtectedResource() {
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "이 API는 보호된 리소스입니다!");
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/userInfo")
+    public CustomUserDetails getUserInfo() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof CustomUserDetails) {
+            return (CustomUserDetails) authentication.getPrincipal();
+        }
+        return null;
+    }
+
+
 }

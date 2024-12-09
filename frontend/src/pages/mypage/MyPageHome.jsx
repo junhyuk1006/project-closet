@@ -2,21 +2,27 @@ import React, {useEffect} from 'react';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { useNavigate } from 'react-router-dom';
 import MyPageHeader from '../../components/mypage/MyPageHeader';
-import { verifyToken } from '../../api/auth/verifyToken'; 
+import { tokenCheck } from '../../api/auth/tokenCheck'; 
+
 
 const MyPageHome = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    console.log(process.env.REACT_APP_API_BASE_URL);
     const authenticate = async () => {
-      const isAuthenticated = await verifyToken(navigate); // verifyToken 호출
-      if (!isAuthenticated) {
-        console.log('인증 실패로 인해 로그인 페이지로 이동');
+      const data = await tokenCheck(navigate); // tokenCheck 호출
+      if (!data) {
+        // 인증 실패 시 navigate 함수로 로그인 페이지로 이동
+        navigate('/Login');
+      } else {
+        console.log('인증 성공:', data); // 성공 시 필요한 작업 수행
       }
     };
 
     authenticate(); // 인증 함수 호출
   }, [navigate]);
+
 
   
   
