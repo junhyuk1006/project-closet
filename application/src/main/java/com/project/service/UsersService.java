@@ -1,7 +1,7 @@
 package com.project.service;
 
 import com.project.domain.Users;
-import com.project.repository.UsersRepository;
+import com.project.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -34,7 +34,7 @@ public class UsersService {
     public Users getByCredentials(final String username, final String password,
                                   final PasswordEncoder encoder) {
 
-        final Users originalUser = usersRepository.findByUsername(username);
+        final Users originalUser = userRepository.findByUsername(username);
 
         // matches 메소드를 이용해 패스워드가 같은지 확인
         if(originalUser != null && encoder.matches(password, originalUser.getPassword())) {

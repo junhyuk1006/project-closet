@@ -8,6 +8,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import lombok.Data;
 import org.hibernate.annotations.DynamicInsert;
+import org.springframework.security.core.userdetails.User;
 
 @Entity
 @NoArgsConstructor
@@ -67,6 +68,6 @@ public class Users {
 
     private java.sql.Timestamp deletedAt; // 탈퇴일자
 
-
+    private String role; // 역할
 
 }
