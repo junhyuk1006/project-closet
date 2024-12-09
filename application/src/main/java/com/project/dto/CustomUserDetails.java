@@ -15,12 +15,68 @@ public  class CustomUserDetails implements UserDetails {
         this.user = user;
     }
 
-    public  Users getUser(){
-        return user;
+    public Long getId() {
+        return user.getId();
     }
 
-    public String getNickname(){
+    public String getNickname() {
         return user.getNickname();
+    }
+
+    public String getEmail() {
+        return user.getEmail();
+    }
+
+    public String getNaverId() {
+        return user.getNaverId();
+    }
+
+    public String getKakaoId() {
+        return user.getKakaoId();
+    }
+
+    public String getBirth() {
+        return user.getBirth();
+    }
+
+    public String getProfileImage() {
+        return user.getProfileImage();
+    }
+
+    public String getName() {
+        return user.getName();
+    }
+
+    public String getPhone() {
+        return user.getPhone();
+    }
+
+    public Integer getAge() {
+        return user.getAge();
+    }
+
+    public String getIntroduction() {
+        return user.getIntroduction();
+    }
+
+    public String getStyle() {
+        return user.getStyle();
+    }
+
+    public String getStatus() {
+        return user.getStatus();
+    }
+
+    public Integer getHeight() {
+        return user.getHeight();
+    }
+
+    public Integer getWeight() {
+        return user.getWeight();
+    }
+
+    public String getSize() {
+        return user.getSize();
     }
 
     @Override

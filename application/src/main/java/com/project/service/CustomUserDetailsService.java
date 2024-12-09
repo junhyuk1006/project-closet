@@ -20,7 +20,6 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
 
-        System.out.println("토큰 순서:2");
         // 데이터베이스에서 사용자 조회
         Users user = userRepository.findByUsername(username);
         if (user == null) {

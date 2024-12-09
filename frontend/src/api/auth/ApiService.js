@@ -51,3 +51,38 @@ export const signin = async (userDTO) => {
     throw error;
   }
 };
+
+// 사용자 정보 가져오는 함수
+export const me = async () => {
+  try {
+    // 로컬 스토리지에서 토큰 가져오기
+    const token = localStorage.getItem('token');
+    if (!token) {
+      throw new Error('Authentication token not found.');
+    }
+
+    const response = await fetch(`${API_BASE_URL}/api/auth/me`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`, // 토큰 설정
+      },
+    });
+
+    // HTTP 응답 상태 확인
+    if (!response.ok) {
+      const errorData = await response.json(); // 에러 응답 데이터 파싱
+      throw new Error(
+        errorData.message ||
+          `Error: ${response.status} - ${response.statusText}`
+      );
+    }
+
+    const data = await response.json(); // JSON 데이터로 변환
+    console.log('User data:', data);
+    return data; // 사용자 데이터 반환
+  } catch (err) {
+    console.error('Failed to fetch user data:', err.message);
+    return { error: err.message }; // 에러 메시지 반환
+  }
+};
