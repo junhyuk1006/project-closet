@@ -10,6 +10,7 @@ export const call = async (api, method = 'GET', request = null) => {
     method,
     headers: {
       'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('token')}`, // 토큰을 헤더에 포함
     },
   };
 
@@ -39,7 +40,7 @@ export const call = async (api, method = 'GET', request = null) => {
 // 로그인 API 함수
 export const signin = async (userDTO) => {
   try {
-    const response = await call('/auth/signin', 'POST', userDTO);
+    const response = await call('/api/auth/signin', 'POST', userDTO);
     console.log('로그인 응답:', response);
     localStorage.setItem('token', response.token); // 토큰을 로절저장소에 저장
     alert('로그인에 성공했습니다!'); // 성공 팝업 표시 (추후 사용자편의 입장에서 변경예정)

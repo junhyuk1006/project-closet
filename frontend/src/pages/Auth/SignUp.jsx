@@ -37,7 +37,7 @@ const Checkout = () => {
 
       try {
         // 회원가입 API 호출
-        const response = await fetch('http://localhost:80/auth/signup', {
+        const response = await fetch('http://localhost:80/api/auth/signup', {
           method: 'post',
           headers: {
             'Content-Type': 'application/json',
