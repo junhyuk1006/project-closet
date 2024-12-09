@@ -19,7 +19,7 @@ export default function MobileMenu({ isMenuOpen }) {
       </ul>
 
       <ul className="main-menu-m">
-        <li>
+        {/* <li>
           <a href="index.html">Home</a>
           <ul className="sub-menu-m">
             <li>
@@ -35,7 +35,7 @@ export default function MobileMenu({ isMenuOpen }) {
           <span className="arrow-main-menu-m">
             <i className="fa fa-angle-right" aria-hidden="true"></i>
           </span>
-        </li>
+        </li> */}
 
         <li>
           <Link to="/shop">아우터</Link>
@@ -55,11 +55,14 @@ export default function MobileMenu({ isMenuOpen }) {
         <li>
           <Link to="/shop">악세서리</Link>
         </li>
-        {/* <li>
-                 <Link to="/ShoppingCart">장바구니</Link>
-                </li> */}
+        <li>
+          <Link to="/ShoppingCart">장바구니</Link>
+        </li>
         <li className="label1-mobile" data-label1="hot">
           <Link to="/Recommend">스타일링</Link>
+        </li>
+        <li>
+          <Link to="/Community">커뮤니티</Link>
         </li>
       </ul>
     </div>

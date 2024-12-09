@@ -24,11 +24,33 @@ function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false); // 모바일 메뉴의 open 상태
   const [isSearching, setIsSearching] = useState(false); // 데스크탑의 검색창 open 상태
   const [inputValue, setInputValue] = useState(''); // 검색창 입력값 상태
-  const [show, setShow] = useState(false); // 카테고리의 열림 상태
+  const [isDesktopCategoryOpen, setIsDesktopCategoryOpen] = useState(false); // 데스크탑 카테고리 open 상태
+  const [isDesktopAlarmOpen, setIsDesktopAlarmOpen] = useState(false); // 데스크탑 알람 패널 open 상태
+  const [isMobileAlarmOpen, setIsMobileAlarmOpen] = useState(false); // 데스크탑 알람 패널 open 상태
 
   // 카테고리 dropdown 열기/닫기 토글
-  const toggleMouseEnter = () => setShow(true);
-  const toggleMouseLeave = () => setShow(false);
+  const toggleMouseEnter = () => {
+    console.log('hover mouse');
+    setIsDesktopCategoryOpen(true);
+  };
+  const toggleMouseLeave = () => {
+    console.log('leave mouse');
+    setIsDesktopCategoryOpen(false);
+  };
+
+  // 데스크탑 알람 패널 열기/닫기 토글
+  const toggleDesktopAlarm = (prev) => {
+    const newState = !prev;
+    console.log(`데스크탑의 알람 버튼을 클릭했습니다: ${newState}`);
+    setIsDesktopAlarmOpen(newState);
+  };
+
+  // 모바일 알람 패널 열기/닫기 토글
+  const toggleMobileAlarm = (prev) => {
+    const newState = !prev;
+    console.log(`모바일의 알람 버튼을 클릭했습니다: ${newState}`);
+    setIsMobileAlarmOpen(newState);
+  };
 
   // 검색창 상태가 변경될 때마다 입력값을 초기화
   useEffect(() => {
@@ -86,12 +108,58 @@ function Header() {
         </div>
 
         <div className="wrap-icon-header flex-w flex-r-m m-r-15">
-          <div className="icon-header-item cl2 hov-cl1 trans-04 p-r-11 js-show-modal-search">
+          <div className="icon-header-item cl2 hov-cl1 trans-04 p-r-22 p-l-10 js-show-modal-search">
             <i className="zmdi zmdi-search"></i>
           </div>
 
+          <Dropdown
+            onClick={toggleMobileAlarm}
+            isMobileAlarmOpen={isMobileAlarmOpen}
+            autoClose={'inside'}
+          >
+            <Dropdown.Toggle variant="" id="">
+              <div
+                className="icon-header-item cl2 hov-cl1 trans-04 p-r-22 p-l-10 icon-header-noti-mobile"
+                data-notify="3"
+              >
+                <i className="zmdi zmdi-notifications-none"></i>
+              </div>
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu>
+              <Dropdown.Item href="/shop">
+                <span style={{ color: '#06F', fontWeight: 'bold' }}>
+                  [알림]
+                </span>{' '}
+                예약하신 상담 시간이 곧 시작됩니다!
+                <br />
+                잊지 말고 시간에 맞춰 준비해주세요.
+                <br />
+                상담 일정: [YYYY년 MM월 DD일 HH:mm]
+              </Dropdown.Item>
+              <Dropdown.Divider />
+              <Dropdown.Item href="/shop">
+                <span style={{ color: '#06F', fontWeight: 'bold' }}>
+                  [알림]
+                </span>{' '}
+                고객님의 주문이 배송을 시작했습니다!
+                <br />
+                주문 번호: [주문번호]
+              </Dropdown.Item>
+              <Dropdown.Divider />
+              <Dropdown.Item href="/shop">
+                <span style={{ color: '#06F', fontWeight: 'bold' }}>
+                  [알림]
+                </span>{' '}
+                환불 요청에 대한 답변이 완료되었습니다.
+                <br />
+                상세 내용은 고객센터 페이지에서 확인해주세요.
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+
           <div
-            className="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti js-show-cart"
+            className="icon-header-item cl2 hov-cl1 trans-04 p-r-22 p-l-10 icon-header-noti-mobile js-show-cart"
             data-notify="2"
           >
             <i className="zmdi zmdi-shopping-cart"></i>
@@ -99,7 +167,7 @@ function Header() {
 
           <a
             href="#"
-            className="dis-block icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti"
+            className="dis-block icon-header-item cl2 hov-cl1 trans-04 p-r-22 p-l-10 icon-header-noti-mobile"
             data-notify="0"
           >
             <i className="zmdi zmdi-favorite-outline"></i>
@@ -151,7 +219,9 @@ function Header() {
       <div className="container-menu-desktop">
         <div className="top-bar">
           <div className="content-topbar flex-sb-m h-full container">
-            <div className="left-top-bar"></div>
+            <div className="left-top-bar" style={{ margin: '0 auto' }}>
+              공지
+            </div>
             <div className="right-top-bar flex-w h-full">
               <Link
                 to="/MyPageHome"
@@ -199,17 +269,19 @@ function Header() {
           }}
         >
           <nav className="limiter-menu-desktop container">
+            {/* 로고 */}
             <Link to="/" className="logo">
               <img src={closetImage} alt="LOGO" />
             </Link>
 
+            {/* navbar */}
             <div className="menu-desktop">
               <ul className="main-menu">
                 <li>
                   <Dropdown
                     onMouseEnter={toggleMouseEnter}
                     onMouseLeave={toggleMouseLeave}
-                    show={show}
+                    show={isDesktopCategoryOpen}
                   >
                     <Dropdown.Toggle variant="" id="">
                       <Link to="#">카테고리</Link>
@@ -238,6 +310,8 @@ function Header() {
                 </li>
               </ul>
             </div>
+
+            {/* 아이콘 */}
             <div className="wrap-icon-header flex-w flex-r-m">
               <input
                 className={`header-search ${isSearching ? '' : 'dis-none'}`}
@@ -259,6 +333,51 @@ function Header() {
                   onClick={() => toggleSearch(isSearching)}
                 ></i>
               </div>
+              <Dropdown
+                onClick={toggleDesktopAlarm}
+                isDesktopAlarmOpen={isDesktopAlarmOpen}
+                autoClose={'inside'}
+              >
+                <Dropdown.Toggle variant="" id="">
+                  <div
+                    className="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti"
+                    data-notify="3"
+                  >
+                    <i className="zmdi zmdi-notifications-none"></i>
+                  </div>
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                  <Dropdown.Item href="/shop">
+                    <span style={{ color: '#06F', fontWeight: 'bold' }}>
+                      [알림]
+                    </span>{' '}
+                    예약하신 상담 시간이 곧 시작됩니다!
+                    <br />
+                    잊지 말고 시간에 맞춰 준비해주세요.
+                    <br />
+                    상담 일정: [YYYY년 MM월 DD일 HH:mm]
+                  </Dropdown.Item>
+                  <Dropdown.Divider />
+                  <Dropdown.Item href="/shop">
+                    <span style={{ color: '#06F', fontWeight: 'bold' }}>
+                      [알림]
+                    </span>{' '}
+                    고객님의 주문이 배송을 시작했습니다!
+                    <br />
+                    주문 번호: [주문번호]
+                  </Dropdown.Item>
+                  <Dropdown.Divider />
+                  <Dropdown.Item href="/shop">
+                    <span style={{ color: '#06F', fontWeight: 'bold' }}>
+                      [알림]
+                    </span>{' '}
+                    환불 요청에 대한 답변이 완료되었습니다.
+                    <br />
+                    상세 내용은 고객센터 페이지에서 확인해주세요.
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
               <div
                 className="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti"
                 onClick={() => {
