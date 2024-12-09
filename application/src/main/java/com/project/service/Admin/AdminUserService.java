@@ -4,6 +4,8 @@ import com.project.domain.User;
 import com.project.dto.AdminUserDTO;
 import com.project.repository.admin.AdminUserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +19,7 @@ public class AdminUserService {
         return adminUserRepository.findAll();
     }
 
-    public List<AdminUserDTO> getAllUsersAdmin() {
-        return adminUserRepository.findAllAdminUsers();
+    public Page<AdminUserDTO> getAllUsersAdmin(Pageable pageable) {
+        return adminUserRepository.findAllAdminUsers(pageable);
     }
 }

@@ -9,8 +9,8 @@ export const getAllUsers = async () => {
   });
 };
 
-export const getAllUserAdmin = async () => {
-  return await fetchAPI('/api/admin/user/user', {
+export const getAllUserAdmin = async (page = 0, size = 20) => {
+  return await fetchAPI(`/api/admin/user/user?page=${page}&size=${size}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

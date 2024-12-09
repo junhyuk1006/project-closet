@@ -5,6 +5,10 @@ import com.project.dto.AdminUserDTO;
 import com.project.service.Admin.AdminUserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,7 +28,7 @@ public class AdminUserController {
     }
 
     @GetMapping("user")
-    public List<AdminUserDTO> getAllUser(){
-        return adminUserService.getAllUsersAdmin();
+    public Page<AdminUserDTO> getAllUser(@PageableDefault(size = 20,sort="createdAt",direction = Sort.Direction.DESC)Pageable pageable) {
+        return adminUserService.getAllUsersAdmin(pageable);
     }
 }

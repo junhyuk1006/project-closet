@@ -1,14 +1,29 @@
 import { useEffect, useState } from 'react';
-import { Form, Button, Row, Col, Table } from 'react-bootstrap';
+import { Form, Button, Row, Col, Table, Pagination } from 'react-bootstrap';
 import { getAllUserAdmin } from '../../../../api/admin/user/user';
+import '../../../../assets/styles/admin/user.css';
 const User = () => {
   const [users, setUsers] = useState([]);
+  const [totalPages, setTotalPages] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [size, setSize] = useState(20);
 
   useEffect(() => {
-    getAllUserAdmin()
-      .then(setUsers)
+    fetchUsers(currentPage, size);
+  }, [currentPage, size]);
+
+  const fetchUsers = (page, size) => {
+    getAllUserAdmin(page, size)
+      .then((response) => {
+        setUsers(response.content);
+        setTotalPages(response.totalPages);
+      })
       .catch((error) => console.error(error));
-  }, []);
+  };
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
 
   return (
     <div>
@@ -129,19 +144,33 @@ const User = () => {
         <tbody>
           {users.map((user, index) => (
             <tr key={user.id}>
-              <td>{index + 1}</td>
+              <td>{index + 1 + currentPage * size}</td>
               <td>{user.username}</td>
               <td>{user.nickname}</td>
               <td>{user.grade}</td>
               <td>{user.birth}</td>
               <td>{user.point}</td>
               <td>{user.buy}</td>
-              <td>{user.createAt}</td>
-              <td>status</td>
+              <td>{user.createdAt}</td>
+              <td>{user.status}</td>
             </tr>
           ))}
         </tbody>
       </Table>
+
+      {/* Pagination */}
+      <Pagination>
+        {Array.from({ length: totalPages }, (_, i) => (
+          <Pagination.Item
+            key={i}
+            active={i === currentPage}
+            className={`custom-page-item ${i === currentPage ? 'custom-active' : ''}`}
+            onClick={() => handlePageChange(i)}
+          >
+            {i + 1}
+          </Pagination.Item>
+        ))}
+      </Pagination>
     </div>
   );
 };

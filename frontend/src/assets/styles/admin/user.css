@@ -1,0 +1,27 @@
+/* Pagination 전체 커스터마이징 */
+
+/* Pagination 컨테이너 중앙 정렬 */
+.custom-pagination {
+  display: flex;
+  justify-content: center; /* 가로 정렬 */
+  margin-top: 20px; /* 위쪽 여백 */
+}
+.custom-pagination .page-item .page-link {
+  color: #000; /* 기본 글씨색 검정 */
+  border: 1px solid #ddd;
+  margin: 0 5px;
+  border-radius: 5px;
+  padding: 5px 10px;
+}
+
+.custom-pagination .page-item .page-link:hover {
+  background-color: #f8f9fa; /* Hover 효과 */
+  color: #000; /* Bootstrap 기본 Primary 색상 */
+}
+
+/* 현재 페이지 스타일 */
+.custom-page-item.custom-active .page-link {
+  background-color: #000; /* 현재 페이지 배경 검정 */
+  color: #fff; /* 글씨 흰색 */
+  border-color: #000;
+}
