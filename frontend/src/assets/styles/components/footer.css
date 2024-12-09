@@ -170,7 +170,6 @@ footer .footer-links a:hover {
   margin-bottom: 30px;
   text-align: center;
   color: #000;
-  border-bottom: 1px solid #ddd;
 }
 
 .agreement-link {
@@ -200,7 +199,6 @@ footer .footer-links a:hover {
 .agreement-box {
   padding-bottom: 30px;
   margin-bottom: 30px;
-  border-bottom: 1px solid #ddd;
 }
 
 .agreement-box h4 {
@@ -218,11 +216,6 @@ footer .footer-links a:hover {
   list-style-type: square;
 }
 
-.end {
-  margin-bottom: 0;
-  border-bottom: none;
-}
-
 .agreement-box h5 {
   margin-bottom: 20px;
   color: #000;
@@ -234,48 +227,71 @@ footer .footer-links a:hover {
   line-height: 1.8;
 }
 
-.agreement-order .order-step {
-  margin-left: 15px;
+.selected-btn {
+  background-color: #5b5b5b;
+  color: #e4e4e4;
 }
 
-.agreement-order .order-step p {
-  font-size: 14px;
+/* 개인정보처리방침 스타일 */
+.privacy-subtitle {
+  padding-top: 120px;
+  padding-bottom: 30px;
+  margin-bottom: 30px;
+  text-align: center;
+  color: #000;
 }
 
-.agreement-signup span {
-  display: block;
-  font-size: 13px;
-  font-weight: bold;
-  color: #777;
-  margin-left: 15px;
-  margin-bottom: 10px;
+.privacy-link {
+  font-size: 17px;
+  line-height: 2;
+  border-right: 1px solid #ddd;
 }
 
-.agreement-payment .payment-box {
+.privacy-link a {
+  color: #888;
+}
+
+.privacy-link .active-link {
+  color: #444;
+  border-bottom: 2px solid #000;
+}
+
+.privacy-link a:hover {
+  color: #444;
+}
+
+.privacy-content {
+  font-size: 17px;
+  line-height: 2;
+}
+
+.privacy-box {
+  padding-bottom: 30px;
   margin-bottom: 30px;
 }
 
-.agreement-payment .payment-subtitle {
-  font-weight: bold;
-  padding-bottom: 5px;
+.privacy-box h4 {
+  margin-bottom: 10px;
 }
 
-.agreement-delivery span {
-  display: block;
-  font-size: 13px;
-  font-weight: bold;
-  color: #777;
-  margin-left: 15px;
+.privacy-box ul {
+  padding-left: 0;
+  margin-left: 30px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
-.agreement-exchange span {
-  display: block;
-  font-size: 13px;
-  font-weight: bold;
-  color: #777;
-  margin-left: 15px;
+.privacy-box li {
+  list-style-type: square;
 }
 
-.point-description {
-  margin-left: 3%;
+.privacy-box h5 {
+  margin-bottom: 20px;
+  color: #000;
+}
+
+.privacy-box p {
+  font-size: 15px;
+  color: #888;
+  line-height: 1.8;
 }
