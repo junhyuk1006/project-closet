@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import "../../assets/styles/DetailItem/ReviewInput.css";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
+import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import LockIcon from '@mui/icons-material/Lock';
 
 /** api */
@@ -68,6 +69,7 @@ function ItemInquiry({ activeTab, userId, productId }) {
                     throw new Error(`Error: ${response.statusText}`);
                 }
                 const data = await response.json();
+                console.log(data);
                 setInquiries(Array.isArray(data) ? data : []);
             } catch (error) {
                 console.error("문의 데이터를 가져오는 중 오류 발생:", error);
@@ -279,7 +281,7 @@ function ItemInquiry({ activeTab, userId, productId }) {
                                 <h5 className="mtext-108 cl2 p-b-7">문의 작성</h5>
                                 <div className="stext-102 cl6">
                                     <p className="inquiry-info-text"><ArrowRightIcon/> 문의 작성 후 목록에서 관리 가능합니다.</p>
-                                    <ArrowRightIcon/> 답변 완료된 문의는 클릭하여 답변 확인이 가능합니다.
+                                    <ArrowRightIcon/>답변 완료된 문의는 클릭하여 답변 확인이 가능합니다.
                                 </div>
                                 <input type="hidden" value={userId || ""} name="userId"/>
                                 <input type="hidden" value={productId || ""} name="productId"/>

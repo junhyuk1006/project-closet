@@ -17,6 +17,8 @@ public class ReviewService {
     private final UsersRepository usersRepository;
 
     public Long getReviewCountByItemId(Long itemId) {return reviewRepository.countInquiry(itemId);}
+
+
     public void saveReview(ReviewDTO reviewDTO) {
         // 중복 확인
         if (reviewRepository.existsByUsersIdAndItemId(reviewDTO.getUser_id(), reviewDTO.getItem_id())) {
@@ -39,6 +41,10 @@ public class ReviewService {
         // 엔티티 저장
         reviewRepository.save(review);
     }
+
+
+
+
 
     public List<UserItemReviewDTO> findAllReviews(Long item_id) {
         return reviewRepository.findUserItemReviewDTOByItemId(item_id);

@@ -22,4 +22,7 @@ public interface ItemInquiryRepository extends JpaRepository<ItemInquiry, Long> 
             "LEFT JOIN ItemInquiryAnswer a ON a.itemInquiry = ir " +
             "WHERE ir.itemDetailId = :itemDetailId")
     List<UserItemInquiryDTO> findByUserId(@Param("itemDetailId") Long itemDetailId);
+
+    @Query("SELECT count(i) from ItemInquiry i where i.itemDetailId = :itemId ")
+    Long countInquiriesByItemId(@Param("itemId") Long itemId);
 }

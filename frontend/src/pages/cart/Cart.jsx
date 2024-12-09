@@ -1,12 +1,17 @@
-import React from 'react';
+import React , { useEffect, useState } from 'react';
 
 // import CSS
 import '../../assets/styles/cart/Cart.css'; // cart 스타일
 import { Link } from 'react-router-dom';
+import FetchGetBasket from "../../api/basket/FetchGetBasket";
 
 function Cart({ isCartOpen, toggleCart }) {
+  const [userId, setUserId] = useState("");
+  const [basket, setBasket] =useState([]);
+
   return (
     <>
+      <FetchGetBasket userId={userId} onGetFetch={setBasket}/>
       {isCartOpen && (
         <div className="wrap-header-cart js-panel-cart show-header-cart">
           {/* 배경 클릭 시 장바구니 닫기 */}

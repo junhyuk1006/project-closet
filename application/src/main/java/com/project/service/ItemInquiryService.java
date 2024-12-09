@@ -21,6 +21,7 @@ public class ItemInquiryService {
     private final UsersRepository usersRepository;
 
     public List<UserItemInquiryDTO> findAll(Long itemId){return itemInquiryRepository.findByUserId(itemId);}
+    public Long countInquiriesByItemId(Long itemId) {return itemInquiryRepository.countInquiriesByItemId(itemId);}
 
     public void saveInquiry(ItemInquiryDTO ItemInquiryDTO) {
 

@@ -31,6 +31,9 @@ public class InquiryController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/getCountInquiries/{itemId}")
+    public Long getCountInquiries(@PathVariable Long itemId){return itemInquiryService.countInquiriesByItemId(itemId);}
+
     @GetMapping("/getInquiries/{itemId}")
     public ResponseEntity<List<UserItemInquiryDTO>> getInquiries(@PathVariable("itemId") Long itemId) {
         List<UserItemInquiryDTO> inquiries = itemInquiryService.findAll(itemId);
