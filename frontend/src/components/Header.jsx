@@ -35,12 +35,22 @@ function Header() {
     setInputValue('');
   }, [isSearching]);
 
-  // 모든 상태가 변할 때마다 해당 로직이 호출 (2번째 인자를 비워둠)
-  // 페이지를 새로고침시키는 등 적절한 상황에만 호출하도록 수정 필요
+  // 페이지 렌더링 시 jwt 토큰의 유효성 확인
   useEffect(() => {
     setIsAuthenticated(isValidJwtToken());
-    console.log(`isAuthenticated ${isAuthenticated}`);
-  });
+  }, []);
+
+  // 로그인 상태 확인 함수
+  const isLoggedIn = (e) => {
+    if (!isAuthenticated) {
+      alert('로그인이 필요합니다.');
+      e.preventDefault();
+    } else if (!isValidJwtToken()) {
+      alert('토큰이 유효하지 않습니다.');
+      setIsAuthenticated(false);
+      e.preventDefault();
+    }
+  };
 
   // 장바구니 열기/닫기 토글
   const toggleCart = (prev) => {
@@ -61,16 +71,6 @@ function Header() {
     const newState = !prev;
     console.log(`검색 버튼 클릭 (현재상태: ${newState})`);
     setIsSearching(newState);
-  };
-
-  // 검색 폼 제출
-  const submitSearchForm = () => {
-    fetch('http://localhost:80/product?key=' + inputValue, {
-      method: 'POST',
-      body: JSON.stringify({ key: inputValue }),
-    }).then((res) => {
-      console.log(res);
-    });
   };
 
   return (
@@ -157,13 +157,7 @@ function Header() {
                 to="/MyPageHome"
                 className="flex-c-m trans-04 p-lr-25"
                 onClick={(e) => {
-                  if (!isAuthenticated) {
-                    alert('로그인이 필요합니다.');
-                    console.log(
-                      `로그인 상태 (isAuthenticated): ${isAuthenticated}`
-                    );
-                    e.preventDefault();
-                  }
+                  isLoggedIn(e);
                 }}
               >
                 마이페이지
