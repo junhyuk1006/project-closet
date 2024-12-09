@@ -162,3 +162,120 @@ footer .footer-links a:hover {
 .point-description {
   margin-left: 3%;
 }
+
+/* 이용약관 스타일 */
+.agreement-subtitle {
+  padding-top: 120px;
+  padding-bottom: 30px;
+  margin-bottom: 30px;
+  text-align: center;
+  color: #000;
+  border-bottom: 1px solid #ddd;
+}
+
+.agreement-link {
+  font-size: 17px;
+  line-height: 2;
+  border-right: 1px solid #ddd;
+}
+
+.agreement-link a {
+  color: #888;
+}
+
+.agreement-link .active-link {
+  color: #444;
+  border-bottom: 2px solid #000;
+}
+
+.agreement-link a:hover {
+  color: #444;
+}
+
+.agreement-content {
+  font-size: 17px;
+  line-height: 2;
+}
+
+.agreement-box {
+  padding-bottom: 30px;
+  margin-bottom: 30px;
+  border-bottom: 1px solid #ddd;
+}
+
+.agreement-box h4 {
+  margin-bottom: 10px;
+}
+
+.agreement-box ul {
+  padding-left: 0;
+  margin-left: 30px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.agreement-box li {
+  list-style-type: square;
+}
+
+.end {
+  margin-bottom: 0;
+  border-bottom: none;
+}
+
+.agreement-box h5 {
+  margin-bottom: 20px;
+  color: #000;
+}
+
+.agreement-box p {
+  font-size: 15px;
+  color: #888;
+  line-height: 1.8;
+}
+
+.agreement-order .order-step {
+  margin-left: 15px;
+}
+
+.agreement-order .order-step p {
+  font-size: 14px;
+}
+
+.agreement-signup span {
+  display: block;
+  font-size: 13px;
+  font-weight: bold;
+  color: #777;
+  margin-left: 15px;
+  margin-bottom: 10px;
+}
+
+.agreement-payment .payment-box {
+  margin-bottom: 30px;
+}
+
+.agreement-payment .payment-subtitle {
+  font-weight: bold;
+  padding-bottom: 5px;
+}
+
+.agreement-delivery span {
+  display: block;
+  font-size: 13px;
+  font-weight: bold;
+  color: #777;
+  margin-left: 15px;
+}
+
+.agreement-exchange span {
+  display: block;
+  font-size: 13px;
+  font-weight: bold;
+  color: #777;
+  margin-left: 15px;
+}
+
+.point-description {
+  margin-left: 3%;
+}
