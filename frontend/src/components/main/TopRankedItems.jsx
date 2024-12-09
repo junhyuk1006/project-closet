@@ -24,6 +24,7 @@ export default function TopRankedItems() {
     month: '월간',
   };
 
+  // slick 속성
   const settings = {
     dots: true,
     infinite: true,
@@ -31,6 +32,23 @@ export default function TopRankedItems() {
     slidesToShow: 1,
     slidesToScroll: 1,
   };
+  useEffect(() => {
+    document
+      .querySelector('button.slick-prev')
+      .classList.add('nav-arrow', 'prev');
+    document.querySelector('button.slick-prev').textContent = '<';
+    document
+      .querySelector('button.slick-prev')
+      .classList.remove('slick-arrow', 'slick-prev');
+
+    document
+      .querySelector('button.slick-next')
+      .classList.add('nav-arrow', 'next');
+    document.querySelector('button.slick-next').textContent = '>';
+    document
+      .querySelector('button.slick-next')
+      .classList.remove('slick-arrow', 'slick-next');
+  }, []);
 
   return (
     <div className="sec-banner bg0 p-t-80 p-b-50">
