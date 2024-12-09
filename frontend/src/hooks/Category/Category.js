@@ -1,4 +1,4 @@
-export default function Category({ activeCategory, handleCategoryChange }) {
+export default function Category({ activeCategory, handleCategory }) {
   const categories = [
     { label: 'All', category: '*' },
     { label: '아우터', category: 'Outerwear' },
@@ -16,7 +16,7 @@ export default function Category({ activeCategory, handleCategoryChange }) {
           key={category.category}
           className={`stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 
               ${activeCategory === category.category ? 'how-active1' : ''}`}
-          onClick={() => handleCategoryChange(category.category)}
+          onClick={() => handleCategory(category.category)}
         >
           {category.label}
         </button>

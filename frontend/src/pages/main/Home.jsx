@@ -26,13 +26,13 @@ function Home() {
   const [activeFilter, setActiveFilter] = useState('sortByRecent'); // 필터 상태
   const [products, setProducts] = useState([]);
 
-  const handleCategoryChange = (category) => {
+  const handleCategory = (category) => {
     setActiveCategory(category);
   };
 
-  const handleFilterChange = (filter) => {
+  const handleFilter = (filter) => {
     setActiveFilter(filter);
-    console.log(`handleFilterChange에 입력된 filter: ${filter}`);
+    console.log(`handleFilter에 입력된 filter: ${filter}`);
   };
 
   return (
@@ -81,11 +81,11 @@ function Home() {
           <div className="flex-w flex-sb-m p-b-52">
             <Category
               activeCategory={activeCategory}
-              handleCategoryChange={handleCategoryChange}
+              handleCategory={handleCategory}
             />
             <FilterSearch
               activeFilter={activeFilter}
-              handleFilterChange={handleFilterChange}
+              handleFilter={handleFilter}
             />
           </div>
 

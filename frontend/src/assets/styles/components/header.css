@@ -207,6 +207,9 @@
 /* 모바일 Topbar */
 .left-top-bar {
   justify-content: flex-start;
+  width: 80%;
+  margin: 0 auto;
+  text-align: center;
 }
 
 .right-top-bar {

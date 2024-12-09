@@ -16,6 +16,7 @@ import Cart from '../pages/cart/Cart';
 import MobileMenu from './main/MobileMenu';
 import isValidJwtToken from '../api/auth/isValidJwtToken';
 import Dropdown from 'react-bootstrap/Dropdown';
+import Slider from 'react-slick';
 
 function Header() {
   const isAtTop = useFixedHeader(); // 현재 페이지 스크롤의 최상단 여부
@@ -29,14 +30,8 @@ function Header() {
   const [isMobileAlarmOpen, setIsMobileAlarmOpen] = useState(false); // 데스크탑 알람 패널 open 상태
 
   // 카테고리 dropdown 열기/닫기 토글
-  const toggleMouseEnter = () => {
-    console.log('hover mouse');
-    setIsDesktopCategoryOpen(true);
-  };
-  const toggleMouseLeave = () => {
-    console.log('leave mouse');
-    setIsDesktopCategoryOpen(false);
-  };
+  const toggleMouseEnter = () => setIsDesktopCategoryOpen(true);
+  const toggleMouseLeave = () => setIsDesktopCategoryOpen(false);
 
   // 데스크탑 알람 패널 열기/닫기 토글
   const toggleDesktopAlarm = (prev) => {
@@ -95,6 +90,24 @@ function Header() {
     setIsSearching(newState);
   };
 
+  // slick 속성
+  const settings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 500,
+  };
+  useEffect(() => {
+    document
+      .querySelectorAll('.left-top-bar .slick-slider button')
+      .forEach((elem) => {
+        elem.remove();
+      });
+  }, []);
+
   return (
     <header className="header">
       <Cart isCartOpen={isCartOpen} toggleCart={toggleCart} />
@@ -135,7 +148,10 @@ function Header() {
                 <br />
                 잊지 말고 시간에 맞춰 준비해주세요.
                 <br />
-                상담 일정: [YYYY년 MM월 DD일 HH:mm]
+                상담 일정:{' '}
+                <span style={{ fontWeight: 'bold' }}>
+                  2024년 12월 24일 14:00
+                </span>
               </Dropdown.Item>
               <Dropdown.Divider />
               <Dropdown.Item href="/shop">
@@ -144,14 +160,16 @@ function Header() {
                 </span>{' '}
                 고객님의 주문이 배송을 시작했습니다!
                 <br />
-                주문 번호: [주문번호]
+                주문 번호:{' '}
+                <span style={{ fontWeight: 'bold' }}>1234 12345</span>
               </Dropdown.Item>
               <Dropdown.Divider />
               <Dropdown.Item href="/shop">
-                <span style={{ color: '#06F', fontWeight: 'bold' }}>
+                <span style={{ color: '#06f', fontWeight: 'bold' }}>
                   [알림]
                 </span>{' '}
-                환불 요청에 대한 답변이 완료되었습니다.
+                <span style={{ color: '#f44' }}>환불 요청</span>에 대한 답변이
+                완료되었습니다.
                 <br />
                 상세 내용은 고객센터 페이지에서 확인해주세요.
               </Dropdown.Item>
@@ -218,9 +236,19 @@ function Header() {
       {/* 데스크탑 헤더 ( 화면 너비가 992px보다 클 때 ) */}
       <div className="container-menu-desktop">
         <div className="top-bar">
-          <div className="content-topbar flex-sb-m h-full container">
-            <div className="left-top-bar" style={{ margin: '0 auto' }}>
-              공지
+          <div className="content-topbar flex-sb-m h-full container p-l-0">
+            <div className="left-top-bar">
+              <Slider {...settings}>
+                <div>
+                  <Link to="#">공지사항입니다.</Link>
+                </div>
+                <div>
+                  <Link to="#">공지사항 전파합니다.</Link>
+                </div>
+                <div>
+                  <Link to="#">전체 공지사항입니다.</Link>
+                </div>
+              </Slider>
             </div>
             <div className="right-top-bar flex-w h-full">
               <Link
@@ -356,7 +384,10 @@ function Header() {
                     <br />
                     잊지 말고 시간에 맞춰 준비해주세요.
                     <br />
-                    상담 일정: [YYYY년 MM월 DD일 HH:mm]
+                    상담 일정:{' '}
+                    <span style={{ fontWeight: 'bold' }}>
+                      2024년 12월 24일 14:00
+                    </span>
                   </Dropdown.Item>
                   <Dropdown.Divider />
                   <Dropdown.Item href="/shop">
@@ -365,14 +396,16 @@ function Header() {
                     </span>{' '}
                     고객님의 주문이 배송을 시작했습니다!
                     <br />
-                    주문 번호: [주문번호]
+                    주문 번호:{' '}
+                    <span style={{ fontWeight: 'bold' }}>1234 12345</span>
                   </Dropdown.Item>
                   <Dropdown.Divider />
                   <Dropdown.Item href="/shop">
-                    <span style={{ color: '#06F', fontWeight: 'bold' }}>
+                    <span style={{ color: '#06f', fontWeight: 'bold' }}>
                       [알림]
                     </span>{' '}
-                    환불 요청에 대한 답변이 완료되었습니다.
+                    <span style={{ color: '#f44' }}>환불 요청</span>에 대한
+                    답변이 완료되었습니다.
                     <br />
                     상세 내용은 고객센터 페이지에서 확인해주세요.
                   </Dropdown.Item>

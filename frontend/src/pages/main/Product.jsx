@@ -31,10 +31,9 @@ export default function Product({ products, activeCategory, activeFilter }) {
     setModalOpen(false);
   };
 
-  const handleNavigate  = (product) => {
-    navigate(`/Detail`, {state: { productId : product.id}})
+  const handleNavigate = (product) => {
+    navigate(`/Detail`, { state: { productId: product.id } });
   };
-
 
   return (
     <div className="row isotope-grid">
@@ -48,7 +47,6 @@ export default function Product({ products, activeCategory, activeFilter }) {
         .sort((a, b) => {
           if (activeFilter === 'sortByRecent') {
             return b.created_at - a.created_at; // 최신순
-            /*return 0;*/ // 구현되지 않은 필터 조건은 정렬 처리하지 않음
           } else if (activeFilter === 'sortByPriceDesc') {
             return (
               parseInt(b.item_price, 10) - // 높은 가격순
@@ -63,8 +61,7 @@ export default function Product({ products, activeCategory, activeFilter }) {
             // return b.rating - a.rating; // 평점
             return 0; // 구현되지 않은 필터 조건은 정렬 처리하지 않음
           } else if (activeFilter === 'sortByReviews') {
-            // return b.reviews.length - a.reviews.length; // 리뷰
-            return 0; // 구현되지 않은 필터 조건은 정렬 처리하지 않음
+            return b.reviews.length - a.reviews.length; // 리뷰
           }
         })
         .map((product) => (
@@ -87,8 +84,8 @@ export default function Product({ products, activeCategory, activeFilter }) {
               <div className="block2-txt flex-w flex-t p-t-14">
                 <div className="block2-txt-child1 flex-col-l ">
                   <button
-                      className="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6"
-                      onClick={() => handleNavigate(product)}
+                    className="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6"
+                    onClick={() => handleNavigate(product)}
                   >
                     {product.item_name}
                   </button>
@@ -98,8 +95,8 @@ export default function Product({ products, activeCategory, activeFilter }) {
 
                 <div className="block2-txt-child2 flex-r p-t-3">
                   <Link
-                      to="#"
-                      className="btn-addwish-b2 dis-block pos-relative js-addwish-b2"
+                    to="#"
+                    className="btn-addwish-b2 dis-block pos-relative js-addwish-b2"
                     onClick={() => toggleLike(product.id)}
                   >
                     <img
