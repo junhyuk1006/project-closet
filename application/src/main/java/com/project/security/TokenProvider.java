@@ -34,7 +34,7 @@ public class TokenProvider {
         Claims claims = Jwts.claims();
         claims.put("id", user.getId()); // 사용자 id 추가
         claims.put("username", user.getUsername()); // 사용자 username 추가
-
+        System.out.println("토큰 순서:1");
         // JWT Token 생성
         return Jwts.builder()
                 .setClaims(claims) // Payload에 추가된 Claims 설정
@@ -43,6 +43,7 @@ public class TokenProvider {
                 .setExpiration(new Date(System.currentTimeMillis() + expiryDate)) // 만료 시간
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256) // 서명
                 .compact();
+
     }
 
         // JWT 검증 및 사용자 ID 반환 메서드

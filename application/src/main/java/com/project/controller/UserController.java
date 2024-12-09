@@ -2,6 +2,7 @@ package com.project.controller;
 
 
 import com.project.domain.Users;
+import com.project.dto.CustomUserDetails;
 import com.project.security.TokenProvider;
 import com.project.service.UserService;
 import com.project.dto.ResponseDTO;
@@ -9,17 +10,16 @@ import com.project.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/auth")
+@RequestMapping("/api/auth")
 public class UserController {
 
     final UserService userService;
@@ -27,6 +27,16 @@ public class UserController {
     final TokenProvider tokenProvider;
 
     final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+    @GetMapping("/me")
+    public CustomUserDetails getCurrentUser(){
+        // SecurityContext에서 인증 정보 가져오기
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof CustomUserDetails) {
+            return (CustomUserDetails) authentication.getPrincipal();
+        }
+        return null;
+    }
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@RequestBody UserDTO userDTO){
