@@ -1,31 +1,12 @@
-import React, {useEffect} from 'react';
+import React, { useState, useEffect } from 'react'; // useContext 임포트 추가
+
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { useNavigate } from 'react-router-dom';
 import MyPageHeader from '../../components/mypage/MyPageHeader';
-import { tokenCheck } from '../../api/auth/tokenCheck'; 
-
 
 const MyPageHome = () => {
   const navigate = useNavigate();
 
-  useEffect(() => {
-    console.log(process.env.REACT_APP_API_BASE_URL);
-    const authenticate = async () => {
-      const data = await tokenCheck(navigate); // tokenCheck 호출
-      if (!data) {
-        // 인증 실패 시 navigate 함수로 로그인 페이지로 이동
-        navigate('/Login');
-      } else {
-        console.log('인증 성공:', data); // 성공 시 필요한 작업 수행
-      }
-    };
-
-    authenticate(); // 인증 함수 호출
-  }, [navigate]);
-
-
-  
-  
   const features = [
     {
       icon: 'bi-info-circle',

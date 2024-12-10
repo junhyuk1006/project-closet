@@ -4,7 +4,7 @@ package com.project.controller;
 import com.project.domain.Users;
 import com.project.dto.CustomUserDetails;
 import com.project.security.TokenProvider;
-import com.project.service.UsersService;
+import com.project.service.UserService;
 import com.project.dto.ResponseDTO;
 import com.project.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
@@ -16,16 +16,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/auth")
 public class UserController {
 
-    final UsersService usersService;
+    final UserService userService;
 
     final TokenProvider tokenProvider;
 
@@ -54,7 +51,7 @@ public class UserController {
                     .build();
 
             // UserService를 통해 사용자 저장
-            Users registeredUser = usersService.create(user);
+            Users registeredUser = userService.create(user);
 
             // 응답용 DTO 생성
             UserDTO responseUserDTO = UserDTO.builder()
@@ -79,7 +76,7 @@ public class UserController {
     @PostMapping("/signin")
     public ResponseEntity<?> authenticate(@RequestBody UserDTO userDTO){
         // 자격 증명 확인
-        Users user = usersService.getByCredentials(
+        Users user = userService.getByCredentials(
                 userDTO.getUsername(),
                 userDTO.getPassword(),passwordEncoder);
 
@@ -111,22 +108,4 @@ public class UserController {
                     .body(responseDTO);
         }
     }
-
-    @GetMapping("/protected-resource")
-    public ResponseEntity<Map<String, String>> getProtectedResource() {
-        Map<String, String> response = new HashMap<>();
-        response.put("message", "이 API는 보호된 리소스입니다!");
-        return ResponseEntity.ok(response);
-    }
-
-    @GetMapping("/userInfo")
-    public CustomUserDetails getUserInfo() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.getPrincipal() instanceof CustomUserDetails) {
-            return (CustomUserDetails) authentication.getPrincipal();
-        }
-        return null;
-    }
-
-
 }
