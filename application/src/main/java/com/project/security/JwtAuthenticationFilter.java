@@ -40,15 +40,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             String token = parseBearerToken(request);
             log.info("Filter is running...");
 
-            // 토큰 검사하기. JWT이므로 인가 서버에 요청하지 않고도 검증 가능
+            // 토큰 검증
             if (token != null && !token.equalsIgnoreCase("null")) {
 
-                // userId 가져오기. 위조된 경우 예외 처리된다.
+                // 토큰에서 사용자 정보 가져오기
                 Map<String, Object> userInfo = tokenProvider.validateAndGetUserId(token);
                 Long userId = (Long) userInfo.get("id"); // ID 가져오기
                 String username = (String) userInfo.get("username"); // Username 가져오기
 
-                log.info("Authenticated user ID : {}", userId);
+                log.info("인증된 사용자 ID: {}", userId);
 
                 // CustomUserDetailsService를 통해 사용자 정보 로드
                 UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);

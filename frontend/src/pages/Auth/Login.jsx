@@ -3,6 +3,7 @@ import { signin } from '../../api/auth/ApiService';
 import { useNavigate } from 'react-router-dom';
 import '../../assets/styles/Auth/login.css';
 import closetImage from '../../assets/closet.png'; // 이미지 경로
+import NaverImage from '../../assets/btnG_완성형.png'; // 이미지 경로
 
 const LoginForm = () => {
   const [username, setUsername] = useState('');
@@ -37,6 +38,11 @@ const LoginForm = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  // OAuth2 로그인 버튼 클릭시 백엔드 OAuth2 인증 엔드 엔드포인트로 리디렉션
+  const handleOAuthLogin = () => {
+    window.location.href = 'http://localhost/oauth2/authorization/naver';
   };
 
   return (
@@ -123,7 +129,7 @@ const LoginForm = () => {
           <h1 className="h3 mb-3 fw-normal">Please sign in</h1>
           <div className="form-floating">
             <input
-              type="id"
+              type="text"
               className="form-control"
               id="floatingInput"
               placeholder="name@example.com"
@@ -166,6 +172,16 @@ const LoginForm = () => {
             disabled={loading}
           >
             {loading ? '로그인 중...' : '로그인'}
+          </button>
+          <hr className="my-4" />
+          {/* OAuth2 로그인 버튼 추가 */}
+          <button type="button" onClick={handleOAuthLogin}>
+            <img
+              src={NaverImage} // 네이버 로고 URL
+              alt="Naver Logo"
+              width="170"
+              height="45"
+            />
           </button>
           <hr className="my-4" />
           <a onClick={goToSignUp} className="btn btn-secondary w-100 py-2">
