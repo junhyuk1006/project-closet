@@ -26,7 +26,7 @@ public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccess
 
         // React 프론트엔드로 리디렉션하며 JWT를 쿼리 파라미터로 전달
         String targetUrl = "http://localhost:3000/oauth2/redirect?token=" + token;
-
+        System.out.println("targetUrl:" + targetUrl);
         response.sendRedirect(targetUrl);
     }
 }

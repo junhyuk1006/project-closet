@@ -23,7 +23,7 @@ spring:
       hibernate:
         format_sql: "true" # 출력되는 SQL 포맷팅 활성화
         dialect: org.hibernate.dialect.MySQLDialect # Hibernate가 사용할 MySQL 방언
-    show-sql: "true" # 실행된 SQL 쿼리 로깅 활성화
+    show-sql: "false" # 실행된 SQL 쿼리 로깅 활성화
 
 
   # 데이터 소스 및 HikariCP(DB 연결 풀) 설정
@@ -57,7 +57,7 @@ spring:
           naver:
             client-id: DvFLuTam14KDBYXb4Ddz # 네이버 앱 클라이언트 ID (환경 변수로 설정)
             client-name: Naver # 클라이언트 이름
-            redirect-uri: http://localhost:3000/login/oauth2/code/naver # 리디렉션 URI
+            redirect-uri: http://localhost/login/oauth2/code/naver # 리디렉션 URI
             authorization-grant-type: authorization_code # 인증 코드 방식
             scope: name,email # 요청할 OAuth2 권한 범위
             client-secret: _K3HnFtgDQ # 네이버 앱 클라이언트 비밀키 (환경 변수로 설정)

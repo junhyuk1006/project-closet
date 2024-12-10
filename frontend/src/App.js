@@ -13,6 +13,7 @@ import Home from './pages/main/Home';
 /** ./pages/auth  */
 import Login from './pages/Auth/Login';
 import SignUp from './pages/Auth/SignUp';
+import OAuth2RedirectHandler from './pages/Auth/OAuth2RedirectHandler ';
 
 /** ./pages/MyPage  */
 import MyPoint from './pages/mypage/MyPoint';
@@ -70,6 +71,7 @@ const AppRoutes = () => (
         {renderRoute('/privacy', <Privacy />)} {/* 개인정보처리방침 페이지 */}
         {/** ./pages/auth */}
         {renderRoute('/Login', <Login />)} {/* 로그인 페이지 */}
+        <Route path="/oauth2/redirect" element={<OAuth2RedirectHandler />} />
         {renderRoute('/SignUp', <SignUp />)} {/* 회원가입 페이지 */}
         {/** ./pages/MyPage */}
         {renderRoute('/MyPageHome', <MyPageHome />)} {/* 마이페이지 홈 */}

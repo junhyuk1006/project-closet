@@ -19,10 +19,16 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest){
+
+        // 기본 Spring OAuth2UserService를 통해 사용자 정보 가져오기
         OAuth2User oAuth2User = super.loadUser(userRequest);
 
+        // Client 정보 추출
         String registrationId = userRequest.getClientRegistration().getRegistrationId();
-        String userNameAttributeName = userRequest.getClientRegistration().getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
+        String userNameAttributeName = userRequest.getClientRegistration()
+                .getProviderDetails()
+                .getUserInfoEndpoint()
+                .getUserNameAttributeName();
 
         Map<String, Object> attributes = oAuth2User.getAttributes();
 
@@ -33,8 +39,22 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             Map<String, Object> response = (Map<String, Object>) attributes.get("response");
             String email = (String) response.get("email");
             String name = (String) response.get("name");
-            String naverId = (String) response.get("Id");
+            String naverId = (String) response.get("id");
+            String birthday = (String) response.get("birthday"); // 사용자 생일(MM-DD 형식)
+            String birthyear = (String) response.get("birthyear"); // 출생연도
+
+            // 생년월일 조합
+            String fullBirthDate = null;
+            if (birthyear != null && birthday != null) {
+                fullBirthDate = birthyear + "-" + birthday; // YYYY-MM-DD 형식
+            } else if (birthday != null) {
+                fullBirthDate = birthday; // MM-DD 형식만 제공된 경우
+            }
+
+            String username = "naver_" + naverId;
             String nickname = (String) response.get("nickname");
+            String mobile = (String) response.get("mobile");
+//            int age = (int) response.get("age");
 
             // 데이터베이스에서 네이버 ID로 사용자 찾기
             user = userRepository.findByNaverId(naverId);
@@ -44,11 +64,15 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                         .email(email)
                         .name(name)
                         .naverId(naverId)
+                        .username(username)
+                        .nickname(nickname)
+                        .birth(fullBirthDate)
+                        .phone(mobile)
+//                        .age(age)
                         .build();
                 userRepository.save(user);
             }
         }
-
         return new CustomOAuth2User(user, attributes);
     }
 }
