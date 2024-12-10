@@ -2,13 +2,12 @@ package com.project.repository.admin;
 
 import com.project.domain.User;
 import com.project.dto.AdminUserDTO;
+import com.project.dto.PageRequestDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 @Repository
 public interface AdminUserRepository extends JpaRepository<User, Long> {
@@ -19,5 +18,5 @@ public interface AdminUserRepository extends JpaRepository<User, Long> {
             "u.status, u.createdAt) " +
             "FROM User u " +
             "LEFT JOIN u.grade g")
-    Page<AdminUserDTO> findAllAdminUsers(Pageable pageable);
+    Page<AdminUserDTO> findAllAdminUsers(Pageable pageable, PageRequestDTO pageRequestDTO);
 }

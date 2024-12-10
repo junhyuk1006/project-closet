@@ -2,6 +2,7 @@ package com.project.controller.admin;
 
 import com.project.domain.User;
 import com.project.dto.AdminUserDTO;
+import com.project.dto.PageRequestDTO;
 import com.project.service.Admin.AdminUserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +29,8 @@ public class AdminUserController {
     }
 
     @GetMapping("user")
-    public Page<AdminUserDTO> getAllUser(@PageableDefault(size = 20,sort="createdAt",direction = Sort.Direction.DESC)Pageable pageable) {
-        return adminUserService.getAllUsersAdmin(pageable);
+    public Page<AdminUserDTO> getAllUser(@PageableDefault(size = 20,sort="createdAt",direction = Sort.Direction.DESC)Pageable pageable, PageRequestDTO pageRequestDTO) {
+        System.out.println(pageRequestDTO);
+        return adminUserService.getAllUsersAdmin(pageable, pageRequestDTO);
     }
 }

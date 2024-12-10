@@ -17,7 +17,7 @@ public class Grade {
     private String grade;
 
     @Column(nullable = true,length = 30)
-    private String description;
+    private String gradeDescription;
 
     @Column(nullable = true , columnDefinition = "INT DEFAULT 0")
     private int discount;
