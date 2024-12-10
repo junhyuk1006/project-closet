@@ -10,15 +10,17 @@ export const UserProvider = ({ children }) => {
 
   // 로그인 후 사용자 정보 가져오기
   useEffect(() => {
-    const fetchUser = async () => {
-      const userData = await me(); // me() 함수 호출하여 사용자 정보 받아오기
-      // 비밀번호를 제외한 나머지 사용자 정보만 저장
-      const { password, ...userWithoutPassword } = userData;
-      setUser(userWithoutPassword); // 비밀번호 제외한 사용자 정보 상태에 저장
-    };
+    if (!user) {
+      // user가 없을 때만 사용자 정보 요청
+      const fetchUser = async () => {
+        const userData = await me(); // me() 함수 호출하여 사용자 정보 받아오기
+        const { password, ...userWithoutPassword } = userData; // 비밀번호를 제외한 나머지 정보
+        setUser(userWithoutPassword); // 비밀번호 제외한 사용자 정보 상태에 저장
+      };
 
-    fetchUser();
-  }, []); // 페이지 로드 시 한 번만 실행
+      fetchUser();
+    }
+  }, [user]); // user 값이 변경될 때마다 실행
 
   // UserContext.Provider에서 user와 setUser를 value로 제공
   return (

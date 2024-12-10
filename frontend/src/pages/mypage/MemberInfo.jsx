@@ -11,18 +11,6 @@ const MemberInfo = () => {
   const [generalAddresses, setGeneralAddresses] = useState([]);
   const { user, setUser } = useUser(); // UserContext에서 user와 setUser를 가져오기
 
-  // 사용자 정보 불러오기
-  useEffect(() => {
-    if (!user) {
-      const fetchUser = async () => {
-        const fetchedUser = await me();
-        setUser(fetchedUser); // setUser를 사용하여 상태를 업데이트
-      };
-
-      fetchUser();
-    }
-  }, [user, setUser]);
-
   // 데이터 가져오기 함수
   const fetchData = async () => {
     try {
