@@ -50,9 +50,9 @@ spring:
         registration:
           kakao:
             authorization-grant-type: authorization_code # 인증 코드 방식
-            client-id: ${KAKAO_ID} # 카카오 앱 클라이언트 ID (환경 변수로 설정)
+            client-id: 1d03b543cc496c9406b87e165db19b2c # 카카오 앱 클라이언트 ID (환경 변수로 설정)
             scope: profile_nickname,account_email # 요청할 OAuth2 권한 범위
-            redirect-uri: http://localhost:3000/login/oauth2/code/kakao # 리디렉션 URI
+            redirect-uri: http://localhost/login/oauth2/code/kakao # 리디렉션 URI
             client-name: Kakao # 클라이언트 이름
           naver:
             client-id: DvFLuTam14KDBYXb4Ddz # 네이버 앱 클라이언트 ID (환경 변수로 설정)

@@ -25,54 +25,78 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
         // Client 정보 추출
         String registrationId = userRequest.getClientRegistration().getRegistrationId();
-        String userNameAttributeName = userRequest.getClientRegistration()
-                .getProviderDetails()
-                .getUserInfoEndpoint()
-                .getUserNameAttributeName();
-
         Map<String, Object> attributes = oAuth2User.getAttributes();
 
         Users user = null;
 
-        if("naver".equals(registrationId)){
+        // 공통적으로 처리할 사용자 정보 추출 메서드
+        String email = null;
+        String nickname = null;
+        String providerId = null;
+        String username = null;
+        String name = null;
+        String mobile = null;
+        String fullBirthDate = null;
+
+        if("naver".equals(registrationId)) {
             // 네이버의 경우 'response' 키 아래에 실제 사용자 정보가 있음
             Map<String, Object> response = (Map<String, Object>) attributes.get("response");
-            String email = (String) response.get("email");
-            String name = (String) response.get("name");
-            String naverId = (String) response.get("id");
-            String birthday = (String) response.get("birthday"); // 사용자 생일(MM-DD 형식)
-            String birthyear = (String) response.get("birthyear"); // 출생연도
 
-            // 생년월일 조합
-            String fullBirthDate = null;
+            providerId = (String) response.get("id");
+            email = (String) response.get("email");
+            name = (String) response.get("name");
+            nickname = (String) response.get("nickname");
+            mobile = (String) response.get("mobile");
+
+            String birthday = (String) response.get("birthday"); // MM-DD 형식
+            String birthyear = (String) response.get("birthyear"); // 연도
             if (birthyear != null && birthday != null) {
                 fullBirthDate = birthyear + "-" + birthday; // YYYY-MM-DD 형식
             } else if (birthday != null) {
                 fullBirthDate = birthday; // MM-DD 형식만 제공된 경우
             }
 
-            String username = "naver_" + naverId;
-            String nickname = (String) response.get("nickname");
-            String mobile = (String) response.get("mobile");
-//            int age = (int) response.get("age");
+            username = "naver_" + providerId;
 
-            // 데이터베이스에서 네이버 ID로 사용자 찾기
-            user = userRepository.findByNaverId(naverId);
+        } else if ("kakao".equals(registrationId)) {
+            providerId = String.valueOf(attributes.get("id"));
+            Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
+            Map<String, Object> properties = (Map<String, Object>) attributes.get("properties");
+
+            email = kakaoAccount != null ? (String) kakaoAccount.get("email") : null;
+            nickname = properties != null ? (String) properties.get("nickname") : null;
+            name = nickname; // 카카오는 닉네임을 이름으로 대체
+            username = "kakao_" + providerId;
+        }
+
+            // 데이터베이스에서 해당 소셜 ID로 사용자 찾기
+            if ("naver".equals(registrationId)){
+                user = userRepository.findByNaverId(providerId);
+            } else if ("kakao".equals(registrationId)) {
+                user = userRepository.findByKakaoIdakaoId(providerId);
+            }
+
             if (user == null){
                 // 새로운 사용자 등록
                 user = Users.builder()
                         .email(email)
-                        .name(name)
-                        .naverId(naverId)
                         .username(username)
                         .nickname(nickname)
-                        .birth(fullBirthDate)
+                        .name(name)
                         .phone(mobile)
-//                        .age(age)
+                        .birth(fullBirthDate)
+                        .role("USER") // 기본 역할
                         .build();
+
+                if ("naver".equals(registrationId)) {
+                    user.setNaverId(providerId); // 네이버 ID 설정
+                } else if ("kakao".equals(registrationId)) {
+                    user.setKakaoId(providerId); // 카카오 ID 설정
+                }
+
                 userRepository.save(user);
             }
-        }
+
         return new CustomOAuth2User(user, attributes);
     }
 }

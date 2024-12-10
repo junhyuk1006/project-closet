@@ -36,6 +36,6 @@ public class CustomOAuth2User implements OAuth2User {
 
     @Override
     public String getName() {
-        return user.getNaverId();
+        return user.getUsername();
     }
 }

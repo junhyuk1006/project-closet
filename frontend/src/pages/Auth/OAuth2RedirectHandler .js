@@ -11,7 +11,7 @@ const OAuth2RedirectHandler = () => {
 
     if (token) {
       // JWT 저장
-      localStorage.setItem('jwtToken', token);
+      localStorage.setItem('Token', token);
 
       // 메인 페이지로 리디렉션
       navigate('/');
