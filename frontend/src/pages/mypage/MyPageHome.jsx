@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react'; // useContext 임포트 추가
+
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { useNavigate } from 'react-router-dom';
-import MyPageHeader from '../../components/myPage/MyPageHeader';
+import MyPageHeader from '../../components/mypage/MyPageHeader';
 
 const MyPageHome = () => {
   const navigate = useNavigate();

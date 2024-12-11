@@ -119,7 +119,11 @@ server:
   port: "80" # 서버 포트
   tomcat:
     connection-timeout: "5000" # 요청 연결 타임아웃 (밀리초)
-
+  error:
+    include-message: always
+    include-binding-errors: always
+    whitelabel:
+      enabled: false
 # JWT 설정
 jwt:
   secret-key: idv64f9MgCqXPwBwDriupFjKOd9xGIYJ # JWT 비밀키

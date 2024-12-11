@@ -1,42 +1,75 @@
 import React, { useState, useEffect } from 'react';
-import MyPageHeader from '../../components/myPage/MyPageHeader';
+import { useUser } from '../../api/auth/UserContext'; // useUser 훅 임포트
+import MyPageHeader from '../../components/mypage/MyPageHeader';
+import { useNavigate } from 'react-router-dom';
+import { me } from '../../api/auth/ApiService';
 
 const MemberInfo = () => {
+  // 토큰 인증
+  const navigate = useNavigate();
   const [representativeAddress, setRepresentativeAddress] = useState(null);
   const [generalAddresses, setGeneralAddresses] = useState([]);
+  const { user, setUser } = useUser(); // UserContext에서 user와 setUser를 가져오기
+
+  // 데이터 가져오기 함수
+  const fetchData = async () => {
+    try {
+      const addressResponse = await fetch(
+        `http://localhost:80/api/mypage/getAddress?userId=${user.id}`,
+        {
+          cache: 'no-store',
+        }
+      );
+
+      const address = await addressResponse.json();
+      const representative = address.find((addr) => addr.isRepresent === true); // 대표 주소
+      const general = address.filter((addr) => addr.isRepresent !== true); // 일반 주소
+
+      setRepresentativeAddress(representative);
+      setGeneralAddresses(general);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const addressResponse = await fetch(
-          'http://localhost:80/api/mypage/getAddress?userId=1'
-        );
+    if (user) {
+      fetchData();
+    }
+  }, [user]);
 
-        const address = await addressResponse.json();
-
-        const representative = address.find(
-          (addr) => addr.isRepresent === true
-        ); // 대표 주소
-
-        const general = address.filter((addr) => addr.isRepresent !== true); // 일반 주소
-
-        setRepresentativeAddress(representative);
-        setGeneralAddresses(general);
-      } catch (error) {
-        console.error('Error fetching data:', error);
+  // 대표 주소지 등록
+  const switchRepresentativeAddress = () => {
+    fetch(
+      `http://localhost:80/api/mypage/switchRepresentativeAddress/userId=${user.id}`,
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
       }
-    };
-    fetchData();
-  }, []);
+    )
+      .then((response) => {
+        if (response.ok) {
+          alert('대표 주소지가 변경되었습니다.');
+          fetchData(); // 변경 후 데이터를 다시 가져와 상태 업데이트
+        } else {
+          console.error('대표 주소지 변경 실패', response.status);
+        }
+      })
+      .catch((error) => console.error('대표 주소지 변경 중 에러 발생:', error));
+  };
+
+  // 대표 주소 삭제
   const DeleteRepresentativeAddress = (id) => {
     if (generalAddresses.length === 0) {
-      // '==' 대신 '==='을 사용하는 것이 좋습니다.
       fetch(`http://localhost:80/api/mypage/deleteAddress/${id}`, {
         method: 'DELETE',
+        cache: 'no-store',
       })
         .then((response) => {
           if (response.ok) {
-            console.log('삭제 완료');
+            fetchData(); // 변경 후 데이터를 다시 가져와 상태 업데이트
           } else {
             console.error('삭제 실패', response.status);
           }
@@ -49,17 +82,15 @@ const MemberInfo = () => {
     }
   };
 
+  // 일반 주소 삭제
   const DeleteGeneralAddress = (id) => {
     fetch(`http://localhost:80/api/mypage/deleteAddress/${id}`, {
       method: 'DELETE',
+      cache: 'no-store',
     })
       .then((response) => {
         if (response.ok) {
-          console.log('일반 주소 삭제 완료');
-          // 삭제 성공 시 화면에서 제거 (state 업데이트)
-          setGeneralAddresses((prevAddresses) =>
-            prevAddresses.filter((address) => address.id !== id)
-          );
+          fetchData(); // 변경 후 데이터를 다시 가져와 상태 업데이트
         } else {
           console.error('일반 주소 삭제 실패');
         }
@@ -73,7 +104,17 @@ const MemberInfo = () => {
         <MyPageHeader title="회원정보" description="회원정보 등록 및 수정" />
       </div>
       <div className="mypage-label1">회원정보</div>
-      <div className="rounded-box"></div>
+      <div className="rounded-box">
+        {user ? (
+          <div>
+            <p>닉네임: {user.nickname}</p>
+            <p>이메일: {user.email}</p>
+            <p>비밀번호: {user.password}</p>
+          </div>
+        ) : (
+          <p>회원 정보를 불러오는 중...</p>
+        )}
+      </div>
 
       <div className="mypage-label1">배송지 관리</div>
 
@@ -82,7 +123,7 @@ const MemberInfo = () => {
           <div className="mypage-label2">등록된 배송지가 없습니다.</div>
         ) : (
           <>
-            {/* 대표 주소 */}
+            {/* 대표 주소 -> 단일 객체 */}
             <div className="address-block">
               <div className="represent-address">대표주소지</div>
               <div className="other-address">
@@ -100,16 +141,21 @@ const MemberInfo = () => {
               </div>
             </div>
 
-            {/* 일반 주소 */}
+            {/* 일반 주소 -> 배열로 반환 */}
             {generalAddresses.map((address) => (
               <div key={address.id} className="address-block">
                 <div className="represent-address">일반</div>
                 <div className="other-address">{address.address}</div>
                 <div className="address-buttons">
-                  <button className="mypage-button">대표주소지 등록</button>
                   <button
                     className="mypage-button"
-                    onClick={() => DeleteGeneralAddress(address?.id)}
+                    onClick={() => switchRepresentativeAddress(address.id)}
+                  >
+                    대표주소지 등록
+                  </button>
+                  <button
+                    className="mypage-button"
+                    onClick={() => DeleteGeneralAddress(address.id)}
                   >
                     삭제
                   </button>
