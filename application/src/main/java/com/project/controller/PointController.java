@@ -1,10 +1,14 @@
 package com.project.controller;
 
 import com.project.domain.Point;
+import com.project.dto.CustomUserDetail;
 import com.project.service.PointService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,16 +36,20 @@ public class PointController {
     }
 
     // 개인 유저 포인트 조회
-    @GetMapping("getPointByUserid")
-    public ResponseEntity< List<Point>> getPointByUserid(@RequestParam("userId") long userId) {
-        // 특정 유저에 대한 포인트 조회
+    @GetMapping("/getPointByUserid")
+    public ResponseEntity<List<Point>> getPointByUserid(@AuthenticationPrincipal CustomUserDetail userDetail) {
+        // 인증된 사용자 정보에서 userId 추출
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        long userId = userDetail.getId(); // 인증된 사용자의 userId 가져오기
         List<Point> points = pointService.findByUserId(userId);
         return ResponseEntity.ok(points);
     }
 
     // 개인 포인트 총합 조회
     @GetMapping("getTotalPointByUserid")
-    public int getTotalPointByUserid(@RequestParam("userId") long userId) {
+    public int getTotalPointByUserid(@PathVariable Long userId) {
         // 특정 유저 중 point_type = '적립' 인 것만 sum해서 계산
         return pointService.getTotalPointByUserid(userId);
     }

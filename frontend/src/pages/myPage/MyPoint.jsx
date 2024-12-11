@@ -1,33 +1,37 @@
 import React, { useState, useEffect } from 'react';
 import MyPageHeader from '../../components/myPage/MyPageHeader';
+import { useUser } from '../../api/auth/UserContext'; // useUser 훅 임포트
 import '../../assets/styles/myPage/MyPage.css';
 
 const MyPoint = () => {
+  const { user, setUser } = useUser(); // UserContext에서 user와 setUser를 가져오기
   const [point, setPoint] = useState([]);
   const [totalPoint, setTotalPoint] = useState([]);
-  const [expirePoint, setExpirePoint] = useState([]);
+
+  // const [expirePoint, setExpirePoint] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [pointResponse, totalResponse, expireResponse] =
-          await Promise.all([
-            fetch('http://localhost:80/api/point/getPointByUserid?userId=1'),
-            fetch(
-              'http://localhost:80/api/point/getTotalPointByUserid?userId=1'
-            ),
-            fetch(
-              'http://localhost:80/api/point/getExpirePointByUserid?userId=1'
-            ),
-          ]);
+        const [pointResponse, totalResponse] = await Promise.all([
+          fetch(
+            'http://localhost:80/api/point/getPointByUserid?userId=${user.id}'
+          ),
+          fetch(
+            'http://localhost:80/api/point/getTotalPointByUserid?userId=${user.id}'
+          ),
+          // fetch(
+          //   'http://localhost:80/api/point/getExpirePointByUserid?userId=1'
+          // ),
+        ]);
 
         const point = await pointResponse.json(); // 적립 내역
         const totalPoint = await totalResponse.json(); // 총 적립금
-        const expirePoint = await expireResponse.json(); // 소멸 예정 적립금
+        // const expirePoint = await expireResponse.json(); // 소멸 예정 적립금
 
         setPoint(point);
         setTotalPoint(totalPoint);
-        setExpirePoint(expirePoint);
+        // setExpirePoint(expirePoint);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -45,9 +49,9 @@ const MyPoint = () => {
       <div className="point-label1">
         나의 적립금 : <strong>{totalPoint}p</strong>
       </div>
-      <div className="point-label2">
+      {/* <div className="point-label2">
         소멸예정 적립금 : <strong>{expirePoint}p</strong>
-      </div>
+      </div> */}
 
       <div className="mypage-line" />
       <div className="point-list">

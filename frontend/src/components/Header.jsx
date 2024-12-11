@@ -51,10 +51,9 @@ function Header() {
     setInputValue('');
   }, [isSearching]);
 
-  // 페이지 렌더링 시 jwt 토큰의 유효성 확인
   useEffect(() => {
-    setIsAuthenticated(isValidJwtToken());
-  }, []);
+    setIsAuthenticated(isValidJwtToken()); // JWT 토큰 검증 후 상태 업데이트
+  }, [isAuthenticated]);
 
   // 로그인 상태 확인 함수
   const isLoggedIn = (e) => {
