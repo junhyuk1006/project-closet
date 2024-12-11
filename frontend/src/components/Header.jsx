@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-
 // import CSS
 import '../assets/styles/components/header.css';
 import '../assets/vendor/css-hamburgers/hamburgers.min.css';
@@ -267,7 +266,9 @@ function Header() {
                   className="flex-c-m trans-04 p-lr-25"
                   onClick={(e) => {
                     localStorage.removeItem('token');
+
                     alert('정상적으로 로그아웃되었습니다.');
+
                     setIsAuthenticated(false);
                     e.preventDefault();
                   }}

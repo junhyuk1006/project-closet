@@ -28,9 +28,8 @@ public class MypageService {
     }
 
 
-    public void switchRepresentativeAddress(@PathVariable("id") long id,
-                                                                     @RequestParam("userId") long userId) {
-       addressRepository.switchRepresentativeAddress(id,userId);
+    public void switchRepresentativeAddress(long addressId, long userId) {
+        addressRepository.switchRepresentativeAddress(addressId, userId);
     }
 }
 

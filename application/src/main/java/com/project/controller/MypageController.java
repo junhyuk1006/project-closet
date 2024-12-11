@@ -2,11 +2,17 @@ package com.project.controller;
 
 import com.project.domain.Address;
 import com.project.service.MypageService;
+import com.project.dto.CustomUserDetail;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/mypage")
 @RequiredArgsConstructor
@@ -28,10 +34,16 @@ public class MypageController {
 
     // 대표 주소 변경
     @PutMapping("/switchRepresentativeAddress/{id}")
-    public void switchRepresentativeAddress(@PathVariable("id") long id,
-                                                                     @RequestParam("userId") long userId) {
-        mypageService.switchRepresentativeAddress(id,userId);
+    public void switchRepresentativeAddress(@PathVariable("id") long addressId,
+                                            @AuthenticationPrincipal CustomUserDetail userDetail) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        log.info("Authentication in Controller: {}", authentication);
+
+        long userId = userDetail.getId(); // 인증된 사용자의 userId 가져오기
+        log.info("userDetail: {}", userId);
+        mypageService.switchRepresentativeAddress(addressId, userId);
     }
+
 
 
 

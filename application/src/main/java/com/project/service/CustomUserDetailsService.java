@@ -1,7 +1,7 @@
 package com.project.service;
 
 import com.project.domain.Users;
-import com.project.dto.CustomUserDetails;
+import com.project.dto.CustomUserDetail;
 import com.project.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -26,6 +26,6 @@ public class CustomUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException("User not found with username: " + username);
         }
         // CustomUserDetails 객체로 변환
-        return new CustomUserDetails(user);
+        return new CustomUserDetail(user);
     }
 }
