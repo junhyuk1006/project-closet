@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 public class AdminUserDTO {
     private Long id;
-    private String username;
+    private String email;
     private String nickname;
     private String grade;
     private String birth;

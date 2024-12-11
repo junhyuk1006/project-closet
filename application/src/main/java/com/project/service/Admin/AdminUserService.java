@@ -20,7 +20,12 @@ public class AdminUserService {
         return adminUserRepository.findAll();
     }
 
-    public Page<AdminUserDTO> getAllUsersAdmin(Pageable pageable, PageRequestDTO pageRequestDTO) {
-        return adminUserRepository.findAllAdminUsers(pageable, pageRequestDTO);
+    public Page<AdminUserDTO> getUsers(Pageable pageable, PageRequestDTO pageRequestDTO) {
+        return adminUserRepository.findAllAdminUsers(pageable,
+                pageRequestDTO.getSearchKeyword(),
+                pageRequestDTO.getSearchInput(),
+                pageRequestDTO.getStartDate(),
+                pageRequestDTO.getEndDate(),
+                pageRequestDTO.getLevel());
     }
 }

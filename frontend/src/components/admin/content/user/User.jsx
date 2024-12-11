@@ -11,16 +11,16 @@ const User = () => {
 
   // 검색 상태 하나의 객체로 관리
   const [searchParams, setSearchParams] = useState({
-    searchKeyword: 'username',
+    searchKeyword: 'email',
     searchInput: '',
     startDate: '',
     endDate: '',
-    level: 'all',
+    level: '',
   });
 
   useEffect(() => {
-    fetchUsers(currentPage, size);
-  }, [currentPage, size]);
+    fetchUsers(currentPage, size, searchParams);
+  }, []);
 
   const fetchUsers = (page, size, searchParams) => {
     const params = {
@@ -92,11 +92,11 @@ const User = () => {
 
   const handleReset = () => {
     setSearchParams({
-      searchKeyword: 'username',
+      searchKeyword: 'email',
       searchInput: '',
       startDate: '',
       endDate: '',
-      level: 'all',
+      level: '',
     });
     setCurrentPage(0);
     setSize(20);
@@ -128,7 +128,6 @@ const User = () => {
                     updateSearchParams('searchKeyword', e.target.value)
                   }
                 >
-                  <option value="username">아이디</option>
                   <option value="nickname">닉네임</option>
                   <option value="email">이메일</option>
                 </Form.Control>
@@ -220,8 +219,8 @@ const User = () => {
                     label="전체"
                     type="radio"
                     name="level"
-                    value="all"
-                    checked={searchParams.level === 'all'}
+                    value=""
+                    checked={searchParams.level === ''}
                     onChange={(e) =>
                       updateSearchParams('level', e.target.value)
                     }
@@ -280,7 +279,7 @@ const User = () => {
         <thead>
           <tr>
             <th>번호</th>
-            <th>아이디</th>
+            <th>이메일</th>
             <th>닉네임</th>
             <th>등급</th>
             <th>생년월일</th>
@@ -294,7 +293,7 @@ const User = () => {
           {users.map((user, index) => (
             <tr key={user.id}>
               <td>{index + 1 + currentPage * size}</td>
-              <td>{user.username}</td>
+              <td>{user.email}</td>
               <td>{user.nickname}</td>
               <td>{user.grade}</td>
               <td>{user.birth}</td>
