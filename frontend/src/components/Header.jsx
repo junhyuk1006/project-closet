@@ -16,6 +16,7 @@ import MobileMenu from './main/MobileMenu';
 import isValidJwtToken from '../api/auth/isValidJwtToken';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Slider from 'react-slick';
+import useFetch from '../hooks/useFetch';
 
 function Header() {
   const isAtTop = useFixedHeader(); // 현재 페이지 스크롤의 최상단 여부
@@ -27,6 +28,7 @@ function Header() {
   const [isDesktopCategoryOpen, setIsDesktopCategoryOpen] = useState(false); // 데스크탑 카테고리 open 상태
   const [isDesktopAlarmOpen, setIsDesktopAlarmOpen] = useState(false); // 데스크탑 알람 패널 open 상태
   const [isMobileAlarmOpen, setIsMobileAlarmOpen] = useState(false); // 데스크탑 알람 패널 open 상태
+  const { data: notices, error, loading } = useFetch('/notice/all');
 
   // 카테고리 dropdown 열기/닫기 토글
   const toggleMouseEnter = () => setIsDesktopCategoryOpen(true);
@@ -233,15 +235,13 @@ function Header() {
           <div className="content-topbar flex-sb-m h-full container p-l-0">
             <div className="left-top-bar">
               <Slider {...settings}>
-                <div>
-                  <Link to="#">공지사항입니다.</Link>
-                </div>
-                <div>
-                  <Link to="#">공지사항 전파합니다.</Link>
-                </div>
-                <div>
-                  <Link to="#">전체 공지사항입니다.</Link>
-                </div>
+                {notices.map((notice) => (
+                  <div key={notice.id}>
+                    <Link to="#" className="notice-link">
+                      {notice.subject}
+                    </Link>
+                  </div>
+                ))}
               </Slider>
             </div>
             <div className="right-top-bar flex-w h-full">

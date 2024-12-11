@@ -3,7 +3,7 @@
 // 반환값은 각각 요청 성공 데이터, 에러 객체, 로딩 여부입니다.
 /*
  *  ex)
- *  const { data, error, loading } = useFetch('/api/products');
+ *  const { data: 변수명, error, loading } = useFetch('/api/products');
  */
 
 import { useState, useEffect } from 'react';
