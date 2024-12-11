@@ -27,7 +27,8 @@ import Admin from './pages/admin/Admin';
 
 /** ./pages/Other  */
 import ShoppingCart from './pages/cart/ShoppingCart';
-import Board from './pages/community/board';
+import Board from './pages/community/board/Board';
+import WritePost from './pages/community/board/WritePost';
 import Recommend from './pages/community/recommend/Recommend';
 import Detail from './pages/detailItem/Detail';
 
@@ -89,8 +90,9 @@ const AppRoutes = () => (
           {renderRoute('/Detail/*', <Detail />)} {/* 상품 상세 페이지 */}
           {renderRoute('/Recommend', <Recommend />)} {/* 추천 페이지 */}
           {renderRoute('/ShoppingCart', <ShoppingCart />)}{' '}
+          {renderRoute('/Board', <Board />)} {/* 일반게시판 페이지 */}
+          {renderRoute('/WritePost', <WritePost />)} {/* 일반게시판 페이지 */}
           {/* 장바구니 페이지 */}
-          {renderRoute('/board', <Board />, false)} {/* 일반게시판 페이지 */}
           {renderRoute('/*', <Page404 />, false)} {/* 에러 페이지 */}
         </Routes>
       </Animation>

@@ -1,18 +1,18 @@
-/* body {
+.board-container body {
   background: #dcdcdc;
   margin-top: 20px;
 }
 
-.widget-26 {
+.board-container .widget-26 {
   color: #3c4142;
   font-weight: 400;
 }
 
-.widget-26 tr:first-child td {
+.board-container .widget-26 tr:first-child td {
   border: 0;
 }
 
-.widget-26 .widget-26-job-emp-img img {
+.board-container .widget-26 .widget-26-job-emp-img img {
   width: 35px;
   height: 35px;
   border-radius: 50%;
@@ -267,4 +267,4 @@
   background-clip: border-box;
   border: 1px solid #e6e4e9;
   border-radius: 8px;
-} */
+}
