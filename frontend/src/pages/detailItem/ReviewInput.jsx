@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { savePoint } from '../../api/point/FetchSavePoint';
 
 /** custom css 및 react icon   */
-import '../../assets/styles/DetailItem/ReviewInput.css';
+import '../../assets/styles/detailItem/ReviewInput.css';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
 /** components */
-import StarRating from '../../components/Rating/StarRating';
+import StarRating from '../../components/rating/StarRating';
 
 /** api */
-import FetchAllReview from '../../api/Review/FetchAllReview';
+import FetchAllReview from '../../api/review/FetchAllReview';
 import LockIcon from '@mui/icons-material/Lock';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 

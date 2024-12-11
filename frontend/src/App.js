@@ -29,7 +29,7 @@ import Admin from './pages/admin/Admin';
 import ShoppingCart from './pages/cart/ShoppingCart';
 import Board from './pages/community/board';
 import Recommend from './pages/community/recommend/Recommend';
-import Detail from './pages/DetailItem/Detail';
+import Detail from './pages/detailItem/Detail';
 
 // 공통 애니메이션과 레이아웃
 import Page404 from './components/main/Page404';

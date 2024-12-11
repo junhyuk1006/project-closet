@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import '../../components/SignUp';
-import '../../assets/styles/Auth/signup.css';
+import '../../assets/styles/auth/signup.css';
 import closetImage from '../../assets/closet.png'; // 이미지 경로를 import
 import { useNavigate } from 'react-router-dom';
 

@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 // Import CSS
 import '../../assets/styles/components/main.css';
 import '../../assets/styles/components/util.css';
-import '../../assets/styles/Home/Home.css';
+import '../../assets/styles/home/Home.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import 'material-design-iconic-font/dist/css/material-design-iconic-font.min.css';
@@ -13,7 +13,7 @@ import 'material-design-iconic-font/dist/css/material-design-iconic-font.min.css
 import Product from '../main/Product';
 
 // Import Components
-import Category from '../../hooks/Category/Category';
+import Category from '../../hooks/category/Category';
 import FilterSearch from '../main/FilterSearch';
 
 // Import API

@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../../assets/styles/Community/Recommend.css';
+import '../../../assets/styles/community/Recommend.css';
 
 function Recommend() {
   return (

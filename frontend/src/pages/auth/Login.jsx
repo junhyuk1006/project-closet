@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { signin } from '../../api/auth/ApiService';
 import { useNavigate } from 'react-router-dom';
-import '../../assets/styles/Auth/login.css';
+import '../../assets/styles/auth/login.css';
 import closetImage from '../../assets/closet.png'; // 이미지 경로
 import NaverImage from '../../assets/btnG_완성형.png'; // 이미지 경로
 import KaKaoImage from '../../assets/kakao_login_medium_narrow.png'; // 이미지 경로

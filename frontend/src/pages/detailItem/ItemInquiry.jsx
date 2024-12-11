@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 /** custom css 및 react icon */
-import '../../assets/styles/DetailItem/ReviewInput.css';
+import '../../assets/styles/detailItem/ReviewInput.css';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
