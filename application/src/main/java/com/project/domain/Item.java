@@ -20,6 +20,10 @@ public class Item {
 
     private String color;
     private String size;
+    //private String item_name;
+    //private String item_category;
+    //private int item_price;
+    private int item_count;
     private String status;
 
     @CreationTimestamp

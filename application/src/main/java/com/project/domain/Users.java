@@ -1,14 +1,26 @@
 package com.project.domain;
 
-import jakarta.persistence.*;
+import java.util.List;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.DynamicInsert;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-
 import lombok.Data;
-import org.hibernate.annotations.DynamicInsert;
-import org.springframework.security.core.userdetails.User;
+import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor
@@ -21,7 +33,7 @@ public class Users {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; // 아이디
+    private Long id; // 아이디 -> userId로
 
     private String username; // 계정
 
@@ -70,4 +82,15 @@ public class Users {
 
     private String role; // 역할
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "grade_id" ,referencedColumnName = "id", nullable = false)
+    private Grade grade; // 등급
+
+    @OneToMany(mappedBy = "user" , cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Point> point;
+
+    @OneToMany(mappedBy = "user" , cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<OrderList> orderList;
 }
