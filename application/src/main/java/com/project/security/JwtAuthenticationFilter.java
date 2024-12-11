@@ -1,5 +1,6 @@
 package com.project.security;
 
+import com.project.service.CustomUserDetailsService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -8,9 +9,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -23,9 +24,11 @@ import java.util.Map;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final TokenProvider tokenProvider;
+    private final CustomUserDetailsService customUserDetailsService;
 
-    public JwtAuthenticationFilter(TokenProvider tokenProvider) {
+    public JwtAuthenticationFilter(TokenProvider tokenProvider, CustomUserDetailsService customUserDetailsService) {
         this.tokenProvider = tokenProvider;
+        this.customUserDetailsService = customUserDetailsService;
     }
 
     @Override
@@ -36,22 +39,30 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             // 요청에서 토큰 가져오기
             String token = parseBearerToken(request);
             log.info("Filter is running...");
-            // 토큰 검사하기. JWT이므로 인가 서버에 요청하지 않고도 검증 가능
+
+            // 토큰 검증
             if (token != null && !token.equalsIgnoreCase("null")) {
 
-                // userId 가져오기. 위조된 경우 예외 처리된다.
+                // 토큰에서 사용자 정보 가져오기
                 Map<String, Object> userInfo = tokenProvider.validateAndGetUserId(token);
                 Long userId = (Long) userInfo.get("id"); // ID 가져오기
                 String username = (String) userInfo.get("username"); // Username 가져오기
 
-                log.info("Authenticated user ID : {}", userId);
-                //인증 완료. SecurithContextHolder에 등록해야 인증도니 사용자라고 생각한다.
+                log.info("인증된 사용자 ID: {}", userId);
+
+                // CustomUserDetailsService를 통해 사용자 정보 로드
+                UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
+
+                // 인증 객체 생성. SecurithContextHolder에 등록해야 인증된 사용자라고 생각한다.
                 AbstractAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                        userId, // 인증된 사용자의 정보, 문자열이 아니어도 아무것이나 넣을 수 있다.
-                        null,   // 보통 UserDetails라는 오브젝트를 넣는데 우리는 넣지 않았다.
-                        AuthorityUtils.NO_AUTHORITIES);
+                        userDetails, // 인증된 사용자 정보(UserDetails)
+                        null,   // 인증된 사용자의 비밀번호 (null로 설정 가능)
+                        userDetails.getAuthorities() // 권한 리스트
+                );
 
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
+                // SecurityContext에 인증 정보 저장
                 SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
                 securityContext.setAuthentication(authentication);
                 SecurityContextHolder.setContext(securityContext);
@@ -65,7 +76,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private String parseBearerToken(HttpServletRequest request) {
         // http 요청의 헤더를 파싱해 Bearer 토큰을 리턴한다.
         String bearerToken = request.getHeader("Authorization");
-
+        System.out.println("bearerToken : " + bearerToken);
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer")) {
             return bearerToken.substring(7);
         }

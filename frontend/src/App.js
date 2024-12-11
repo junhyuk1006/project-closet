@@ -13,6 +13,7 @@ import Home from './pages/main/Home';
 /** ./pages/auth  */
 import Login from './pages/auth/Login';
 import SignUp from './pages/auth/SignUp';
+import OAuth2RedirectHandler from './pages/auth/OAuth2RedirectHandler ';
 
 /** ./pages/MyPage  */
 import MyPoint from './pages/mypage/MyPoint';
@@ -27,6 +28,7 @@ import Admin from './pages/admin/Admin';
 import Detail from './pages/DetailItem/Detail';
 import Recommend from './pages/community/recommend/Recommend';
 import ShoppingCart from './pages/cart/ShoppingCart';
+import Board from './pages/comunity/board';
 
 // 공통 애니메이션과 레이아웃
 import Layout from './layouts/Layout'; // Header/Footer 포함 여부를 제어하는 레이아웃
@@ -71,6 +73,7 @@ const AppRoutes = () => (
         {renderRoute('/privacy', <Privacy />)} {/* 개인정보처리방침 페이지 */}
         {/** ./pages/auth */}
         {renderRoute('/Login', <Login />)} {/* 로그인 페이지 */}
+        <Route path="/oauth2/redirect" element={<OAuth2RedirectHandler />} />
         {renderRoute('/SignUp', <SignUp />)} {/* 회원가입 페이지 */}
         {/** ./pages/MyPage */}
         {renderRoute('/MyPageHome', <MyPageHome />)} {/* 마이페이지 홈 */}
@@ -84,6 +87,7 @@ const AppRoutes = () => (
         {renderRoute('/Detail/*', <Detail />)} {/* 상품 상세 페이지 */}
         {renderRoute('/Recommend', <Recommend />)} {/* 추천 페이지 */}
         {renderRoute('/ShoppingCart', <ShoppingCart />)} {/* 장바구니 페이지 */}
+        {renderRoute('/board', <Board />, false)} {/* 일반게시판 페이지 */}
         {renderRoute('/*', <Page404 />, false)} {/* 에러 페이지 */}
       </Routes>
     </Animation>

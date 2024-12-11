@@ -1,7 +1,7 @@
 # 이메일 인증 설정
 spring:
   mail:
-    username: ${EMAIL_ID} # 이메일 계정 ID (환경 변수로 설정)
+    username: "hyunu29@gmail.com" # 이메일 계정 ID (환경 변수로 설정)
     properties:
       mail:
         smtp:
@@ -10,7 +10,7 @@ spring:
             required: "true" # STARTTLS 필수
           auth: "true" # SMTP 인증 활성화
     host: smtp.gmail.com # SMTP 서버 주소
-    password: ${EMAIL_PW} # 이메일 계정 비밀번호 (환경 변수로 설정)
+    password: "jjed anbj kjrw okqk" # 이메일 계정 비밀번호 (환경 변수로 설정)
     port: "587" # SMTP 서버 포트
 
   # JPA 및 Hibernate 설정
@@ -23,7 +23,7 @@ spring:
       hibernate:
         format_sql: "true" # 출력되는 SQL 포맷팅 활성화
         dialect: org.hibernate.dialect.MySQLDialect # Hibernate가 사용할 MySQL 방언
-    show-sql: "true" # 실행된 SQL 쿼리 로깅 활성화
+    show-sql: "false" # 실행된 SQL 쿼리 로깅 활성화
 
 
   # 데이터 소스 및 HikariCP(DB 연결 풀) 설정
@@ -50,14 +50,14 @@ spring:
         registration:
           kakao:
             authorization-grant-type: authorization_code # 인증 코드 방식
-            client-id: ${KAKAO_ID} # 카카오 앱 클라이언트 ID (환경 변수로 설정)
+            client-id: 1d03b543cc496c9406b87e165db19b2c # 카카오 앱 클라이언트 ID (환경 변수로 설정)
             scope: profile_nickname,account_email # 요청할 OAuth2 권한 범위
-            redirect-uri: "{baseUrl}/login/oauth2/code/kakao" # 리디렉션 URI
+            redirect-uri: http://localhost/login/oauth2/code/kakao # 리디렉션 URI
             client-name: Kakao # 클라이언트 이름
           naver:
             client-id: DvFLuTam14KDBYXb4Ddz # 네이버 앱 클라이언트 ID (환경 변수로 설정)
             client-name: Naver # 클라이언트 이름
-            redirect-uri: "{baseUrl}/login/oauth2/code/naver" # 리디렉션 URI
+            redirect-uri: http://localhost/login/oauth2/code/naver # 리디렉션 URI
             authorization-grant-type: authorization_code # 인증 코드 방식
             scope: name,email # 요청할 OAuth2 권한 범위
             client-secret: _K3HnFtgDQ # 네이버 앱 클라이언트 비밀키 (환경 변수로 설정)
