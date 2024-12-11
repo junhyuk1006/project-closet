@@ -28,7 +28,8 @@ import Admin from './pages/admin/Admin';
 import Detail from './pages/DetailItem/Detail';
 import Recommend from './pages/comunity/recommend/Recommend';
 import ShoppingCart from './pages/cart/ShoppingCart';
-import Board from './pages/comunity/board';
+import Board from './pages/comunity/board/Board';
+import WritePost from './pages/comunity/board/WritePost';
 
 // 공통 애니메이션과 레이아웃
 import Layout from './layouts/Layout'; // Header/Footer 포함 여부를 제어하는 레이아웃
@@ -85,7 +86,8 @@ const AppRoutes = () => (
         {renderRoute('/Detail/*', <Detail />)} {/* 상품 상세 페이지 */}
         {renderRoute('/Recommend', <Recommend />)} {/* 추천 페이지 */}
         {renderRoute('/ShoppingCart', <ShoppingCart />)} {/* 장바구니 페이지 */}
-        {renderRoute('/board', <Board />, false)} {/* 일반게시판 페이지 */}
+        {renderRoute('/Board', <Board />)} {/* 일반게시판 페이지 */}
+        {renderRoute('/WritePost', <WritePost />)} {/* 일반게시판 페이지 */}
         {renderRoute('/*', <Page404 />, false)} {/* 에러 페이지 */}
       </Routes>
     </Animation>

@@ -1,7 +1,28 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
+import { useNavigate } from 'react-router-dom';
 
 const Board = () => {
+  const [posts, setPosts] = useState([]);
+  const navigate = useNavigate(); // useNavigate 사용
+
+  const handleWriteButtonClick = () => {
+    navigate('/WritePost');
+  };
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await fetch('http://localhost:80/api/posts');
+        const data = await response.json();
+        setPosts(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchPosts();
+  }, []);
+
   return (
     <>
       <Helmet>
@@ -551,6 +572,12 @@ const Board = () => {
                     </li>
                   </ul>
                 </nav>
+                <button
+                  className="btn btn-primary"
+                  onClick={handleWriteButtonClick}
+                >
+                  글작성
+                </button>
               </div>
             </div>
           </div>
