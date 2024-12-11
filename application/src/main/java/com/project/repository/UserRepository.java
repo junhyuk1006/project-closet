@@ -4,6 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import com.project.domain.Users;
 
+import java.util.Optional;
+
 @Repository
 public interface UserRepository extends JpaRepository<Users, Long> {
   Users findByUsername(String username); // 사용자 이름으로 사용자 찾기
@@ -12,6 +14,7 @@ public interface UserRepository extends JpaRepository<Users, Long> {
 
   Users findByNaverId(String providerId);
   Users findByKakaoId(String providerId);
+  Users findByNickname(String nickname);
 }
 
 
