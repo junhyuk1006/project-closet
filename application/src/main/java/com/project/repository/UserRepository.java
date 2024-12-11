@@ -12,7 +12,7 @@ public interface UserRepository extends JpaRepository<Users, Long> {
   Users findByUsernameAndPassword(String username, String password); // 사용자 이름과 비밀번호로 사용자 찾기
 
   Users findByNaverId(String providerId);
-  Users findByKakaoIdakaoId(String providerId);
+  Users findByKakaoId(String providerId);
 }
 
 

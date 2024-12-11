@@ -73,7 +73,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             if ("naver".equals(registrationId)){
                 user = userRepository.findByNaverId(providerId);
             } else if ("kakao".equals(registrationId)) {
-                user = userRepository.findByKakaoIdakaoId(providerId);
+                user = userRepository.findByKakaoId(providerId);
             }
 
             if (user == null){
