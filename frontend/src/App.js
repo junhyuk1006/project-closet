@@ -1,7 +1,6 @@
 // React 기본 및 라우팅 관련 라이브러리
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { UserContext } from './api/auth/UserContext';
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import { UserProvider } from './api/auth/UserContext';
 
 // 외부 CSS 및 아이콘 라이브러리
@@ -14,32 +13,32 @@ import Home from './pages/main/Home';
 
 /** ./pages/auth  */
 import Login from './pages/auth/Login';
-import SignUp from './pages/auth/SignUp';
 import OAuth2RedirectHandler from './pages/auth/OAuth2RedirectHandler ';
+import SignUp from './pages/auth/SignUp';
 
 /** ./pages/MyPage  */
-import MyPoint from './pages/myPage/MyPoint';
-import MyPageHome from './pages/myPage/MyPageHome';
 import MemberInfo from './pages/myPage/MemberInfo';
 import MyInquirement from './pages/myPage/MyInquirement';
+import MyPageHome from './pages/myPage/MyPageHome';
+import MyPoint from './pages/myPage/MyPoint';
 
 /** ./pages/Admin  */
 import Admin from './pages/admin/Admin';
 
 /** ./pages/Other  */
-import Detail from './pages/DetailItem/Detail';
-import Recommend from './pages/community/recommend/Recommend';
 import ShoppingCart from './pages/cart/ShoppingCart';
 import Board from './pages/community/board';
+import Recommend from './pages/community/recommend/Recommend';
+import Detail from './pages/DetailItem/Detail';
 
 // 공통 애니메이션과 레이아웃
-import Layout from './layouts/Layout'; // Header/Footer 포함 여부를 제어하는 레이아웃
-import Animation from './hooks/animation/Animation'; // 페이지 전환 애니메이션 효과
-import Guide from './pages/main/Guide';
-import Agreement from './pages/main/Agreement';
-import Privacy from './pages/main/Privacy';
 import Page404 from './components/main/Page404';
 import ScrollToTop from './components/ScrollToTop';
+import Animation from './hooks/animation/Animation'; // 페이지 전환 애니메이션 효과
+import Layout from './layouts/Layout'; // Header/Footer 포함 여부를 제어하는 레이아웃
+import Agreement from './pages/main/Agreement';
+import Guide from './pages/main/Guide';
+import Privacy from './pages/main/Privacy';
 
 /**
  * 공통적으로 사용하는 Route 생성 함수

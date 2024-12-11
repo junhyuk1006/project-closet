@@ -10,7 +10,6 @@ function FetchAllProduct ({ onItemFetch }) {
         }).then((data) => {
                 if(onItemFetch){
                     onItemFetch(data)
-                    console.log("data: ", data)
                 }
         }).catch((error) =>
             console.log("Error fetching item data:", error)

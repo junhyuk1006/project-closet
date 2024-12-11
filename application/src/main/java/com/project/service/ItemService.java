@@ -44,7 +44,6 @@ public class ItemService {
     }
 
     public List<ItemDetailItemDTO> getItemsByItemDetailId(Long itemDetailId) {
-        System.out.print("asdasdasd" + itemDetailRepository.findItemDetailWithItem(itemDetailId));
         return itemDetailRepository.findItemDetailWithItem(itemDetailId);
     }
 

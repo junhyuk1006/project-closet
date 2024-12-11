@@ -1,11 +1,13 @@
 package com.project.service;
 
-import com.project.domain.Users;
-import com.project.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import com.project.domain.Users;
+import com.project.repository.UserRepository;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j // 로깅 객체 자동 생성 (log 변수 사용 가능)
 @Service

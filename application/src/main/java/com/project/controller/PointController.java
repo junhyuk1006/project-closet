@@ -3,11 +3,9 @@ package com.project.controller;
 import com.project.domain.Point;
 import com.project.service.PointService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -17,6 +15,14 @@ import java.util.List;
 public class PointController {
 
     private final PointService pointService;
+
+    /** 리뷰 포인트 저장*/
+    @ResponseStatus(HttpStatus.OK)
+    @PostMapping("/saveReviewPoint")
+    public ResponseEntity<String> savePoint(@RequestBody Point point) {
+        pointService.save(point);
+        return ResponseEntity.ok("success");
+    }
 
     // 전체 포인트 조회
     @GetMapping("/getAllPoint")

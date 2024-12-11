@@ -92,7 +92,6 @@ function Home() {
           {/* Product */}
           <Product
             products={(() => {
-              console.log('Passing products to Product:', products);
               return products;
             })()}
             activeCategory={activeCategory}

@@ -1,20 +1,26 @@
 package com.project.controller;
 
-
-import com.project.domain.Users;
-import com.project.dto.CustomUserDetail;
-import com.project.security.TokenProvider;
-import com.project.service.UserService;
-import com.project.dto.ResponseDTO;
-import com.project.dto.UserDTO;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.project.domain.Users;
+import com.project.dto.CustomUserDetail;
+import com.project.dto.ResponseDTO;
+import com.project.dto.UserDTO;
+import com.project.security.TokenProvider;
+import com.project.service.ItemService;
+import com.project.service.UserService;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
@@ -22,7 +28,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/auth")
 public class UserController {
 
-    final UserService userService;
+    private final UserService userService;
+    private final ItemService itemService;
 
     final TokenProvider tokenProvider;
 

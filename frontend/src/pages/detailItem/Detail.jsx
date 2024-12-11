@@ -1,28 +1,50 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import "../../assets/styles/components/main.css";
 import "../../assets/styles/components/util.css";
 import "../../assets/styles/DetailItem/Detail.css";
-import StarRating from '../../components/Rating/StarRating';
 import useProductQuantity from "../../hooks/useProductQuantity";
 import FetchIdProduct from "../../api/item/FetchIdProduct";
 import { useLocation } from "react-router-dom";
+import ReviewInput from "./ReviewInput"
+import ItemInquiry from "./ItemInquiry";
+import FetchCountReview from "../../api/Review/FetchCountReview";
+import FetchCountInquiry from "../../api/inquiry/FetchCountInquiry";
+import FetchGetBasket from "../../api/basket/FetchGetBasket";
 
 function Detail() {
   const location = useLocation();
   const productId = location.state?.productId || "";
   const [idProducts, setIdProducts] = useState([]); // Fetch된 데이터 저장
+  const [userId, setUserId] = useState(null)
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isZoomed, setIsZoomed] = useState(false);
   const [activeTab, setActiveTab] = useState("description");
-
+  const [countReview, setCountReview] = useState(0);
+  const [countInquiry, setCountInquiry] = useState(0);
+  const [selectedColor, setSelectedColor] = useState("");
+  const [selectedSize, setSelectedSize] = useState("");
+  const [baskets, setBasket] = useState(null);
   const { quantity, increaseQuantity, decreaseQuantity } = useProductQuantity(1);
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
 
+  const handleFetch = (data) => {
+    setIdProducts(data.items);
+    setUserId(data.userId);
+  }
+
   const handleThumbnailClick = (index) => {
     setCurrentIndex(index);
+  };
+
+  const handleColorChange = (event) => {
+    setSelectedColor(event.target.value);
+  };
+
+  const handleSizeChange = (event) => {
+    setSelectedSize(event.target.value);
   };
 
   const handlePrev = () => {
@@ -41,12 +63,51 @@ function Detail() {
     setIsZoomed(!isZoomed);
   };
 
+  const handleSaveBasket = async (e) => {
+    e.preventDefault();
+    if(!userId) {
+      alert("로그인이 필요합니다")
+      return;
+    }
+    try {
+      const basketData = {
+        userId: userId,
+        itemDetailId: productId,
+        itemCount: quantity,
+        size: selectedSize,
+        color: selectedColor
+      };
+
+      const response = await fetch(`http://localhost:80/api/basket/saveBasket`, {
+        method: "POST",
+        headers: {"Content-Type": "application/json" },
+        body: JSON.stringify(basketData)
+      });
+
+      const result = await response.json();
+
+      if(!response.ok) {
+        throw new Error("Can't save basketData now");
+      }
+      alert("장바구니 저장 완료, Cart를 확인하세요");
+
+    } catch (error) {
+      console.error("장바구니 저장 중 오류 발생",error);
+      alert("장바구니 저장 실패, 관리자 모드로 확인하세요");
+    }
+  };
+
+  useEffect(() => {
+    setBasket([])
+  }, []);
+
   return (
       <>
         <div className="container">
           <div className="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
             {/* Fetch 컴포넌트 */}
-            <FetchIdProduct id={productId} onItemFetch={setIdProducts} />
+            <FetchIdProduct id={productId} onItemFetch={handleFetch} />
+            <FetchGetBasket userId={userId} onGetFetch={setBasket} />
 
             {/* 크럼브 데이터 */}
             <a href="/" className="stext-109 cl8 hov-cl1 trans-04">
@@ -78,6 +139,7 @@ function Detail() {
               {/* 이미지 섹션 */}
               <div className="col-md-6 col-lg-7 p-b-30">
                 <div className="p-l-25 p-r-30 p-lr-0-lg">
+
                   {idProducts.length > 0 && (
                       <div className="flex">
                         {/* 썸네일 */}
@@ -138,11 +200,13 @@ function Detail() {
                     <div className="flex-w flex-r-m p-b-10">
                       <div className="size-203 flex-c-m respon6">Size</div>
                       <div className="size-204 flex-w flex-m respon6-next">
-                        <select className="custom-select">
+                        <select className="custom-select" value={selectedSize} onChange={handleSizeChange}>
                           <option>사이즈 선택</option>
                           {Array.from(new Set(idProducts.map((product) => product.size))).map(
                               (uniqueSize, index) => (
-                                  <option key={index}>{uniqueSize}</option>
+                                  <option key={index} value={uniqueSize}>
+                                    {uniqueSize}
+                                  </option>
                               )
                           )}
                         </select>
@@ -152,11 +216,13 @@ function Detail() {
                     <div className="flex-w flex-r-m p-b-10">
                       <div className="size-203 flex-c-m respon6">Color</div>
                       <div className="size-204 flex-w flex-m respon6-next">
-                        <select className="custom-select">
+                        <select className="custom-select" value={selectedColor} onChange={handleColorChange}>
                           <option>색상 선택</option>
                           {Array.from(new Set(idProducts.map((product) => product.color))).map(
-                              (uniqueSize, index) => (
-                                  <option key={index}>{uniqueSize}</option>
+                              (uniqueColor, index) => (
+                                  <option key={index} value={uniqueColor}>
+                                    {uniqueColor}
+                                  </option>
                               )
                           )}
                         </select>
@@ -195,7 +261,7 @@ function Detail() {
                           </div>
                         </div>
 
-                        <button
+                        <button onClick={handleSaveBasket}
                             className="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
                           장바구니
                         </button>
@@ -260,11 +326,21 @@ function Detail() {
                     </button>
                   </li>
                   <li className="nav-item p-b-10">
+                    <FetchCountReview itemId={productId} onCountFetch={setCountReview}/>
                     <button
                         className={`nav-link ${activeTab === 'reviews' ? 'active' : ''}`}
                         onClick={() => handleTabClick('reviews')}
                     >
-                      리뷰 (1)
+                      리뷰( {countReview} )
+                    </button>
+                  </li>
+                  <li className="nav-item p-b-10">
+                    <FetchCountInquiry itemId={productId} onCountFetch={setCountInquiry}/>
+                    <button
+                        className={`nav-link ${activeTab === 'QnA' ? 'active' : ''}`}
+                        onClick={() => handleTabClick('inquiry')}
+                    >
+                      문의 사항 ( {countInquiry} )
                     </button>
                   </li>
                 </ul>
@@ -338,95 +414,11 @@ function Detail() {
                     </div>
                   </div>
 
-                  {/* Reviews Tab */}
-                  <div
-                      className={`tab-pane fade ${activeTab === 'reviews' ? 'show active' : ''}`}
-                      id="reviews"
-                      role="tabpanel"
-                  >
-                    <div className="row">
-                      <div className="col-sm-10 col-md-8 col-lg-6 m-lr-auto">
-                        <div className="p-b-30 m-lr-15-sm">
-                          <div className="flex-w flex-t p-b-68">
-                            <div className="wrap-pic-s size-109 bor0 of-hidden m-r-18 m-t-6">
-                              <img
-                                  src="../../../public/images/avatar-01.jpg"
-                                  alt="AVATAR"
-                              />
-                            </div>
-                            <div className="size-207">
-                              <div className="flex-w flex-sb-m p-b-17">
-                              <span className="mtext-107 cl2 p-r-20">
-                                Ariana Grande
-                              </span>
-                                <span className="fs-18 cl11">
-                                <i className="zmdi zmdi-star"></i>
-                                <i className="zmdi zmdi-star"></i>
-                                <i className="zmdi zmdi-star"></i>
-                                <i className="zmdi zmdi-star"></i>
-                                <i className="zmdi zmdi-star-half"></i>
-                              </span>
-                              </div>
-                              <p className="stext-102 cl6">
-                                Quod autem in homine praestantissimum atque
-                                optimum est, id deseruit. Apud ceteros autem
-                                philosophos
-                              </p>
-                            </div>
-                          </div>
-                          <form className="w-full">
-                            <h5 className="mtext-108 cl2 p-b-7">Add a review</h5>
-                            <p className="stext-102 cl6">
-                              Your email address will not be published. Required
-                              fields are marked *
-                            </p>
-                            <div className="flex-w flex-m p-t-50 p-b-23">
-                              <span className="stext-102 cl3 m-r-16">별점</span>
-                              <StarRating totalStars={5}/>
-                            </div>
-                            <div className="row p-b-25">
-                              <div className="col-12 p-b-5">
-                                <label className="stext-102 cl3" htmlFor="review">
-                                  리뷰
-                                </label>
-                                <textarea
-                                    className="size-110 bor8 stext-102 cl2 p-lr-20 p-tb-10"
-                                    id="review"
-                                    name="review"
-                                ></textarea>
-                              </div>
-                              <div className="col-sm-6 p-b-5">
-                                <label className="stext-102 cl3" htmlFor="name">
-                                  이름
-                                </label>
-                                <input
-                                    className="size-111 bor8 stext-102 cl2 p-lr-20"
-                                    id="name"
-                                    type="text"
-                                    name="name"
-                                />
-                              </div>
-                              <div className="col-sm-6 p-b-5">
-                                <label className="stext-102 cl3" htmlFor="email">
-                                  이메일
-                                </label>
-                                <input
-                                    className="size-111 bor8 stext-102 cl2 p-lr-20"
-                                    id="email"
-                                    type="text"
-                                    name="email"
-                                />
-                              </div>
-                            </div>
-                            <button
-                                className="flex-c-m stext-101 cl0 size-112 bg7 bor11 hov-btn3 p-lr-15 trans-04 m-b-10">
-                              리뷰 작성
-                            </button>
-                          </form>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  {/** Reviews Tab */}
+                  <ReviewInput activeTab={activeTab} userId={userId} productId={productId}/>
+
+                  {/** Inquiry Tab */}
+                  <ItemInquiry activeTab={activeTab} userId={userId} productId={productId}/>
                 </div>
               </div>
             </div>
