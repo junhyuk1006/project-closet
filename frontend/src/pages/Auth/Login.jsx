@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import '../../assets/styles/Auth/login.css';
 import closetImage from '../../assets/closet.png'; // 이미지 경로
 import NaverImage from '../../assets/btnG_완성형.png'; // 이미지 경로
+import KaKaoImage from '../../assets/kakao_login_medium_narrow.png'; // 이미지 경로
 
 const LoginForm = () => {
   const [username, setUsername] = useState('');
@@ -41,8 +42,17 @@ const LoginForm = () => {
   };
 
   // OAuth2 로그인 버튼 클릭시 백엔드 OAuth2 인증 엔드 엔드포인트로 리디렉션
-  const handleOAuthLogin = () => {
-    window.location.href = 'http://localhost/oauth2/authorization/naver';
+  const handleOAuthLogin = (provider) => {
+    const oauthUrls = {
+      naver: 'http://localhost/oauth2/authorization/naver',
+      kakao: 'http://localhost/oauth2/authorization/kakao',
+    };
+
+    if (provider && oauthUrls[provider]) {
+      window.location.href = oauthUrls[provider];
+    } else {
+      console.error('Invalid provider specified for OAuth login.');
+    }
   };
 
   return (
@@ -174,12 +184,22 @@ const LoginForm = () => {
             {loading ? '로그인 중...' : '로그인'}
           </button>
           <hr className="my-4" />
-          {/* OAuth2 로그인 버튼 추가 */}
-          <button type="button" onClick={handleOAuthLogin}>
+          {/* OAuth2 네이버 로그인 버튼 추가 */}
+          <button type="button" onClick={() => handleOAuthLogin('naver')}>
             <img
               src={NaverImage} // 네이버 로고 URL
               alt="Naver Logo"
-              width="170"
+              width="175"
+              height="45"
+            />
+          </button>
+          &nbsp;&nbsp;
+          {/* OAuth2 카카오 로그인 버튼 추가 */}
+          <button type="button" onClick={() => handleOAuthLogin('kakao')}>
+            <img
+              src={KaKaoImage} // 카카오 로고 URL
+              alt="Kakao Logo"
+              width="175"
               height="45"
             />
           </button>

@@ -4,6 +4,7 @@ import com.project.domain.Users;
 import com.project.dto.CustomOAuth2User;
 import com.project.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -73,7 +74,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             if ("naver".equals(registrationId)){
                 user = userRepository.findByNaverId(providerId);
             } else if ("kakao".equals(registrationId)) {
-                user = userRepository.findByKakaoIdakaoId(providerId);
+                user = userRepository.findByKakaoId(providerId);
             }
 
             if (user == null){
@@ -94,7 +95,11 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                     user.setKakaoId(providerId); // 카카오 ID 설정
                 }
 
-                userRepository.save(user);
+                try {
+                    userRepository.save(user);
+                } catch (DataIntegrityViolationException e) {
+                    throw new RuntimeException("이미 사용 중인 닉네임입니다. 다른 소셜 계정과 연동하거나 닉네임을 변경해주세요.");
+                }
             }
 
         return new CustomOAuth2User(user, attributes);
