@@ -18,3 +18,20 @@ export const getUserAdmin = async (params) => {
     },
   });
 };
+
+export const getGrade = async () => {
+  return await fetchAPI('/api/admin/user/grade', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'applicaiont/json',
+    },
+  });
+};
+
+export const updateGrade = async (updateGrades) => {
+  return await fetchAPI('/api/admin/user/grade', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(updateGrades),
+  });
+};

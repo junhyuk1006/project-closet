@@ -25,7 +25,7 @@ public interface AdminUserRepository extends JpaRepository<User, Long> {
             " (:searchKeyword ='username' AND u.username LIKE CONCAT('%',:searchInput, '%')) OR"+
             " (:searchKeyword ='nickname' AND u.nickname LIKE CONCAT('%',:searchInput,'%')) OR" +
             " (:searchKeyword ='email' AND u.email LIKE CONCAT('%',:searchInput,'%')))" +
-            "AND (:level ='' OR g.grade = :level)" +
+            "AND (:grade ='' OR g.grade = :grade)" +
             "AND (:startDate IS NULL OR u.createdAt >= :startDate)"+
             "AND (:endDate IS NULL OR u.createdAt <= :endDate)")
     Page<AdminUserDTO> findAllAdminUsers(Pageable pageable,
@@ -33,5 +33,5 @@ public interface AdminUserRepository extends JpaRepository<User, Long> {
                                          @Param("searchInput") String searchInput,
                                          @Param("startDate") Timestamp startDate,
                                          @Param("endDate") Timestamp endDate,
-                                         @Param("level") String level);
+                                         @Param("grade") String grade);
 }

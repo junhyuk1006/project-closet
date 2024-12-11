@@ -16,8 +16,8 @@ const UserSidebar = ({ activeMenu, handleMenuClick }) => {
       <li>
         <a
           href="#"
-          className={`nav-link ${activeMenu === 'UserLevel' ? 'active' : 'link-dark'}`}
-          onClick={() => handleMenuClick('UserLevel')}
+          className={`nav-link ${activeMenu === 'UserGrade' ? 'active' : 'link-dark'}`}
+          onClick={() => handleMenuClick('UserGrade')}
         >
           <FaRegAddressCard className="me-2" /> 회원등급
         </a>
