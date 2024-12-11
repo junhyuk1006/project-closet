@@ -16,7 +16,7 @@ public class OrderList {
 
     @ManyToOne(fetch = FetchType.LAZY) // (fetch = FetchType.LAZY) -> 성능
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false) // 기존 외래 키와 참조 키
-    private User user; // Users 테이블의 ID와 매핑
+    private Users user; // Users 테이블의 ID와 매핑
     private String orderStatus;
     private int totalPrice;
     @CreationTimestamp

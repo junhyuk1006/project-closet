@@ -1,6 +1,6 @@
 package com.project.service.Admin;
 
-import com.project.domain.User;
+import com.project.domain.Users;
 import com.project.dto.AdminUserDTO;
 import com.project.dto.PageRequestDTO;
 import com.project.repository.admin.AdminUserRepository;
@@ -16,7 +16,7 @@ import java.util.List;
 public class AdminUserService {
     private final AdminUserRepository adminUserRepository;
 
-    public List<User> getAllUsers() {
+    public List<Users> getAllUsers() {
         return adminUserRepository.findAll();
     }
 

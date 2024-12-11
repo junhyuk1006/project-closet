@@ -23,5 +23,5 @@ public class Grade {
     private int discount;
 
     @OneToMany(mappedBy = "grade",cascade = CascadeType.ALL)
-    private List<User> users;
+    private List<Users> users;
 }
