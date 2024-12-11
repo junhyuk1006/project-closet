@@ -4,12 +4,14 @@ import com.project.domain.Users;
 import com.project.dto.CustomOAuth2User;
 import com.project.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -75,6 +77,16 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             } else if ("kakao".equals(registrationId)) {
                 user = userRepository.findByKakaoId(providerId);
             }
+
+        // 닉네임 기본값 설정 (null 또는 빈 문자열 처리)
+        if (nickname == null || nickname.trim().isEmpty()) {
+            nickname = "user_" + UUID.randomUUID().toString().substring(0, 8);
+        }
+
+        // 데이터베이스에서 해당 닉네임 중복 확인
+        if (userRepository.findByNickname(nickname) != null) {
+            nickname = "user_" + UUID.randomUUID().toString().substring(0, 8);
+        }
 
             if (user == null){
                 // 새로운 사용자 등록
