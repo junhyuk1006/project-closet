@@ -1,29 +1,23 @@
 import React, { useState, useEffect } from 'react';
+import { call } from '../../api/auth/ApiService'; // useUser 훅 임포트
 import { useUser } from '../../api/auth/UserContext'; // useUser 훅 임포트
 import MyPageHeader from '../../components/mypage/MyPageHeader';
 import { useNavigate } from 'react-router-dom';
-import { me } from '../../api/auth/ApiService';
 
 const MemberInfo = () => {
-  // 토큰 인증
   const navigate = useNavigate();
   const [representativeAddress, setRepresentativeAddress] = useState(null);
   const [generalAddresses, setGeneralAddresses] = useState([]);
   const { user, setUser } = useUser(); // UserContext에서 user와 setUser를 가져오기
 
-  // 데이터 가져오기 함수
   const fetchData = async () => {
     try {
-      const addressResponse = await fetch(
-        `http://localhost:80/api/mypage/getAddress?userId=${user.id}`,
-        {
-          cache: 'no-store',
-        }
+      const address = await call(
+        `/api/mypage/getAddress?userId=${user.id}`,
+        'GET'
       );
-
-      const address = await addressResponse.json();
-      const representative = address.find((addr) => addr.isRepresent === true); // 대표 주소
-      const general = address.filter((addr) => addr.isRepresent !== true); // 일반 주소
+      const representative = address.find((addr) => addr.isRepresent === true);
+      const general = address.filter((addr) => addr.isRepresent !== true);
 
       setRepresentativeAddress(representative);
       setGeneralAddresses(general);
@@ -38,26 +32,15 @@ const MemberInfo = () => {
     }
   }, [user]);
 
-  // 대표 주소지 등록
-  const switchRepresentativeAddress = () => {
-    fetch(
-      `http://localhost:80/api/mypage/switchRepresentativeAddress/userId=${user.id}`,
-      {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-    )
-      .then((response) => {
-        if (response.ok) {
-          alert('대표 주소지가 변경되었습니다.');
-          fetchData(); // 변경 후 데이터를 다시 가져와 상태 업데이트
-        } else {
-          console.error('대표 주소지 변경 실패', response.status);
-        }
-      })
-      .catch((error) => console.error('대표 주소지 변경 중 에러 발생:', error));
+  const switchRepresentativeAddress = async (id) => {
+    try {
+      await call(`/api/mypage/switchRepresentativeAddress/${id}`, 'PUT');
+      alert('대표 주소지가 변경되었습니다.');
+      fetchData(); // 데이터 새로고침
+    } catch (error) {
+      console.error('대표 주소지 변경 실패:', error);
+      alert(error.message || '대표 주소지 변경 실패하였습니다.');
+    }
   };
 
   // 대표 주소 삭제
@@ -151,7 +134,7 @@ const MemberInfo = () => {
                     className="mypage-button"
                     onClick={() => switchRepresentativeAddress(address.id)}
                   >
-                    대표주소지 등록
+                    대표주소지 변경
                   </button>
                   <button
                     className="mypage-button"

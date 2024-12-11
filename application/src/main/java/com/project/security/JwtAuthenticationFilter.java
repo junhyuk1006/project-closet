@@ -49,17 +49,22 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 String username = (String) userInfo.get("username"); // Username 가져오기
 
                 log.info("Authenticated user ID : {}", userId);
-
+                log.info("username : {}", username);
+                log.info("Token validation result: {}", userInfo);
                 // CustomUserDetailsService를 통해 사용자 정보 로드
                 UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
+
+                log.info("Setting Authentication in SecurityContext");
+                log.info("UserDetails: {}", userDetails);
 
                 // 인증 객체 생성. SecurithContextHolder에 등록해야 인증된 사용자라고 생각한다.
                 AbstractAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                         userDetails, // 인증된 사용자 정보(UserDetails)
                         null,   // 인증된 사용자의 비밀번호 (null로 설정 가능)
+
                         userDetails.getAuthorities() // 권한 리스트
                 );
-
+                log.info("Loaded UserDetails: {}", userDetails.getClass());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
                 // SecurityContext에 인증 정보 저장

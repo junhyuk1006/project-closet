@@ -3,15 +3,14 @@ package com.project.dto;
 import com.project.domain.Users;
 import net.minidev.json.annotate.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Collections;
 
-public  class CustomUserDetails implements UserDetails {
+public  class CustomUserDetail implements UserDetails {
     private final Users user;
 
-    public  CustomUserDetails(Users user) {
+    public CustomUserDetail(Users user) {
         this.user = user;
     }
 

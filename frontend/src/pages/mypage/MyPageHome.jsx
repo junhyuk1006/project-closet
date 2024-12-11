@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'; // useContext 임포트 추가
-
+import { useUser } from '../../api/auth/UserContext';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { useNavigate } from 'react-router-dom';
 import MyPageHeader from '../../components/mypage/MyPageHeader';
 
 const MyPageHome = () => {
   const navigate = useNavigate();
-
+  const { user, setUser } = useUser();
   const features = [
     {
       icon: 'bi-info-circle',
@@ -50,7 +50,10 @@ const MyPageHome = () => {
     <>
       <div style={{ marginBottom: '100px', marginTop: '100px' }}>
         <div>
-          <MyPageHeader title="마이페이지" description="마이페이지" />
+          <MyPageHeader
+            title="마이페이지"
+            description={`${user.nickname}님, 환영합니다.`}
+          />
         </div>
 
         <section className="pt-4">

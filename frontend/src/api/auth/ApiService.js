@@ -3,7 +3,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const API_BASE_URL = 'http://localhost:80'; // 서버 URL
 
-// 공통 API 호출 함수
+// 공동API 호출(null처리추가)
 export const call = async (api, method = 'GET', request = null) => {
   const url = `${API_BASE_URL}${api}`;
   const options = {
@@ -20,20 +20,33 @@ export const call = async (api, method = 'GET', request = null) => {
 
   try {
     const response = await fetch(url, options);
-    const data = await response.json();
 
+    // 응답 상태 확인
     if (!response.ok) {
-      if (response.status === 403) {
-        window.location.href = '/Login'; // 인증 오류시 로그인 페이지로 리디렉션
+      if (response.status === 403 || response.status === 401) {
+        alert('세션이 만료되었습니다. 다시 로그인해주세요.');
+        localStorage.removeItem('token'); // 토큰 제거
+        window.location.href = '/login'; // 로그인 페이지로 이동
       }
-      throw data; // 서버에서 반환한 오류 데이터를 던짐
+      const errorData = await response.json().catch(() => null); // JSON 파싱 에러 처리
+      throw (
+        errorData || {
+          message: '알 수 없는 오류 발생',
+          status: response.status,
+        }
+      );
     }
 
-    return data; // 성공 시 데이터 반환
+    // 응답 본문이 있는 경우만 JSON 파싱
+    const contentType = response.headers.get('Content-Type');
+    if (contentType && contentType.includes('application/json')) {
+      return await response.json();
+    } else {
+      return null; // JSON 응답이 없을 경우 null 반환
+    }
   } catch (error) {
     console.error('API 호출 중 오류 발생:', error);
-    // 여기서 추가적인 에러 처리를 할 수있음(예: toast.error) 나중에 해볼예정
-    throw error;
+    throw error; // 추가 처리를 위해 호출자에게 에러 전달
   }
 };
 

@@ -2,7 +2,7 @@ package com.project.controller;
 
 
 import com.project.domain.Users;
-import com.project.dto.CustomUserDetails;
+import com.project.dto.CustomUserDetail;
 import com.project.security.TokenProvider;
 import com.project.service.UserService;
 import com.project.dto.ResponseDTO;
@@ -29,13 +29,16 @@ public class UserController {
     final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @GetMapping("/me")
-    public CustomUserDetails getCurrentUser(){
+    public CustomUserDetail getCurrentUser(){
         // SecurityContext에서 인증 정보 가져오기
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.getPrincipal() instanceof CustomUserDetails) {
-            return (CustomUserDetails) authentication.getPrincipal();
+        if (authentication != null && authentication.getPrincipal() instanceof CustomUserDetail) {
+            return (CustomUserDetail) authentication.getPrincipal();
         }
+
+        log.info("Authentication object: {}", authentication);
         return null;
+
     }
 
     @PostMapping("/signup")
