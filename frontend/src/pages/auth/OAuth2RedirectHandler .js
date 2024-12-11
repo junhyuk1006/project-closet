@@ -13,6 +13,17 @@ const OAuth2RedirectHandler = () => {
       // JWT 저장
       localStorage.setItem('token', token);
 
+      // 전역 fetch 설정
+      const originalFetch = window.fetch;
+      window.fetch = async (url, options = {}) => {
+        const token = localStorage.getItem('token');
+        const headers = {
+          ...options.headers,
+          Authorization: `Bearer ${token}`,
+        };
+        return originalFetch(url, { ...options, headers });
+      };
+
       // 메인 페이지로 리디렉션
       navigate('/');
     } else {
