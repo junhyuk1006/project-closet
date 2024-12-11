@@ -39,19 +39,17 @@ const Board = () => {
                           className="form-control"
                           id="exampleFormControlSelect1"
                         >
-                          <option>Location</option>
-                          <option>London</option>
-                          <option>Boston</option>
-                          <option>Mumbai</option>
-                          <option>New York</option>
-                          <option>Toronto</option>
-                          <option>Paris</option>
+                          <option>선택</option>
+                          <option>작성자</option>
+                          <option>제목</option>
+                          <option>내용</option>
+                          <option>작성일</option>
                         </select>
                       </div>
                       <div className="col-lg-8 col-md-6 col-sm-12 p-0">
                         <input
                           type="text"
-                          placeholder="Search..."
+                          placeholder="검색..."
                           className="form-control"
                           id="search"
                           name="search"
@@ -95,20 +93,20 @@ const Board = () => {
                       <div className="row">
                         <div className="col-lg-6">
                           <div className="records">
-                            Showing: <b>1-20</b> of <b>200</b> result
+                            글목록: <b>1-20</b> of <b>200</b> result
                           </div>
                         </div>
                         <div className="col-lg-6">
                           <div className="result-actions">
                             <div className="result-sorting">
-                              <span>Sort By:</span>
+                              <span>정렬:</span>
                               <select
                                 className="form-control border-0"
                                 id="exampleOption"
                               >
-                                <option value="1">Relevance</option>
-                                <option value="2">Names (A-Z)</option>
-                                <option value="3">Names (Z-A)</option>
+                                <option value="1">선택</option>
+                                <option value="2">이름 (ㄱ-ㅎ)</option>
+                                <option value="3">이름 (ㅎ-ㄱ)</option>
                               </select>
                             </div>
                             <div className="result-views">
@@ -193,37 +191,23 @@ const Board = () => {
                               </td>
                               <td>
                                 <div className="widget-26-job-title">
-                                  <a href="#">
-                                    Senior Software Engineer / Developer
-                                  </a>
-                                  <p className="m-0">
-                                    <a href="#" className="employer-name">
-                                      Axiom Corp.
-                                    </a>{' '}
-                                    <span className="text-muted time">
-                                      1 days ago
-                                    </span>
-                                  </p>
+                                  <a href="#">제목입니다.</a>
                                 </div>
                               </td>
                               <td>
                                 <div className="widget-26-job-info">
-                                  <p className="type m-0">Full-Time</p>
-                                  <p className="text-muted m-0">
-                                    in{' '}
-                                    <span className="location">London, UK</span>
-                                  </p>
+                                  <p className="type m-0">작성자</p>
                                 </div>
                               </td>
                               <td>
                                 <div className="widget-26-job-salary">
-                                  $ 50/hr
+                                  2024-12-11
                                 </div>
                               </td>
                               <td>
                                 <div className="widget-26-job-category bg-soft-base">
                                   <i className="indicator bg-base"></i>
-                                  <span>Software Development</span>
+                                  <span>안녕하세요. 방갑습니다.</span>
                                 </div>
                               </td>
                               <td>
@@ -292,7 +276,7 @@ const Board = () => {
                 </ul>
               </nav>
               <button
-                className="btn btn-primary"
+                className="btn btn-secondary"
                 onClick={handleWriteButtonClick}
               >
                 글작성

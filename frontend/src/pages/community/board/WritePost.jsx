@@ -1,32 +1,61 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { me } from '../../../api/auth/ApiService';
 
 const WritePost = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [user, setUser] = useState(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // 사용자 정보 가져오기
+    const fetchUser = async () => {
+      try {
+        const userData = await me();
+        if (userData.error) {
+          alert('사용자 정보를 가져오는 데 실패했습니다.');
+        } else {
+          setUser(userData);
+        }
+      } catch (error) {
+        console.error('사용자 정보 가져오기 중 오류:', error);
+      }
+    };
+
+    fetchUser();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log({ title, content }); // 여기서 서버로 데이터를 전송하는 로직 추가
+
+    if (!user) {
+      alert('로그인이 필요합니다.');
+      return;
+    }
+
     try {
       const response = await fetch('http://localhost:80/api/posts', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify({
           boardTitle: title,
           boardContent: content,
+          userId: user.id, // 사용자 ID 추가
         }),
       });
 
       if (response.ok) {
         alert('글이 작성되었습니다.');
-        navigate('/board'); // 글작성 후 게시판으로 이동
+        navigate('/board'); // 글 작성 후 게시판으로 이동
       } else {
         alert('글 작성 중 오류가 발생했습니다.');
       }
     } catch (error) {
-      console.error(error);
+      console.error('서버와의 통신 중 오류:', error);
       alert('서버와의 통신 중 문제가 발생했습니다.');
     }
   };
@@ -57,7 +86,7 @@ const WritePost = () => {
             required
           />
         </div>
-        <button type="submit" className="btn btn-primary mt-3">
+        <button type="submit" className="btn btn-secondary mt-3">
           작성 완료
         </button>
       </form>

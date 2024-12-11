@@ -38,8 +38,6 @@ public class Users {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id; // 아이디
     
-    private Long gradeId; // 등급아이디
-
     private String username; // 계정
 
     private String password; // 비밀번호
