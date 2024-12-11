@@ -11,7 +11,7 @@ export const getAllUsers = async () => {
 
 export const getUserAdmin = async (params) => {
   const queryString = new URLSearchParams(params).toString();
-  return await fetchAPI(`/api/admin/user/user?page=${queryString}`, {
+  return await fetchAPI(`/api/admin/user/user?${queryString}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
