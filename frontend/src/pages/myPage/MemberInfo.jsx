@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useUser } from '../../api/auth/UserContext'; // useUser 훅 임포트
-import MyPageHeader from '../../components/mypage/MyPageHeader';
+import MyPageHeader from '../../components/myPage/MyPageHeader';
 import { useNavigate } from 'react-router-dom';
 import { me } from '../../api/auth/ApiService';
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import MyPageHeader from '../../components/mypage/MyPageHeader';
-import '../../assets/styles/mypage/MyPage.css';
+import MyPageHeader from '../../components/myPage/MyPageHeader';
+import '../../assets/styles/myPage/MyPage.css';
 
 const MyPoint = () => {
   const [point, setPoint] = useState([]);

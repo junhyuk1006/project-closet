@@ -190,7 +190,9 @@
     width: 60%; /* 화면 크기에 비례하여 크기 조정 */
     max-width: 1000px; /* 최대 너비 */
     height: 60%; /* 높이 비율 */
-    max-height: 00px; /* 최대 높이 */
+
+    /* 00px -> 500px 임의 수정 */
+    max-height: 500px; /* 최대 높이 */
     border-radius: 25px; /* 둥글기 증가 */
     margin-bottom: 50px;
   }
