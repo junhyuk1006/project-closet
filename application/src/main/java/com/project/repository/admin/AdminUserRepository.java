@@ -2,7 +2,6 @@ package com.project.repository.admin;
 
 import com.project.domain.User;
 import com.project.dto.AdminUserDTO;
-import com.project.dto.PageRequestDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -22,7 +21,6 @@ public interface AdminUserRepository extends JpaRepository<User, Long> {
             "FROM User u " +
             "LEFT JOIN u.grade g " +
             "WHERE ((:searchKeyword IS NULL OR :searchInput ='') OR " +
-            " (:searchKeyword ='username' AND u.username LIKE CONCAT('%',:searchInput, '%')) OR"+
             " (:searchKeyword ='nickname' AND u.nickname LIKE CONCAT('%',:searchInput,'%')) OR" +
             " (:searchKeyword ='email' AND u.email LIKE CONCAT('%',:searchInput,'%')))" +
             "AND (:grade ='' OR g.grade = :grade)" +

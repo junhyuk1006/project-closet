@@ -24,7 +24,7 @@ const UserGrade = () => {
         return {
           id: grades[idx]?.id || null,
           grade: cells[0].value,
-          discount: parseInt(cells[1].value, 10) || 0,
+          rate: parseInt(cells[1].value, 10) || 0,
           gradeDescription: cells[2].value,
         };
       }
@@ -43,7 +43,7 @@ const UserGrade = () => {
         <thead>
           <tr>
             <th>레벨명</th>
-            <th>할인율</th>
+            <th>포인트 지급률</th>
             <th>비고</th>
           </tr>
         </thead>
@@ -66,7 +66,7 @@ const UserGrade = () => {
                       placeholder="0"
                       min="0"
                       max="100"
-                      defaultValue={grade.discount || ''}
+                      defaultValue={grade.rate || ''}
                       style={{ width: '70px', marginRight: '5px' }}
                     />
                     <span>%</span>

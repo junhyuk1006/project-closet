@@ -21,7 +21,7 @@ public class Grade {
     private String gradeDescription;
 
     @Column(nullable = true , columnDefinition = "INT DEFAULT 0")
-    private int discount;
+    private int rate;
 
     @OneToMany(mappedBy = "grade",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore

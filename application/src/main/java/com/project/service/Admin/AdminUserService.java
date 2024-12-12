@@ -2,9 +2,11 @@ package com.project.service.Admin;
 
 import com.project.domain.Grade;
 import com.project.domain.User;
+import com.project.dto.AdminPointDTO;
 import com.project.dto.AdminUserDTO;
 import com.project.dto.PageRequestDTO;
 import com.project.repository.admin.AdminGradeRepository;
+import com.project.repository.admin.AdminPointRepository;
 import com.project.repository.admin.AdminUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -19,6 +21,7 @@ import java.util.List;
 public class AdminUserService {
     private final AdminUserRepository adminUserRepository;
     private final AdminGradeRepository adminGradeRepository;
+    private final AdminPointRepository adminPointRepository;
 
     public List<User> getAllUsers() {
         return adminUserRepository.findAll();
@@ -49,5 +52,13 @@ public class AdminUserService {
 
 
         return adminGradeRepository.saveAll(grades);
+    }
+
+    public Page<AdminPointDTO> getUserPoint(Pageable pageable, PageRequestDTO pageRequestDTO) {
+        return adminPointRepository.findAllPointUser(pageable,
+                pageRequestDTO.getSearchKeyword(),
+                pageRequestDTO.getSearchInput(),
+                pageRequestDTO.getStartDate(),
+                pageRequestDTO.getEndDate());
     }
 }

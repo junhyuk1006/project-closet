@@ -2,6 +2,7 @@ package com.project.controller.admin;
 
 import com.project.domain.Grade;
 import com.project.domain.User;
+import com.project.dto.AdminPointDTO;
 import com.project.dto.AdminUserDTO;
 import com.project.dto.PageRequestDTO;
 import com.project.service.Admin.AdminUserService;
@@ -30,9 +31,6 @@ public class AdminUserController {
     @GetMapping("user")
     public Page<AdminUserDTO> getUsers(@PageableDefault(size = 20,sort="createdAt",direction = Sort.Direction.DESC)Pageable pageable,
                                        @ModelAttribute PageRequestDTO pageRequestDTO) {
-        System.out.println(pageRequestDTO);
-        Page<AdminUserDTO> users = adminUserService.getUsers(pageable, pageRequestDTO);
-        System.out.println(users);
         return adminUserService.getUsers(pageable, pageRequestDTO);
     }
 
@@ -44,5 +42,11 @@ public class AdminUserController {
     @PostMapping("grade")
     public List<Grade> updateGrade(@RequestBody List<Grade> grades) {
         return adminUserService.updateGrades(grades);
+    }
+
+    @GetMapping("point")
+    public Page<AdminPointDTO> getUserPoint(@PageableDefault(size = 20,sort = "createdAt",direction = Sort.Direction.DESC)Pageable pageable,
+                                            @ModelAttribute PageRequestDTO pageRequestDTO) {
+        return adminUserService.getUserPoint(pageable,pageRequestDTO);
     }
 }
