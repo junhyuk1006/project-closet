@@ -33,7 +33,8 @@ import Detail from './pages/detailItem/Detail';
 /** ./pages/community  */
 import Board from './pages/community/board/Board';
 import WritePost from './pages/community/board/WritePost';
-import Coodi from './pages/community/coodi/Coodi';
+import Coordi from './pages/community/coordi/Coordi';
+import BoardDetail from './pages/community/board/BoardDetail';
 
 // 공통 애니메이션과 레이아웃
 import Page404 from './components/main/Page404';
@@ -98,7 +99,8 @@ const AppRoutes = () => (
           {/** ./pages/community  */}
           {renderRoute('/Board', <Board />)} {/* 일반게시판 페이지 */}
           {renderRoute('/WritePost', <WritePost />)} {/* 글 작성페이지 */}
-          {renderRoute('/Coodi', <Coodi />)} {/* 코디자랑 페이지 */}
+          {renderRoute('/board/:id', <BoardDetail />)} {/* 글 상세페이지 */}
+          {renderRoute('/Coordi', <Coordi />)} {/* 코디자랑 페이지 */}
         </Routes>
       </Animation>
     </Router>

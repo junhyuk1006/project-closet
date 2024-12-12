@@ -1,0 +1,92 @@
+/* 전체 컨테이너 */
+.board-detail-container {
+  max-width: 800px;
+  margin: 100px auto 50px;
+  padding: 25px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  font-family: 'Arial', sans-serif;
+}
+
+/* 제목 스타일 */
+.board-detail-header .board-title {
+  font-size: 26px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+/* 작성자 정보 */
+.board-info {
+  font-size: 14px;
+  color: #666;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.board-info .board-author strong {
+  color: #000;
+}
+
+.board-info .board-date {
+  color: #666;
+}
+
+/* 구분선 */
+.divider {
+  border: none;
+  height: 1px;
+  background: #eaeaea;
+  margin: 20px 0;
+}
+
+/* 내용 스타일 */
+.board-content {
+  margin: 20px 0;
+  line-height: 1.8;
+  font-size: 15px;
+  color: #444;
+}
+
+.board-content p {
+  margin: 10px 0;
+}
+
+/* 이미지 스타일 */
+.board-image {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.board-image .detail-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+}
+
+/* 버튼 스타일 */
+.board-actions {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.board-actions .btn {
+  padding: 8px 20px;
+  font-size: 14px;
+  color: #fff;
+  background-color: #5a6268;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.board-actions .btn:hover {
+  background-color: #495057;
+}

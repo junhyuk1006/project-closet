@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { me } from '../../../api/auth/ApiService';
+import './WritePost.css'; // 스타일 파일 추가
 
 const WritePost = () => {
   const [title, setTitle] = useState('');
@@ -63,11 +64,13 @@ const WritePost = () => {
   };
 
   return (
-    <div className="container mt-4">
-      <h2>글 작성</h2>
-      <form onSubmit={handleSubmit}>
+    <div className="write-post-container">
+      <h2 className="form-title">글 작성</h2>
+      <form onSubmit={handleSubmit} className="write-post-form">
         <div className="form-group">
-          <label htmlFor="title">제목</label>
+          <label htmlFor="title" className="form-label">
+            제목
+          </label>
           <input
             type="text"
             id="title"
@@ -78,7 +81,9 @@ const WritePost = () => {
           />
         </div>
         <div className="form-group mt-3">
-          <label htmlFor="content">내용</label>
+          <label htmlFor="content" className="form-label">
+            내용
+          </label>
           <textarea
             id="content"
             className="form-control"
@@ -88,7 +93,7 @@ const WritePost = () => {
             required
           />
         </div>
-        <button type="submit" className="btn btn-secondary mt-3">
+        <button type="submit" className="btn btn-submit mt-3">
           작성 완료
         </button>
       </form>

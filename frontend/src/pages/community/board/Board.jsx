@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './Board.css';
-import { getAllboard } from '../../../api/community/board/Board';
+import { getAllboard, searchBoards } from '../../../api/community/board/Board';
 
 const Board = () => {
   const [board, setBoard] = useState([]);
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(10); // 한 페이지에 보여줄 게시글 수
+  const [keyword, setKeyword] = useState(''); // 검색 키워드
+  const [condition, setCondition] = useState('title'); // 검색 조건 기본값: 제목
   const navigate = useNavigate();
 
   const handleWriteButtonClick = () => {
@@ -18,9 +20,24 @@ const Board = () => {
   const fetchBoards = async () => {
     try {
       const data = await getAllboard();
-      setBoard(data); // 게시글 데이터 상태 업데이트
+      // 작성일 기준 내림차순 정렬
+      const sortedData = data.sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+      );
+      setBoard(sortedData); // 정렬된 데이터 상태 업데이트
     } catch (err) {
       setError(err.message); // 에러 메시지 상태 업데이트
+    }
+  };
+
+  // 검색 요청 처리
+  const handleSearch = async (e) => {
+    e.preventDefault();
+    try {
+      const result = await searchBoards(keyword, condition);
+      setBoard(result); // 검색 결과 업데이트
+    } catch (err) {
+      setError(err.message);
     }
   };
 
@@ -42,7 +59,7 @@ const Board = () => {
         <div className="col-lg-12 card-margin m-t-100">
           <div className="card search-form">
             <div className="card-body p-0">
-              <form id="search-form">
+              <form id="search-form" onSubmit={handleSearch}>
                 <div className="row">
                   <div className="col-12">
                     <div className="row no-gutters">
@@ -50,12 +67,12 @@ const Board = () => {
                         <select
                           className="form-control"
                           id="exampleFormControlSelect1"
+                          value={condition}
+                          onChange={(e) => setCondition(e.target.value)}
                         >
                           <option>선택</option>
-                          <option>작성자</option>
-                          <option>제목</option>
-                          <option>내용</option>
-                          <option>작성일</option>
+                          <option value="title">제목</option>
+                          <option value="content">내용</option>
                         </select>
                       </div>
                       <div className="col-lg-8 col-md-6 col-sm-12 p-0">
@@ -65,6 +82,8 @@ const Board = () => {
                           className="form-control"
                           id="search"
                           name="search"
+                          value={keyword}
+                          onChange={(e) => setKeyword(e.target.value)}
                         />
                       </div>
                       <div className="col-lg-1 col-md-3 col-sm-12 p-0">
@@ -142,7 +161,9 @@ const Board = () => {
                             style={{ textAlign: 'center' }}
                           >
                             <div className="widget-26-job-title">
-                              <a href="#">{item.boardTitle}</a>
+                              <Link to={`/board/${item.id}`}>
+                                {item.boardTitle}
+                              </Link>
                             </div>
                           </td>
                           <td style={{ textAlign: 'center' }}>

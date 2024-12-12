@@ -28,4 +28,21 @@ public class BoardController {
         Board createdBoard = boardService.createBoard(board);
         return ResponseEntity.ok(createdBoard);
     }
+
+    // 게시글 상세 조회
+    @GetMapping("/{id}")
+    public ResponseEntity<Board> getBoardDetail(@PathVariable Long id) {
+        Board board = boardService.getBoardDetail(id);
+        return ResponseEntity.ok(board);
+    }
+
+    // 검색 API
+    @GetMapping("/search")
+    public ResponseEntity<List<Board>> searchBoards(
+            @RequestParam String keyword,
+            @RequestParam String condition) {
+        List<Board> result = boardService.searchBoards(keyword, condition);
+        return ResponseEntity.ok(result);
+    }
+
 }

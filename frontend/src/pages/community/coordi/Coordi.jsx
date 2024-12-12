@@ -1,5 +1,5 @@
 import React from 'react';
-import './Coodi.css';
+import './Coordi.css';
 
 const Album = () => {
   return (
@@ -13,7 +13,7 @@ const Album = () => {
             </p>
             <p>
               <a href="#" className="btn btn-secondary my-2">
-                코디자랑 하러가기
+                코디 올리기
               </a>
             </p>
           </div>
