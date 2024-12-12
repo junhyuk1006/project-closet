@@ -121,7 +121,7 @@ function Header() {
 
   return (
     <header className="header">
-      <Cart isCartOpen={isCartOpen} toggleCart={toggleCart} />
+      <Cart isCartOpen={isCartOpen} toggleCart={toggleCart} user={user} />
 
       {/* 모바일 헤더 ( 화면 너비가 991px보다 작을 때 ) */}
       <div className="wrap-header-mobile">
