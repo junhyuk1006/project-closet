@@ -14,12 +14,14 @@ const WritePost = () => {
       try {
         const userData = await me();
         if (userData.error) {
-          alert('사용자 정보를 가져오는 데 실패했습니다.');
+          alert('로그인이 필요합니다.');
+          navigate(-1); // 뒤로가기
         } else {
           setUser(userData);
         }
       } catch (error) {
         console.error('사용자 정보 가져오기 중 오류:', error);
+        navigate(-1); // 뒤로가기
       }
     };
 
@@ -35,7 +37,7 @@ const WritePost = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:80/api/posts', {
+      const response = await fetch('http://localhost:80/api/board/write', {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,

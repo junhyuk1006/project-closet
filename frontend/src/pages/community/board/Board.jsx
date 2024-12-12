@@ -1,28 +1,40 @@
 import React, { useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet';
 import { useNavigate } from 'react-router-dom';
 import './Board.css';
+import { getAllboard } from '../../../api/community/board/Board';
 
 const Board = () => {
-  const [posts, setPosts] = useState([]);
-  const navigate = useNavigate(); // useNavigate 사용
+  const [board, setBoard] = useState([]);
+  const [error, setError] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(10); // 한 페이지에 보여줄 게시글 수
+  const navigate = useNavigate();
 
   const handleWriteButtonClick = () => {
     navigate('/WritePost');
   };
 
+  // 데이터 불러오기 함수
+  const fetchBoards = async () => {
+    try {
+      const data = await getAllboard();
+      setBoard(data); // 게시글 데이터 상태 업데이트
+    } catch (err) {
+      setError(err.message); // 에러 메시지 상태 업데이트
+    }
+  };
+
+  // 컴포넌트가 마운트될 때 데이터 가져오기
   useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const response = await fetch('http://localhost:80/api/posts');
-        const data = await response.json();
-        setPosts(data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchPosts();
+    fetchBoards();
   }, []);
+
+  // 페이지네이션 처리
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = board.slice(indexOfFirstPost, indexOfLastPost);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div className="container board-container">
@@ -86,197 +98,123 @@ const Board = () => {
         <div className="col-12">
           <div className="card card-margin">
             <div className="card-body">
-              <div className="row search-body">
-                <div className="col-lg-12">
-                  <div className="search-result">
-                    <div className="result-header">
-                      <div className="row">
-                        <div className="col-lg-6">
-                          <div className="records">
-                            글목록: <b>1-20</b> of <b>200</b> result
-                          </div>
-                        </div>
-                        <div className="col-lg-6">
-                          <div className="result-actions">
-                            <div className="result-sorting">
-                              <span>정렬:</span>
-                              <select
-                                className="form-control border-0"
-                                id="exampleOption"
-                              >
-                                <option value="1">선택</option>
-                                <option value="2">이름 (ㄱ-ㅎ)</option>
-                                <option value="3">이름 (ㅎ-ㄱ)</option>
-                              </select>
+              {error && <p style={{ color: 'red' }}>에러 발생: {error}</p>}
+              {currentPosts.length > 0 ? (
+                <div className="table-responsive">
+                  <table className="table widget-26">
+                    <thead>
+                      <tr>
+                        <th style={{ textAlign: 'center' }}>이미지</th>
+                        <th
+                          className="highlight bg-soft-base"
+                          style={{ textAlign: 'center' }}
+                        >
+                          제목
+                        </th>
+                        <th style={{ textAlign: 'center' }}>작성자 ID</th>
+                        <th style={{ textAlign: 'center' }}>작성일</th>
+                        <th
+                          className="highlight bg-soft-base"
+                          style={{ textAlign: 'center' }}
+                        >
+                          내용
+                        </th>
+                        <th style={{ textAlign: 'center' }}>즐겨찾기</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {currentPosts.map((item) => (
+                        <tr key={item.id}>
+                          <td style={{ textAlign: 'center' }}>
+                            <div className="widget-26-job-emp-img">
+                              <img
+                                src={
+                                  item.boardImage
+                                    ? `http://localhost/images/${item.boardImage}`
+                                    : 'https://bootdey.com/img/Content/avatar/avatar5.png'
+                                }
+                                alt={item.boardTitle}
+                              />
                             </div>
-                            <div className="result-views">
-                              <button
-                                type="button"
-                                className="btn btn-soft-base btn-icon"
-                              >
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  width="24"
-                                  height="24"
-                                  viewBox="0 0 24 24"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  strokeWidth="2"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  className="feather feather-list"
-                                >
-                                  <line x1="8" y1="6" x2="21" y2="6"></line>
-                                  <line x1="8" y1="12" x2="21" y2="12"></line>
-                                  <line x1="8" y1="18" x2="21" y2="18"></line>
-                                  <line x1="3" y1="6" x2="3" y2="6"></line>
-                                  <line x1="3" y1="12" x2="3" y2="12"></line>
-                                  <line x1="3" y1="18" x2="3" y2="18"></line>
-                                </svg>
-                              </button>
-                              <button
-                                type="button"
-                                className="btn btn-soft-base btn-icon"
-                              >
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  width="24"
-                                  height="24"
-                                  viewBox="0 0 24 24"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  strokeWidth="2"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  className="feather feather-grid"
-                                >
-                                  <rect x="3" y="3" width="7" height="7"></rect>
-                                  <rect
-                                    x="14"
-                                    y="3"
-                                    width="7"
-                                    height="7"
-                                  ></rect>
-                                  <rect
-                                    x="14"
-                                    y="14"
-                                    width="7"
-                                    height="7"
-                                  ></rect>
-                                  <rect
-                                    x="3"
-                                    y="14"
-                                    width="7"
-                                    height="7"
-                                  ></rect>
-                                </svg>
-                              </button>
+                          </td>
+                          <td
+                            className="highlight bg-soft-base"
+                            style={{ textAlign: 'center' }}
+                          >
+                            <div className="widget-26-job-title">
+                              <a href="#">{item.boardTitle}</a>
                             </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="result-body">
-                      <div className="table-responsive">
-                        <table className="table widget-26">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <div className="widget-26-job-emp-img">
-                                  <img
-                                    src="https://bootdey.com/img/Content/avatar/avatar5.png"
-                                    alt="Company"
-                                  />
-                                </div>
-                              </td>
-                              <td>
-                                <div className="widget-26-job-title">
-                                  <a href="#">제목입니다.</a>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="widget-26-job-info">
-                                  <p className="type m-0">작성자</p>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="widget-26-job-salary">
-                                  2024-12-11
-                                </div>
-                              </td>
-                              <td>
-                                <div className="widget-26-job-category bg-soft-base">
-                                  <i className="indicator bg-base"></i>
-                                  <span>안녕하세요. 방갑습니다.</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="widget-26-job-starred">
-                                  <a href="#">
-                                    <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      width="24"
-                                      height="24"
-                                      viewBox="0 0 24 24"
-                                      fill="none"
-                                      stroke="currentColor"
-                                      strokeWidth="2"
-                                      strokeLinecap="round"
-                                      strokeLinejoin="round"
-                                      className="feather feather-star"
-                                    >
-                                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                                    </svg>
-                                  </a>
-                                </div>
-                              </td>
-                            </tr>
-                            {/* 이하 반복 데이터는 원본처럼 추가 가능 */}
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
+                          </td>
+                          <td style={{ textAlign: 'center' }}>
+                            <div className="widget-26-job-info">
+                              <p className="type m-0">{item.userId}</p>
+                            </div>
+                          </td>
+                          <td style={{ textAlign: 'center' }}>
+                            <div className="widget-26-job-salary">
+                              {new Date(item.createdAt).toLocaleDateString()}
+                            </div>
+                          </td>
+                          <td
+                            className="highlight bg-soft-base"
+                            style={{ textAlign: 'center' }}
+                          >
+                            <div className="widget-26-job-category">
+                              <span>
+                                {item.boardContent.length > 10
+                                  ? `${item.boardContent.substring(0, 10)}...`
+                                  : item.boardContent}
+                              </span>
+                            </div>
+                          </td>
+                          <td style={{ textAlign: 'center' }}>
+                            <div className="widget-26-job-starred">
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                className="feather feather-star"
+                              >
+                                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                              </svg>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
-              </div>
-              <nav className="d-flex justify-content-center">
+              ) : (
+                <p>게시글이 없습니다.</p>
+              )}
+              <nav className="d-flex justify-content-center mt-3">
                 <ul className="pagination pagination-base pagination-boxed pagination-square mb-0">
-                  <li className="page-item">
-                    <a className="page-link no-border" href="#">
-                      <span aria-hidden="true">«</span>
-                      <span className="sr-only">Previous</span>
-                    </a>
-                  </li>
-                  <li className="page-item active">
-                    <a className="page-link no-border" href="#">
-                      1
-                    </a>
-                  </li>
-                  <li className="page-item">
-                    <a className="page-link no-border" href="#">
-                      2
-                    </a>
-                  </li>
-                  <li className="page-item">
-                    <a className="page-link no-border" href="#">
-                      3
-                    </a>
-                  </li>
-                  <li className="page-item">
-                    <a className="page-link no-border" href="#">
-                      4
-                    </a>
-                  </li>
-                  <li className="page-item">
-                    <a className="page-link no-border" href="#">
-                      <span aria-hidden="true">»</span>
-                      <span className="sr-only">Next</span>
-                    </a>
-                  </li>
+                  {Array.from(
+                    { length: Math.ceil(board.length / postsPerPage) },
+                    (_, index) => (
+                      <li
+                        className={`page-item ${currentPage === index + 1 ? 'active' : ''}`}
+                        key={index}
+                      >
+                        <button
+                          className="page-link no-border"
+                          onClick={() => paginate(index + 1)}
+                        >
+                          {index + 1}
+                        </button>
+                      </li>
+                    )
+                  )}
                 </ul>
               </nav>
               <button
-                className="btn btn-secondary"
+                className="btn btn-secondary mt-3"
                 onClick={handleWriteButtonClick}
               >
                 글작성
