@@ -27,10 +27,13 @@ import Admin from './pages/admin/Admin';
 
 /** ./pages/Other  */
 import ShoppingCart from './pages/cart/ShoppingCart';
-import Board from './pages/community/board/Board';
-import WritePost from './pages/community/board/WritePost';
 import Recommend from './pages/community/recommend/Recommend';
 import Detail from './pages/detailItem/Detail';
+
+/** ./pages/community  */
+import Board from './pages/community/board/Board';
+import WritePost from './pages/community/board/WritePost';
+import Coodi from './pages/community/coodi/Coodi';
 
 // 공통 애니메이션과 레이아웃
 import Page404 from './components/main/Page404';
@@ -90,10 +93,12 @@ const AppRoutes = () => (
           {renderRoute('/Detail/*', <Detail />)} {/* 상품 상세 페이지 */}
           {renderRoute('/Recommend', <Recommend />)} {/* 추천 페이지 */}
           {renderRoute('/ShoppingCart', <ShoppingCart />)}{' '}
-          {renderRoute('/Board', <Board />)} {/* 일반게시판 페이지 */}
-          {renderRoute('/WritePost', <WritePost />)} {/* 일반게시판 페이지 */}
           {/* 장바구니 페이지 */}
           {renderRoute('/*', <Page404 />, false)} {/* 에러 페이지 */}
+          {/** ./pages/community  */}
+          {renderRoute('/Board', <Board />)} {/* 일반게시판 페이지 */}
+          {renderRoute('/WritePost', <WritePost />)} {/* 글 작성페이지 */}
+          {renderRoute('/Coodi', <Coodi />)} {/* 코디자랑 페이지 */}
         </Routes>
       </Animation>
     </Router>
