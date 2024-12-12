@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -37,6 +38,16 @@ public class AdminUserService {
     }
 
     public List<Grade> updateGrades(List<Grade> grades) {
+
+       grades.removeIf(grade -> {
+           boolean shouldRemove = !StringUtils.hasText(grade.getGrade()) || !StringUtils.hasText(grade.getGradeDescription());
+           if(shouldRemove) {
+               adminGradeRepository.delete(grade);
+           }
+           return shouldRemove;
+       });
+
+
         return adminGradeRepository.saveAll(grades);
     }
 }

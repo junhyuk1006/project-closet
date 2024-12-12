@@ -18,8 +18,8 @@ const UserGrade = () => {
   };
 
   const handleSave = () => {
-    const updateGrades = Array.from(document.querySelectorAll('tbody tr'))
-      .map((row, idx) => {
+    const updateGrades = Array.from(document.querySelectorAll('tbody tr')).map(
+      (row, idx) => {
         const cells = row.querySelectorAll('input');
         return {
           id: grades[idx]?.id || null,
@@ -27,13 +27,9 @@ const UserGrade = () => {
           discount: parseInt(cells[1].value, 10) || 0,
           gradeDescription: cells[2].value,
         };
-      })
-      .filter(
-        (grade) =>
-          grade.grade !== '' &&
-          (grade.discount !== 0 || grade.grade === '브론즈') // 브론즈는 discount가 0이어도 허용
-      );
-    console.log(updateGrades);
+      }
+    );
+    // .filter((grade) => grade.grade !== '');
     updateGrade(updateGrades);
     alert('저장되었습니다!');
     fetchGrades();
