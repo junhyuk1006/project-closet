@@ -17,8 +17,11 @@ import isValidJwtToken from '../api/auth/isValidJwtToken';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Slider from 'react-slick';
 import useFetch from '../hooks/useFetch';
+import { call } from '../api/auth/ApiService';
+import { useUser } from '../api/auth/UserContext';
 
 function Header() {
+  const { user } = useUser(); // 로그인한 사용자 데이터
   const isAtTop = useFixedHeader(); // 현재 페이지 스크롤의 최상단 여부
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false); // 데스크탑 장바구니의 open 상태
@@ -28,7 +31,19 @@ function Header() {
   const [isDesktopCategoryOpen, setIsDesktopCategoryOpen] = useState(false); // 데스크탑 카테고리 open 상태
   const [isDesktopAlarmOpen, setIsDesktopAlarmOpen] = useState(false); // 데스크탑 알람 패널 open 상태
   const [isMobileAlarmOpen, setIsMobileAlarmOpen] = useState(false); // 데스크탑 알람 패널 open 상태
-  const { data: notices, error, loading } = useFetch('/notice/all');
+  const [notices, setNotices] = useState([]); // 공지사항 상태
+
+  useEffect(() => {
+    const getNotices = async () => {
+      try {
+        const newNotices = await call('/notice/all');
+        setNotices(newNotices);
+      } catch (err) {
+        console.error('공지사항을 불러오는 데 실패했습니다:', err);
+      }
+    };
+    getNotices();
+  }, []);
 
   // 카테고리 dropdown 열기/닫기 토글
   const toggleMouseEnter = () => setIsDesktopCategoryOpen(true);
@@ -121,11 +136,7 @@ function Header() {
             <i className="zmdi zmdi-search"></i>
           </div>
 
-          <Dropdown
-            onClick={toggleMobileAlarm}
-            isMobileAlarmOpen={isMobileAlarmOpen}
-            autoClose={'inside'}
-          >
+          <Dropdown onClick={toggleMobileAlarm} autoClose={'inside'}>
             <Dropdown.Toggle variant="" id="">
               <div
                 className="icon-header-item cl2 hov-cl1 trans-04 p-r-22 p-l-10 icon-header-noti-mobile"
@@ -234,15 +245,19 @@ function Header() {
         <div className="top-bar">
           <div className="content-topbar flex-sb-m h-full container p-l-0">
             <div className="left-top-bar">
-              <Slider {...settings}>
-                {notices.map((notice) => (
-                  <div key={notice.id}>
-                    <Link to="#" className="notice-link">
-                      {notice.subject}
-                    </Link>
-                  </div>
-                ))}
-              </Slider>
+              {notices.length != undefined ? (
+                <Slider {...settings}>
+                  {notices.map((notice) => (
+                    <div key={notice.id}>
+                      <Link to="#" className="notice-link">
+                        {notice.subject}
+                      </Link>
+                    </div>
+                  ))}
+                </Slider>
+              ) : (
+                <div>공지사항이 존재하지 않습니다.</div>
+              )}
             </div>
             <div className="right-top-bar flex-w h-full">
               <Link
@@ -357,11 +372,7 @@ function Header() {
                   onClick={() => toggleSearch(isSearching)}
                 ></i>
               </div>
-              <Dropdown
-                onClick={toggleDesktopAlarm}
-                isDesktopAlarmOpen={isDesktopAlarmOpen}
-                autoClose={'inside'}
-              >
+              <Dropdown onClick={toggleDesktopAlarm} autoClose={'inside'}>
                 <Dropdown.Toggle variant="" id="">
                   <div
                     className="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti"

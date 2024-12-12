@@ -19,12 +19,14 @@ import FilterSearch from '../main/FilterSearch';
 // Import API
 import FetchAllProduct from '../../api/item/FetchAllProduct';
 import TopRankedItems from '../../components/main/TopRankedItems';
+import { useUser } from '../../api/auth/UserContext';
 
 // Function Aria
 function Home() {
   const [activeCategory, setActiveCategory] = useState('*'); // 카테고리 상태
   const [activeFilter, setActiveFilter] = useState('sortByRecent'); // 필터 상태
   const [products, setProducts] = useState([]);
+  const { user, setUser } = useUser();
 
   const handleCategory = (category) => {
     setActiveCategory(category);
