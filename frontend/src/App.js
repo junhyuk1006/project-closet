@@ -97,7 +97,7 @@ const AppRoutes = () => (
           {/* 장바구니 페이지 */}
           {renderRoute('/*', <Page404 />, false)} {/* 에러 페이지 */}
           {/** ./pages/community  */}
-          {renderRoute('/Board', <Board />)} {/* 일반게시판 페이지 */}
+          {renderRoute('/community', <Board />)} {/* 일반게시판 페이지 */}
           {renderRoute('/WritePost', <WritePost />)} {/* 글 작성페이지 */}
           {renderRoute('/board/:id', <BoardDetail />)} {/* 글 상세페이지 */}
           {renderRoute('/Coordi', <Coordi />)} {/* 코디자랑 페이지 */}

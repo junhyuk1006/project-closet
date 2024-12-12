@@ -57,10 +57,7 @@ const BoardDetail = () => {
       </div>
 
       <div className="board-actions">
-        <button
-          className="btn btn-secondary"
-          onClick={() => navigate('/board')}
-        >
+        <button className="btn btn-secondary" onClick={() => navigate(-1)}>
           목록으로
         </button>
       </div>
