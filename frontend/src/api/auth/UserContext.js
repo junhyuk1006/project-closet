@@ -3,12 +3,11 @@ import { me } from './ApiService';
 
 const UserContext = createContext(null);
 
+/**
+ * 유저 데이터를 전역으로 사용하도록 만들어주는 컴포넌트입니다.
+ */
 export const UserProvider = ({ children }) => {
-  // localStorage에서 user 데이터를 초기값으로 가져오기
-  const [user, setUser] = useState(() => {
-    const savedUser = localStorage.getItem('user');
-    return savedUser ? JSON.parse(savedUser) : null; // 저장된 데이터가 있으면 파싱해서 반환
-  });
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -16,18 +15,23 @@ export const UserProvider = ({ children }) => {
         const userData = await me();
         const { password, ...userWithoutPassword } = userData;
         setUser(userWithoutPassword);
-        localStorage.setItem('user', JSON.stringify(userWithoutPassword)); // 사용자 정보를 localStorage에 저장
       } catch (error) {
         console.error('Failed to fetch user:', error);
         setUser(null);
-        localStorage.removeItem('user'); // 에러 발생 시 localStorage에서 데이터 삭제
       }
     };
 
-    if (!user) {
-      fetchUser(); // user가 없을 때만 사용자 정보 가져오기
+    const token = localStorage.getItem('token'); // 토큰 확인
+
+    if (!token) {
+      setUser(null); // 명확히 초기화
+      return; // fetchUser 호출하지 않음
     }
-  }, []);
+
+    if (!user) {
+      fetchUser(); // user가 없을 때만 호출
+    }
+  }, [user]);
 
   return (
     <UserContext.Provider value={{ user, setUser }}>
@@ -36,6 +40,11 @@ export const UserProvider = ({ children }) => {
   );
 };
 
+/**
+ * 유저 데이터를 반환받는 함수입니다.
+ *
+ * @returns {Users} user 객체를 반환받습니다 (e.g., user.nickname, user.id, ...).
+ */
 export const useUser = () => {
   const context = useContext(UserContext);
   return context || { user: {}, setUser: () => {} };

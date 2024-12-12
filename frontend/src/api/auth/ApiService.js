@@ -1,9 +1,15 @@
-import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const API_BASE_URL = 'http://localhost:80'; // 서버 URL
 
-// 공동API 호출(null처리추가)
+/**
+ * API 호출을 처리하는 함수입니다.
+ *
+ * @param {string} api API의 엔드포인트를 입력합니다.
+ * @param {string} [method='GET'] - HTTP 메서드를 입력합니다('GET', 'POST' 등). 기본값은 'GET'입니다.
+ * @param {Object} [request=null] - 서버에 전송할 데이터를 입력합니다 (선택 사항).
+ * @returns {Promise<any>} 서버로부터의 응답 데이터입니다.
+ */
 export const call = async (api, method = 'GET', request = null) => {
   const url = `${API_BASE_URL}${api}`;
   const options = {
@@ -50,7 +56,12 @@ export const call = async (api, method = 'GET', request = null) => {
   }
 };
 
-// 로그인 API 함수
+/**
+ * 로그인 API 호출 함수입니다.
+ *
+ * @param {Object} userDTO - 로그인을 시도할 유저의 데이터 객체를 입력합니다.
+ * @returns {Promise<UserDTO>} 로그인 성공 시 UserDTO 객체가 반환됩니다.
+ */
 export const signin = async (userDTO) => {
   try {
     const response = await call('/api/auth/signin', 'POST', userDTO);
@@ -64,7 +75,18 @@ export const signin = async (userDTO) => {
   }
 };
 
-// 사용자 정보 가져오는 함수
+/**
+ * !!! 직접 사용금지 !!!
+ *
+ * !!! 비밀번호 노출 !!!
+ *
+ * ~~사용자 정보를 가져오는 함수입니다.~~
+ *
+ * ~~@returns {Promise<CustomUserDetail>} 현재 로그인된 사용자의 데이터를 포함한 객체입니다.~~
+ *
+ * ~~반환 객체 구조:~~
+ * ~~- `user`: `Users` 사용자 객체~~
+ */
 export const me = async () => {
   try {
     // 로컬 스토리지에서 토큰 가져오기
@@ -91,7 +113,6 @@ export const me = async () => {
     }
 
     const data = await response.json(); // JSON 데이터로 변환
-    console.log('User data:', data);
     return data; // 사용자 데이터 반환
   } catch (err) {
     console.error('Failed to fetch user data:', err.message);
