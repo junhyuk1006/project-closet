@@ -348,10 +348,17 @@ function Header({ user }) {
                   toggleCart(isCartOpen); // 장바구니 열림 상태 토글
                 }}
                 style={{ cursor: 'pointer' }}
-                data-notify={baskets.reduce(
-                  (total, basket) => total + basket.itemCount,
-                  0
-                )}
+                data-notify={
+                  baskets.reduce(
+                    (total, basket) => total + basket.itemCount,
+                    0
+                  ) > 9
+                    ? 9 + '+'
+                    : baskets.reduce(
+                        (total, basket) => total + basket.itemCount,
+                        0
+                      )
+                }
               >
                 <i className="zmdi zmdi-shopping-cart"></i>
               </div>

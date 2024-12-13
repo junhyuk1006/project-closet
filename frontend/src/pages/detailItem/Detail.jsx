@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useUser } from '../../api/auth/UserContext'
+import { useUser } from '../../api/auth/UserContext';
 import '../../assets/styles/components/main.css';
 import '../../assets/styles/components/util.css';
 import '../../assets/styles/detailItem/Detail.css';
@@ -11,7 +11,6 @@ import ItemInquiry from './ItemInquiry';
 import FetchCountReview from '../../api/review/FetchCountReview';
 import FetchCountInquiry from '../../api/inquiry/FetchCountInquiry';
 import { fetchSaveBasket } from '../../api/basket/FetchSaveBasket';
-
 
 function Detail() {
   const location = useLocation();
@@ -45,7 +44,6 @@ function Detail() {
   if (!user || !user.id) {
     return user;
   }
-
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
@@ -87,7 +85,7 @@ function Detail() {
     e.preventDefault();
 
     if (!selectedColor || !selectedSize) {
-      alert("색상과 사이즈를 선택해주세요.");
+      alert('색상과 사이즈를 선택해주세요.');
       return;
     }
 
@@ -100,16 +98,19 @@ function Detail() {
     };
 
     try {
-      const response = await fetch(`http://localhost:80/api/basket/saveBasket`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(basketData),
-      });
+      const response = await fetch(
+        `http://localhost:80/api/basket/saveBasket`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(basketData),
+        }
+      );
 
       if (!response.ok) {
-        throw new Error("Failed to save basket");
+        throw new Error('Failed to save basket');
       }
 
       const data = await response.json();
@@ -118,10 +119,11 @@ function Detail() {
       setBasket((prev) => [...prev, basketData]);
       console.log('장바구니 데이터 업데이트:', baskets);
 
-      alert(data.message || "장바구니에 추가되었습니다.");
+      window.location.reload(); // 장바구니에 상품 추가 후 페이지 리로드
+      alert(data.message || '장바구니에 추가되었습니다.');
     } catch (error) {
-      console.error("장바구니 저장 실패:", error);
-      alert("장바구니 저장 중 오류가 발생했습니다.");
+      console.error('장바구니 저장 실패:', error);
+      alert('장바구니 저장 중 오류가 발생했습니다.');
     }
   };
 

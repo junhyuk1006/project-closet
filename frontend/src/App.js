@@ -46,13 +46,20 @@ import Privacy from './pages/main/Privacy';
  * @returns {JSX.Element} - Route 컴포넌트
  */
 
-const renderRoute = (path, component, includeHeaderFooter = true) => (
-    <Route
-        path={path}
-        element={
-            <Layout includeHeaderFooter={includeHeaderFooter}>{component}</Layout>
-        }
-    />
+const renderRoute = (
+  path,
+  component,
+  includeHeaderFooter = true,
+  animationClass = 't03'
+) => (
+  <Route
+    path={path}
+    element={
+      <Animation animationClass={animationClass}>
+        <Layout includeHeaderFooter={includeHeaderFooter}>{component}</Layout>
+      </Animation>
+    }
+  />
 );
 
 /**
@@ -61,38 +68,35 @@ const renderRoute = (path, component, includeHeaderFooter = true) => (
  */
 
 const AppRoutes = () => (
-    <UserProvider>
-        <Router>
-            <ScrollToTop />
-            <Animation>
-                <Routes>
-                    {/** ./pages/main */}
-                    {renderRoute('/', <Home />)} {/* 메인 페이지 */}
-                    {renderRoute('/guide', <Guide />)} {/* 이용안내 페이지 */}
-                    {renderRoute('/agreement', <Agreement />)} {/* 이용약관 페이지 */}
-                    {renderRoute('/privacy', <Privacy />)} {/* 개인정보처리방침 페이지 */}
-                    {/** ./pages/auth */}
-                    {renderRoute('/Login', <Login />)} {/* 로그인 페이지 */}
-                    <Route path="/oauth2/redirect" element={<OAuth2RedirectHandler />} />
-                    {renderRoute('/SignUp', <SignUp />)} {/* 회원가입 페이지 */}
-                    {/** ./pages/MyPage */}
-                    {renderRoute('/MyPageHome', <MyPageHome />)} {/* 마이페이지 홈 */}
-                    {renderRoute('/MyPoint', <MyPoint />)} {/* 포인트 페이지 */}
-                    {/* 회원정보 페이지 */}
-                    {renderRoute('/MyInquirement', <MyInquirement />)}{' '}
-                    {/* 문의내역 페이지 */}
-                    {/**./pages/admin */}
-                    {renderRoute('/admin/*', <Admin />, false)} {/* 관리자 페이지 */}
-                    {/** ./pages/Other  */}
-                    {renderRoute('/Detail/*', <Detail />)} {/* 상품 상세 페이지 */}
-                    {renderRoute('/Recommend', <Recommend />)} {/* 추천 페이지 */}
-                    {renderRoute('/ShoppingCart', <ShoppingCart />)}{' '}
-                    {/* 장바구니 페이지 */}
-                    {renderRoute('/*', <Page404 />, false)} {/* 에러 페이지 */}
-                </Routes>
-            </Animation>
-        </Router>
-    </UserProvider>
+  <UserProvider>
+    <Router>
+      <ScrollToTop />
+      <Routes>
+        {/** ./pages/main */}
+        {renderRoute('/', <Home />, true, 't10')} {/* 메인 페이지 */}
+        {renderRoute('/guide', <Guide />)} {/* 이용안내 페이지 */}
+        {renderRoute('/agreement', <Agreement />)} {/* 이용약관 페이지 */}
+        {renderRoute('/privacy', <Privacy />)} {/* 개인정보처리방침 페이지 */}
+        {/** ./pages/auth */}
+        {renderRoute('/Login', <Login />)} {/* 로그인 페이지 */}
+        <Route path="/oauth2/redirect" element={<OAuth2RedirectHandler />} />
+        {renderRoute('/SignUp', <SignUp />)} {/* 회원가입 페이지 */}
+        {/** ./pages/MyPage */}
+        {renderRoute('/MyPageHome', <MyPageHome />)} {/* 마이페이지 홈 */}
+        {renderRoute('/MyPoint', <MyPoint />)} {/* 포인트 페이지 */}
+        {/* 회원정보 페이지 */}
+        {renderRoute('/MyInquirement', <MyInquirement />)}{' '}
+        {/* 문의내역 페이지 */}
+        {/**./pages/admin */}
+        {renderRoute('/admin/*', <Admin />, false)} {/* 관리자 페이지 */}
+        {/** ./pages/Other  */}
+        {renderRoute('/Detail/*', <Detail />)} {/* 상품 상세 페이지 */}
+        {renderRoute('/Recommend', <Recommend />)} {/* 추천 페이지 */}
+        {renderRoute('/ShoppingCart', <ShoppingCart />)} {/* 장바구니 페이지 */}
+        {renderRoute('/*', <Page404 />, false)} {/* 에러 페이지 */}
+      </Routes>
+    </Router>
+  </UserProvider>
 );
 
 export default AppRoutes;
