@@ -217,7 +217,12 @@ function Header() {
       )}
 
       {/* 모바일 메뉴 */}
-      <MobileMenu isMenuOpen={isMenuOpen} />
+      <MobileMenu
+        isMenuOpen={isMenuOpen}
+        isLoggedIn={isLoggedIn}
+        isAuthenticated={isAuthenticated}
+        setIsAuthenticated={setIsAuthenticated}
+      />
 
       {/* Modal Search */}
       <div className="modal-search-header flex-c-m trans-04 js-hide-modal-search">
@@ -345,7 +350,7 @@ function Header() {
                   <Link to="/Recommend">스타일링</Link>
                 </li>
                 <li>
-                  <Link to="/Community">커뮤니티</Link>
+                  <Link to="/Board">커뮤니티</Link>
                 </li>
               </ul>
             </div>

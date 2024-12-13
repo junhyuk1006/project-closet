@@ -5,11 +5,9 @@ img[alt='logo'] {
   margin-bottom: 20px;
   align-items: start;
 }
-.container-fluid {
-  height: 100vh;
-}
 .error-page {
   width: 90%;
+  height: 100vh;
 }
 .error-page h1 {
   font-size: 6rem;

@@ -1,6 +1,11 @@
 import { Link } from 'react-router-dom';
 
-export default function MobileMenu({ isMenuOpen }) {
+export default function MobileMenu({
+  isMenuOpen,
+  isLoggedIn,
+  isAuthenticated,
+  setIsAuthenticated,
+}) {
   return (
     <div
       className={`menu-mobile ${isMenuOpen ? 'dis-block show-menu-mobile' : ''}`}
@@ -8,12 +13,36 @@ export default function MobileMenu({ isMenuOpen }) {
       <ul className="topbar-mobile">
         <li>
           <div className="right-top-bar flex-w h-full">
-            <Link to="/MyPageHome" className="flex-c-m trans-04 p-lr-10">
-              My Account
+            <Link
+              to="/MyPageHome"
+              className="flex-c-m trans-04 p-lr-25"
+              onClick={(e) => {
+                isLoggedIn(e);
+              }}
+            >
+              마이페이지
             </Link>
-            <Link to="/Login" className="flex-c-m trans-04 p-lr-10">
-              Login
-            </Link>
+
+            {isAuthenticated ? (
+              <Link
+                to="/Logout"
+                className="flex-c-m trans-04 p-lr-25"
+                onClick={(e) => {
+                  localStorage.removeItem('token');
+
+                  alert('정상적으로 로그아웃되었습니다.');
+
+                  setIsAuthenticated(false);
+                  e.preventDefault();
+                }}
+              >
+                로그아웃
+              </Link>
+            ) : (
+              <Link to="/Login" className="flex-c-m trans-04 p-lr-25">
+                로그인
+              </Link>
+            )}
           </div>
         </li>
       </ul>
@@ -62,7 +91,7 @@ export default function MobileMenu({ isMenuOpen }) {
           <Link to="/Recommend">스타일링</Link>
         </li>
         <li>
-          <Link to="/Community">커뮤니티</Link>
+          <Link to="/Board">커뮤니티</Link>
         </li>
       </ul>
     </div>
