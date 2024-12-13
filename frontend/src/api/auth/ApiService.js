@@ -30,10 +30,10 @@ export const call = async (api, method = 'GET', request = null) => {
       }
       const errorData = await response.json().catch(() => null); // JSON 파싱 에러 처리
       throw (
-        errorData || {
-          message: '알 수 없는 오류 발생',
-          status: response.status,
-        }
+          errorData || {
+            message: '알 수 없는 오류 발생',
+            status: response.status,
+          }
       );
     }
 
@@ -81,20 +81,18 @@ export const me = async () => {
       },
     });
 
-    // HTTP 응답 상태 확인
     if (!response.ok) {
-      const errorData = await response.json(); // 에러 응답 데이터 파싱
+      const errorData = await response.json();
       throw new Error(
-        errorData.message ||
+          errorData.message ||
           `Error: ${response.status} - ${response.statusText}`
       );
     }
 
-    const data = await response.json(); // JSON 데이터로 변환
-    console.log('User data:', data);
+    const data = await response.json();
     return data; // 사용자 데이터 반환
   } catch (err) {
     console.error('Failed to fetch user data:', err.message);
-    return { error: err.message }; // 에러 메시지 반환
+    return null; // 에러 발생 시 null 반환
   }
 };

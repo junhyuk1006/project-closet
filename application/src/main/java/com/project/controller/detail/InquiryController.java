@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,12 +23,12 @@ public class InquiryController {
 
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/saveInquiry")
-    public ResponseEntity<Map<String, String>> saveInquiry(@RequestBody ItemInquiryDTO ItemInquiryDTO) {
-        itemInquiryService.saveInquiry(ItemInquiryDTO);
+    public ResponseEntity<List<String>> saveInquiry(@RequestBody ItemInquiryDTO itemInquiryDTO) {
+        itemInquiryService.saveInquiry(itemInquiryDTO);
 
-        Map<String, String> response = new HashMap<>();
-        response.put("status", "success");
-        response.put("message", "Inquiry saved successfully.");
+        List<String> response = new ArrayList<>();
+        response.add("status: success");
+        response.add("message: Inquiry saved successfully.");
         return ResponseEntity.ok(response);
     }
 

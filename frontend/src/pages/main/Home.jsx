@@ -19,6 +19,7 @@ import FilterSearch from '../main/FilterSearch';
 // Import API
 import FetchAllProduct from '../../api/item/FetchAllProduct';
 import TopRankedItems from '../../components/main/TopRankedItems';
+import {useUser} from '../../api/auth/UserContext'
 
 // Function Aria
 function Home() {

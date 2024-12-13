@@ -1,23 +1,16 @@
-import {useEffect} from 'react'
-
-function FetchGetBasket ({ userId, onGetFetch }) {
-    useEffect(() => {
-        if(userId) {
-            fetch(`http://localhost/api/basket/getBasket/${userId}`)
-                .then((response) => {
-                    if(!response.ok) {
-                        throw new Error("getBasket API response error")
-                    }
-                    return response.json();
-                })
-                .then((data) => {
-                    if(onGetFetch) {
-                        onGetFetch(data);
-                        console.log("getBasket: ",data)
-                    }
-                }).catch((error) => console.error("getBasket Fetch Error: ",error))
+export const FetchGetBasket = async ({ userId, onGetFetch }) => {
+    try {
+        if (userId) {
+            const response = await fetch(`http://localhost:80/api/basket/getBasket/${userId}`);
+            if (!response.ok) {
+                throw new Error("getBasket API response error");
+            }
+            const data = await response.json();
+            if (onGetFetch) {
+                onGetFetch(data);
+            }
         }
-    }, [userId])
-    return null;
-}
-export default FetchGetBasket;
+    } catch (error) {
+        console.error("getBasket Fetch Error: ", error);
+    }
+};

@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface BasketRepository extends JpaRepository<Basket, Long> {
@@ -19,4 +20,5 @@ public interface BasketRepository extends JpaRepository<Basket, Long> {
            "JOIN b.users u " +
            "JOIN b.itemDetail i WHERE u.id = :userId")
     List<BasketItemDTO> findByUserId(@Param("userId") Long userId);
+
 }

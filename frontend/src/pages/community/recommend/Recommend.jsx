@@ -1,5 +1,6 @@
 import React from 'react';
 import '../../../assets/styles/community/Recommend.css';
+import {useUser} from "../../../api/auth/UserContext";
 
 function Recommend() {
   return (
