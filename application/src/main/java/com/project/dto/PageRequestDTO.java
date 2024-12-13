@@ -12,5 +12,5 @@ public class PageRequestDTO {
     private Timestamp startDate;
 
     private Timestamp endDate;
-    private String level;
+    private String grade;
 }

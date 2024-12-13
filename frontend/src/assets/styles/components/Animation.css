@@ -20,9 +20,6 @@
   transition: opacity 1s ease-out; /* 애니메이션 시간과 타이밍 설정 */
 }
 
-/**
- * overlay option
- */
 .animsition-overlay-slide {
   position: fixed;
   z-index: 1;
@@ -85,50 +82,50 @@
 }
 
 /* @-webkit-keyframes fade-in {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-@keyframes fade-in {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-.fade-in {
-  -webkit-animation-name: fade-in;
-  animation-name: fade-in;
-}
-
-@-webkit-keyframes fade-out {
-  0% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-
-@keyframes fade-out {
-  0% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-
-.fade-out {
-  -webkit-animation-name: fade-out;
-  animation-name: fade-out;
-} */
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+    
+    @keyframes fade-in {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+    
+    .fade-in {
+      -webkit-animation-name: fade-in;
+      animation-name: fade-in;
+    }
+    
+    @-webkit-keyframes fade-out {
+      0% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+      }
+    }
+    
+    @keyframes fade-out {
+      0% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+      }
+    }
+    
+    .fade-out {
+      -webkit-animation-name: fade-out;
+      animation-name: fade-out;
+    } */
 
 .fade-in {
   opacity: 1; /* 애니메이션 완료 후 상태 */
