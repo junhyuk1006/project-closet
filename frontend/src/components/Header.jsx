@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 // import CSS
 import '../assets/styles/components/header.css';
 import '../assets/vendor/css-hamburgers/hamburgers.min.css';
@@ -21,6 +21,7 @@ import Alarm from './main/Alarm';
 import { useUser } from '../api/auth/UserContext';
 
 function Header({ user }) {
+  const navigate = useNavigate();
   const isAtTop = useFixedHeader(); // 현재 페이지 스크롤의 최상단 여부
   const [isAuthenticated, setIsAuthenticated] = useState(false); // 토큰 유효성 상태
   const [isCartOpen, setIsCartOpen] = useState(false); // 데스크탑 장바구니의 open 상태
@@ -124,6 +125,7 @@ function Header({ user }) {
   const handleLogout = (e) => {
     e.preventDefault();
     logout();
+    navigate('/');
   };
 
   return (
