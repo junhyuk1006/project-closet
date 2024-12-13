@@ -24,7 +24,6 @@ public class UserDTO {
     private String profileImage; // 프로필 사진
     private String name; // 이름
     private String phone; // 휴대폰번호
-    private Integer age; // 나이
     private String introduction; // 자기소개
     private String style; // 스타일
     private String status; // 상태

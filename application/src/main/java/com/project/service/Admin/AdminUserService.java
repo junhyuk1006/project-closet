@@ -4,7 +4,9 @@ import com.project.domain.Grade;
 import com.project.domain.Users;
 import com.project.dto.AdminPointDTO;
 import com.project.dto.AdminUserDTO;
+import com.project.dto.AdminUserMonthDTO;
 import com.project.dto.PageRequestDTO;
+import com.project.repository.UserRepository;
 import com.project.repository.admin.AdminGradeRepository;
 import com.project.repository.admin.AdminPointRepository;
 import com.project.repository.admin.AdminUserRepository;
@@ -14,6 +16,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -60,5 +64,11 @@ public class AdminUserService {
                 pageRequestDTO.getSearchInput(),
                 pageRequestDTO.getStartDate(),
                 pageRequestDTO.getEndDate());
+    }
+
+    public List<AdminUserMonthDTO> getUserMonth(){
+        LocalDateTime endDate = LocalDateTime.now();
+        LocalDateTime startDate = endDate.minusYears(1);
+        return adminUserRepository.findUserMonth(startDate,endDate);
     }
 }

@@ -4,6 +4,7 @@ import com.project.domain.Grade;
 import com.project.domain.Users;
 import com.project.dto.AdminPointDTO;
 import com.project.dto.AdminUserDTO;
+import com.project.dto.AdminUserMonthDTO;
 import com.project.dto.PageRequestDTO;
 import com.project.service.Admin.AdminUserService;
 import lombok.RequiredArgsConstructor;
@@ -47,6 +48,19 @@ public class AdminUserController {
     @GetMapping("point")
     public Page<AdminPointDTO> getUserPoint(@PageableDefault(size = 20,sort = "createdAt",direction = Sort.Direction.DESC)Pageable pageable,
                                             @ModelAttribute PageRequestDTO pageRequestDTO) {
+        System.out.println(pageRequestDTO);
         return adminUserService.getUserPoint(pageable,pageRequestDTO);
+    }
+
+    @GetMapping("month")
+    public List<AdminUserMonthDTO> getUserMonth() {
+        System.out.println(adminUserService.getUserMonth());
+        return adminUserService.getUserMonth();
+    }
+
+    @GetMapping("userDate")
+    public int getUserDate(@RequestParam(required = false) String startDate
+    , @RequestParam(required = false) String endDate) {
+        return adminUserService.getUserDate(startDate,endDate);
     }
 }

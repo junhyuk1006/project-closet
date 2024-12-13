@@ -11,7 +11,7 @@ const CustomNavbar = ({ onMenuClick }) => {
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
       <div className="container-fluid">
-        <Navbar.Brand href="/">Company Name</Navbar.Brand>
+        <Navbar.Brand href="/">CLOSET</Navbar.Brand>
         <Button
           variant="outline-light"
           className="d-lg-none"
