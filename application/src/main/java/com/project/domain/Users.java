@@ -55,8 +55,6 @@ public class Users {
 
     private String phone; // 휴대폰번호
 
-    private Integer age; // 나이
-
     private String introduction; // 자기소개
 
     private String style; // 스타일

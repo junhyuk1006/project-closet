@@ -50,9 +50,6 @@ public  class CustomUserDetail implements UserDetails {
         return user.getPhone();
     }
 
-    public Integer getAge() {
-        return user.getAge();
-    }
 
     public String getIntroduction() {
         return user.getIntroduction();

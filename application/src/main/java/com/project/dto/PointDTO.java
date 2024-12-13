@@ -11,6 +11,7 @@ import java.sql.Timestamp;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+
 public class PointDTO {
 
 
@@ -25,4 +26,15 @@ public class PointDTO {
     private String status;
 
     private int totalUserPoint;
+
+    public PointDTO(long id, long userId, int point, String pointReason, String pointType, Timestamp createdAt, Timestamp deletedAt, String status) {
+        this.id = id;
+        this.userId = userId;
+        this.point = point;
+        this.pointReason = pointReason;
+        this.pointType = pointType;
+        this.createdAt = createdAt;
+        this.deletedAt = deletedAt;
+        this.status = status;
+    }
 }
