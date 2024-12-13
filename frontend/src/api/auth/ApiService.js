@@ -65,8 +65,9 @@ export const call = async (api, method = 'GET', request = null) => {
 export const signin = async (userDTO) => {
   try {
     const response = await call('/api/auth/signin', 'POST', userDTO);
-    localStorage.setItem('token', response.token); // 토큰을 로절저장소에 저장
-    alert('로그인에 성공했습니다!'); // 성공 팝업 표시 (추후 사용자편의 입장에서 변경예정)
+    localStorage.setItem('token', response.token); // 토큰을 로컬 저장소에 저장
+    alert('로그인에 성공했습니다!'); // 성공 팝업 표시
+
     return response; // 필요 시 응답 데이터 반환
   } catch (error) {
     console.error('로그인 실패:', error);
@@ -79,6 +80,8 @@ export const signin = async (userDTO) => {
  * !!! 직접 사용금지 !!!
  *
  * !!! 비밀번호 노출 !!!
+ *
+ * !!! UserProvider 사용 !!!
  *
  * ~~사용자 정보를 가져오는 함수입니다.~~
  *

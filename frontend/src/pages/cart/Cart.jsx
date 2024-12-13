@@ -3,27 +3,9 @@ import React, { useEffect, useState } from 'react';
 // import CSS
 import '../../assets/styles/cart/Cart.css'; // cart 스타일
 import { Link } from 'react-router-dom';
-import FetchGetBasket from '../../api/basket/FetchGetBasket';
-import useFetch from '../../hooks/useFetch';
 import { call } from '../../api/auth/ApiService';
 
-function Cart({ isCartOpen, toggleCart, user }) {
-  const [baskets, setBaskets] = useState([]); //
-
-  useEffect(() => {
-    if (user) {
-      async function fetchBaskets() {
-        try {
-          const newBaskets = await call(`/api/basket/getBasket/` + user.id); // 비동기 처리
-          setBaskets(newBaskets);
-        } catch (error) {
-          console.error('장바구니 데이터를 가져오는 데 실패했습니다:', error);
-        }
-      }
-      fetchBaskets();
-    }
-  }, [user]);
-
+function Cart({ isCartOpen, toggleCart, baskets }) {
   return (
     <div
       className={`wrap-header-cart js-panel-cart ${isCartOpen ? 'show-header-cart' : ''}`}

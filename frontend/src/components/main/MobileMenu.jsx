@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom';
 export default function MobileMenu({
   isMenuOpen,
   isLoggedIn,
-  isAuthenticated,
+  user,
   setIsAuthenticated,
+  handleLogout,
 }) {
   return (
     <div
@@ -23,18 +24,11 @@ export default function MobileMenu({
               마이페이지
             </Link>
 
-            {isAuthenticated ? (
+            {user ? (
               <Link
                 to="/Logout"
                 className="flex-c-m trans-04 p-lr-25"
-                onClick={(e) => {
-                  localStorage.removeItem('token');
-
-                  alert('정상적으로 로그아웃되었습니다.');
-
-                  setIsAuthenticated(false);
-                  e.preventDefault();
-                }}
+                onClick={handleLogout}
               >
                 로그아웃
               </Link>
@@ -48,24 +42,6 @@ export default function MobileMenu({
       </ul>
 
       <ul className="main-menu-m">
-        {/* <li>
-          <a href="index.html">Home</a>
-          <ul className="sub-menu-m">
-            <li>
-              <a href="index.html">Homepage 1</a>
-            </li>
-            <li>
-              <a href="home-02.html">Homepage 2</a>
-            </li>
-            <li>
-              <a href="home-03.html">Homepage 3</a>
-            </li>
-          </ul>
-          <span className="arrow-main-menu-m">
-            <i className="fa fa-angle-right" aria-hidden="true"></i>
-          </span>
-        </li> */}
-
         <li>
           <Link to="/shop">아우터</Link>
         </li>
