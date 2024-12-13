@@ -21,9 +21,15 @@
 }
 
 /**
+<<<<<<< HEAD:frontend/src/assets/styles/components/Animation.css
      * overlay option
      */
-.animsition-overlay-slide {
+=======
+  *
+  overlay
+  option
+  */>>>>>>>feature/admin:frontend/src/assets/styles/components/animation.css
+  .animsition-overlay-slide {
   position: fixed;
   z-index: 1;
   width: 100%;

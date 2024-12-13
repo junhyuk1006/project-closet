@@ -1,5 +1,6 @@
 package com.project.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -20,8 +21,9 @@ public class Grade {
     private String gradeDescription;
 
     @Column(nullable = true , columnDefinition = "INT DEFAULT 0")
-    private int discount;
+    private int rate;
 
-    @OneToMany(mappedBy = "grade",cascade = CascadeType.ALL)
-    private List<Users> users;
+    @OneToMany(mappedBy = "grade",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<User> users;
 }
