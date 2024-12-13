@@ -23,4 +23,6 @@ public class PointDTO {
     private Timestamp createdAt;
     private Timestamp deletedAt;
     private String status;
+
+    private int totalUserPoint;
 }

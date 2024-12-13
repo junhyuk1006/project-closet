@@ -4,8 +4,10 @@ import com.project.domain.Point;
 import com.project.dto.PointDTO;
 import com.project.repository.PointRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -23,9 +25,10 @@ public class PointService {
             //  원하는 지급 이력 추가 가능
     );
 
-    public List<PointDTO> findPointDTOsByUserId(long userId) {
-        return pointRepository.findByUserId(userId);
+    public Page<PointDTO> findPointDTOsByUserId(long userId, Pageable pageable) {
+        return pointRepository.findByUserId(userId, pageable);
     }
+
 
     public void save(Point point) {
         int retentionDays = POINT_RETENTION_DAYS.getOrDefault(point.getPointType(), 0);
@@ -37,10 +40,13 @@ public class PointService {
         pointRepository.save(point);
     }
 
-    public Map<String, Integer> getTotalPointByUserid(long userId) {
-        // PointRepository에서 총 포인트 값을 가져와 JSON 형태로 반환
-        int totalPoints = pointRepository.getTotalPointByUserId(userId);
-        return Map.of("totalPoints", totalPoints); // JSON 형태로 감싸서 반환
+    public PointDTO getTotalPointByUserId(long userId) {
+        int totalPoint = pointRepository.getTotalPointByUserId(userId);
+
+        // DTO 생성 및 값 설정
+        PointDTO dto = new PointDTO();
+        dto.setTotalUserPoint(totalPoint);
+        return dto;
     }
 }
 

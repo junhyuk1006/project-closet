@@ -5,13 +5,17 @@ import com.project.dto.CustomUserDetail;
 import com.project.dto.PointDTO;
 import com.project.service.PointService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,22 +34,23 @@ public class PointController {
         return ResponseEntity.ok("success");
     }
 
-    // 개인 유저 포인트 내역 조회
     @GetMapping("/getPointByUserid")
-    public ResponseEntity<List<PointDTO>> getPointByUserid(@AuthenticationPrincipal CustomUserDetail userDetail) {
+    public ResponseEntity<Page<PointDTO>> getPointByUserid(
+            @AuthenticationPrincipal CustomUserDetail userDetail,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
         long userId = userDetail.getId();
-        List<PointDTO> points = pointService.findPointDTOsByUserId(userId);
+        Pageable pageable = PageRequest.of(page, size); // 페이지 번호와 크기 설정
+        Page<PointDTO> points = pointService.findPointDTOsByUserId(userId, pageable);
         return ResponseEntity.ok(points);
     }
 
-    @GetMapping("getTotalPointByUserid")
-    public ResponseEntity<Map<String, Integer>> getTotalPointByUserid(@AuthenticationPrincipal CustomUserDetail userDetail) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        long userId = userDetail.getId(); // 인증된 사용자 ID 가져오기
-        log.info("userDetail point: {}", userId);
-
-        Map<String, Integer> totalPoints = pointService.getTotalPointByUserid(userId); // JSON 형태로 데이터 가져오기
-        return ResponseEntity.ok(totalPoints); // 그대로 반환
+    @GetMapping("/getTotalPointByUserid")
+    public ResponseEntity<PointDTO> getTotalPointByUserid(@AuthenticationPrincipal CustomUserDetail userDetail) {
+        long userId = userDetail.getId();
+        PointDTO dto = pointService.getTotalPointByUserId(userId);
+        return ResponseEntity.ok(dto);
     }
 
 

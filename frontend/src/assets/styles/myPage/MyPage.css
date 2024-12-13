@@ -11,6 +11,7 @@
   display: flex;
   justify-content: center; /* 가로 방향 중앙 정렬 */
   align-items: center; /* 세로 방향 중앙 정렬 */
+  margin-bottom: 20px;
 }
 
 @media (max-width: 768px) {
@@ -332,4 +333,24 @@
   text-align: center; /* 가운데 정렬 */
   margin-top: 40px;
   margin-bottom: 20px;
+}
+/* 추후 공통 css로 빼야할 듯 */
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.page-button {
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-top: 20px;
+  margin-bottom: 50px;
+  font-weight: normal; /* 기본 상태 */
+}
+
+.page-button.active {
+  color: black;
+  border-color: #007bff;
+  font-weight: bold; /* 활성화된 상태에서 bold */
 }
