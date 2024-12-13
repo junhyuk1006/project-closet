@@ -1,9 +1,10 @@
 package com.project.service;
 
 import com.project.domain.Point;
+import com.project.dto.PointDTO;
 import com.project.repository.PointRepository;
-import io.jsonwebtoken.lang.Maps;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -17,18 +18,18 @@ public class PointService {
     private final PointRepository pointRepository;
 
     private static final Map<String, Integer> POINT_RETENTION_DAYS = Map.of(
-        "normal_review", 7,
-        "signUp", 30
+            "normal_review", 7,
+            "signUp", 30
             //  원하는 지급 이력 추가 가능
     );
 
-    public List<Point> findAll() {
-        return pointRepository.findAll();
+    public List<PointDTO> findPointDTOsByUserId(long userId) {
+        return pointRepository.findByUserId(userId);
     }
 
     public void save(Point point) {
-        int retentionDays = POINT_RETENTION_DAYS.getOrDefault(point.getPointType(),0);
-        if (retentionDays >0) {
+        int retentionDays = POINT_RETENTION_DAYS.getOrDefault(point.getPointType(), 0);
+        if (retentionDays > 0) {
             Timestamp createdAt = new Timestamp(System.currentTimeMillis());
             point.setDeletedAt(Timestamp.valueOf(createdAt.toLocalDateTime().plusDays(retentionDays)));
         }
@@ -36,15 +37,11 @@ public class PointService {
         pointRepository.save(point);
     }
 
-    public List<Point> findByUserId(Long userId) {
-        return pointRepository.findByUserId(userId);
-    }
-
-    public int getTotalPointByUserid(long userId) {
-        return pointRepository.getTotalPointByUserId(userId);
-    }
-
-    public int getExpirePointByUserid(long userId) {
-        return pointRepository.getExpirePointByUserid(userId);
+    public Map<String, Integer> getTotalPointByUserid(long userId) {
+        // PointRepository에서 총 포인트 값을 가져와 JSON 형태로 반환
+        int totalPoints = pointRepository.getTotalPointByUserId(userId);
+        return Map.of("totalPoints", totalPoints); // JSON 형태로 감싸서 반환
     }
 }
+
+

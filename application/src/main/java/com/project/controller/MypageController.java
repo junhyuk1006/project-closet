@@ -37,8 +37,6 @@ public class MypageController {
     public void switchRepresentativeAddress(@PathVariable("id") long addressId,
                                             @AuthenticationPrincipal CustomUserDetail userDetail) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        log.info("Authentication in Controller: {}", authentication);
-
         long userId = userDetail.getId(); // 인증된 사용자의 userId 가져오기
         log.info("userDetail: {}", userId);
         mypageService.switchRepresentativeAddress(addressId, userId);
