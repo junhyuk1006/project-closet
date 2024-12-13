@@ -13,22 +13,48 @@ export const getAllboard = async () => {
 
 // 게시판 상세 조회
 export const getBoardDetail = async (id) => {
-  return await call(`/api/board/${id}`, 'GET');
+  return await call(`/api/board/${id}`);
 };
 
 // 검색 요청 API
 export const searchBoards = async (keyword, condition) => {
-  const API_URL = `http://localhost/api/board/search?keyword=${encodeURIComponent(
-    keyword
-  )}&condition=${encodeURIComponent(condition)}`;
-  try {
-    const response = await fetch(API_URL);
-    if (!response.ok) {
-      throw new Error('검색 중 오류가 발생했습니다.');
+  return await fetchAPI(
+    `/api/board/search?keyword=${encodeURIComponent(keyword)}&condition=${encodeURIComponent(condition)}`,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
     }
-    return await response.json(); // JSON 데이터 반환
-  } catch (error) {
-    console.error('검색 요청 실패:', error.message);
-    throw error;
+  );
+};
+
+// 글 수정
+export const updateBoard = async (id, updatedData) => {
+  return await fetchAPI(`/api/board/update/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
+    body: JSON.stringify(updatedData),
+  });
+};
+
+// 글 삭제
+export const deleteBoard = async (id) => {
+  const response = await fetch(`http://localhost/api/board/delete/${id}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
+  });
+
+  if (!response.ok) {
+    const errorMessage = await response.text();
+    throw new Error(errorMessage || '삭제 실패');
   }
+
+  return await response.text(); // 서버에서 반환된 "삭제 성공" 메시지 반환
 };

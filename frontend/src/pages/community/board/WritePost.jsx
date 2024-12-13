@@ -53,7 +53,7 @@ const WritePost = () => {
 
       if (response.ok) {
         alert('글이 작성되었습니다.');
-        navigate('/board'); // 글 작성 후 게시판으로 이동
+        navigate('/community'); // 글 작성 후 게시판으로 이동
       } else {
         alert('글 작성 중 오류가 발생했습니다.');
       }

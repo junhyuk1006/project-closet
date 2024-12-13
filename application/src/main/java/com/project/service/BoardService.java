@@ -38,4 +38,26 @@ public class BoardService {
         };
     }
 
+    // 글수정
+    public Board updateBoard(Long id, Board updatedBoard) {
+        // 기존 게시글 조회
+        Board existingBoard = boardRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글을 찾을 수 없습니다. ID: " + id));
+        
+        // 필요한 필드 업데이트
+        existingBoard.setBoardTitle(updatedBoard.getBoardTitle());
+        existingBoard.setBoardContent(updatedBoard.getBoardContent());
+        
+        return boardRepository.save(existingBoard); // 수정 후 저장
+    }
+
+    // 글삭제
+    public void deleteBoard(Long id) {
+        // 게시글 존재 여부 확인
+        Board existingBoard = boardRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글을 찾을 수 없습니다. ID: " + id));
+
+        boardRepository.delete(existingBoard); // 게시글 삭제
+    }
+
 }

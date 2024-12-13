@@ -45,4 +45,22 @@ public class BoardController {
         return ResponseEntity.ok(result);
     }
 
+    // 글수정
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Board> updateBoard(
+            @PathVariable Long id,
+            @RequestBody Board updatedBoard) {
+        Board board = boardService.updateBoard(id, updatedBoard);
+        return ResponseEntity.ok(board);
+    }
+
+    // 글삭제
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteBoard(@PathVariable Long id) {
+        boardService.deleteBoard(id);
+        return ResponseEntity.ok("삭제 성공");
+    }
+
+
+
 }
