@@ -1,5 +1,6 @@
 package com.project.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -7,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 
+@Slf4j
 @RestController
 @RequestMapping("/api")
 public class UploadController {
@@ -37,7 +39,9 @@ public class UploadController {
 
                 return ResponseEntity.ok("File uploaded successfully: " + fileName);
             } catch (IOException e) {
-                e.printStackTrace();
+                log.info("File uploaded successfully: {}", fileName);
+                log.error("File upload failed for file: {}", fileName, e);
+
                 return ResponseEntity.status(500).body("File upload failed");
             }
         }

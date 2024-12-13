@@ -123,7 +123,7 @@ const Board = () => {
                   <table className="table widget-26">
                     <thead>
                       <tr>
-                        <th style={{ textAlign: 'center' }}>이미지</th>
+                        <th style={{ textAlign: 'center' }}>프로필</th>
                         <th
                           className="highlight bg-soft-base"
                           style={{ textAlign: 'center' }}

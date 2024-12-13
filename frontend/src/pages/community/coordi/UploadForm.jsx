@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import './UploadForm.css';
+import { useNavigate } from 'react-router-dom';
 
 const UploadForm = () => {
   const [image, setImage] = useState(null);
   const [description, setDescription] = useState('');
   const [preview, setPreview] = useState(null);
   const [message, setMessage] = useState('');
+  const navigate = useNavigate();
 
   // 이미지 파일 변경 이벤트
   const handleImageChange = (event) => {
@@ -41,10 +43,11 @@ const UploadForm = () => {
       });
 
       if (response.ok) {
-        setMessage('코디가 성공적으로 업로드되었습니다!');
+        alert('코디가 성공적으로 업로드되었습니다!');
         setImage(null);
         setDescription('');
         setPreview(null);
+        navigate('/coordi');
       } else {
         setMessage('업로드에 실패했습니다.');
       }
