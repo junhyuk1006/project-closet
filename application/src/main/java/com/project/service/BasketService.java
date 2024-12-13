@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -36,4 +37,11 @@ public class BasketService {
     }
 
     public List<BasketItemDTO> getBasket(Long userId) {return basketRepository.findByUserId(userId);}
+
+    public void removeBasketItem(Long id) {
+        if (!basketRepository.existsById(id)) {
+            throw new NoSuchElementException("Basket item not found with id: " + id);
+        }
+        basketRepository.deleteById(id);
+    }
 }

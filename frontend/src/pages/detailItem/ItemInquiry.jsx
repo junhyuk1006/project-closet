@@ -71,7 +71,6 @@ function ItemInquiry({ activeTab, userId, productId }) {
         throw new Error(`Error: ${response.statusText}`);
       }
       const data = await response.json();
-      console.log(data);
       setInquiries(Array.isArray(data) ? data : []);
     } catch (error) {
       console.error('문의 데이터를 가져오는 중 오류 발생:', error);

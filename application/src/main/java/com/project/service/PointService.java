@@ -32,7 +32,6 @@ public class PointService {
             Timestamp createdAt = new Timestamp(System.currentTimeMillis());
             point.setDeletedAt(Timestamp.valueOf(createdAt.toLocalDateTime().plusDays(retentionDays)));
         }
-
         pointRepository.save(point);
     }
 

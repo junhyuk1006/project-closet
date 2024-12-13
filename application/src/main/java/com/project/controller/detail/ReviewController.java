@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,19 +22,19 @@ public class ReviewController {
 
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/saveReview")
-    public ResponseEntity<Map<String, String>> saveReview(@RequestBody ReviewDTO review) {
-        Map<String, String> response = new HashMap<>();
+    public ResponseEntity<List<String>> saveReview(@RequestBody ReviewDTO review) {
+        List<String> response = new ArrayList<>();
         try {
             reviewService.saveReview(review);
-            response.put("message", "Review saved successfully");
+            response.add("message: Review saved successfully.");
             return ResponseEntity.ok(response);
         } catch (IllegalStateException e) {
             // 중복 리뷰 예외 처리
-            response.put("message", e.getMessage());
+            response.add("message: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
         } catch (Exception e) {
             // 기타 예외 처리
-            response.put("message", "An error occurred while saving the review");
+            response.add("message: An error occurred while saving the review.");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
