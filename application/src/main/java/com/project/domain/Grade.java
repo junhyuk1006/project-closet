@@ -25,5 +25,5 @@ public class Grade {
 
     @OneToMany(mappedBy = "grade",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
-    private List<User> users;
+    private List<Users> users;
 }

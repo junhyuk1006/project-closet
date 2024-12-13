@@ -1,7 +1,7 @@
 package com.project.controller.admin;
 
 import com.project.domain.Grade;
-import com.project.domain.User;
+import com.project.domain.Users;
 import com.project.dto.AdminPointDTO;
 import com.project.dto.AdminUserDTO;
 import com.project.dto.PageRequestDTO;
@@ -24,7 +24,7 @@ public class AdminUserController {
     private final AdminUserService adminUserService;
 
     @GetMapping("all")
-    public List<User> getAllUsers() {
+    public List<Users> getAllUsers() {
         return adminUserService.getAllUsers();
     }
 

@@ -1,6 +1,6 @@
 package com.project.repository.admin;
 
-import com.project.domain.User;
+import com.project.domain.Users;
 import com.project.dto.AdminUserDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,13 +12,13 @@ import org.springframework.stereotype.Repository;
 import java.sql.Timestamp;
 
 @Repository
-public interface AdminUserRepository extends JpaRepository<User, Long> {
+public interface AdminUserRepository extends JpaRepository<Users, Long> {
     @Query("SELECT new com.project.dto.AdminUserDTO( " +
             "u.id,u.email, u.nickname, g.grade, u.birth, " +
             "(SELECT COALESCE(SUM(p.point), 0) FROM Point p WHERE p.user.id = u.id), " +
             "(SELECT COUNT(o) FROM OrderList o WHERE o.user.id = u.id), " +
             "u.status, u.createdAt) " +
-            "FROM User u " +
+            "FROM Users u " +
             "LEFT JOIN u.grade g " +
             "WHERE ((:searchKeyword IS NULL OR :searchInput ='') OR " +
             " (:searchKeyword ='nickname' AND u.nickname LIKE CONCAT('%',:searchInput,'%')) OR" +

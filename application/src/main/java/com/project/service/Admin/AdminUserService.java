@@ -1,7 +1,7 @@
 package com.project.service.Admin;
 
 import com.project.domain.Grade;
-import com.project.domain.User;
+import com.project.domain.Users;
 import com.project.dto.AdminPointDTO;
 import com.project.dto.AdminUserDTO;
 import com.project.dto.PageRequestDTO;
