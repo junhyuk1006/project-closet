@@ -36,6 +36,7 @@ import WritePost from './pages/community/board/WritePost';
 import Coordi from './pages/community/coordi/Coordi';
 import BoardDetail from './pages/community/board/BoardDetail';
 import EditPost from './pages/community/board/EditPost';
+import UploadForm from './pages/community/coordi/UploadForm';
 
 // 공통 애니메이션과 레이아웃
 import Page404 from './components/main/Page404';
@@ -101,8 +102,9 @@ const AppRoutes = () => (
           {renderRoute('/Community', <Board />)} {/* 일반게시판 페이지 */}
           {renderRoute('/WritePost', <WritePost />)} {/* 글 작성페이지 */}
           {renderRoute('/board/:id', <BoardDetail />)} {/* 글 상세페이지 */}
-          {renderRoute('/board/edit/:id', <EditPost />)} {/* 글 상세페이지 */}
+          {renderRoute('/board/edit/:id', <EditPost />)} {/* 글 수정페이지 */}
           {renderRoute('/Coordi', <Coordi />)} {/* 코디자랑 페이지 */}
+          {renderRoute('/Upload', <UploadForm />)} {/* 코디업로드 페이지 */}
         </Routes>
       </Animation>
     </Router>

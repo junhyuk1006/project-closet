@@ -12,7 +12,7 @@ const Album = () => {
               나의 코디를 자랑해보세요.
             </p>
             <p>
-              <a href="#" className="btn btn-secondary my-2">
+              <a href="/Upload" className="btn btn-secondary my-2">
                 코디 올리기
               </a>
             </p>
