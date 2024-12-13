@@ -80,3 +80,18 @@
 .upload-button:hover {
   background-color: #404740;
 }
+
+.text-input {
+  width: 100%; /* 입력 필드의 너비를 부모 요소에 맞춤 */
+  padding: 10px; /* 입력 필드 내부 여백 */
+  margin-top: 5px; /* 위쪽 간격 */
+  border: 1px solid #ccc; /* 테두리 색상 */
+  border-radius: 5px; /* 테두리 둥글게 */
+  font-size: 16px; /* 글자 크기 */
+  box-sizing: border-box; /* 패딩 포함 크기 계산 */
+}
+
+.text-input:focus {
+  border-color: #007bff; /* 포커스 시 테두리 색상 변경 */
+  outline: none; /* 기본 포커스 테두리 제거 */
+}

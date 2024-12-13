@@ -3,6 +3,7 @@ import './UploadForm.css';
 import { useNavigate } from 'react-router-dom';
 
 const UploadForm = () => {
+  const [title, setTitle] = useState(''); // 코디 제목 상태 추가
   const [image, setImage] = useState(null);
   const [description, setDescription] = useState('');
   const [preview, setPreview] = useState(null);
@@ -18,6 +19,11 @@ const UploadForm = () => {
     }
   };
 
+  // 제목 입력 이벤트
+  const handleTitleChange = (event) => {
+    setTitle(event.target.value);
+  };
+
   // 설명 입력 이벤트
   const handleDescriptionChange = (event) => {
     setDescription(event.target.value);
@@ -27,23 +33,25 @@ const UploadForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (!image || !description) {
+    if (!title || !image || !description) {
       setMessage('모든 필드를 채워주세요!');
       return;
     }
 
     const formData = new FormData();
+    formData.append('title', title); // 제목 추가
     formData.append('image', image);
     formData.append('description', description);
 
     try {
-      const response = await fetch('http://localhost:80/api/upload', {
+      const response = await fetch('http://localhost/api/coordi/upload', {
         method: 'POST',
         body: formData,
       });
 
       if (response.ok) {
         alert('코디가 성공적으로 업로드되었습니다!');
+        setTitle('');
         setImage(null);
         setDescription('');
         setPreview(null);
@@ -61,6 +69,21 @@ const UploadForm = () => {
     <div className="upload-form-container">
       <h2 className="upload-title">나의 코디 업로드</h2>
       <form onSubmit={handleSubmit}>
+        {/* 제목 입력 */}
+        <div className="form-group">
+          <label htmlFor="title" className="form-label">
+            코디 제목
+          </label>
+          <input
+            type="text"
+            id="title"
+            value={title}
+            onChange={handleTitleChange}
+            placeholder="코디 제목을 입력해주세요."
+            className="text-input"
+          />
+        </div>
+
         {/* 이미지 업로드 */}
         <div className="form-group">
           <label htmlFor="imageUpload" className="form-label">
