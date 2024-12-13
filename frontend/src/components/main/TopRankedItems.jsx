@@ -83,7 +83,7 @@ export default function TopRankedItems() {
                       </span>
 
                       <span className="block1-info stext-102 trans-04">
-                        {rankedItem.item_price}
+                        {rankedItem.item_price.toLocaleString()}원
                       </span>
                     </div>
 
@@ -123,7 +123,7 @@ export default function TopRankedItems() {
                       </span>
 
                       <span className="block1-info stext-102 trans-04">
-                        {rankedItem.item_price}
+                        {rankedItem.item_price.toLocaleString()}원
                       </span>
                     </div>
 
