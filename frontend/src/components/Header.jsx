@@ -311,7 +311,7 @@ function Header({ user }) {
                   <Link to="/Recommend">스타일링</Link>
                 </li>
                 <li>
-                  <Link to="/Board">커뮤니티</Link>
+                  <Link to="/Community">커뮤니티</Link>
                 </li>
               </ul>
             </div>
