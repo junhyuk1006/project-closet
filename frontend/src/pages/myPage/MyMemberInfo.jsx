@@ -159,185 +159,113 @@ const MemberInfo = () => {
           noValidate
           onSubmit={handleSubmit} // 제출 이벤트 연결
         >
-          <div className="row g-3">
-            <label className="info-label">* 필수정보 *</label>
-            <div className="col-12">
-              <label htmlFor="username" className="form-label">
-                아이디
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="username"
-                name="username"
-                placeholder="ID"
-                required
-              />
-              <div className="invalid-feedback">아이디를 입력해주세요.</div>
-            </div>
+          <label className="info-label">* 필수정보 *</label>
+          <label className="form-label mt-4 ">아이디</label>
+          <div className="d-flex justify-content-center col-12 ">
+            <input
+              className="form-control w-50"
+              id="name"
+              value={user.username}
+              readOnly
+            />
+          </div>
+          <label className="form-label mt-4 ">아이디</label>
+          <div className="d-flex justify-content-center col-12 ">
+            <input
+              className="form-control w-50"
+              id="name"
+              value={user.username}
+            />
+          </div>
 
-            <div className="col-6">
-              <label htmlFor="password" className="form-label">
-                비밀번호
-              </label>
-              <input
-                type="password"
-                className="form-control"
-                id="password"
-                name="password"
-                placeholder="Password"
-                required
-              />
-              <div className="invalid-feedback">비밀번호를 입력해주세요.</div>
-            </div>
-
-            <div className="col-6">
-              <label htmlFor="confirmPassword" className="form-label">
-                비밀번호 확인
-              </label>
-              <input
-                type="password"
-                className="form-control"
-                id="confirmPassword"
-                placeholder="Password"
-                required
-              />
-              <div className="invalid-feedback">비밀번호를 확인해주세요.</div>
-            </div>
-
-            <div className="col-12">
-              <label htmlFor="nickname" className="form-label">
-                닉네임
-              </label>
-              <div className="input-group has-validation">
+          <label className="form-label mt-4 ">나이</label>
+          <div className="d-flex justify-content-center col-12 ">
+            <input
+              className="form-control text-center"
+              id="name"
+              style={{ width: '150px' }}
+            />
+          </div>
+          <label className="form-label mt-4 ">이름</label>
+          <div className="d-flex justify-content-center col-12 ">
+            <input className="form-control w-50" id="name" placeholder="이름" />
+          </div>
+          <label className="form-label mt-4 ">이름</label>
+          <div className="d-flex justify-content-center col-12 ">
+            <input className="form-control w-50" id="name" placeholder="이름" />
+          </div>
+          <hr className="my-4" />
+          <div className="container">
+            <label className="info-label mb-3">비밀번호 변경</label>
+            <div className="row justify-content-center">
+              <div className="col-12 col-md-5 d-flex align-items-center mb-3 mb-md-0">
                 <input
-                  type="text"
                   className="form-control"
-                  id="nickname"
-                  name="nickname"
-                  placeholder="닉네임"
-                  required
+                  id="password"
+                  type="password"
+                  placeholder="비밀번호"
                 />
               </div>
-            </div>
-
-            <div className="col-12">
-              <label htmlFor="email" className="form-label">
-                이메일
-              </label>
-              <input
-                type="email"
-                className="form-control"
-                id="email"
-                name="email"
-                placeholder="you@example.com"
-                required
-              />
-              <div className="invalid-feedback">
-                유효한 이메일 주소를 입력해주세요.
+              <div className="col-12 col-md-5 d-flex align-items-center">
+                <input
+                  className="form-control"
+                  id="confirmPassword"
+                  type="password"
+                  placeholder="비밀번호 확인"
+                />
               </div>
-            </div>
-
-            <div className="col-md-4">
-              <label htmlFor="birthYear" className="form-label">
-                출생연도
-              </label>
-              <select className="form-select" id="birthYear" required>
-                <option value="">연도 선택</option>
-                {Array.from({ length: 100 }, (_, index) => {
-                  const year = new Date().getFullYear() - index; // 현재 연도 기준으로 100년 전까지
-                  return (
-                    <option key={year} value={year}>
-                      {year}
-                    </option>
-                  );
-                })}
-              </select>
-              <div className="invalid-feedback">
-                올바른 출생연도를 선택해주세요.
-              </div>
-            </div>
-
-            <div className="col-md-4">
-              <label htmlFor="birthMonth" className="form-label">
-                월
-              </label>
-              <select className="form-select" id="birthMonth" required>
-                <option value="">월 선택</option>
-                {Array.from({ length: 12 }, (_, index) => {
-                  const month = index + 1; // 1~12월
-                  return (
-                    <option key={month} value={month}>
-                      {month}월
-                    </option>
-                  );
-                })}
-              </select>
-              <div className="invalid-feedback">올바른 월을 선택해주세요.</div>
-            </div>
-
-            <div className="col-md-4">
-              <label htmlFor="birthDay" className="form-label">
-                일
-              </label>
-              <input
-                type="number"
-                className="form-control"
-                id="birthDay"
-                placeholder="1~31"
-                min="1"
-                max="31"
-                required
-              />
-              <div className="invalid-feedback">올바른 일을 입력해주세요.</div>
             </div>
           </div>
 
           <hr className="my-4" />
-          <label className="info-label">신체정보 공개여부</label>
-          <label className="form-label mt-4 text-center w-100">
-            휴대폰번호
-          </label>
-          <div className="d-flex justify-content-center align-items-center">
-            <span className="mx-1">키</span>
-            <input
-              className="form-control text-center mx-1"
-              id="height"
-              maxLength="3"
-              style={{ width: '60px' }}
-            />
-            cm
-            <span className="mx-1 ms-5">체중</span>
-            <input
-              className="form-control text-center mx-1"
-              id="weight"
-              maxLength="3"
-              style={{ width: '70px' }}
-            />
-            kg
-            <span className="mx-1 ms-5">평소사이즈</span>
-            <select
-              className="form-select custom-select mx-1"
-              style={{ width: '60px', height: '38px' }}
-            >
-              <option>XS</option>
-              <option>S</option>
-              <option>M</option>
-              <option>L</option>
-              <option>XL</option>
-            </select>
-          </div>
-          <div className="form-check">
-            <input
-              type="checkbox"
-              className="form-check-input"
-              id="privacy-size"
-              required
-            />
-            <label className="form-check-label mt-4" htmlFor="privacy">
-              본 체크박스를 체크하시면 리뷰 작성 시 회원님의 신체 정보(키,
-              몸무게, 사이즈)가 공개됩니다.
-            </label>
+          <div className="container text-center">
+            <label className="info-label mb-3">신체정보 공개여부</label>
+            <div className="row justify-content-center align-items-center mb-4">
+              <div className="col-12 col-md-4 d-flex justify-content-center align-items-center mb-2">
+                <span className="me-2">키</span>
+                <input
+                  className="form-control text-center"
+                  id="height"
+                  maxLength="3"
+                  style={{ width: '80px' }}
+                />
+                <span className="ms-2">cm</span>
+              </div>
+              <div className="col-12 col-md-4 d-flex justify-content-center align-items-center mb-2">
+                <span className="me-2">체중</span>
+                <input
+                  className="form-control text-center"
+                  id="weight"
+                  maxLength="3"
+                  style={{ width: '80px' }}
+                />
+                <span className="ms-2">kg</span>
+              </div>
+              <div className="col-12 col-md-4 d-flex justify-content-center align-items-center">
+                <span className="me-2">평소사이즈</span>
+                <select
+                  className="form-select text-center"
+                  style={{ width: '80px' }}
+                >
+                  <option>S</option>
+                  <option>M</option>
+                  <option>L</option>
+                </select>
+              </div>
+            </div>
+            <div className="form-check d-flex justify-content-center align-items-center flex-column">
+              <div className="d-flex justify-content-center align-items-center">
+                <input
+                  type="checkbox"
+                  className="form-check-input"
+                  id="isReleased"
+                  required
+                />
+                <label className="form-check-label ms-2" htmlFor="isReleased">
+                  정보 제공에 동의합니다.
+                </label>
+              </div>
+            </div>
           </div>
 
           <hr className="my-4" />
