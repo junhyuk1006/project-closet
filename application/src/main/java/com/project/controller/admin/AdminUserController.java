@@ -15,6 +15,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Slf4j // 로깅 객체 자동 생성 (log 변수 사용 가능)
@@ -48,19 +49,17 @@ public class AdminUserController {
     @GetMapping("point")
     public Page<AdminPointDTO> getUserPoint(@PageableDefault(size = 20,sort = "createdAt",direction = Sort.Direction.DESC)Pageable pageable,
                                             @ModelAttribute PageRequestDTO pageRequestDTO) {
-        System.out.println(pageRequestDTO);
         return adminUserService.getUserPoint(pageable,pageRequestDTO);
     }
 
     @GetMapping("month")
     public List<AdminUserMonthDTO> getUserMonth() {
-        System.out.println(adminUserService.getUserMonth());
         return adminUserService.getUserMonth();
     }
 
     @GetMapping("userDate")
-    public int getUserDate(@RequestParam(required = false) String startDate
-    , @RequestParam(required = false) String endDate) {
-        return adminUserService.getUserDate(startDate,endDate);
+    public int getUserDate(@RequestParam(required = false) Timestamp startDate
+    , @RequestParam(required = false) Timestamp endDate) {
+        return adminUserService.getUserDate(startDate, endDate);
     }
 }

@@ -44,4 +44,11 @@ public interface AdminUserRepository extends JpaRepository<Users, Long> {
             "GROUP BY YEAR(u.createdAt), MONTH(u.createdAt) " +
             "ORDER BY YEAR(u.createdAt) ASC, MONTH(u.createdAt) ASC")
     List<AdminUserMonthDTO> findUserMonth(@Param("startDate") LocalDateTime startDate , @Param("endDate")LocalDateTime endDate);
+
+
+    @Query("SELECT COUNT(u) "+
+            "FROM Users u " +
+            "WHERE (:startDate IS NULL OR :endDate IS NULL) OR " +
+            "u.createdAt BETWEEN :startDate AND :endDate")
+    int findUserDate(@Param("startDate") Timestamp startDate, @Param("endDate") Timestamp endDate);
 }

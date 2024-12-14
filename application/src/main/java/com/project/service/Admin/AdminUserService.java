@@ -16,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -70,5 +71,14 @@ public class AdminUserService {
         LocalDateTime endDate = LocalDateTime.now();
         LocalDateTime startDate = endDate.minusYears(1);
         return adminUserRepository.findUserMonth(startDate,endDate);
+    }
+
+    public int getUserDate(Timestamp startDate, Timestamp endDate) {
+        if(endDate != null){
+            LocalDateTime endDateTime = endDate.toLocalDateTime();
+            endDateTime = endDateTime.plusDays(1);
+            endDate = Timestamp.valueOf(endDateTime);
+        }
+        return adminUserRepository.findUserDate(startDate,endDate);
     }
 }

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import java.beans.PropertyEditorSupport;
 import java.sql.Timestamp;
 
-@ControllerAdvice
+@ControllerAdvice(basePackages = "com.project.controller.admin")
 public class GlobalBindingInitalizer {
     @InitBinder
     public void initBinder(WebDataBinder binder) {
