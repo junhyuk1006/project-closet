@@ -2,7 +2,6 @@ package com.project.repository.admin;
 
 import com.project.domain.Users;
 import com.project.dto.AdminUserDTO;
-import com.project.dto.PageRequestDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -22,10 +21,9 @@ public interface AdminUserRepository extends JpaRepository<Users, Long> {
             "FROM Users u " +
             "LEFT JOIN u.grade g " +
             "WHERE ((:searchKeyword IS NULL OR :searchInput ='') OR " +
-            " (:searchKeyword ='username' AND u.username LIKE CONCAT('%',:searchInput, '%')) OR"+
             " (:searchKeyword ='nickname' AND u.nickname LIKE CONCAT('%',:searchInput,'%')) OR" +
             " (:searchKeyword ='email' AND u.email LIKE CONCAT('%',:searchInput,'%')))" +
-            "AND (:level ='' OR g.grade = :level)" +
+            "AND (:grade ='' OR g.grade = :grade)" +
             "AND (:startDate IS NULL OR u.createdAt >= :startDate)"+
             "AND (:endDate IS NULL OR u.createdAt <= :endDate)")
     Page<AdminUserDTO> findAllAdminUsers(Pageable pageable,
@@ -33,5 +31,5 @@ public interface AdminUserRepository extends JpaRepository<Users, Long> {
                                          @Param("searchInput") String searchInput,
                                          @Param("startDate") Timestamp startDate,
                                          @Param("endDate") Timestamp endDate,
-                                         @Param("level") String level);
+                                         @Param("grade") String grade);
 }

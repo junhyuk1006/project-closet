@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Form, Button, Row, Col, Table, Pagination } from 'react-bootstrap';
-import { getUserAdmin } from '../../../../api/admin/user/user';
+import { getGrade, getUserAdmin } from '../../../../api/admin/user/user';
 import '../../../../assets/styles/admin/user.css';
 const User = () => {
   const [users, setUsers] = useState([]);
@@ -9,18 +9,28 @@ const User = () => {
   const [size, setSize] = useState(20);
   const [pageGroup, setPageGroup] = useState(0);
 
+  const [grades, setGrades] = useState([]);
   // 검색 상태 하나의 객체로 관리
   const [searchParams, setSearchParams] = useState({
     searchKeyword: 'email',
     searchInput: '',
     startDate: '',
     endDate: '',
-    level: '',
+    grade: '',
   });
 
   useEffect(() => {
+    fetchGrades();
     fetchUsers(currentPage, size, searchParams);
   }, []);
+
+  const fetchGrades = () => {
+    getGrade()
+      .then((response) => {
+        setGrades(response);
+      })
+      .catch((error) => console.error(error));
+  };
 
   const fetchUsers = (page, size, searchParams) => {
     const params = {
@@ -96,7 +106,7 @@ const User = () => {
       searchInput: '',
       startDate: '',
       endDate: '',
-      level: '',
+      grade: '',
     });
     setCurrentPage(0);
     setSize(20);
@@ -211,54 +221,37 @@ const User = () => {
 
           <Row className="align-items-center">
             <Col xs={12}>
-              <Form.Group controlId="levelSearch">
+              <Form.Group controlId="gradeSearch">
                 <Form.Label>레벨검색</Form.Label>
                 <div>
                   <Form.Check
                     inline
                     label="전체"
                     type="radio"
-                    name="level"
+                    name="grade"
                     value=""
-                    checked={searchParams.level === ''}
+                    checked={searchParams.grade === ''}
                     onChange={(e) =>
-                      updateSearchParams('level', e.target.value)
+                      updateSearchParams('grade', e.target.value)
                     }
                     defaultChecked
                   />
-                  <Form.Check
-                    inline
-                    label="일반회원"
-                    type="radio"
-                    name="level"
-                    value="normal"
-                    checked={searchParams.level === 'normal'}
-                    onChange={(e) =>
-                      updateSearchParams('level', e.target.value)
-                    }
-                  />
-                  <Form.Check
-                    inline
-                    label="우수회원"
-                    type="radio"
-                    name="level"
-                    value="premium"
-                    checked={searchParams.level === 'premium'}
-                    onChange={(e) =>
-                      updateSearchParams('level', e.target.value)
-                    }
-                  />
-                  <Form.Check
-                    inline
-                    label="특별회원"
-                    type="radio"
-                    name="level"
-                    value="vip"
-                    checked={searchParams.level === 'vip'}
-                    onChange={(e) =>
-                      updateSearchParams('level', e.target.value)
-                    }
-                  />
+
+                  {/** 동적 렌더링된 옵션 */}
+                  {grades.map((grade) => (
+                    <Form.Check
+                      inline
+                      key={grade.grade}
+                      label={grade.grade}
+                      type="radio"
+                      name="grade"
+                      value={grade.grade}
+                      checked={searchParams.grade === grade.grade}
+                      onChange={(e) =>
+                        updateSearchParams('grade', e.target.value)
+                      }
+                    />
+                  ))}
                 </div>
               </Form.Group>
             </Col>

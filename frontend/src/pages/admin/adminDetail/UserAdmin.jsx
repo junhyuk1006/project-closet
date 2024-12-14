@@ -5,7 +5,7 @@ import CustomNavbar from '../../../components/admin/CustomNavbar';
 import Point from '../../../components/admin/content/user/Point';
 import User from '../../../components/admin/content/user/User';
 import UserDashboard from '../../../components/admin/content/user/UserDashboard';
-import UserLevel from '../../../components/admin/content/user/UserLevel';
+import UserGrade from '../../../components/admin/content/user/UserGrade';
 import Sidebar from '../../../components/admin/sidebar/UserSidebar';
 const UserAdmin = () => {
   // 활성화된 메뉴를 추적하기 위한 상태
@@ -22,12 +22,12 @@ const UserAdmin = () => {
     switch (activeMenu) {
       case 'User':
         return <User />;
-      case 'UserLevel':
-        return <UserLevel />;
-      case 'UserDashboard':
-        return <UserDashboard />;
+      case 'UserGrade':
+        return <UserGrade />;
       case 'Point':
         return <Point />;
+      case 'UserDashboard':
+        return <UserDashboard />;
       default:
         return <User />;
     }

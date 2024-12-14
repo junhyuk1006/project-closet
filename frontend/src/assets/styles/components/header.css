@@ -5,6 +5,10 @@
   height: 41.6px;
 }
 
+.notice-link {
+  color: #b8d5ff;
+}
+
 /*------------------------------------------------------------------
 [ 카테고리 ]*/
 .main-menu > li:hover > a {
@@ -312,7 +316,7 @@
   display: block;
   position: absolute;
   top: -7px;
-  right: 12px;
+  right: 0px;
   min-width: 15px;
   height: 15px;
   padding: 0 3px;

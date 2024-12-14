@@ -1,23 +1,26 @@
-import {useEffect} from "react"
+export const fetchSaveBasket = async ({ basketData, onSaveFetch }) => {
+    try {
+        const response = await fetch(`http://localhost:80/api/basket/saveBasket`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(basketData),
+        });
 
-function FetchSaveBasket({ userId, onSaveFetch }) {
-    if(userId) {
-        useEffect(() => {
-            fetch(`http://localhost:80/api/basket/saveBasket/${userId}`)
-                .then((response) => {
-                    if(!response.ok){
-                        throw new Error("no")
-                    }
-                    return response.json();
-                })
-                .then((data) => {
-                    if(onSaveFetch) {
-                        onSaveFetch(data)
-                    }
-                })
-                .catch((error) => console.log("this is (SaveBasket): ", error))
-        }, []);
-        return null;
+        if (!response.ok) {
+            throw new Error("Failed to save basket");
+        }
+
+        const data = await response.json();
+
+        if (onSaveFetch) {
+            onSaveFetch(data);
+        }
+
+        return data;
+    } catch (error) {
+        console.error("Error in fetchSaveBasket:", error);
+        throw error;
     }
-}
-export default FetchSaveBasket;
+};

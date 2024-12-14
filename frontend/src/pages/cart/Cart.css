@@ -1,0 +1,20 @@
+.header-cart-content ul {
+    padding-left: 0;
+}
+.header-cart-wrapitem .header-cart-item {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+}
+.header-cart-item-img {
+    width: 100px;
+    position: relative;
+    margin-right: 0;
+    cursor: pointer;
+}
+.header-cart-item-txt {
+    flex: 1 1 0%;
+    margin-left: 20px;
+}
