@@ -1,39 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { me } from '../../../api/auth/ApiService';
+import { useUser } from '../../../api/auth/UserContext'; // useUser 사용
 import './WritePost.css'; // 스타일 파일 추가
 
 const WritePost = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [user, setUser] = useState(null);
+  const { user } = useUser(); // 사용자 정보 가져오기
   const navigate = useNavigate();
-
-  useEffect(() => {
-    // 사용자 정보 가져오기
-    const fetchUser = async () => {
-      try {
-        const userData = await me();
-        if (userData.error) {
-          alert('로그인이 필요합니다.');
-          navigate(-1); // 뒤로가기
-        } else {
-          setUser(userData);
-        }
-      } catch (error) {
-        console.error('사용자 정보 가져오기 중 오류:', error);
-        navigate(-1); // 뒤로가기
-      }
-    };
-
-    fetchUser();
-  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!user) {
       alert('로그인이 필요합니다.');
+      navigate('/login'); // 로그인 페이지로 이동
       return;
     }
 

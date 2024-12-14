@@ -1,7 +1,21 @@
 import React from 'react';
 import './Coordi.css';
+import { useUser } from '../../../api/auth/UserContext';
+import { useNavigate } from 'react-router-dom';
 
 const Album = () => {
+  const { user } = useUser(); // 유저 정보 가져오기
+  const navigate = useNavigate();
+
+  const handleUploadClick = () => {
+    if (!user) {
+      alert('로그인이 필요합니다.');
+      navigate(-1); // 뒤로가기
+      return;
+    }
+    navigate('/upload'); // 업로드 페이지로 이동
+  };
+
   return (
     <>
       <section className="py-5 text-center container">
@@ -12,9 +26,12 @@ const Album = () => {
               나의 코디를 자랑해보세요.
             </p>
             <p>
-              <a href="/Upload" className="btn btn-secondary my-2">
+              <button
+                className="btn btn-secondary my-2"
+                onClick={handleUploadClick}
+              >
                 코디 올리기
-              </a>
+              </button>
             </p>
           </div>
         </div>
@@ -76,7 +93,7 @@ const Album = () => {
       <footer className="text-body-secondary py-5">
         <div className="container">
           <p className="float-end mb-1">
-            <a href="#">맨 위로 가기</a>
+            <a href="#top">맨 위로 가기</a>
           </p>
           <p className="mb-1">
             Album example is &copy; Bootstrap, but please download and customize

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './UploadForm.css';
 import { useNavigate } from 'react-router-dom';
+import { useUser } from '../../../api/auth/UserContext'; // 유저 데이터 가져오기 위한 훅
 
 const UploadForm = () => {
   const [title, setTitle] = useState(''); // 코디 제목 상태 추가
@@ -9,6 +10,7 @@ const UploadForm = () => {
   const [preview, setPreview] = useState(null);
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
+  const { user } = useUser(); // 로그인된 유저 데이터 가져오기
 
   // 이미지 파일 변경 이벤트
   const handleImageChange = (event) => {
@@ -38,10 +40,16 @@ const UploadForm = () => {
       return;
     }
 
+    if (!user || !user.id) {
+      setMessage('로그인이 필요합니다.');
+      return;
+    }
+
     const formData = new FormData();
     formData.append('title', title); // 제목 추가
     formData.append('image', image);
     formData.append('description', description);
+    formData.append('userId', user.id); // userId 추가
 
     try {
       const response = await fetch('http://localhost/api/coordi/upload', {

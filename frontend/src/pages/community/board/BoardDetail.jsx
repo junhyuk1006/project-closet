@@ -4,33 +4,19 @@ import {
   deleteBoard,
   getBoardDetail,
 } from '../../../api/community/board/Board';
+import { useUser } from '../../../api/auth/UserContext'; // useUser 사용
 import './BoardDetail.css'; // 스타일을 위한 CSS 파일
-import { me } from '../../../api/auth/ApiService';
 
 const BoardDetail = () => {
   const { id } = useParams();
   const [boardDetail, setBoardDetail] = useState(null);
-  const [currentUser, setCurrentUser] = useState(null); // 현재 로그인된 사용자
+  const { user } = useUser(); // 현재 로그인된 사용자 정보
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-
-  // 로그인된 사용자 정보 가져오기
-  const fetchCurrentUser = async () => {
-    try {
-      const userData = await me();
-      if (userData.error) {
-        throw new Error(userData.error);
-      }
-      setCurrentUser(userData); // 로그인된 사용자 정보 저장
-    } catch (error) {
-      console.error('사용자 정보를 가져오는 데 실패했습니다:', error.message);
-    }
-  };
 
   useEffect(() => {
     const fetchBoardDetail = async () => {
       try {
-        await fetchCurrentUser(); // 사용자 정보 가져오기
         const data = await getBoardDetail(id);
         setBoardDetail(data);
       } catch (error) {
@@ -102,7 +88,7 @@ const BoardDetail = () => {
         </button>
         &nbsp;&nbsp;
         {/* 수정 버튼: 작성자와 로그인된 사용자가 동일할 경우만 렌더링 */}
-        {currentUser?.id === boardDetail.userId && (
+        {user?.id === boardDetail.userId && (
           <>
             <button className="btn btn-secondary" onClick={handleEditClick}>
               글수정
