@@ -153,12 +153,7 @@ const MemberInfo = () => {
       </div>
       <div className="mypage-label1">회원정보</div>
       <div className="memberInfo-rounded-box">
-        <form
-          ref={formRef}
-          className="needs-validation"
-          noValidate
-          onSubmit={handleSubmit} // 제출 이벤트 연결
-        >
+        <form>
           <label className="info-label">* 필수정보 *</label>
           <label className="form-label mt-4 ">아이디</label>
           <div className="d-flex justify-content-center col-12 ">
@@ -194,6 +189,8 @@ const MemberInfo = () => {
           <div className="d-flex justify-content-center col-12 ">
             <input className="form-control w-50" id="name" placeholder="이름" />
           </div>
+        </form>
+        <form>
           <hr className="my-4" />
           <div className="container">
             <label className="info-label mb-3">비밀번호 변경</label>
@@ -216,7 +213,8 @@ const MemberInfo = () => {
               </div>
             </div>
           </div>
-
+        </form>
+        <form>
           <hr className="my-4" />
           <div className="container text-center">
             <label className="info-label mb-3">신체정보 공개여부</label>
@@ -267,7 +265,8 @@ const MemberInfo = () => {
               </div>
             </div>
           </div>
-
+        </form>
+        <form>
           <hr className="my-4" />
           <label className="info-label">추가정보</label>
           <label className="form-label mt-4 ">이름</label>
