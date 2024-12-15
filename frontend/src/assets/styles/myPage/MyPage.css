@@ -11,6 +11,7 @@
   display: flex;
   justify-content: center; /* 가로 방향 중앙 정렬 */
   align-items: center; /* 세로 방향 중앙 정렬 */
+  margin-bottom: 20px;
 }
 
 @media (max-width: 768px) {
@@ -146,10 +147,10 @@
 }
 
 /* 각 박스를 화면 중앙에 위치시키는 스타일 */
-.rounded-box {
+.memberInfo-rounded-box {
   width: 80%; /* 화면 크기에 비례하여 크기 조정 */
   max-width: 800px; /* 최대 너비 */
-  height: 50%; /* 높이 비율 */
+  height: 70%; /* 높이 비율 */
   background-color: white; /* 배경색을 하얀색으로 설정 */
   border-radius: 15px; /* 모서리 둥글기 */
   padding: 20px;
@@ -332,4 +333,35 @@
   text-align: center; /* 가운데 정렬 */
   margin-top: 40px;
   margin-bottom: 20px;
+}
+
+.info-label {
+  font-size: 16px;
+  display: flex;
+  justify-content: center; /* 가로 방향 중앙 정렬 */
+  align-items: center; /* 세로 방향 중앙 정렬 */
+  margin-bottom: 30px;
+  margin-top: 40px;
+  color: rgb(129, 135, 150);
+}
+
+/* 추후 공통 css로 빼야할 듯 */
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.page-button {
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-top: 20px;
+  margin-bottom: 50px;
+  font-weight: normal; /* 기본 상태 */
+}
+
+.page-button.active {
+  color: black;
+  border-color: #007bff;
+  font-weight: bold; /* 활성화된 상태에서 bold */
 }

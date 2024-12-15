@@ -28,6 +28,8 @@ import Admin from './pages/admin/Admin';
 import ShoppingCart from './pages/cart/ShoppingCart';
 import Recommend from './pages/community/recommend/Recommend';
 import Detail from './pages/detailItem/Detail';
+import { BasketProvider } from "./api/basket/BasketContext";
+
 
 // 공통 애니메이션과 레이아웃
 import Page404 from './components/main/Page404';
@@ -62,36 +64,38 @@ const renderRoute = (path, component, includeHeaderFooter = true) => (
 
 const AppRoutes = () => (
     <UserProvider>
-        <Router>
-            <ScrollToTop />
-            <Animation>
-                <Routes>
-                    {/** ./pages/main */}
-                    {renderRoute('/', <Home />)} {/* 메인 페이지 */}
-                    {renderRoute('/guide', <Guide />)} {/* 이용안내 페이지 */}
-                    {renderRoute('/agreement', <Agreement />)} {/* 이용약관 페이지 */}
-                    {renderRoute('/privacy', <Privacy />)} {/* 개인정보처리방침 페이지 */}
-                    {/** ./pages/auth */}
-                    {renderRoute('/Login', <Login />)} {/* 로그인 페이지 */}
-                    <Route path="/oauth2/redirect" element={<OAuth2RedirectHandler />} />
-                    {renderRoute('/SignUp', <SignUp />)} {/* 회원가입 페이지 */}
-                    {/** ./pages/MyPage */}
-                    {renderRoute('/MyPageHome', <MyPageHome />)} {/* 마이페이지 홈 */}
-                    {renderRoute('/MyPoint', <MyPoint />)} {/* 포인트 페이지 */}
-                    {/* 회원정보 페이지 */}
-                    {renderRoute('/MyInquirement', <MyInquirement />)}{' '}
-                    {/* 문의내역 페이지 */}
-                    {/**./pages/admin */}
-                    {renderRoute('/admin/*', <Admin />, false)} {/* 관리자 페이지 */}
-                    {/** ./pages/Other  */}
-                    {renderRoute('/Detail/*', <Detail />)} {/* 상품 상세 페이지 */}
-                    {renderRoute('/Recommend', <Recommend />)} {/* 추천 페이지 */}
-                    {renderRoute('/ShoppingCart', <ShoppingCart />)}{' '}
-                    {/* 장바구니 페이지 */}
-                    {renderRoute('/*', <Page404 />, false)} {/* 에러 페이지 */}
-                </Routes>
-            </Animation>
-        </Router>
+        <BasketProvider>
+            <Router>
+                <ScrollToTop />
+                <Animation>
+                    <Routes>
+                        {/** ./pages/main */}
+                        {renderRoute('/', <Home />)} {/* 메인 페이지 */}
+                        {renderRoute('/guide', <Guide />)} {/* 이용안내 페이지 */}
+                        {renderRoute('/agreement', <Agreement />)} {/* 이용약관 페이지 */}
+                        {renderRoute('/privacy', <Privacy />)} {/* 개인정보처리방침 페이지 */}
+                        {/** ./pages/auth */}
+                        {renderRoute('/Login', <Login />)} {/* 로그인 페이지 */}
+                        <Route path="/oauth2/redirect" element={<OAuth2RedirectHandler />} />
+                        {renderRoute('/SignUp', <SignUp />)} {/* 회원가입 페이지 */}
+                        {/** ./pages/MyPage */}
+                        {renderRoute('/MyPageHome', <MyPageHome />)} {/* 마이페이지 홈 */}
+                        {renderRoute('/MyPoint', <MyPoint />)} {/* 포인트 페이지 */}
+                        {/* 회원정보 페이지 */}
+                        {renderRoute('/MyInquirement', <MyInquirement />)}{' '}
+                        {/* 문의내역 페이지 */}
+                        {/**./pages/admin */}
+                        {renderRoute('/admin/*', <Admin />, false)} {/* 관리자 페이지 */}
+                        {/** ./pages/Other  */}
+                        {renderRoute('/Detail/*', <Detail />)} {/* 상품 상세 페이지 */}
+                        {renderRoute('/Recommend', <Recommend />)} {/* 추천 페이지 */}
+                        {renderRoute('/ShoppingCart', <ShoppingCart />)}{' '}
+                        {/* 장바구니 페이지 */}
+                        {renderRoute('/*', <Page404 />, false)} {/* 에러 페이지 */}
+                    </Routes>
+                </Animation>
+            </Router>
+        </BasketProvider>
     </UserProvider>
 );
 

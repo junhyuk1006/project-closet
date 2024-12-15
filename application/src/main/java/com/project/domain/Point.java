@@ -25,6 +25,7 @@ public class Point {
     private int point;
     private String pointReason;
     private String pointType;
+    private String pointInsertType;
 
     @CreationTimestamp
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul") // 날짜 포맷 지정

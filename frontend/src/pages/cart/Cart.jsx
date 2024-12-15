@@ -1,40 +1,33 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { FetchGetBasket } from "../../api/basket/FetchGetBasket";
-
+import { useCart } from "../../api/basket/BasketContext";
 import { useUser } from "../../api/auth/UserContext";
 import "./Cart.css";
 
 function Cart({ isCartOpen, toggleCart }) {
-  const [baskets, setBaskets] = useState([]); // 장바구니 데이터 상태 관리
+  const { baskets, removeFromCart, fetchBaskets } = useCart();
   const { user, loading } = useUser();
 
   useEffect(() => {
     if (!loading && user && user.id) {
-      FetchGetBasket({ userId: user.id, onGetFetch: setBaskets });
+      fetchBaskets(user.id);
     }
   }, [user, loading]);
 
   const handleRemoveItem = async (basketId) => {
+    if (!basketId) {
+      console.error('basketId is undefined');
+      return;
+    }
     try {
-      const response = await fetch(`http://localhost:80/api/basket/remove/${basketId}`, {
-        method: "DELETE",
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to remove item from basket.");
-      }
-
+      await removeFromCart(basketId);
+      await fetchBaskets(user.id); // 삭제 후 데이터 새로고침
       alert("Item removed successfully.");
-
-      // 장바구니 상태 업데이트
-      setBaskets((prevBaskets) => prevBaskets.filter((item) => item.basketId !== basketId));
     } catch (error) {
       console.error("Error removing item:", error);
       alert("Failed to remove item. Please try again.");
     }
   };
-
 
   if (loading) {
     return loading;
@@ -44,12 +37,13 @@ function Cart({ isCartOpen, toggleCart }) {
     return user;
   }
 
+  const totalAmount = baskets.reduce((acc, item) => acc + (item.itemCount * item.itemPrice || 0), 0);
+
   return (
       <>
         {isCartOpen && (
             <div className="wrap-header-cart js-panel-cart show-header-cart">
               <div className="s-full js-hide-cart" onClick={() => toggleCart(isCartOpen)}></div>
-
               <div className="header-cart flex-col-l p-l-45 p-r-25">
                 <div className="header-cart-title flex-w flex-sb-m p-b-8 w-full">
               <span className="mtext-103 cl2">
@@ -66,11 +60,11 @@ function Cart({ isCartOpen, toggleCart }) {
                 <div className="header-cart-content flex-w js-pscroll">
                   <ul className="header-cart-wrapitem w-full">
                     {baskets.length > 0 ? (
-                        baskets.map((item, index) => (
-                            <li key={index} className="header-cart-item flex-w flex-t m-b-12">
+                        baskets.map((item) => (
+                            <li key={item.basketId} className="header-cart-item flex-w flex-t m-b-12">
                               <div className="header-cart-item-img">
                                 <img
-                                    src={`images/${item.mainImage}`} // 이미지 URL
+                                    src={`images/${item.mainImage}`}
                                     alt={item.itemName || "상품 이미지"}
                                 />
                               </div>
@@ -79,8 +73,8 @@ function Cart({ isCartOpen, toggleCart }) {
                                   {item.itemName || "상품 이름"}
                                 </a>
                                 <span className="header-cart-item-info">
-                          {item.itemCount} × {item.itemPrice?.toLocaleString()} 원
-                        </span>
+                                    {item.itemCount} × {item.itemPrice?.toLocaleString()} 원
+                                </span>
                               </div>
                               <div className="header-cart-item-remove p-t-8">
                                 <button
@@ -95,9 +89,9 @@ function Cart({ isCartOpen, toggleCart }) {
                     ) : (
                         <li className="header-cart-item flex-w flex-t m-b-12">
                           <div className="header-cart-item-txt p-t-8">
-                      <span className="header-cart-item-name m-b-18 hov-cl1 trans-04">
-                        장바구니가 비어 있습니다.
-                      </span>
+                            <span className="header-cart-item-name m-b-18 hov-cl1 trans-04">
+                                장바구니가 비어 있습니다.
+                            </span>
                           </div>
                         </li>
                     )}
@@ -105,11 +99,7 @@ function Cart({ isCartOpen, toggleCart }) {
 
                   <div className="w-full">
                     <div className="header-cart-total w-full p-tb-40">
-                      Total:{" "}
-                      {baskets
-                          .reduce((acc, item) => acc + item.itemCount * item.itemPrice, 0)
-                          .toLocaleString()}{" "}
-                      원
+                      Total: {totalAmount.toLocaleString()} 원
                     </div>
                     <div className="header-cart-buttons flex-w w-full">
                       <Link
