@@ -77,6 +77,29 @@ export const signin = async (userDTO) => {
   }
 };
 
+export const signup = async (data) => {
+  try {
+    const response = await fetch('http://localhost:80/api/auth/signup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      return {
+        success: false,
+        message: errorData.message || '회원가입에 실패했습니다.',
+      };
+    }
+
+    return { success: true, message: '회원가입에 성공했습니다!' };
+  } catch (error) {
+    console.error('API 호출 중 오류 발생:', error);
+    return { success: false, message: '서버와의 연결에 실패했습니다.' };
+  }
+};
+
 /**
  * !!! 직접 사용금지 !!!
  *
@@ -131,6 +154,13 @@ export const me = async () => {
  */
 export const sendCode = async (email) => {
   try {
+    // 이메일 중복 검사
+    const isAvailable = await checkEmail(email);
+    if (!isAvailable) {
+      throw new Error('이미 사용 중인 이메일입니다.');
+    }
+
+    // 중복이 없을 경우 인증 코드 전송
     const response = await call(`/api/email/sendCode`, 'POST', { email });
     return response; // 성공 메시지 반환
   } catch (error) {
@@ -155,6 +185,63 @@ export const verifyCode = async (email, code) => {
     return response; // 성공 메시지 반환
   } catch (error) {
     console.error('이메일 인증 실패:', error);
+    throw error;
+  }
+};
+
+/**
+ * 아이디 중복 검사 함수
+ *
+ * @param {string} username - 중복 검사를 수행할 아이디
+ * @returns {Promise<boolean>} 사용 가능 여부 (true: 사용 가능, false: 중복)
+ */
+export const checkUsername = async (username) => {
+  try {
+    const isAvailable = await call(
+      `/api/auth/check-username?username=${username}`,
+      'GET'
+    );
+    console.log('아이디 중복 검사 응답:', isAvailable); // 디버깅 로그 추가
+    return isAvailable; // true 또는 false 반환
+  } catch (error) {
+    console.error('아이디 중복 검사 실패:', error);
+    throw error;
+  }
+};
+
+/**
+ * 닉네임 중복 검사 함수
+ *
+ * @param {string} nickname - 중복 검사를 수행할 닉네임
+ * @returns {Promise<boolean>} 사용 가능 여부 (true: 사용 가능, false: 중복)
+ */
+export const checkNickname = async (nickname) => {
+  try {
+    const isAvailable = await call(
+      `/api/auth/check-nickname?nickname=${nickname}`,
+      'GET'
+    );
+    console.log('닉네임 중복 검사 응답:', isAvailable); // 디버깅 로그 추가
+    return isAvailable; // true 또는 false 반환
+  } catch (error) {
+    console.error('닉네임 중복 검사 실패:', error);
+    throw error;
+  }
+};
+
+/**
+ * 이메일 중복 검사 함수
+ *
+ * @param {string} email - 중복 검사를 수행할 이메일 주소
+ * @returns {Promise<boolean>} 사용 가능 여부 (true: 사용 가능, false: 중복)
+ */
+export const checkEmail = async (email) => {
+  try {
+    const response = await call(`/api/auth/check-email?email=${email}`, 'GET');
+    console.log('이메일 중복 검사 응답:', response); // 디버깅 로그
+    return response; // true 또는 false 반환
+  } catch (error) {
+    console.error('이메일 중복 검사 실패:', error);
     throw error;
   }
 };

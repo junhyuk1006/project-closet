@@ -5,11 +5,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.project.domain.Users;
 import com.project.dto.CustomUserDetail;
@@ -118,4 +114,28 @@ public class UserController {
                     .body(responseDTO);
         }
     }
+
+    // 아이디 중복 검사
+    @GetMapping("/check-username")
+    public ResponseEntity<Boolean> checkUsername(@RequestParam String username) {
+        boolean isAvailable = userService.isUsernameAvailable(username);
+        return ResponseEntity.ok(isAvailable);
+    }
+
+    // 닉네임 중복 검사
+    @GetMapping("/check-nickname")
+    public ResponseEntity<Boolean> checkNickname(@RequestParam String nickname) {
+        boolean isAvailable = userService.isNicknameAvailable(nickname);
+        return ResponseEntity.ok(isAvailable);
+    }
+
+    // 이메일 중복 검사
+    @GetMapping("/check-email")
+    public ResponseEntity<Boolean> checkEmail(@RequestParam String email) {
+        boolean isAvailable = userService.isEmailAvailable(email);
+        return ResponseEntity.ok(isAvailable);
+    }
+
+
+
 }

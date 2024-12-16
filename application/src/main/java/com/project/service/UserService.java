@@ -44,4 +44,20 @@ public class UserService {
         }
         return null;
     }
+
+    // 아이디 중복 여부 확인
+    public boolean isUsernameAvailable(String username) {
+        return !userRepository.existsByUsername(username);
+    }
+
+    // 닉네임 중복 여부 확인
+    public boolean isNicknameAvailable(String nickname) {
+        return !userRepository.existsByNickname(nickname);
+    }
+
+    // 이메일 중복 여부 확인
+    public boolean isEmailAvailable(String email) {
+        return !userRepository.existsByEmail(email); // 중복 여부 반환
+    }
+
 }
