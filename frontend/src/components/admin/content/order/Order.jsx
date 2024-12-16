@@ -1,5 +1,18 @@
+import { useState } from 'react';
 import { Form, Button, Row, Col, Table } from 'react-bootstrap';
+
 const Order = () => {
+  const [searchParams, setSearchParams] = useState({
+    searchKeyword: 'orderNo',
+  });
+
+  const updateSearchParams = (key, value) => {
+    setSearchParams((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
+  };
+
   return (
     <div>
       <h2>주문</h2>
@@ -18,9 +31,16 @@ const Order = () => {
             <Col xs={12} md={4} lg={3}>
               <Form.Group controlId="searchKeyword">
                 <Form.Label>검색어</Form.Label>
-                <Form.Control as="select">
-                  <option>주문번호</option>
-                  <option>회원아이디</option>
+                <Form.Control
+                  as="select"
+                  name="searchKeyword"
+                  value={searchParams.searchKeyword}
+                  onChange={(e) =>
+                    updateSearchParams('searchKeyword', e.target.value)
+                  }
+                >
+                  <option value="orderNo">주문번호</option>
+                  <option value="email">이메일</option>
                   <option>상품이름</option>
                 </Form.Control>
               </Form.Group>
