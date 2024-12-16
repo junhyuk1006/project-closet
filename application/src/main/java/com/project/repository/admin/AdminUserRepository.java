@@ -16,7 +16,7 @@ public interface AdminUserRepository extends JpaRepository<Users, Long> {
     @Query("SELECT new com.project.dto.AdminUserDTO( " +
             "u.id,u.email, u.nickname, g.grade, u.birth, " +
             "(SELECT COALESCE(SUM(p.point), 0) FROM Point p WHERE p.user.id = u.id), " +
-            "(SELECT COUNT(o) FROM OrderList o WHERE o.user.id = u.id), " +
+            "(SELECT COUNT(o) FROM OrderHistory o WHERE o.user.id = u.id), " +
             "u.status, u.createdAt) " +
             "FROM Users u " +
             "LEFT JOIN u.grade g " +
