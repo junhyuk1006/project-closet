@@ -74,6 +74,11 @@ public  class CustomUserDetail implements UserDetails {
         return user.getSize();
     }
 
+    public Boolean getIsReleased() {
+        return user.getIsReleased();
+    }
+
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.emptyList();

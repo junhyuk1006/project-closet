@@ -6,13 +6,15 @@ import MyPageHeader from '../../components/myPage/MyPageHeader';
 
 const MyPageHome = () => {
   const navigate = useNavigate();
-  const { user, setUser } = useUser();
+  const { user } = useUser();
+
+  console.log('User in MyPageHome:', user);
   const features = [
     {
       icon: 'bi-info-circle',
       title: '회원정보',
       text: '회원정보 조회 및 수정',
-      link: '/MemberInfo',
+      link: '/MyMemberInfo',
     },
     {
       icon: 'bi-cart-check',
@@ -52,7 +54,7 @@ const MyPageHome = () => {
         <div>
           <MyPageHeader
             title="마이페이지"
-            description={`${user.nickname}님, 환영합니다.`}
+            description={`${user?.nickname || ''}님, 환영합니다.`}
           />
         </div>
 

@@ -17,6 +17,7 @@ import OAuth2RedirectHandler from './pages/auth/OAuth2RedirectHandler ';
 import SignUp from './pages/auth/SignUp';
 
 /** ./pages/MyPage  */
+import MyMemberInfo from './pages/myPage/MyMemberInfo';
 import MyInquirement from './pages/myPage/MyInquirement';
 import MyPageHome from './pages/myPage/MyPageHome';
 import MyPoint from './pages/myPage/MyPoint';
@@ -92,7 +93,7 @@ const AppRoutes = () => (
         {/** ./pages/MyPage */}
         {renderRoute('/MyPageHome', <MyPageHome />)} {/* 마이페이지 홈 */}
         {renderRoute('/MyPoint', <MyPoint />)} {/* 포인트 페이지 */}
-        {/* 회원정보 페이지 */}
+        {renderRoute('/MyMemberInfo', <MyMemberInfo />)} {/* 회원정보 페이지 */}
         {renderRoute('/MyInquirement', <MyInquirement />)}{' '}
         {/* 문의내역 페이지 */}
         {/**./pages/admin */}

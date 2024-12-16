@@ -75,7 +75,6 @@ function Header({ user }) {
     setInputValue('');
   }, [isSearching]);
 
-  // 페이지 렌더링 시 jwt 토큰의 유효성 확인
   useEffect(() => {
     setIsAuthenticated(isValidJwtToken());
   }, [user]);

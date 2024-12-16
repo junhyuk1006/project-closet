@@ -17,25 +17,19 @@ export const call = async (api, method = 'GET', request = null) => {
     credentials: 'include',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${localStorage.getItem('token')}`, // 토큰을 헤더에 포함
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
     },
   };
 
   if (request) {
-    options.body = JSON.stringify(request); // 요청 데이터가 있을 경우 body에 추가
+    options.body = JSON.stringify(request);
   }
 
   try {
     const response = await fetch(url, options);
 
-    // 응답 상태 확인
     if (!response.ok) {
-      if (response.status === 403 || response.status === 401) {
-        alert('세션이 만료되었습니다. 다시 로그인해주세요.');
-        localStorage.removeItem('token'); // 토큰 제거
-        window.location.href = '/login'; // 로그인 페이지로 이동
-      }
-      const errorData = await response.json().catch(() => null); // JSON 파싱 에러 처리
+      const errorData = await response.json().catch(() => null);
       throw (
         errorData || {
           message: '알 수 없는 오류 발생',
@@ -44,16 +38,16 @@ export const call = async (api, method = 'GET', request = null) => {
       );
     }
 
-    // 응답 본문이 있는 경우만 JSON 파싱
+    // JSON 응답 여부 확인
     const contentType = response.headers.get('Content-Type');
     if (contentType && contentType.includes('application/json')) {
       return await response.json();
     } else {
-      return null; // JSON 응답이 없을 경우 null 반환
+      return null;
     }
   } catch (error) {
     console.error('API 호출 중 오류 발생:', error);
-    throw error; // 추가 처리를 위해 호출자에게 에러 전달
+    throw error;
   }
 };
 
@@ -139,6 +133,7 @@ export const me = async () => {
     }
 
     const data = await response.json();
+    console.log('data: ' + data);
     return data; // 사용자 데이터 반환
   } catch (err) {
     console.error('Failed to fetch user data:', err.message);
