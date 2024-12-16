@@ -29,10 +29,11 @@ public class PointController {
     private final PointService pointService;
     private final UserService userService;
 
-    /** 리뷰 포인트 저장*/
+/** 리뷰 포인트 저장*/
+
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/saveReviewPoint")
-    public ResponseEntity<String> savePoint(@RequestBody Point point) {
+    public ResponseEntity<String> savePoint(@RequestBody PointDTO point) {
         pointService.save(point);
         return ResponseEntity.ok("success");
     }
@@ -49,12 +50,22 @@ public class PointController {
         return ResponseEntity.ok(points);
     }
 
-    @GetMapping("/getTotalPointByUserid")
-    public ResponseEntity<PointDTO> getTotalPointByUserid(@AuthenticationPrincipal CustomUserDetail userDetail) {
-        long userId = userDetail.getId();
-        PointDTO dto = pointService.getTotalPointByUserId(userId);
-        return ResponseEntity.ok(dto);
+    @RequestMapping(value = "/getTotalPointByUserid", method = {RequestMethod.GET, RequestMethod.POST})
+    public int getTotalPointByUserId(@RequestParam(required = false) Long userId,
+                                     @RequestBody(required = false) Map<String, Long> body) {
+        if (userId != null) {
+            return pointService.getTotalPointByUserId(userId);
+        } else if (body != null && body.containsKey("userId")) {
+            return pointService.getTotalPointByUserId(body.get("userId"));
+        }
+        throw new IllegalArgumentException("Invalid request: userId is missing");
     }
 
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleException(Exception ex) {
+        log.error("Exception occurred: ", ex);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal Server Error");
+    }
 
 }

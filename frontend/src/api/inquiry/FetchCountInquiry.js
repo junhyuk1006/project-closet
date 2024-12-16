@@ -16,7 +16,7 @@ function FetchCountInquiry ({ itemId, onCountFetch }) {
                     }
                 }).catch((error) => console.error("this error(Count Inquiry): ",error))
         }
-    }, []);
+    }, [onCountFetch]);
     return null;
 }
 

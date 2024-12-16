@@ -17,7 +17,7 @@
 .animsition {
   position: relative;
   opacity: 0; /* 기본 상태를 투명하게 설정 */
-  transition: opacity 1s ease-out; /* 애니메이션 시간과 타이밍 설정 */
+  transition: opacity 0.3s ease-out; /* 애니메이션 시간과 타이밍 설정 */
 }
 
 .animsition-overlay-slide {

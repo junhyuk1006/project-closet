@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import MyPageHeader from '../../components/myPage/MyPageHeader';
 import Pagination from '../../pages/public/Pagination'; // 분리된 Pagination 컴포넌트 임포트
 import { call } from '../../api/auth/ApiService';
+import { useUser } from '../../api/auth/UserContext';
 import '../../assets/styles/myPage/MyPage.css';
 
 const MyPoint = () => {
@@ -9,9 +11,26 @@ const MyPoint = () => {
   const [totalPoints, setTotalPoints] = useState(0); // 나의 적립금
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
+  const { user, loading } = useUser();
   const pageSize = 6;
   const blockSize = 5; // 한 블록에 표시할 페이지 수
 
+  useEffect(() => {
+    if (!loading && user) {
+      fetchPoints(currentPage); // 포인트 데이터 가져오기
+      fetchTotalPoints(); // 나의 적립금 데이터 가져오기
+    }
+  }, [loading, user, currentPage]);
+
+  if (loading) {
+  }
+
+  // 로그인되지 않은 경우 처리
+  if (!user || !user.id) {
+    return user;
+  }
+
+  const userId = user.id;
   const fetchPoints = async (page) => {
     try {
       const response = await call(
@@ -19,28 +38,26 @@ const MyPoint = () => {
         'GET'
       );
       setPoints(response.content);
-      setTotalPages(response.totalPages);
     } catch (error) {
       console.error('Error fetching points:', error);
     }
   };
 
   const fetchTotalPoints = async () => {
+    console.log(userId);
     try {
-      const response = await call(`/api/point/getTotalPointByUserid`, 'GET');
-      setTotalPoints(response.totalPoints); // 백엔드에서 "totalPoints" 필드로 전달된 값
+      const response = await axios.post(
+        'http://localhost:80/api/point/getTotalPointByUserid',
+        {
+          userId: userId, // JSON 형태로 전달
+        }
+      );
+      console.log('Total points:', response.data);
+      setTotalPoints(response.data);
     } catch (error) {
       console.error('Error fetching total points:', error);
     }
   };
-
-  useEffect(() => {
-    fetchPoints(currentPage); // 포인트 데이터 가져오기
-  }, [currentPage]);
-
-  useEffect(() => {
-    fetchTotalPoints(); // 나의 적립금 데이터 가져오기
-  }, []);
 
   return (
     <div>

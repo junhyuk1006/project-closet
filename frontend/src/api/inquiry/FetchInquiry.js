@@ -17,7 +17,7 @@ function FetchInquiry ({ item_id, onInquiryFetch }) {
             .catch((error) =>
                 console.log("Error fetching item data:", error)
             );
-    }, [])
+    }, [onInquiryFetch])
     return null;
 }
 export default FetchInquiry

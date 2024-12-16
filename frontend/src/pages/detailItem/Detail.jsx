@@ -10,7 +10,7 @@ import ReviewInput from './ReviewInput';
 import ItemInquiry from './ItemInquiry';
 import FetchCountReview from '../../api/review/FetchCountReview';
 import FetchCountInquiry from '../../api/inquiry/FetchCountInquiry';
-import { fetchSaveBasket } from '../../api/basket/FetchSaveBasket';
+import { useCart } from '../../api/basket/BasketContext';
 
 function Detail() {
   const location = useLocation();
@@ -24,14 +24,15 @@ function Detail() {
   const [countInquiry, setCountInquiry] = useState(0);
   const [selectedColor, setSelectedColor] = useState('');
   const [selectedSize, setSelectedSize] = useState('');
-  const [dataLoaded, setDataLoaded] = useState(false);
   const [baskets, setBasket] = useState(null);
   const { quantity, increaseQuantity, decreaseQuantity } =
     useProductQuantity(1);
+  const { addToCart } = useCart();
 
   useEffect(() => {
     if (!loading && user) {
       setBasket([]); // 초기화
+      console.log('Current baskets state:', baskets);
       console.log('장바구니 초기화됨');
     }
   }, [loading, user]);
@@ -95,6 +96,9 @@ function Detail() {
       itemCount: quantity,
       size: selectedSize,
       color: selectedColor,
+      itemName: idProducts[0]?.itemName, // 필수 데이터 추가
+      itemPrice: idProducts[0]?.itemPrice, // 필수 데이터 추가
+      mainImage: idProducts[0]?.mainImage, // 필수 데이터 추가
     };
 
     try {
@@ -102,9 +106,7 @@ function Detail() {
         `http://localhost:80/api/basket/saveBasket`,
         {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(basketData),
         }
       );
@@ -115,12 +117,14 @@ function Detail() {
 
       const data = await response.json();
 
-      // 기존 장바구니 상태에 새 데이터 추가
-      setBasket((prev) => [...prev, basketData]);
-      console.log('장바구니 데이터 업데이트:', baskets);
+      // 전역 상태 업데이트
+      addToCart({
+        ...basketData,
+        basketId: data.basketId, // 서버에서 반환된 basketId 추가
+      });
 
-      window.location.reload(); // 장바구니에 상품 추가 후 페이지 리로드
-      alert(data.message || '장바구니에 추가되었습니다.');
+      window.location.reload();
+      alert('장바구니에 추가되었습니다!');
     } catch (error) {
       console.error('장바구니 저장 실패:', error);
       alert('장바구니 저장 중 오류가 발생했습니다.');
