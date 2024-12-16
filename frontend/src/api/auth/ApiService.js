@@ -5,7 +5,7 @@ const API_BASE_URL = 'http://localhost:80'; // 서버 URL
 /**
  * API 호출을 처리하는 함수입니다.
  *
- * @param {string} api API의 엔드포인트를 입력합니다.
+ * @param {string} api - API의 엔드포인트를 입력합니다.
  * @param {string} [method='GET'] - HTTP 메서드를 입력합니다('GET', 'POST' 등). 기본값은 'GET'입니다.
  * @param {Object} [request=null] - 서버에 전송할 데이터를 입력합니다 (선택 사항).
  * @returns {Promise<any>} 서버로부터의 응답 데이터입니다.

@@ -5,6 +5,7 @@ import Modal from '../../components/Modal';
 export default function Product({ products, activeCategory, activeFilter }) {
   const [isLiked, setIsLiked] = useState({});
   const [isModalOpen, setModalOpen] = useState(false); // 모달 상태 관리
+  const [selectedProduct, setSelectedProduct] = useState(null); // 선택한 제품의 상태
   const navigate = useNavigate();
 
   const toggleLike = (id) => {
@@ -15,7 +16,8 @@ export default function Product({ products, activeCategory, activeFilter }) {
     }));
   };
 
-  const handleQuickView = () => {
+  const handleQuickView = (product) => {
+    setSelectedProduct(product);
     setModalOpen(true);
   };
 
@@ -37,7 +39,13 @@ export default function Product({ products, activeCategory, activeFilter }) {
 
   return (
     <div className="row isotope-grid">
-      <Modal isOpen={isModalOpen} onClose={closeModal} />
+      {selectedProduct && (
+        <Modal
+          isOpen={isModalOpen}
+          onClose={closeModal}
+          product={selectedProduct}
+        />
+      )}
 
       {uniqueProducts
         .filter(
@@ -75,7 +83,7 @@ export default function Product({ products, activeCategory, activeFilter }) {
 
                 <button
                   className="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04"
-                  onClick={handleQuickView}
+                  onClick={() => handleQuickView(product)}
                 >
                   Quick View
                 </button>
@@ -90,7 +98,9 @@ export default function Product({ products, activeCategory, activeFilter }) {
                     {product.item_name}
                   </button>
 
-                  <span className="stext-105 cl3">{product.item_price}원</span>
+                  <span className="stext-105 cl3">
+                    {product.item_price.toLocaleString()}원
+                  </span>
                 </div>
 
                 <div className="block2-txt-child2 flex-r p-t-3">

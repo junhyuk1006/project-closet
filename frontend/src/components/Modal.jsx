@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -7,16 +7,31 @@ import useProductQuantity from '../hooks/useProductQuantity';
 
 // 필요한 경우 다른 스타일이나 스크립트도 import 해주세요.
 
-function Modal({ isOpen, onClose }) {
+function Modal({ isOpen, onClose, product }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isZoomed, setIsZoomed] = useState(false); // 확대 보기 상태
   const { quantity, increaseQuantity, decreaseQuantity } =
     useProductQuantity(1);
 
+  // useEffect(() => {
+  //   if (productId) {
+  //     async function getProduct() {
+  //       try {
+  //         const data = await fetch(
+  //           `http://localhost:80/api/itemDetail/${productId}`
+  //         ).then((data) => data.json());
+  //         setProducts('data:' + data);
+  //       } catch (error) {
+  //         console.error('Failed to fetch product details:', error);
+  //       }
+  //     }
+  //     getProduct();
+  //   }
+  // }, [productId]);
+
   const thumbnails = [
-    'images/product-detail-01.jpg',
-    'images/product-detail-02.jpg',
-    'images/product-detail-03.jpg',
+    `images/${product.main_image}`,
+    `images/${product.detail_image}`,
   ];
 
   if (!isOpen) return null;
@@ -106,15 +121,12 @@ function Modal({ isOpen, onClose }) {
             <div className="col-md-6 col-lg-5 p-b-30">
               <div className="p-r-50 p-t-5 p-lr-0-lg">
                 <h4 className="mtext-105 cl2 js-name-detail p-b-14">
-                  [CL33] 경량 재킷
+                  {product.item_name}
                 </h4>
 
-                <span className="mtext-106 cl2">75,000원</span>
+                <span className="mtext-106 cl2">{product.item_price}원</span>
 
-                <p className="stext-102 cl3 p-t-23">
-                  무난하게 입기 좋은 재킷입니다. 소매에 스트라이프 패턴을
-                  추가하여 포인트를 주었습니다.
-                </p>
+                <p className="stext-102 cl3 p-t-23">{product.item_category}</p>
 
                 <div className="p-t-33">
                   <div className="flex-w flex-r-m p-b-10">
@@ -123,10 +135,7 @@ function Modal({ isOpen, onClose }) {
                     <div className="size-204 flex-w flex-m respon6-next">
                       <select className="custom-select">
                         <option>사이즈 선택</option>
-                        <option>Size S</option>
-                        <option>Size M</option>
-                        <option>Size L</option>
-                        <option>Size XL</option>
+                        <option>S</option>
                       </select>
                     </div>
                   </div>
@@ -138,9 +147,6 @@ function Modal({ isOpen, onClose }) {
                       <select className="custom-select">
                         <option>색상 선택</option>
                         <option>Red</option>
-                        <option>Blue</option>
-                        <option>White</option>
-                        <option>Grey</option>
                       </select>
                     </div>
                   </div>
