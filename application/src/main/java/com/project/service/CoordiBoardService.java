@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -13,20 +14,23 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CoordiBoardService {
 
+    private static final String FRONTEND_IMAGES_PATH = System.getProperty("user.dir") + "/frontend/public/images";
+
+
     final CoordiBoardRepository coordiBoardRepository;
     final FileService fileService;
 
+    // 코디 저장
     public void saveCoordi(MultipartFile image, String description, Long userId, String title) throws IOException {
-        // 파일 업로드 로직 위임
-        String directoryPath = "src/main/resources/static/images";
-        String fileName = fileService.uploadFile(image, directoryPath);
+        // 파일 업로드 로직: 프론트엔드 경로 사용
+        String fileName = fileService.uploadFile(image, FRONTEND_IMAGES_PATH);
 
         // CoordiBoard 엔티티 저장
         CoordiBoard coordiBoard = new CoordiBoard();
         coordiBoard.setUserId(userId);
         coordiBoard.setCoordiTitle(title);
         coordiBoard.setCoordiContent(description);
-        coordiBoard.setCoordiImage(fileName); // 저장된 파일 이름 설정
+        coordiBoard.setCoordiImage(fileName);
 
         coordiBoardRepository.save(coordiBoard);
     }
@@ -49,8 +53,8 @@ public class CoordiBoardService {
         }
 
         if (image != null) {
-            String directoryPath = "src/main/resources/static/images";
-            String fileName = fileService.uploadFile(image, directoryPath);
+            // 기존 이미지 덮어쓰기
+            String fileName = fileService.uploadFile(image, FRONTEND_IMAGES_PATH);
             coordiBoard.setCoordiImage(fileName);
         }
 

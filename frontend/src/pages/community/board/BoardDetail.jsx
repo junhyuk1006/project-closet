@@ -6,6 +6,7 @@ import {
 } from '../../../api/community/board/Board';
 import { useUser } from '../../../api/auth/UserContext'; // useUser 사용
 import './BoardDetail.css'; // 스타일을 위한 CSS 파일
+import BoardReply from './BoardReply';
 
 const BoardDetail = () => {
   const { id } = useParams();
@@ -78,6 +79,7 @@ const BoardDetail = () => {
           </div>
         )}
       </div>
+      <BoardReply />
 
       <div className="board-actions">
         <button

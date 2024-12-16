@@ -1,0 +1,93 @@
+/* 전체 댓글 컨테이너 스타일 */
+.reply-container {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* 제목 스타일 */
+.reply-title {
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+/* 댓글 리스트 스타일 */
+.reply-list {
+  margin-bottom: 15px;
+}
+
+/* 댓글 아이템 스타일 */
+.reply-item {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+/* 댓글 내용 텍스트 */
+.reply-content {
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+/* 댓글 액션 버튼들 */
+.reply-actions {
+  display: flex;
+  gap: 10px;
+}
+
+/* 입력 필드 */
+.reply-input {
+  width: 100%;
+  padding: 8px;
+  font-size: 0.9rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+/* 버튼 스타일 */
+.reply-button {
+  padding: 6px 12px;
+  font-size: 0.9rem;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.reply-button:hover {
+  background-color: #0056b3;
+}
+
+/* 삭제 버튼 스타일 */
+.reply-delete {
+  background-color: #dc3545;
+}
+
+.reply-delete:hover {
+  background-color: #b02a37;
+}
+
+/* 등록 버튼 스타일 */
+.reply-submit {
+  background-color: #919492;
+}
+
+.reply-submit:hover {
+  background-color: #1d1d1d;
+}
+
+.no-replies {
+  text-align: center;
+  color: #999;
+  font-size: 14px;
+  margin: 20px 0;
+}

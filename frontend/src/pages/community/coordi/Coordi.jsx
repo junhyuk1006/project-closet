@@ -70,7 +70,7 @@ const Album = () => {
                 <div className="col" key={index}>
                   <div className="card shadow-sm">
                     <img
-                      src={`http://localhost/images/${coordi.coordiImage}`}
+                      src={`/images/${coordi.coordiImage}`}
                       className="card-img-top"
                       alt={coordi.coordiTitle}
                       style={{ height: '225px', objectFit: 'cover' }}

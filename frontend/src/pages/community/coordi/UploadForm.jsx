@@ -55,6 +55,9 @@ const UploadForm = () => {
       const response = await fetch('http://localhost/api/coordi/upload', {
         method: 'POST',
         body: formData,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`, // Authorization 헤더 추가
+        },
       });
 
       if (response.ok) {

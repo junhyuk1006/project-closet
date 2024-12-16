@@ -10,17 +10,18 @@ import java.io.IOException;
 public class FileService {
 
     public String uploadFile(MultipartFile file, String directoryPath) throws IOException {
-        String staticImagePath = new File(directoryPath).getAbsolutePath();
-        String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
-        String filePath = staticImagePath + File.separator + fileName;
-
-        File directory = new File(staticImagePath);
+        // 디렉토리 생성
+        File directory = new File(directoryPath);
         if (!directory.exists()) {
-            directory.mkdirs(); // 디렉토리 생성
+            directory.mkdirs();
         }
 
-        File targetFile = new File(filePath);
-        file.transferTo(targetFile); // 파일 저장
+        // 파일 이름 설정 (고유 이름 생성)
+        String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+        File destinationFile = new File(directoryPath + "/" + fileName);
+
+        // 파일 저장
+        file.transferTo(destinationFile);
 
         return fileName; // 저장된 파일 이름 반환
     }
