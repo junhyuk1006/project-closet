@@ -3,15 +3,82 @@ import '../../components/SignUp';
 import '../../assets/styles/auth/signup.css';
 import closetImage from '../../assets/closet.png'; // 이미지 경로를 import
 import { useNavigate } from 'react-router-dom';
+import { sendCode, verifyCode } from '../../api/auth/ApiService';
 
 const Checkout = () => {
   const formRef = useRef(null); // 폼 참조
   const navigate = useNavigate(); // 페이지 네비게이션 훅
-  const [isSubmitting, setIsSumitting] = useState(false); // 제출상태 관리
 
+  const [isSubmitting, setIsSumitting] = useState(false); // 제출상태 관리
+  const [isEmailVerified, setIsEmailVerified] = useState(false); // 이메일 인증 성공 여부
+  const [verificationCode, setVerificationCode] = useState(''); // 인증 코드 입력 필드 상태
+  const [isCodeSent, setIsCodeSent] = useState(false); // 인증 코드 전송 여부
+
+  // 이메일 인증 코드 전송
+  const handleSendCode = async () => {
+    const email = formRef.current.email.value;
+
+    if (!email) {
+      alert('이메일을 입력해주세요.');
+      return;
+    }
+
+    try {
+      await sendCode(email); // 인증 코드 전송 API 호출
+      alert('인증 코드가 이메일로 전송되었습니다.');
+      setIsCodeSent(true);
+    } catch (error) {
+      console.error('인증 코드 전송 실패:', error);
+      alert('인증 코드 전송에 실패했습니다. 다시 시도해주세요.');
+    }
+  };
+
+  // 이메일 인증 코드 확인
+  const handleVerifyCode = async () => {
+    const email = formRef.current.email.value.trim(); // 이메일 값 공백 제거
+    const code = verificationCode?.trim(); // 입력된 인증 코드 공백 제거
+
+    console.log('전송할 이메일:', email);
+    console.log('전송할 인증 코드:', code);
+
+    // 입력값 유효성 검사
+    if (!email) {
+      alert('이메일을 입력해주세요.');
+      return;
+    }
+    if (!code) {
+      alert('인증 코드를 입력해주세요.');
+      return;
+    }
+
+    try {
+      // 이메일 인증 코드 검증 API 호출
+      const response = await verifyCode(email, code);
+      console.log('이메일 인증 성공:', response);
+
+      alert('이메일 인증에 성공했습니다.');
+      setIsEmailVerified(true); // 인증 성공 상태 업데이트
+    } catch (error) {
+      console.error('이메일 인증 실패:', error);
+
+      // 오류 메시지에 따라 처리
+      if (error.message) {
+        alert(`이메일 인증 실패: ${error.message}`);
+      } else {
+        alert('이메일 인증에 실패했습니다. 인증 코드를 다시 확인해주세요.');
+      }
+    }
+  };
+
+  // 회원가입 제출 처리
   const handleSubmit = async (event) => {
     event.preventDefault(); // 기본 동작 중단
     event.stopPropagation(); // 이벤트 전파 중단
+
+    if (!isEmailVerified) {
+      alert('이메일 인증을 완료해주세요.');
+      return;
+    }
 
     const form = event.target;
     const formData = new FormData(form);
@@ -26,7 +93,7 @@ const Checkout = () => {
     // 비밀번호 확인
     if (data.password != form.confirmPassword.value) {
       alert('비밀번호가 일치하지 않습니다.');
-      form.confirmPassword.classList.add('is-invaild');
+      form.confirmPassword.classList.add('is-invalid');
       return;
     } else {
       form.confirmPassword.classList.remove('is-invalid');
@@ -56,7 +123,6 @@ const Checkout = () => {
           throw new Error(errorData.message || '회원가입에 실패했습니다.');
         }
 
-        const result = await response.json();
         alert('회원가입에 성공했습니다! 로그인페이지로 이동합니다.');
         navigate('/Login'); // 로그인 페이지로 이동
       } catch (error) {
@@ -68,13 +134,10 @@ const Checkout = () => {
     } else {
       form.classList.add('was-validated'); // 유효성 검사 스타일 추가
       alert('모든 필드를 올바르게 입력해주세요.');
-      console.log('유효성 검사 실패');
     }
   };
 
   return (
-    // 부트스트랩의 col-6 속성을 임시로 적용해두었습니다.
-    // main, footer 태그를 삭제하였습니다.
     <div className="signup-container col-6">
       <div className="py-5 text-center">
         <img
@@ -157,18 +220,59 @@ const Checkout = () => {
             <label htmlFor="email" className="form-label">
               이메일
             </label>
-            <input
-              type="email"
-              className="form-control"
-              id="email"
-              name="email"
-              placeholder="you@example.com"
-              required
-            />
+            <div className="input-group">
+              <input
+                type="email"
+                className="form-control"
+                id="email"
+                name="email"
+                placeholder="you@example.com"
+                required
+              />
+              <button
+                type="button"
+                className="btn btn-outline-primary"
+                onClick={handleSendCode}
+                disabled={isCodeSent} // 인증 코드 전송 후 비활성화
+              >
+                인증 코드 전송
+              </button>
+            </div>
             <div className="invalid-feedback">
               유효한 이메일 주소를 입력해주세요.
             </div>
           </div>
+
+          {isCodeSent && (
+            <div className="col-12 mt-2">
+              <label htmlFor="verificationCode" className="form-label">
+                인증 코드
+              </label>
+              <div className="input-group">
+                <input
+                  type="text"
+                  className="form-control"
+                  id="verificationCode"
+                  placeholder="인증 코드를 입력하세요"
+                  value={verificationCode}
+                  onChange={(e) => setVerificationCode(e.target.value)}
+                />
+                <button
+                  type="button"
+                  className="btn btn-outline-success"
+                  onClick={handleVerifyCode}
+                  disabled={isEmailVerified} // 인증 성공 후 비활성화
+                >
+                  인증 확인
+                </button>
+              </div>
+              {isEmailVerified && (
+                <div className="text-success mt-2">
+                  이메일 인증에 성공했습니다!
+                </div>
+              )}
+            </div>
+          )}
 
           <div className="col-md-4">
             <label htmlFor="birthYear" className="form-label">
@@ -256,7 +360,7 @@ const Checkout = () => {
         <button
           className="w-100 btn btn-secondary btn-lg"
           type="submit"
-          disabled={isSubmitting} // 제출 중일 때 버튼 비활성화
+          disabled={isSubmitting || !isEmailVerified} // 이메일 인증 미완료 시 비활성화
         >
           {isSubmitting ? '가입 중...' : '회원가입'}
         </button>
@@ -265,10 +369,10 @@ const Checkout = () => {
         <p className="mb-1">&copy; 2024 CLOSET</p>
         <ul className="list-inline">
           <li className="list-inline-item">
-            <a href="#">개인정보처리방침</a>
+            <a href="/privacy">개인정보처리방침</a>
           </li>
           <li className="list-inline-item">
-            <a href="#">이용약관</a>
+            <a href="/guide">이용약관</a>
           </li>
           <li className="list-inline-item">
             <a href="#">고객센터</a>

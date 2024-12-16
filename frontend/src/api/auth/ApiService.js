@@ -14,6 +14,7 @@ export const call = async (api, method = 'GET', request = null) => {
   const url = `${API_BASE_URL}${api}`;
   const options = {
     method,
+    credentials: 'include',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${localStorage.getItem('token')}`, // 토큰을 헤더에 포함
@@ -119,5 +120,41 @@ export const me = async () => {
   } catch (err) {
     console.error('Failed to fetch user data:', err.message);
     return null; // 에러 발생 시 null 반환
+  }
+};
+
+/**
+ * 이메일 인증 코드 전송 함수
+ *
+ * @param {string} email - 인증 코드를 받을 이메일 주소
+ * @returns {Promise<string>} 성공 메시지
+ */
+export const sendCode = async (email) => {
+  try {
+    const response = await call(`/api/email/sendCode`, 'POST', { email });
+    return response; // 성공 메시지 반환
+  } catch (error) {
+    console.error('인증 코드 전송 실패:', error);
+    throw error;
+  }
+};
+
+/**
+ * 이메일 인증 코드 검증 함수
+ *
+ * @param {string} email - 이메일 주소
+ * @param {string} code - 사용자가 입력한 인증 코드
+ * @returns {Promise<string>} 성공 메시지
+ */
+export const verifyCode = async (email, code) => {
+  try {
+    const response = await call(`/api/email/verifyCode`, 'POST', {
+      email,
+      code,
+    });
+    return response; // 성공 메시지 반환
+  } catch (error) {
+    console.error('이메일 인증 실패:', error);
+    throw error;
   }
 };
