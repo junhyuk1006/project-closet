@@ -4,6 +4,7 @@ import com.project.domain.Grade;
 import com.project.domain.Users;
 import com.project.dto.AdminPointDTO;
 import com.project.dto.AdminUserDTO;
+import com.project.dto.AdminUserMonthDTO;
 import com.project.dto.PageRequestDTO;
 import com.project.service.Admin.AdminUserService;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Slf4j // 로깅 객체 자동 생성 (log 변수 사용 가능)
@@ -48,5 +50,16 @@ public class AdminUserController {
     public Page<AdminPointDTO> getUserPoint(@PageableDefault(size = 20,sort = "createdAt",direction = Sort.Direction.DESC)Pageable pageable,
                                             @ModelAttribute PageRequestDTO pageRequestDTO) {
         return adminUserService.getUserPoint(pageable,pageRequestDTO);
+    }
+
+    @GetMapping("month")
+    public List<AdminUserMonthDTO> getUserMonth() {
+        return adminUserService.getUserMonth();
+    }
+
+    @GetMapping("userDate")
+    public int getUserDate(@RequestParam(required = false) Timestamp startDate
+    , @RequestParam(required = false) Timestamp endDate) {
+        return adminUserService.getUserDate(startDate, endDate);
     }
 }
