@@ -68,4 +68,20 @@ public class UserService {
     public void changeAddInfo(Long userId, String profileImage, String name, String phone, String style, String introduction) {
         userRepository.changeAddInfo(userId, profileImage, name,phone,style,introduction);
     }
+
+    // 아이디 중복 여부 확인
+    public boolean isUsernameAvailable(String username) {
+        return !userRepository.existsByUsername(username);
+    }
+
+    // 닉네임 중복 여부 확인
+    public boolean isNicknameAvailable(String nickname) {
+        return !userRepository.existsByNickname(nickname);
+    }
+
+    // 이메일 중복 여부 확인
+    public boolean isEmailAvailable(String email) {
+        return !userRepository.existsByEmail(email); // 중복 여부 반환
+    }
+
 }

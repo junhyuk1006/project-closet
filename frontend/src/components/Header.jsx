@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 // import CSS
 import '../assets/styles/components/header.css';
 import '../assets/vendor/css-hamburgers/hamburgers.min.css';
@@ -16,35 +16,54 @@ import MobileMenu from './main/MobileMenu';
 import isValidJwtToken from '../api/auth/isValidJwtToken';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Slider from 'react-slick';
+import { call } from '../api/auth/ApiService';
+import Alarm from './main/Alarm';
+import { useUser } from '../api/auth/UserContext';
 
-function Header() {
+function Header({ user }) {
+  const navigate = useNavigate();
   const isAtTop = useFixedHeader(); // 현재 페이지 스크롤의 최상단 여부
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false); // 토큰 유효성 상태
   const [isCartOpen, setIsCartOpen] = useState(false); // 데스크탑 장바구니의 open 상태
   const [isMenuOpen, setIsMenuOpen] = useState(false); // 모바일 메뉴의 open 상태
   const [isSearching, setIsSearching] = useState(false); // 데스크탑의 검색창 open 상태
   const [inputValue, setInputValue] = useState(''); // 검색창 입력값 상태
   const [isDesktopCategoryOpen, setIsDesktopCategoryOpen] = useState(false); // 데스크탑 카테고리 open 상태
-  const [isDesktopAlarmOpen, setIsDesktopAlarmOpen] = useState(false); // 데스크탑 알람 패널 open 상태
-  const [isMobileAlarmOpen, setIsMobileAlarmOpen] = useState(false); // 데스크탑 알람 패널 open 상태
+  const [notices, setNotices] = useState([]); // 공지사항 상태
+  const [baskets, setBaskets] = useState([]); // 장바구니 상태
+  const { logout } = useUser();
+
+  // 장바구니 데이터 로드
+  useEffect(() => {
+    if (user) {
+      async function fetchBaskets() {
+        try {
+          const newBaskets = await call(`/api/basket/getBasket/` + user.id); // 비동기 처리
+          setBaskets(newBaskets);
+        } catch (err) {
+          console.error('장바구니 데이터를 가져오는 데 실패했습니다:', err);
+        }
+      }
+      fetchBaskets();
+    }
+  }, [user, isCartOpen]);
+
+  // 공지사항 데이터 로드
+  useEffect(() => {
+    const getNotices = async () => {
+      try {
+        const newNotices = await call('/notice/all');
+        setNotices(newNotices);
+      } catch (err) {
+        console.error('공지사항을 불러오는 데 실패했습니다:', err);
+      }
+    };
+    getNotices();
+  }, []);
 
   // 카테고리 dropdown 열기/닫기 토글
   const toggleMouseEnter = () => setIsDesktopCategoryOpen(true);
   const toggleMouseLeave = () => setIsDesktopCategoryOpen(false);
-
-  // 데스크탑 알람 패널 열기/닫기 토글
-  const toggleDesktopAlarm = (prev) => {
-    const newState = !prev;
-    console.log(`데스크탑의 알람 버튼을 클릭했습니다: ${newState}`);
-    setIsDesktopAlarmOpen(newState);
-  };
-
-  // 모바일 알람 패널 열기/닫기 토글
-  const toggleMobileAlarm = (prev) => {
-    const newState = !prev;
-    console.log(`모바일의 알람 버튼을 클릭했습니다: ${newState}`);
-    setIsMobileAlarmOpen(newState);
-  };
 
   // 검색창 상태가 변경될 때마다 입력값을 초기화
   useEffect(() => {
@@ -101,9 +120,16 @@ function Header() {
       });
   }, []);
 
+  // 로그아웃
+  const handleLogout = (e) => {
+    e.preventDefault();
+    logout();
+    navigate('/');
+  };
+
   return (
     <header className="header">
-      <Cart isCartOpen={isCartOpen} toggleCart={toggleCart} />
+      <Cart isCartOpen={isCartOpen} toggleCart={toggleCart} baskets={baskets} />
 
       {/* 모바일 헤더 ( 화면 너비가 991px보다 작을 때 ) */}
       <div className="wrap-header-mobile">
@@ -114,71 +140,25 @@ function Header() {
         </div>
 
         <div className="wrap-icon-header flex-w flex-r-m m-r-15">
-          <div className="icon-header-item cl2 hov-cl1 trans-04 p-r-22 p-l-10 js-show-modal-search">
+          <div className="icon-header-item cl2 hov-cl1 trans-04 p-r-12 p-l-20 js-show-modal-search">
             <i className="zmdi zmdi-search"></i>
           </div>
 
-          <Dropdown
-            onClick={toggleMobileAlarm}
-            isMobileAlarmOpen={isMobileAlarmOpen}
-            autoClose={'inside'}
-          >
-            <Dropdown.Toggle variant="" id="">
-              <div
-                className="icon-header-item cl2 hov-cl1 trans-04 p-r-22 p-l-10 icon-header-noti-mobile"
-                data-notify="3"
-              >
-                <i className="zmdi zmdi-notifications-none"></i>
-              </div>
-            </Dropdown.Toggle>
-
-            <Dropdown.Menu>
-              <Dropdown.Item href="/shop">
-                <span style={{ color: '#06F', fontWeight: 'bold' }}>
-                  [알림]
-                </span>{' '}
-                예약하신 상담 시간이 곧 시작됩니다!
-                <br />
-                잊지 말고 시간에 맞춰 준비해주세요.
-                <br />
-                상담 일정:{' '}
-                <span style={{ fontWeight: 'bold' }}>
-                  2024년 12월 24일 14:00
-                </span>
-              </Dropdown.Item>
-              <Dropdown.Divider />
-              <Dropdown.Item href="/shop">
-                <span style={{ color: '#06F', fontWeight: 'bold' }}>
-                  [알림]
-                </span>{' '}
-                고객님의 주문이 배송을 시작했습니다!
-                <br />
-                주문 번호:{' '}
-                <span style={{ fontWeight: 'bold' }}>1234 12345</span>
-              </Dropdown.Item>
-              <Dropdown.Divider />
-              <Dropdown.Item href="/shop">
-                <span style={{ color: '#06f', fontWeight: 'bold' }}>
-                  [알림]
-                </span>{' '}
-                <span style={{ color: '#f44' }}>환불 요청</span>에 대한 답변이
-                완료되었습니다.
-                <br />
-                상세 내용은 고객센터 페이지에서 확인해주세요.
-              </Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
+          <Alarm />
 
           <div
-            className="icon-header-item cl2 hov-cl1 trans-04 p-r-22 p-l-10 icon-header-noti-mobile js-show-cart"
-            data-notify="2"
+            className="icon-header-item cl2 hov-cl1 trans-04 p-r-12 p-l-20 icon-header-noti-mobile js-show-cart"
+            data-notify={baskets.reduce(
+              (total, basket) => total + basket.itemCount,
+              0
+            )}
           >
             <i className="zmdi zmdi-shopping-cart"></i>
           </div>
 
           <a
             href="#"
-            className="dis-block icon-header-item cl2 hov-cl1 trans-04 p-r-22 p-l-10 icon-header-noti-mobile"
+            className="dis-block icon-header-item cl2 hov-cl1 trans-04 p-r-12 p-l-20 icon-header-noti-mobile"
             data-notify="0"
           >
             <i className="zmdi zmdi-favorite-outline"></i>
@@ -203,7 +183,13 @@ function Header() {
       )}
 
       {/* 모바일 메뉴 */}
-      <MobileMenu isMenuOpen={isMenuOpen} />
+      <MobileMenu
+        isMenuOpen={isMenuOpen}
+        isLoggedIn={isLoggedIn}
+        user={user}
+        setIsAuthenticated={setIsAuthenticated}
+        handleLogout={handleLogout}
+      />
 
       {/* Modal Search */}
       <div className="modal-search-header flex-c-m trans-04 js-hide-modal-search">
@@ -231,17 +217,19 @@ function Header() {
         <div className="top-bar">
           <div className="content-topbar flex-sb-m h-full container p-l-0">
             <div className="left-top-bar">
-              <Slider {...settings}>
-                <div>
-                  <Link to="#">공지사항입니다.</Link>
-                </div>
-                <div>
-                  <Link to="#">공지사항 전파합니다.</Link>
-                </div>
-                <div>
-                  <Link to="#">전체 공지사항입니다.</Link>
-                </div>
-              </Slider>
+              {notices.length != undefined ? (
+                <Slider {...settings}>
+                  {notices.map((notice) => (
+                    <div key={notice.id}>
+                      <Link to="#" className="notice-link">
+                        {notice.subject}
+                      </Link>
+                    </div>
+                  ))}
+                </Slider>
+              ) : (
+                <div>공지사항이 존재하지 않습니다.</div>
+              )}
             </div>
             <div className="right-top-bar flex-w h-full">
               <Link
@@ -254,18 +242,11 @@ function Header() {
                 마이페이지
               </Link>
 
-              {isAuthenticated ? (
+              {user ? (
                 <Link
                   to="/Logout"
                   className="flex-c-m trans-04 p-lr-25"
-                  onClick={(e) => {
-                    localStorage.removeItem('token');
-
-                    alert('정상적으로 로그아웃되었습니다.');
-
-                    setIsAuthenticated(false);
-                    e.preventDefault();
-                  }}
+                  onClick={handleLogout}
                 >
                   로그아웃
                 </Link>
@@ -350,76 +331,39 @@ function Header() {
                 }}
                 value={inputValue}
               />
-              <div className="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
+              <div className="icon-header-item cl2 hov-cl1 trans-04 p-l-20 p-r-12">
                 <i
                   className="zmdi zmdi-search"
                   onClick={() => toggleSearch(isSearching)}
                 ></i>
               </div>
-              <Dropdown
-                onClick={toggleDesktopAlarm}
-                isDesktopAlarmOpen={isDesktopAlarmOpen}
-                autoClose={'inside'}
-              >
-                <Dropdown.Toggle variant="" id="">
-                  <div
-                    className="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti"
-                    data-notify="3"
-                  >
-                    <i className="zmdi zmdi-notifications-none"></i>
-                  </div>
-                </Dropdown.Toggle>
 
-                <Dropdown.Menu>
-                  <Dropdown.Item href="/shop">
-                    <span style={{ color: '#06F', fontWeight: 'bold' }}>
-                      [알림]
-                    </span>{' '}
-                    예약하신 상담 시간이 곧 시작됩니다!
-                    <br />
-                    잊지 말고 시간에 맞춰 준비해주세요.
-                    <br />
-                    상담 일정:{' '}
-                    <span style={{ fontWeight: 'bold' }}>
-                      2024년 12월 24일 14:00
-                    </span>
-                  </Dropdown.Item>
-                  <Dropdown.Divider />
-                  <Dropdown.Item href="/shop">
-                    <span style={{ color: '#06F', fontWeight: 'bold' }}>
-                      [알림]
-                    </span>{' '}
-                    고객님의 주문이 배송을 시작했습니다!
-                    <br />
-                    주문 번호:{' '}
-                    <span style={{ fontWeight: 'bold' }}>1234 12345</span>
-                  </Dropdown.Item>
-                  <Dropdown.Divider />
-                  <Dropdown.Item href="/shop">
-                    <span style={{ color: '#06f', fontWeight: 'bold' }}>
-                      [알림]
-                    </span>{' '}
-                    <span style={{ color: '#f44' }}>환불 요청</span>에 대한
-                    답변이 완료되었습니다.
-                    <br />
-                    상세 내용은 고객센터 페이지에서 확인해주세요.
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
+              <Alarm />
+
               <div
-                className="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti"
+                className="icon-header-item cl2 hov-cl1 trans-04 p-l-20 p-r-12 icon-header-noti"
                 onClick={() => {
                   console.log('Cart icon clicked');
                   toggleCart(isCartOpen); // 장바구니 열림 상태 토글
                 }}
                 style={{ cursor: 'pointer' }}
-                data-notify="2"
+                data-notify={
+                  baskets.reduce(
+                    (total, basket) => total + basket.itemCount,
+                    0
+                  ) > 9
+                    ? 9 + '+'
+                    : baskets.reduce(
+                        (total, basket) => total + basket.itemCount,
+                        0
+                      )
+                }
               >
                 <i className="zmdi zmdi-shopping-cart"></i>
               </div>
               <Link
                 to="#"
-                className="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti"
+                className="icon-header-item cl2 hov-cl1 trans-04 p-l-20 p-r-12 icon-header-noti"
                 data-notify="0"
               >
                 <i className="zmdi zmdi-favorite-outline"></i>

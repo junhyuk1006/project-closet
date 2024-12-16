@@ -3,78 +3,170 @@ import '../../components/SignUp';
 import '../../assets/styles/auth/signup.css';
 import closetImage from '../../assets/closet.png'; // 이미지 경로를 import
 import { useNavigate } from 'react-router-dom';
+import {
+  sendCode,
+  verifyCode,
+  checkUsername,
+  checkNickname,
+  checkEmail,
+  signup,
+} from '../../api/auth/ApiService';
 
 const Checkout = () => {
   const formRef = useRef(null); // 폼 참조
   const navigate = useNavigate(); // 페이지 네비게이션 훅
-  const [isSubmitting, setIsSumitting] = useState(false); // 제출상태 관리
 
+  const [isSubmitting, setIsSubmitting] = useState(false); // 제출상태 관리
+  const [isEmailVerified, setIsEmailVerified] = useState(false); // 이메일 인증 성공 여부
+  const [verificationCode, setVerificationCode] = useState(''); // 인증 코드 입력 필드 상태
+  const [isCodeSent, setIsCodeSent] = useState(false); // 인증 코드 전송 여부
+
+  // 이메일 인증 코드 전송
+  const handleSendCode = async () => {
+    const email = formRef.current.email.value.trim();
+
+    if (!email) {
+      alert('이메일을 입력해주세요.');
+      return;
+    }
+
+    try {
+      // 이메일 중복 검사
+      const isAvailable = await checkEmail(email);
+      if (!isAvailable) {
+        alert('이미 사용 중인 이메일입니다.');
+        return;
+      }
+
+      // 중복이 없을 경우 인증 코드 전송
+      const result = await sendCode(email);
+      console.log('인증 코드 전송 결과:', result); // 서버 응답 디버깅
+
+      if (result && result.success) {
+        alert(result.message || '인증 코드가 성공적으로 전송되었습니다.');
+        setIsCodeSent(true);
+      } else {
+        alert('인증 코드 전송에 실패했습니다.');
+      }
+    } catch (error) {
+      console.error('인증 코드 전송 중 오류 발생:', error);
+      const errorMessage = error?.message || '알 수 없는 오류가 발생했습니다.';
+      alert(errorMessage);
+    }
+  };
+
+  // 이메일 인증 코드 확인
+  const handleVerifyCode = async () => {
+    const email = formRef.current.email.value.trim();
+    const code = verificationCode.trim();
+
+    if (!email || !code) {
+      alert('이메일과 인증 코드를 입력해주세요.');
+      return;
+    }
+
+    const result = await verifyCode(email, code);
+    alert(result.message);
+
+    if (result.success) {
+      setIsEmailVerified(true);
+    }
+  };
+
+  // 아이디 중복 확인
+  const handleCheckUsername = async () => {
+    const username = formRef.current.username.value.trim();
+
+    if (!username) {
+      alert('아이디를 입력해주세요.');
+      return;
+    }
+
+    try {
+      const isAvailable = await checkUsername(username); // 서버에서 true 또는 false 반환
+      console.log('아이디 중복 검사 결과:', isAvailable); // 디버깅 로그
+      if (isAvailable) {
+        alert('사용 가능한 아이디입니다.');
+      } else {
+        alert('이미 사용 중인 아이디입니다.');
+      }
+    } catch (error) {
+      console.error('아이디 중복 확인 오류:', error);
+      alert('중복 확인 중 오류가 발생했습니다.');
+    }
+  };
+
+  // 닉네임 중복 확인
+  const handleCheckNickname = async () => {
+    const nickname = formRef.current.nickname.value.trim();
+
+    if (!nickname) {
+      alert('닉네임을 입력해주세요.');
+      return;
+    }
+
+    try {
+      const isAvailable = await checkNickname(nickname); // 서버에서 true 또는 false 반환
+      console.log('닉네임 중복 검사 결과:', isAvailable); // 디버깅 로그
+      if (isAvailable) {
+        alert('사용 가능한 닉네임입니다.');
+      } else {
+        alert('이미 사용 중인 닉네임입니다.');
+      }
+    } catch (error) {
+      console.error('닉네임 중복 확인 오류:', error);
+      alert('중복 확인 중 오류가 발생했습니다.');
+    }
+  };
+
+  // 회원가입 제출
   const handleSubmit = async (event) => {
-    event.preventDefault(); // 기본 동작 중단
-    event.stopPropagation(); // 이벤트 전파 중단
+    event.preventDefault();
+    event.stopPropagation();
 
-    const form = event.target;
-    const formData = new FormData(form);
-    const data = Object.fromEntries(formData.entries());
+    if (!isEmailVerified) {
+      alert('이메일 인증을 완료해주세요.');
+      return;
+    }
 
-    // 생년월일 처리
+    const form = formRef.current;
     const birthYear = form.birthYear.value;
     const birthMonth = form.birthMonth.value.padStart(2, '0'); // 1~9월을 01~09로 패딩
     const birthDay = form.birthDay.value.padStart(2, '0'); // 1~9일을 01~09로 패딩
     const birth = `${birthYear}-${birthMonth}-${birthDay}`; // YYYY-MM-DD 형식으로 결합
 
-    // 비밀번호 확인
-    if (data.password != form.confirmPassword.value) {
+    const password = form.password.value;
+    const confirmPassword = form.confirmPassword.value;
+
+    if (password !== confirmPassword) {
       alert('비밀번호가 일치하지 않습니다.');
-      form.confirmPassword.classList.add('is-invaild');
+      form.confirmPassword.classList.add('is-invalid');
       return;
     } else {
       form.confirmPassword.classList.remove('is-invalid');
     }
 
-    if (form.checkValidity()) {
-      setIsSumitting(true); // 제출시작
+    const data = {
+      username: form.username.value.trim(),
+      password,
+      nickname: form.nickname.value.trim(),
+      email: form.email.value.trim(),
+      birth,
+    };
 
-      try {
-        // 회원가입 API 호출
-        const response = await fetch('http://localhost:80/api/auth/signup', {
-          method: 'post',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            username: data.username,
-            password: data.password,
-            nickname: data.nickname,
-            email: data.email,
-            birth,
-          }),
-        });
+    setIsSubmitting(true);
 
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.message || '회원가입에 실패했습니다.');
-        }
+    const result = await signup(data);
+    alert(result.message);
 
-        const result = await response.json();
-        alert('회원가입에 성공했습니다! 로그인페이지로 이동합니다.');
-        navigate('/Login'); // 로그인 페이지로 이동
-      } catch (error) {
-        console.error('회원가입 실패:', error);
-        alert(error.message);
-      } finally {
-        setIsSumitting(false); // 제출 종료
-      }
-    } else {
-      form.classList.add('was-validated'); // 유효성 검사 스타일 추가
-      alert('모든 필드를 올바르게 입력해주세요.');
-      console.log('유효성 검사 실패');
+    if (result.success) {
+      navigate('/Login');
     }
+
+    setIsSubmitting(false);
   };
 
   return (
-    // 부트스트랩의 col-6 속성을 임시로 적용해두었습니다.
-    // main, footer 태그를 삭제하였습니다.
     <div className="signup-container col-6">
       <div className="py-5 text-center">
         <img
@@ -93,17 +185,23 @@ const Checkout = () => {
       >
         <div className="row g-3">
           <div className="col-12">
-            <label htmlFor="username" className="form-label">
-              아이디
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="username"
-              name="username"
-              placeholder="ID"
-              required
-            />
+            <div className="input-group">
+              <input
+                type="text"
+                className="form-control"
+                id="username"
+                name="username"
+                placeholder="ID"
+                required
+              />
+              <button
+                type="button"
+                className="btn btn-outline-secondary"
+                onClick={handleCheckUsername}
+              >
+                중복 확인
+              </button>
+            </div>
             <div className="invalid-feedback">아이디를 입력해주세요.</div>
           </div>
 
@@ -141,14 +239,23 @@ const Checkout = () => {
               닉네임
             </label>
             <div className="input-group has-validation">
-              <input
-                type="text"
-                className="form-control"
-                id="nickname"
-                name="nickname"
-                placeholder="닉네임"
-                required
-              />
+              <div className="input-group">
+                <input
+                  type="text"
+                  className="form-control"
+                  id="nickname"
+                  name="nickname"
+                  placeholder="닉네임"
+                  required
+                />
+                <button
+                  type="button"
+                  className="btn btn-outline-secondary"
+                  onClick={handleCheckNickname}
+                >
+                  중복 확인
+                </button>
+              </div>
               <div className="invalid-feedback">닉네임을 입력해주세요.</div>
             </div>
           </div>
@@ -157,18 +264,59 @@ const Checkout = () => {
             <label htmlFor="email" className="form-label">
               이메일
             </label>
-            <input
-              type="email"
-              className="form-control"
-              id="email"
-              name="email"
-              placeholder="you@example.com"
-              required
-            />
+            <div className="input-group">
+              <input
+                type="email"
+                className="form-control"
+                id="email"
+                name="email"
+                placeholder="you@example.com"
+                required
+              />
+              <button
+                type="button"
+                className="btn btn-outline-secondary"
+                onClick={handleSendCode}
+                disabled={isCodeSent} // 인증 코드 전송 후 비활성화
+              >
+                인증 코드 전송
+              </button>
+            </div>
             <div className="invalid-feedback">
               유효한 이메일 주소를 입력해주세요.
             </div>
           </div>
+
+          {isCodeSent && (
+            <div className="col-12 mt-2">
+              <label htmlFor="verificationCode" className="form-label">
+                인증 코드
+              </label>
+              <div className="input-group">
+                <input
+                  type="text"
+                  className="form-control"
+                  id="verificationCode"
+                  placeholder="인증 코드를 입력하세요"
+                  value={verificationCode}
+                  onChange={(e) => setVerificationCode(e.target.value)}
+                />
+                <button
+                  type="button"
+                  className="btn btn-outline-success"
+                  onClick={handleVerifyCode}
+                  disabled={isEmailVerified} // 인증 성공 후 비활성화
+                >
+                  인증 확인
+                </button>
+              </div>
+              {isEmailVerified && (
+                <div className="text-success mt-2">
+                  이메일 인증에 성공했습니다!
+                </div>
+              )}
+            </div>
+          )}
 
           <div className="col-md-4">
             <label htmlFor="birthYear" className="form-label">
@@ -256,7 +404,7 @@ const Checkout = () => {
         <button
           className="w-100 btn btn-secondary btn-lg"
           type="submit"
-          disabled={isSubmitting} // 제출 중일 때 버튼 비활성화
+          disabled={isSubmitting || !isEmailVerified} // 이메일 인증 미완료 시 비활성화
         >
           {isSubmitting ? '가입 중...' : '회원가입'}
         </button>
@@ -265,10 +413,10 @@ const Checkout = () => {
         <p className="mb-1">&copy; 2024 CLOSET</p>
         <ul className="list-inline">
           <li className="list-inline-item">
-            <a href="#">개인정보처리방침</a>
+            <a href="/privacy">개인정보처리방침</a>
           </li>
           <li className="list-inline-item">
-            <a href="#">이용약관</a>
+            <a href="/guide">이용약관</a>
           </li>
           <li className="list-inline-item">
             <a href="#">고객센터</a>

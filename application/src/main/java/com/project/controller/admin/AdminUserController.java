@@ -1,6 +1,8 @@
 package com.project.controller.admin;
 
+import com.project.domain.Grade;
 import com.project.domain.Users;
+import com.project.dto.AdminPointDTO;
 import com.project.dto.AdminUserDTO;
 import com.project.dto.PageRequestDTO;
 import com.project.service.Admin.AdminUserService;
@@ -10,10 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,9 +31,22 @@ public class AdminUserController {
     @GetMapping("user")
     public Page<AdminUserDTO> getUsers(@PageableDefault(size = 20,sort="createdAt",direction = Sort.Direction.DESC)Pageable pageable,
                                        @ModelAttribute PageRequestDTO pageRequestDTO) {
-        System.out.println(pageRequestDTO);
-        Page<AdminUserDTO> users = adminUserService.getUsers(pageable, pageRequestDTO);
-        System.out.println(users);
         return adminUserService.getUsers(pageable, pageRequestDTO);
+    }
+
+    @GetMapping("grade")
+    public List<Grade> getGrades() {
+        return adminUserService.getAllGrades();
+    }
+
+    @PostMapping("grade")
+    public List<Grade> updateGrade(@RequestBody List<Grade> grades) {
+        return adminUserService.updateGrades(grades);
+    }
+
+    @GetMapping("point")
+    public Page<AdminPointDTO> getUserPoint(@PageableDefault(size = 20,sort = "createdAt",direction = Sort.Direction.DESC)Pageable pageable,
+                                            @ModelAttribute PageRequestDTO pageRequestDTO) {
+        return adminUserService.getUserPoint(pageable,pageRequestDTO);
     }
 }

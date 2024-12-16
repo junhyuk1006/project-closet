@@ -5,6 +5,7 @@ import '../../assets/styles/auth/login.css';
 import closetImage from '../../assets/closet.png'; // 이미지 경로
 import NaverImage from '../../assets/btnG_완성형.png'; // 이미지 경로
 import KaKaoImage from '../../assets/kakao_login_medium_narrow.png'; // 이미지 경로
+import { useUser } from '../../api/auth/UserContext';
 
 const LoginForm = () => {
   const [username, setUsername] = useState('');
@@ -12,6 +13,7 @@ const LoginForm = () => {
   const [errorMessage, setErrorMessage] = useState(''); // 에러 메시지 상태
   const [loading, setLoading] = useState(false); // 로딩 상태
   const [theme, setTheme] = useState('auto'); // 테마 토글 기본값
+  const { login } = useUser();
   const navigator = useNavigate();
 
   // 회원가입 페이지로 이동
@@ -32,7 +34,7 @@ const LoginForm = () => {
 
     // 로그인API 함수 호출
     try {
-      await signin({ username, password });
+      await login({ username, password });
       navigator('/'); // 로그인 성공 시 메인홈페이지로 이동
     } catch (error) {
       setErrorMessage(error.message || '로그인에 실패했습니다.');

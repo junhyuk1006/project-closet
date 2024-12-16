@@ -19,8 +19,11 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import lombok.Data;
+import org.hibernate.annotations.DynamicInsert;
+import java.sql.Timestamp;
 
 @Entity
 @NoArgsConstructor
@@ -33,8 +36,8 @@ public class Users {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; // 아이디 -> userId로
-
+    private Long id; // 아이디
+    
     private String username; // 계정
 
     private String password; // 비밀번호
@@ -70,13 +73,13 @@ public class Users {
     private Boolean isReleased; // 공개여부
 
     @CreationTimestamp
-    private java.sql.Timestamp createdAt; // 가입일자
+    private Timestamp createdAt; // 가입일자
 
-    private java.sql.Timestamp inactiveDate; // 비활성화일자
+    private Timestamp inactiveDate; // 비활성화일자
 
-    private java.sql.Timestamp reactiveDate; // 차단해제일자
+    private Timestamp reactiveDate; // 차단해제일자
 
-    private java.sql.Timestamp deletedAt; // 탈퇴일자
+    private Timestamp deletedAt; // 탈퇴일자
 
     private String role; // 역할
 

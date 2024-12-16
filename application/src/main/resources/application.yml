@@ -10,7 +10,7 @@ spring:
             required: "true" # STARTTLS 필수
           auth: "true" # SMTP 인증 활성화
     host: smtp.gmail.com # SMTP 서버 주소
-    password: "jjed anbj kjrw okqk" # 이메일 계정 비밀번호 (환경 변수로 설정)
+    password: "riiw xqky hibv yfpq" # 이메일 계정 비밀번호 (환경 변수로 설정)
     port: "587" # SMTP 서버 포트
 
   # JPA 및 Hibernate 설정

@@ -3,7 +3,7 @@
 // 반환값은 각각 요청 성공 데이터, 에러 객체, 로딩 여부입니다.
 /*
  *  ex)
- *  const { data, error, loading } = useFetch('/api/products');
+ *  const { data: 변수명, error, loading } = useFetch('/api/products');
  */
 
 import { useState, useEffect } from 'react';
@@ -14,15 +14,17 @@ export default function useFetch(url) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    console.log('useFetch 호출');
     async function fetchData() {
       try {
         const response = await fetch(`http://localhost:80${url}`);
+        if (!response.ok) {
+          throw new Error(`HTTP 에러 (!response.ok): ${response.status}`);
+        }
         const json = await response.json();
-        console.log(`Fetched data: ${json.length && json}`);
+        console.log(`useFetch 데이터: ${json.length}`);
         setData(json);
       } catch (e) {
-        console.error(`Error occured while Fetch Data: ${e}`);
+        console.error(`데이터를 받아오는 중 에러가 발생했습니다: ${e.message}`);
         setError(e);
       } finally {
         setLoading(false);

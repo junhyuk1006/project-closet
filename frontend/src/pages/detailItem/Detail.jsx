@@ -1,21 +1,22 @@
 import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import { useUser } from '../../api/auth/UserContext';
 import '../../assets/styles/components/main.css';
 import '../../assets/styles/components/util.css';
 import '../../assets/styles/detailItem/Detail.css';
 import useProductQuantity from '../../hooks/useProductQuantity';
 import FetchIdProduct from '../../api/item/FetchIdProduct';
-import { useLocation } from 'react-router-dom';
 import ReviewInput from './ReviewInput';
 import ItemInquiry from './ItemInquiry';
 import FetchCountReview from '../../api/review/FetchCountReview';
 import FetchCountInquiry from '../../api/inquiry/FetchCountInquiry';
-import FetchGetBasket from '../../api/basket/FetchGetBasket';
+import { fetchSaveBasket } from '../../api/basket/FetchSaveBasket';
 
 function Detail() {
   const location = useLocation();
+  const { user, loading } = useUser(); // useUser에서 loading 상태 가져오기
   const productId = location.state?.productId || '';
   const [idProducts, setIdProducts] = useState([]); // Fetch된 데이터 저장
-  const [userId, setUserId] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isZoomed, setIsZoomed] = useState(false);
   const [activeTab, setActiveTab] = useState('description');
@@ -23,17 +24,33 @@ function Detail() {
   const [countInquiry, setCountInquiry] = useState(0);
   const [selectedColor, setSelectedColor] = useState('');
   const [selectedSize, setSelectedSize] = useState('');
+  const [dataLoaded, setDataLoaded] = useState(false);
   const [baskets, setBasket] = useState(null);
   const { quantity, increaseQuantity, decreaseQuantity } =
     useProductQuantity(1);
+
+  useEffect(() => {
+    if (!loading && user) {
+      setBasket([]); // 초기화
+      console.log('장바구니 초기화됨');
+    }
+  }, [loading, user]);
+
+  // 로딩 상태 처리
+  if (loading) {
+  }
+
+  // 로그인되지 않은 경우 처리
+  if (!user || !user.id) {
+    return user;
+  }
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
 
   const handleFetch = (data) => {
-    setIdProducts(data.items);
-    setUserId(data.userId);
+    setIdProducts(data);
   };
 
   const handleThumbnailClick = (index) => {
@@ -66,43 +83,49 @@ function Detail() {
 
   const handleSaveBasket = async (e) => {
     e.preventDefault();
-    if (!userId) {
-      alert('로그인이 필요합니다');
+
+    if (!selectedColor || !selectedSize) {
+      alert('색상과 사이즈를 선택해주세요.');
       return;
     }
-    try {
-      const basketData = {
-        userId: userId,
-        itemDetailId: productId,
-        itemCount: quantity,
-        size: selectedSize,
-        color: selectedColor,
-      };
 
+    const basketData = {
+      userId: user.id,
+      itemDetailId: productId,
+      itemCount: quantity,
+      size: selectedSize,
+      color: selectedColor,
+    };
+
+    try {
       const response = await fetch(
         `http://localhost:80/api/basket/saveBasket`,
         {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: {
+            'Content-Type': 'application/json',
+          },
           body: JSON.stringify(basketData),
         }
       );
 
-      const result = await response.json();
-
       if (!response.ok) {
-        throw new Error("Can't save basketData now");
+        throw new Error('Failed to save basket');
       }
-      alert('장바구니 저장 완료, Cart를 확인하세요');
+
+      const data = await response.json();
+
+      // 기존 장바구니 상태에 새 데이터 추가
+      setBasket((prev) => [...prev, basketData]);
+      console.log('장바구니 데이터 업데이트:', baskets);
+
+      window.location.reload(); // 장바구니에 상품 추가 후 페이지 리로드
+      alert(data.message || '장바구니에 추가되었습니다.');
     } catch (error) {
-      console.error('장바구니 저장 중 오류 발생', error);
-      alert('장바구니 저장 실패, 관리자 모드로 확인하세요');
+      console.error('장바구니 저장 실패:', error);
+      alert('장바구니 저장 중 오류가 발생했습니다.');
     }
   };
-
-  useEffect(() => {
-    setBasket([]);
-  }, []);
 
   return (
     <>
@@ -110,7 +133,6 @@ function Detail() {
         <div className="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
           {/* Fetch 컴포넌트 */}
           <FetchIdProduct id={productId} onItemFetch={handleFetch} />
-          <FetchGetBasket userId={userId} onGetFetch={setBasket} />
 
           {/* 크럼브 데이터 */}
           <a href="/" className="stext-109 cl8 hov-cl1 trans-04">
@@ -435,14 +457,14 @@ function Detail() {
                 {/** Reviews Tab */}
                 <ReviewInput
                   activeTab={activeTab}
-                  userId={userId}
+                  userId={user.id}
                   productId={productId}
                 />
 
                 {/** Inquiry Tab */}
                 <ItemInquiry
                   activeTab={activeTab}
-                  userId={userId}
+                  userId={user.id}
                   productId={productId}
                 />
               </div>
