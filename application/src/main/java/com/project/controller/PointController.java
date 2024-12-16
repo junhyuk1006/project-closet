@@ -4,6 +4,7 @@ import com.project.domain.Point;
 import com.project.dto.CustomUserDetail;
 import com.project.dto.PointDTO;
 import com.project.service.PointService;
+import com.project.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -26,6 +27,8 @@ import lombok.extern.slf4j.Slf4j;
 public class PointController {
 
     private final PointService pointService;
+    private final UserService userService;
+
     /** 리뷰 포인트 저장*/
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/saveReviewPoint")
@@ -53,11 +56,5 @@ public class PointController {
         return ResponseEntity.ok(dto);
     }
 
-
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<String> handleException(Exception ex) {
-        log.error("Exception occurred: ", ex);
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal Server Error");
-    }
 
 }

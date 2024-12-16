@@ -1,6 +1,9 @@
 package com.project.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.project.domain.Users;
@@ -16,7 +19,9 @@ public interface UserRepository extends JpaRepository<Users, Long> {
   Users findByNaverId(String providerId);
   Users findByKakaoId(String providerId);
   Users findByNickname(String nickname);
+
+  @Modifying
+  @Query("Update Users u SET u.password = :encodedPwd WHERE u.id = :userId")
+  void changePwd(@Param("userId") Long userId, @Param("encodedPwd") String encodedPwd);
 }
-
-
 

@@ -3,13 +3,18 @@ package com.project.controller;
 import com.project.domain.Address;
 import com.project.service.MypageService;
 import com.project.dto.CustomUserDetail;
+import com.project.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -19,6 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 public class MypageController {
 
     private final MypageService mypageService;
+    private final UserService userService;
 
     // 회원의 모든 등록 배송지 조회
     @GetMapping("/getAddress")
@@ -41,6 +47,27 @@ public class MypageController {
         log.info("userDetail: {}", userId);
         mypageService.switchRepresentativeAddress(addressId, userId);
     }
+    @PutMapping("/changePwd")
+    public ResponseEntity<Map<String, Object>> updatePasswordById(
+            @RequestBody Map<String, String> request,
+            @AuthenticationPrincipal CustomUserDetail userDetails) {
+
+        log.info("비밀번호 변경 요청: 사용자 ID={}, 비밀번호={}", userDetails.getId(), request.get("password"));
+
+        String newPwd = request.get("password");
+        Long userId = userDetails.getId();
+
+        // 비밀번호 변경 서비스 호출
+        userService.changePwd(userId, newPwd);
+
+        // 응답 데이터 생성
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", "success");
+        response.put("message", "비밀번호가 성공적으로 변경되었습니다.");
+
+        return ResponseEntity.ok(response);
+    }
+
 
 
 

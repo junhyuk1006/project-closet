@@ -54,7 +54,7 @@ const MyPageHome = () => {
         <div>
           <MyPageHeader
             title="마이페이지"
-            description={`${user.nickname}님, 환영합니다.`}
+            description={`${user?.nickname || ''}님, 환영합니다.`}
           />
         </div>
 

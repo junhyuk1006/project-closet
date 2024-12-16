@@ -1,84 +1,52 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { call } from '../../api/auth/ApiService'; // useUser 훅 임포트
 import { useUser } from '../../api/auth/UserContext'; // useUser 훅 임포트
 import MyPageHeader from '../../components/myPage/MyPageHeader';
+import { RepeatOneSharp } from '@mui/icons-material';
 
 const MemberInfo = () => {
   const navigate = useNavigate();
   const [representativeAddress, setRepresentativeAddress] = useState(null);
   const [generalAddresses, setGeneralAddresses] = useState([]);
   const { user, setUser } = useUser(); // UserContext에서 user와 setUser를 가져오기
-  const [isSubmitting, setIsSumitting] = useState(false); // 제출상태 관리
-  const formRef = useRef(null); // 폼 참조
+  const MultiFormHandler = async (e) => {
+    e.preventDefault(); // 기본 동작 막기
+    const formName = e.target.name; // 제출된 폼의 이름 가져오기
+    const formData = new FormData(e.target); // 해당 폼 데이터 수집
+    const data = Object.fromEntries(formData.entries()); // 폼 데이터를 객체로 변환
 
-  const handleSubmit = async (event) => {
-    event.preventDefault(); // 기본 동작 중단
-    event.stopPropagation(); // 이벤트 전파 중단
+    if (formName === 'changePwd') {
+      const password = data.password;
+      const confirmPassword = data.confirmPassword;
 
-    const form = event.target;
-    const formData = new FormData(form);
-    const data = Object.fromEntries(formData.entries());
-
-    // 생년월일 처리
-    const birthYear = form.birthYear.value;
-    const birthMonth = form.birthMonth.value.padStart(2, '0'); // 1~9월을 01~09로 패딩
-    const birthDay = form.birthDay.value.padStart(2, '0'); // 1~9일을 01~09로 패딩
-    const birth = `${birthYear}-${birthMonth}-${birthDay}`; // YYYY-MM-DD 형식으로 결합
-
-    // 비밀번호 확인
-    if (data.password != form.confirmPassword.value) {
-      alert('비밀번호가 일치하지 않습니다.');
-      form.confirmPassword.classList.add('is-invaild');
-      return;
-    } else {
-      form.confirmPassword.classList.remove('is-invalid');
-    }
-
-    if (form.checkValidity()) {
-      setIsSumitting(true); // 제출시작
+      // 비밀번호 일치 확인
+      if (password !== confirmPassword) {
+        alert('비밀번호가 일치하지 않습니다.');
+        return;
+      }
 
       try {
-        // 회원가입 API 호출
-        const response = await fetch('http://localhost:80/api/auth/signup', {
-          method: 'post',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            username: data.username,
-            password: data.password,
-            nickname: data.nickname,
-            email: data.email,
-            birth,
-          }),
+        const response = await call('/api/mypage/changePwd', 'PUT', {
+          password,
         });
 
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.message || '회원가입에 실패했습니다.');
+        if (response.status === 'success') {
+          alert(response.message); // "비밀번호가 성공적으로 변경되었습니다."
+        } else {
+          alert('비밀번호 변경에 실패하였습니다.');
         }
-
-        const result = await response.json();
-        alert('회원가입에 성공했습니다! 로그인페이지로 이동합니다.');
-        navigate('/Login'); // 로그인 페이지로 이동
       } catch (error) {
-        console.error('회원가입 실패:', error);
-        alert(error.message);
-      } finally {
-        setIsSumitting(false); // 제출 종료
+        console.error('비밀번호 변경 중 에러:', error);
+        alert('비밀번호 변경에 실패하였습니다.');
       }
-    } else {
-      form.classList.add('was-validated'); // 유효성 검사 스타일 추가
-      alert('모든 필드를 올바르게 입력해주세요.');
-      console.log('유효성 검사 실패');
     }
   };
 
   const fetchData = async () => {
     try {
       const address = await call(
-        `/api/mypage/getAddress?userId=${user.id}`,
+        `/api/mypage/getAddress?userId=${user?.id}`,
         'GET'
       );
       const representative = address.find((addr) => addr.isRepresent === true);
@@ -109,20 +77,14 @@ const MemberInfo = () => {
   };
 
   // 대표 주소 삭제
-  const DeleteRepresentativeAddress = (id) => {
+  const DeleteRepresentativeAddress = async (id) => {
     if (generalAddresses.length === 0) {
-      fetch(`http://localhost:80/api/mypage/deleteAddress/${id}`, {
-        method: 'DELETE',
-        cache: 'no-store',
-      })
-        .then((response) => {
-          if (response.ok) {
-            fetchData(); // 변경 후 데이터를 다시 가져와 상태 업데이트
-          } else {
-            console.error('삭제 실패', response.status);
-          }
-        })
-        .catch((error) => console.error('에러 발생:', error));
+      try {
+        await call(`/api/mypage/deleteAddress/${id}`, 'DELETE');
+        fetchData(); // 변경 후 데이터 다시 가져오기
+      } catch (error) {
+        console.error('Error deleting address:', error);
+      }
     } else {
       alert(
         '대표 주소지는 일반 주소지가 없을 경우에만 삭제가 가능합니다.\n 대표 주소지를 다른 주소지로 변경 후 해당 주소를 삭제해주세요.'
@@ -153,44 +115,76 @@ const MemberInfo = () => {
       </div>
       <div className="mypage-label1">회원정보</div>
       <div className="memberInfo-rounded-box">
-        <form>
-          <label className="info-label">* 필수정보 *</label>
-          <label className="form-label mt-4 ">아이디</label>
-          <div className="d-flex justify-content-center col-12 ">
-            <input
-              className="form-control w-50"
-              id="name"
-              value={user.username}
-              readOnly
-            />
-          </div>
-          <label className="form-label mt-4 ">아이디</label>
-          <div className="d-flex justify-content-center col-12 ">
-            <input
-              className="form-control w-50"
-              id="name"
-              value={user.username}
-            />
-          </div>
+        <label className="info-label">* 필수정보 *</label>
 
-          <label className="form-label mt-4 ">나이</label>
-          <div className="d-flex justify-content-center col-12 ">
-            <input
-              className="form-control text-center"
-              id="name"
-              style={{ width: '150px' }}
-            />
+        <form>
+          <div className="d-flex flex-wrap justify-content-center align-items-center col-12">
+            <div className="d-flex align-items-center mb-3 mb-md-0 me-md-1">
+              <label
+                className="form-label pe-3"
+                style={{ whiteSpace: 'nowrap' }}
+              >
+                아이디
+              </label>
+              <input
+                className="form-control"
+                id="username"
+                value={user?.username || ''}
+                disabled
+              />
+            </div>
           </div>
-          <label className="form-label mt-4 ">이름</label>
-          <div className="d-flex justify-content-center col-12 ">
-            <input className="form-control w-50" id="name" placeholder="이름" />
+          <div className="d-flex flex-wrap justify-content-center align-items-center col-12">
+            <div className="d-flex align-items-center mt-3 mb-3 mb-md-0 me-md-1">
+              <label
+                className="form-label pe-3"
+                style={{ whiteSpace: 'nowrap' }}
+              >
+                닉네임
+              </label>
+              <input
+                className="form-control"
+                id="nickname"
+                value={user?.nickname || ''}
+                disabled
+              />
+            </div>
           </div>
-          <label className="form-label mt-4 ">이름</label>
-          <div className="d-flex justify-content-center col-12 ">
-            <input className="form-control w-50" id="name" placeholder="이름" />
+          <div className="d-flex flex-wrap justify-content-center align-items-center col-12">
+            <div className="d-flex align-items-center mt-3 mb-3 mb-md-0 me-md-3">
+              <label
+                className="form-label pe-3"
+                style={{ whiteSpace: 'nowrap' }}
+              >
+                생년월일
+              </label>
+              <input
+                className="form-control"
+                id="birth"
+                value={user?.birth || ''}
+                disabled
+              />
+            </div>
+          </div>
+          <div className="d-flex flex-wrap justify-content-center align-items-center col-12">
+            <div className="d-flex align-items-center mt-3 mb-3  mb-md-0 me-md-1">
+              <label
+                className="form-label"
+                style={{ whiteSpace: 'nowrap', marginRight: '10px' }} // 간격 조정
+              >
+                이메일
+              </label>
+              <input
+                className="form-control"
+                id="email"
+                value={user?.email || ''}
+                disabled
+                style={{ width: '300px' }} // 입력 칸 크기 설정
+              />
+            </div>
           </div>
         </form>
-        <form>
+        <form name="changePwd" onSubmit={MultiFormHandler}>
           <hr className="my-4" />
           <div className="container">
             <label className="info-label mb-3">비밀번호 변경</label>
@@ -199,6 +193,7 @@ const MemberInfo = () => {
                 <input
                   className="form-control"
                   id="password"
+                  name="password"
                   type="password"
                   placeholder="비밀번호"
                 />
@@ -207,14 +202,18 @@ const MemberInfo = () => {
                 <input
                   className="form-control"
                   id="confirmPassword"
+                  name="confirmPassword"
                   type="password"
                   placeholder="비밀번호 확인"
                 />
               </div>
             </div>
           </div>
+          <button type="submit" className="mypage-button mt-3">
+            변경
+          </button>
         </form>
-        <form>
+        <form name="bodyInfo" onSubmit={MultiFormHandler}>
           <hr className="my-4" />
           <div className="container text-center">
             <label className="info-label mb-3">신체정보 공개여부</label>
@@ -264,6 +263,9 @@ const MemberInfo = () => {
                 </label>
               </div>
             </div>
+            <button type="submit" className="mypage-button mt-3">
+              저장
+            </button>
           </div>
         </form>
         <form>

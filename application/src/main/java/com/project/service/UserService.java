@@ -1,13 +1,15 @@
 package com.project.service;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
+import org.springframework.security.crypto.password.PasswordEncoder;
 import com.project.domain.Users;
 import com.project.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j // 로깅 객체 자동 생성 (log 변수 사용 가능)
 @Service
@@ -15,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public Users create(final Users user) {
         // 요청 데이터 검증
@@ -43,5 +46,15 @@ public class UserService {
             return originalUser;
         }
         return null;
+    }
+    // 마이페이지 - 비밀번호 변경
+    @Transactional
+    public void changePwd(Long userId, String newPwd) {
+        // 비밀번호 암호화
+        String encodedPwd = passwordEncoder.encode(newPwd);
+        log.info("암호화된 비밀번호: {}, 사용자 ID: {}", encodedPwd, userId);
+
+        // 저장소에 업데이트
+        userRepository.changePwd(userId, encodedPwd);
     }
 }
