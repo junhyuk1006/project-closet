@@ -1,10 +1,12 @@
 package com.project.controller;
 
 import com.project.domain.Address;
+import com.project.dto.UserDTO;
 import com.project.service.MypageService;
 import com.project.dto.CustomUserDetail;
 import com.project.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -47,20 +49,20 @@ public class MypageController {
         log.info("userDetail: {}", userId);
         mypageService.switchRepresentativeAddress(addressId, userId);
     }
+
+    // 비밀번호 변경
     @PutMapping("/changePwd")
     public ResponseEntity<Map<String, Object>> updatePasswordById(
-            @RequestBody Map<String, String> request,
+            @RequestBody UserDTO userDTO,
             @AuthenticationPrincipal CustomUserDetail userDetails) {
 
-        log.info("비밀번호 변경 요청: 사용자 ID={}, 비밀번호={}", userDetails.getId(), request.get("password"));
-
-        String newPwd = request.get("password");
+        String newPwd = userDTO.getPassword(); // UserDTO에서 비밀번호 추출
         Long userId = userDetails.getId();
 
-        // 비밀번호 변경 서비스 호출
+        // 비밀번호 변경 로직 수행
         userService.changePwd(userId, newPwd);
 
-        // 응답 데이터 생성
+        // 응답 반환
         Map<String, Object> response = new HashMap<>();
         response.put("status", "success");
         response.put("message", "비밀번호가 성공적으로 변경되었습니다.");
@@ -68,9 +70,45 @@ public class MypageController {
         return ResponseEntity.ok(response);
     }
 
+    // 신체 정보 변경
+    @PutMapping("/changeBodyInfo")
+    public ResponseEntity <Map<String,Object>> changeBodyInfoById(@RequestBody UserDTO userDTO,
+                                                                  @AuthenticationPrincipal CustomUserDetail userDetails) {
+       Long userId = userDetails.getId();
+       int newHeight = userDTO.getHeight();
+       int newWeight = userDTO.getWeight();
+       String newSize = userDTO.getSize();
+       boolean newIsReleased = userDTO.getIsReleased();
 
+       userService.changeBodyInfo(userId, newHeight,newWeight,newSize,newIsReleased);
+        log.info("newHeight: {}", newHeight);
+        // 응답 반환
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", "success");
+        response.put("message", "신체 정보가 저장되었습니다.");
 
+        return ResponseEntity.ok(response);
+    }
 
+    // 신체 정보 변경
+    @PutMapping("/changeAddInfo")
+    public ResponseEntity <Map<String,Object>> changeAddInfoById(@RequestBody UserDTO userDTO,
+                                                                  @AuthenticationPrincipal CustomUserDetail userDetails) {
+        Long userId = userDetails.getId();
+        String profileImage = userDTO.getProfileImage();
+        String name = userDTO.getName();
+        String phone = userDTO.getPhone();
+        String style = userDTO.getStyle();
+        String introduction = userDTO.getIntroduction();
+
+        userService.changeAddInfo(userId, profileImage, name,phone,style,introduction);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", "success");
+        response.put("message", "회원 추가 정보가 수정되었습니다.");
+
+        return ResponseEntity.ok(response);
+    }
 
 
 }

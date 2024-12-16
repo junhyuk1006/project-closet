@@ -57,4 +57,15 @@ public class UserService {
         // 저장소에 업데이트
         userRepository.changePwd(userId, encodedPwd);
     }
+
+    // 신체 정보 변경
+    @Transactional
+    public void changeBodyInfo(Long userId, int newHeight, int newWeight, String newSize,boolean newIsReleased) {
+        userRepository.changeBodyInfo(userId,newHeight,newWeight,newSize,newIsReleased);
+    }
+
+    @Transactional
+    public void changeAddInfo(Long userId, String profileImage, String name, String phone, String style, String introduction) {
+        userRepository.changeAddInfo(userId, profileImage, name,phone,style,introduction);
+    }
 }

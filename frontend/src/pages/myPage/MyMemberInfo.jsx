@@ -10,6 +10,60 @@ const MemberInfo = () => {
   const [representativeAddress, setRepresentativeAddress] = useState(null);
   const [generalAddresses, setGeneralAddresses] = useState([]);
   const { user, setUser } = useUser(); // UserContext에서 user와 setUser를 가져오기
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [bodyInfo, setBodyInfo] = useState({
+    height: user?.height || '',
+    weight: user?.weight || '',
+    size: user?.size || '',
+    isReleased: Boolean(user?.isReleased), // 숫자를 불리언으로 변환
+  });
+  const [addInfo, setAddInfo] = useState(() => {
+    const profileImage = user?.profileImage || '';
+    const name = user?.name || '';
+    const style = user?.style || '';
+    const introduction = user?.introduction || '';
+
+    let phone1 = '';
+    let phone2 = '';
+    let phone3 = '';
+
+    if (user?.phone) {
+      // 전화번호에서 하이픈 제거
+      const phone = user.phone.replace(/-/g, '');
+      // 전화번호 길이에 따라 분기 처리
+      phone1 = phone.substring(0, 3);
+      phone2 = phone.substring(3, 7);
+      phone3 = phone.substring(7);
+    }
+
+    return {
+      profileImage,
+      name,
+      phone1,
+      phone2,
+      phone3,
+      style,
+      introduction,
+    };
+  });
+
+  // 값 변경 시에 null 값 반영
+  const handlePasswordChange = (e) => setPassword(e.target.value);
+  const handleConfirmPasswordChange = (e) => setConfirmPassword(e.target.value);
+  const handleChangeAddInfo = (e) => {
+    const { name, value } = e.target;
+    // 숫자만 허용
+    if (name.startsWith('phone') && !/^\d*$/.test(value)) return;
+
+    if (value.length <= 200) {
+      setAddInfo((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
+  };
+
   const MultiFormHandler = async (e) => {
     e.preventDefault(); // 기본 동작 막기
     const formName = e.target.name; // 제출된 폼의 이름 가져오기
@@ -33,6 +87,8 @@ const MemberInfo = () => {
 
         if (response.status === 'success') {
           alert(response.message); // "비밀번호가 성공적으로 변경되었습니다."
+          setPassword(''); // 상태 초기화 -> 입력 칸 비움
+          setConfirmPassword('');
         } else {
           alert('비밀번호 변경에 실패하였습니다.');
         }
@@ -41,6 +97,77 @@ const MemberInfo = () => {
         alert('비밀번호 변경에 실패하였습니다.');
       }
     }
+
+    if (formName === 'changebodyInfo') {
+      try {
+        const response = await call('/api/mypage/changeBodyInfo', 'PUT', {
+          height: bodyInfo.height,
+          weight: bodyInfo.weight,
+          size: bodyInfo.size,
+          isReleased: bodyInfo.isReleased,
+        });
+
+        if (response.status === 'success') {
+          alert(response.message);
+        } else {
+          alert('오류가 발생하였습니다. 재시도해주세요.');
+        }
+      } catch (error) {
+        alert('오류가 발생하였습니다. 재시도해주세요.');
+      }
+    }
+
+    if (formName === 'addInfo') {
+      try {
+        const response = await call(`/api/mypage/changeAddInfo`, 'PUT', {
+          profileImage: addInfo.profileImage,
+          name: addInfo.name,
+          phone: addInfo.phone1 + addInfo.phone2 + addInfo.phone3,
+          style: addInfo.style,
+          introduction: addInfo.introduction,
+        });
+
+        if (response.status === 'success') {
+          alert(response.message);
+        } else {
+          alert('오류가 발생하였습니다. 재시도해주세요.');
+        }
+      } catch (error) {
+        alert('회원정보 수정에 문제가 발생하였습니다. 재시도해주세요.');
+      }
+    }
+  };
+
+  const handleProfileChange = async (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const formData = new FormData();
+      formData.append('file', file);
+
+      try {
+        const response = await call('/api/upload/profile', 'POST', formData, {
+          'Content-Type': 'multipart/form-data',
+        });
+        if (response.status === 'success') {
+          // 서버에서 반환된 이미지 URL을 상태에 저장
+          setAddInfo((prev) => ({
+            ...prev,
+            profileImage: response.url, // 서버에서 반환된 URL
+          }));
+        } else {
+          alert('이미지 업로드 실패');
+        }
+      } catch (error) {
+        console.error('이미지 업로드 실패:', error);
+        alert('이미지 업로드 중 문제가 발생했습니다.');
+      }
+    }
+  };
+
+  // 신체 정보 변경
+  const changeBodyInfo = (e) => {
+    const { name, value } = e.target;
+    setBodyInfo((prev) => ({ ...prev, [name]: value }));
   };
 
   const fetchData = async () => {
@@ -62,6 +189,17 @@ const MemberInfo = () => {
   useEffect(() => {
     if (user) {
       fetchData();
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (user) {
+      setBodyInfo({
+        height: user.height || '',
+        weight: user.weight || '',
+        size: user.size || '',
+        isReleased: Boolean(user.isReleased), // 불리언 변환
+      });
     }
   }, [user]);
 
@@ -130,7 +268,6 @@ const MemberInfo = () => {
                 className="form-control"
                 id="username"
                 value={user?.username || ''}
-                disabled
               />
             </div>
           </div>
@@ -179,7 +316,7 @@ const MemberInfo = () => {
                 id="email"
                 value={user?.email || ''}
                 disabled
-                style={{ width: '300px' }} // 입력 칸 크기 설정
+                style={{ width: '230px' }} // 입력 칸 크기 설정
               />
             </div>
           </div>
@@ -196,6 +333,8 @@ const MemberInfo = () => {
                   name="password"
                   type="password"
                   placeholder="비밀번호"
+                  value={password} // 상태 연결
+                  onChange={handlePasswordChange} // 상태 업데이트
                 />
               </div>
               <div className="col-12 col-md-5 d-flex align-items-center">
@@ -205,6 +344,8 @@ const MemberInfo = () => {
                   name="confirmPassword"
                   type="password"
                   placeholder="비밀번호 확인"
+                  value={confirmPassword} // 상태 연결
+                  onChange={handleConfirmPasswordChange} // 상태 업데이트
                 />
               </div>
             </div>
@@ -213,7 +354,7 @@ const MemberInfo = () => {
             변경
           </button>
         </form>
-        <form name="bodyInfo" onSubmit={MultiFormHandler}>
+        <form name="changebodyInfo" onSubmit={MultiFormHandler}>
           <hr className="my-4" />
           <div className="container text-center">
             <label className="info-label mb-3">신체정보 공개여부</label>
@@ -222,7 +363,10 @@ const MemberInfo = () => {
                 <span className="me-2">키</span>
                 <input
                   className="form-control text-center"
-                  id="height"
+                  type="number"
+                  name="height"
+                  value={bodyInfo.height}
+                  onChange={changeBodyInfo}
                   maxLength="3"
                   style={{ width: '80px' }}
                 />
@@ -232,7 +376,9 @@ const MemberInfo = () => {
                 <span className="me-2">체중</span>
                 <input
                   className="form-control text-center"
-                  id="weight"
+                  name="weight"
+                  value={bodyInfo.weight}
+                  onChange={changeBodyInfo}
                   maxLength="3"
                   style={{ width: '80px' }}
                 />
@@ -241,6 +387,9 @@ const MemberInfo = () => {
               <div className="col-12 col-md-4 d-flex justify-content-center align-items-center">
                 <span className="me-2">평소사이즈</span>
                 <select
+                  name="size"
+                  value={bodyInfo.size}
+                  onChange={changeBodyInfo}
                   className="form-select text-center"
                   style={{ width: '80px' }}
                 >
@@ -256,8 +405,15 @@ const MemberInfo = () => {
                   type="checkbox"
                   className="form-check-input"
                   id="isReleased"
-                  required
+                  checked={bodyInfo.isReleased}
+                  onChange={(e) =>
+                    setBodyInfo((prev) => ({
+                      ...prev,
+                      isReleased: e.target.checked, // 체크박스 상태값 반영
+                    }))
+                  }
                 />
+
                 <label className="form-check-label ms-2" htmlFor="isReleased">
                   정보 제공에 동의합니다.
                 </label>
@@ -268,14 +424,39 @@ const MemberInfo = () => {
             </button>
           </div>
         </form>
-        <form>
+        <form name="addInfo" onSubmit={MultiFormHandler}>
           <hr className="my-4" />
           <label className="info-label">추가정보</label>
-          <label className="form-label mt-4 ">이름</label>
-          <div className="d-flex justify-content-center col-12 ">
-            <input className="form-control w-50" id="name" placeholder="이름" />
+
+          <div>
+            <label htmlFor="formFile" className="form-label mt-4 ">
+              프로필 사진 등록
+            </label>
+            <input
+              className="form-control mb-4"
+              type="file"
+              id="formFile"
+              onChange={handleProfileChange}
+            />
           </div>
-          <label className="form-label mt-4 text-center w-100">
+
+          <div className="d-flex flex-wrap justify-content-center align-items-center col-12">
+            <div className="d-flex align-items-center mb-3 mb-md-0 me-md-1">
+              <label
+                className="form-label pe-3"
+                style={{ whiteSpace: 'nowrap' }}
+              >
+                이름
+              </label>
+              <input
+                className="form-control"
+                id="name"
+                style={{ width: '120px' }}
+                value={user?.name || ''}
+              />
+            </div>
+          </div>
+          <label className="form-label mt-4 text-center w-1 00">
             휴대폰번호
           </label>
 
@@ -285,14 +466,17 @@ const MemberInfo = () => {
               id="phone1"
               maxLength="3"
               placeholder="010"
+              value={addInfo.phone1}
+              onChange={handleChangeAddInfo}
               style={{ width: '60px' }}
             />
             <span className="mx-1">-</span>
             <input
               className="form-control text-center mx-1"
               id="phone2"
+              value={addInfo.phone2}
+              onChange={handleChangeAddInfo}
               maxLength="4"
-              placeholder="1234"
               style={{ width: '70px' }}
             />
             <span className="mx-1">-</span>
@@ -300,27 +484,44 @@ const MemberInfo = () => {
               className="form-control text-center mx-1"
               id="phone3"
               maxLength="4"
-              placeholder="5678"
+              value={addInfo.phone3}
+              onChange={handleChangeAddInfo}
               style={{ width: '70px' }}
             />
           </div>
-          <label className="form-label mt-4 ">나이</label>
-          <div className="d-flex justify-content-center col-12 ">
-            <input
-              className="form-control text-center"
-              id="name"
-              placeholder="이름"
-              style={{ width: '150px' }}
-            />
+          <div className="d-flex flex-wrap justify-content-center align-items-center col-12 mt-4">
+            <span className="me-2">선호 스타일</span>
+            <select
+              name="style"
+              value={addInfo.style} // 상태 연결
+              onChange={handleChangeAddInfo} // 상태 업데이트
+              className="form-select text-center"
+              style={{ width: '120px' }}
+            >
+              <option>데일리</option>
+              <option>캐주얼</option>
+              <option>포멀</option>
+              <option>스트릿</option>
+              <option>빈티지</option>
+            </select>
           </div>
-          <label className="form-label mt-4 ">이름</label>
-          <div className="d-flex justify-content-center col-12 ">
-            <input className="form-control w-50" id="name" placeholder="이름" />
+
+          <div>
+            <label htmlFor="exampleTextarea" className="form-label mt-4">
+              소개글
+            </label>
+            <textarea
+              className="form-control"
+              name="introduction"
+              value={addInfo.introduction} // 상태 연결
+              onChange={handleChangeAddInfo} // 상태 업데이트
+              rows="3"
+              placeholder="200자 이내로 작성해주세요."
+            ></textarea>
           </div>
-          <label className="form-label mt-4 ">이름</label>
-          <div className="d-flex justify-content-center col-12 ">
-            <input className="form-control w-50" id="name" placeholder="이름" />
-          </div>
+          <button type="submit" className="mypage-button mt-3">
+            저장
+          </button>
         </form>
       </div>
 
