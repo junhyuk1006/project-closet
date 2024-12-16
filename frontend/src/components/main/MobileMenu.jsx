@@ -1,15 +1,26 @@
+import { useCallback } from 'react';
 import { Link } from 'react-router-dom';
 
 export default function MobileMenu({
   isMenuOpen,
+  setIsMenuOpen,
   isLoggedIn,
   user,
-  setIsAuthenticated,
   handleLogout,
 }) {
+  const handleMenuClick = useCallback(
+    (e) => {
+      const tag = e.target.tagName;
+      if (tag === 'A' || tag === 'BUTTON') {
+        setIsMenuOpen(false);
+      }
+    },
+    [setIsMenuOpen]
+  );
   return (
     <div
       className={`menu-mobile ${isMenuOpen ? 'dis-block show-menu-mobile' : ''}`}
+      onClick={handleMenuClick}
     >
       <ul className="topbar-mobile">
         <li>
@@ -67,7 +78,7 @@ export default function MobileMenu({
           <Link to="/Recommend">스타일링</Link>
         </li>
         <li>
-          <Link to="/Board">커뮤니티</Link>
+          <Link to="/Community">커뮤니티</Link>
         </li>
       </ul>
     </div>

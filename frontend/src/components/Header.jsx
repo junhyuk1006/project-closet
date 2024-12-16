@@ -190,9 +190,9 @@ function Header({ user }) {
       {/* 모바일 메뉴 */}
       <MobileMenu
         isMenuOpen={isMenuOpen}
+        setIsMenuOpen={setIsMenuOpen}
         isLoggedIn={isLoggedIn}
         user={user}
-        setIsAuthenticated={setIsAuthenticated}
         handleLogout={handleLogout}
       />
 
