@@ -134,9 +134,6 @@ const Checkout = () => {
     const birthMonth = form.birthMonth.value.padStart(2, '0'); // 1~9월을 01~09로 패딩
     const birthDay = form.birthDay.value.padStart(2, '0'); // 1~9일을 01~09로 패딩
     const birth = `${birthYear}-${birthMonth}-${birthDay}`; // YYYY-MM-DD 형식으로 결합
-    const birthMonth = form.birthMonth.value.padStart(2, '0');
-    const birthDay = form.birthDay.value.padStart(2, '0');
-    const birth = `${birthYear}-${birthMonth}-${birthDay}`;
 
     const password = form.password.value;
     const confirmPassword = form.confirmPassword.value;
