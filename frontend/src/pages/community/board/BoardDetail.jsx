@@ -58,7 +58,7 @@ const BoardDetail = () => {
         <h2 className="board-title">{boardDetail.boardTitle}</h2>
         <div className="board-info">
           <span className="board-author">
-            작성자 ID: <strong>{boardDetail.userId}</strong>
+            닉네임: <strong>{boardDetail.nickname}</strong>
           </span>
           <span className="board-date">
             작성일: {new Date(boardDetail.createdAt).toLocaleString()}

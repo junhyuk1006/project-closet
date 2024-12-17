@@ -1,6 +1,7 @@
 package com.project.service;
 
 import com.project.domain.Board;
+import com.project.dto.BoardDTO;
 import com.project.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,9 +14,15 @@ public class BoardService {
 
     private final BoardRepository boardRepository;
 
-    // 게시글 목록 조회
-    public List<Board> getAllBoards() {
-        return boardRepository.findAll();
+
+    // 게시글 목록 조회: 닉네임 포함
+    public List<BoardDTO> getAllBoardsWithNickname() {
+        return boardRepository.findAllWithUserNickname();
+    }
+
+    // 게시글 상세 조회: 닉네임 포함
+    public BoardDTO getBoardDetailWithNickname(Long id) {
+        return boardRepository.findBoardDetailWithUserById(id);
     }
 
     // 게시글 생성
@@ -23,11 +30,6 @@ public class BoardService {
         return boardRepository.save(board);
     }
 
-    // 게시글 상세 조회
-    public Board getBoardDetail(Long id) {
-        return boardRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 게시글을 찾을 수 없습니다. ID: " + id));
-    }
 
     // 검색기능
     public List<Board> searchBoards(String keyword, String condition) {

@@ -14,7 +14,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CoordiBoardService {
 
-    private static final String FRONTEND_IMAGES_PATH = System.getProperty("user.dir") + "/frontend/public/images";
+    private static final String FRONTEND_IMAGES_PATH =
+            System.getProperty("user.dir") + "/../frontend/public/images";
 
 
     final CoordiBoardRepository coordiBoardRepository;

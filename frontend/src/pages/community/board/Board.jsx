@@ -130,7 +130,7 @@ const Board = () => {
                         >
                           제목
                         </th>
-                        <th style={{ textAlign: 'center' }}>작성자 ID</th>
+                        <th style={{ textAlign: 'center' }}>닉네임</th>
                         <th style={{ textAlign: 'center' }}>작성일</th>
                         <th
                           className="highlight bg-soft-base"
@@ -138,7 +138,6 @@ const Board = () => {
                         >
                           내용
                         </th>
-                        <th style={{ textAlign: 'center' }}>즐겨찾기</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -150,7 +149,7 @@ const Board = () => {
                                 src={
                                   item.boardImage
                                     ? `http://localhost/images/${item.boardImage}`
-                                    : 'https://bootdey.com/img/Content/avatar/avatar5.png'
+                                    : 'https://bootdey.com/img/Content/avatar/avatar7.png'
                                 }
                                 alt={item.boardTitle}
                               />
@@ -168,7 +167,7 @@ const Board = () => {
                           </td>
                           <td style={{ textAlign: 'center' }}>
                             <div className="widget-26-job-info">
-                              <p className="type m-0">{item.userId}</p>
+                              <p className="type m-0">{item.nickname}</p>
                             </div>
                           </td>
                           <td style={{ textAlign: 'center' }}>
@@ -186,24 +185,6 @@ const Board = () => {
                                   ? `${item.boardContent.substring(0, 10)}...`
                                   : item.boardContent}
                               </span>
-                            </div>
-                          </td>
-                          <td style={{ textAlign: 'center' }}>
-                            <div className="widget-26-job-starred">
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="24"
-                                height="24"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                className="feather feather-star"
-                              >
-                                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                              </svg>
                             </div>
                           </td>
                         </tr>

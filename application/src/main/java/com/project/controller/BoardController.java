@@ -1,6 +1,7 @@
 package com.project.controller;
 
 import com.project.domain.Board;
+import com.project.dto.BoardDTO;
 import com.project.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +18,16 @@ public class BoardController {
 
     // 게시글 목록 조회
     @GetMapping("/list")
-    public ResponseEntity<List<Board>> getAllBoards() {
-        List<Board> boards = boardService.getAllBoards();
+    public ResponseEntity<List<BoardDTO>> getAllBoards() {
+        List<BoardDTO> boards = boardService.getAllBoardsWithNickname();
         return ResponseEntity.ok(boards);
+    }
+
+    // 게시글 상세 조회
+    @GetMapping("/{id}")
+    public ResponseEntity<BoardDTO> getBoardDetail(@PathVariable Long id) {
+        BoardDTO boardDetail = boardService.getBoardDetailWithNickname(id);
+        return ResponseEntity.ok(boardDetail);
     }
 
     // 게시글 생성
@@ -27,13 +35,6 @@ public class BoardController {
     public ResponseEntity<Board> createBoard(@RequestBody Board board) {
         Board createdBoard = boardService.createBoard(board);
         return ResponseEntity.ok(createdBoard);
-    }
-
-    // 게시글 상세 조회
-    @GetMapping("/{id}")
-    public ResponseEntity<Board> getBoardDetail(@PathVariable Long id) {
-        Board board = boardService.getBoardDetail(id);
-        return ResponseEntity.ok(board);
     }
 
     // 검색 API
