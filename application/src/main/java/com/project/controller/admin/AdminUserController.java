@@ -28,11 +28,6 @@ public class AdminUserController {
         return adminUserService.getAllUsers();
     }
 
-    @GetMapping("user")
-    public Page<AdminUserDTO> getUsers(@PageableDefault(size = 20,sort="createdAt",direction = Sort.Direction.DESC)Pageable pageable,
-                                       @ModelAttribute PageRequestDTO pageRequestDTO) {
-        return adminUserService.getUsers(pageable, pageRequestDTO);
-    }
 
     @GetMapping("grade")
     public List<Grade> getGrades() {

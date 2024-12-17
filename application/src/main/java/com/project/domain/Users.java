@@ -91,7 +91,5 @@ public class Users {
     @JsonIgnore
     private List<Point> point;
 
-    @OneToMany(mappedBy = "user" , cascade = CascadeType.ALL)
-    @JsonIgnore
-    private List<OrderList> orderList;
+
 }

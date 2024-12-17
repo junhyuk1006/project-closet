@@ -1,5 +1,6 @@
 package com.project.service;
 
+import com.project.dto.UserDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -47,27 +48,6 @@ public class UserService {
         }
         return null;
     }
-    // 마이페이지 - 비밀번호 변경
-    @Transactional
-    public void changePwd(Long userId, String newPwd) {
-        // 비밀번호 암호화
-        String encodedPwd = passwordEncoder.encode(newPwd);
-        log.info("암호화된 비밀번호: {}, 사용자 ID: {}", encodedPwd, userId);
-
-        // 저장소에 업데이트
-        userRepository.changePwd(userId, encodedPwd);
-    }
-
-    // 신체 정보 변경
-    @Transactional
-    public void changeBodyInfo(Long userId, int newHeight, int newWeight, String newSize,boolean newIsReleased) {
-        userRepository.changeBodyInfo(userId,newHeight,newWeight,newSize,newIsReleased);
-    }
-
-    @Transactional
-    public void changeAddInfo(Long userId, String profileImage, String name, String phone, String style, String introduction) {
-        userRepository.changeAddInfo(userId, profileImage, name,phone,style,introduction);
-    }
 
     // 아이디 중복 여부 확인
     public boolean isUsernameAvailable(String username) {
@@ -82,6 +62,52 @@ public class UserService {
     // 이메일 중복 여부 확인
     public boolean isEmailAvailable(String email) {
         return !userRepository.existsByEmail(email); // 중복 여부 반환
+    }
+
+
+
+
+    // 마이페이지 - 비밀번호 변경
+    @Transactional
+    public void changePwd(Long userId, String newPwd) {
+        // 비밀번호 암호화
+        String encodedPwd = passwordEncoder.encode(newPwd);
+        log.info("암호화된 비밀번호: {}, 사용자 ID: {}", encodedPwd, userId);
+
+        // 저장소에 업데이트
+        userRepository.changePwd(userId, encodedPwd);
+    }
+
+    // 마이페이지 - 신체 정보 변경
+    public void changeBodyInfo(Long userId, UserDTO userDTO) {
+
+        Users user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
+
+        // DTO에서 엔티티 필드 업데이트
+        user.setHeight(userDTO.getHeight());
+        user.setWeight(userDTO.getWeight());
+        user.setSize(userDTO.getSize());
+        user.setIsReleased(userDTO.getIsReleased());
+
+        // 저장
+        userRepository.save(user);
+    }
+
+    // 마이페이지 - 추가 정보 변경
+    public void changeAddInfo(Long userId, UserDTO userDTO) {
+
+        Users user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
+
+        // DTO에서 엔티티 필드 업데이트
+        user.setName(userDTO.getName());
+        user.setPhone(userDTO.getPhone());
+        user.setSize(userDTO.getSize());
+        user.setIntroduction(userDTO.getIntroduction());
+
+        // 저장
+        userRepository.save(user);
     }
 
 }

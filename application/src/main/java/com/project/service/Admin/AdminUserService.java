@@ -27,14 +27,7 @@ public class AdminUserService {
         return adminUserRepository.findAll();
     }
 
-    public Page<AdminUserDTO> getUsers(Pageable pageable, PageRequestDTO pageRequestDTO) {
-        return adminUserRepository.findAllAdminUsers(pageable,
-                pageRequestDTO.getSearchKeyword(),
-                pageRequestDTO.getSearchInput(),
-                pageRequestDTO.getStartDate(),
-                pageRequestDTO.getEndDate(),
-                pageRequestDTO.getGrade());
-    }
+
 
     public List<Grade> getAllGrades() {
         return adminGradeRepository.findAll();

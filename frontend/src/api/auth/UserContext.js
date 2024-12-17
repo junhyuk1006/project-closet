@@ -16,13 +16,7 @@ export const UserProvider = ({ children }) => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const token = localStorage.getItem('token'); // 토큰 확인
-        if (!token) {
-          setUser(null);
-          return;
-        }
-
-        const userData = await me(); // 백엔드에서 유저 정보 가져오기
+        const userData = await me();
         const { password, ...userWithoutPassword } = userData;
         setUser(userWithoutPassword);
       } catch (error) {
@@ -31,11 +25,43 @@ export const UserProvider = ({ children }) => {
       }
     };
 
-    fetchUser(); // 초기 한 번만 실행
-  }, []); // 의존성 배열에 빈 배열을 넣어 초기 실행만 수행
+    const token = localStorage.getItem('token'); // 토큰 확인
+
+    if (!token) {
+      setUser(null); // 명확히 초기화
+      return; // fetchUser 호출하지 않음
+    }
+
+    if (!user) {
+      fetchUser(); // user가 없을 때만 호출
+    }
+  }, [user]);
+
+  // UserContext에 로그인 로직 추가
+  const login = async (userDTO) => {
+    try {
+      const response = await signin(userDTO); // 기존 signin 호출
+      const { password, ...userWithoutPassword } = response;
+      setUser(userWithoutPassword); // 상태 업데이트
+    } catch (error) {
+      console.error('로그인 예외가 발생했습니다:', error);
+    }
+  };
+
+  // UserContext에 로그아웃 로직 추가
+  const logout = async () => {
+    try {
+      localStorage.removeItem('token');
+      setUser(null);
+
+      alert('정상적으로 로그아웃되었습니다.');
+    } catch (error) {
+      console.error('로그아웃 예외가 발생했습니다:', error);
+    }
+  };
 
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={{ user, setUser, login, logout }}>
       {children}
     </UserContext.Provider>
   );

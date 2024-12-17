@@ -18,7 +18,6 @@ public class CoordiBoard {
     private Long id;
 
     private Long userId;
-    private Long gradeId;
     private String coordiTitle;
     private String coordiContent;
     private String coordiImage;

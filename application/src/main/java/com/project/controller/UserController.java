@@ -45,8 +45,8 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@RequestBody UserDTO userDTO){
-        try{
+    public ResponseEntity<ResponseDTO<UserDTO>> registerUser(@RequestBody UserDTO userDTO) {
+        try {
             // 요청 데이터를 사용해 User 엔티티 생성
             Users user = Users.builder()
                     .username(userDTO.getUsername())
@@ -68,14 +68,23 @@ public class UserController {
                     .birth(registeredUser.getBirth())
                     .build();
 
-            // 성공 응답 반환
-            return ResponseEntity.ok().body(responseUserDTO);
+            // 성공 응답 생성
+            ResponseDTO<UserDTO> responseDTO = ResponseDTO.<UserDTO>builder()
+                    .status("success")
+                    .message("회원가입이 완료되었습니다.")
+                    .data(responseUserDTO)
+                    .build();
+
+            return ResponseEntity.ok().body(responseDTO);
         } catch (Exception e) {
-            // 에러 응답 반환
-            ResponseDTO<Object> responseDTO = ResponseDTO.builder().error(e.getMessage()).build();
-            return ResponseEntity
-                    .badRequest()
-                    .body(responseDTO);
+            // 에러 응답 생성
+            ResponseDTO<UserDTO> responseDTO = ResponseDTO.<UserDTO>builder()
+                    .status("failure")
+                    .message("회원가입 중 에러가 발생했습니다.")
+                    .error(e.getMessage())
+                    .build();
+
+            return ResponseEntity.badRequest().body(responseDTO);
         }
     }
 
