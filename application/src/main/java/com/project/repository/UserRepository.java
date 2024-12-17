@@ -1,5 +1,6 @@
 package com.project.repository;
 
+import com.project.dto.UserGradeDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -28,6 +29,9 @@ public interface UserRepository extends JpaRepository<Users, Long> {
   @Query("Update Users u SET u.password = :encodedPwd WHERE u.id = :userId")
   void changePwd(@Param("userId") Long userId, @Param("encodedPwd") String encodedPwd);
 
+  @Query("SELECT new com.project.dto.UserGradeDTO(g.grade, g.rate) " +
+          "FROM Users u JOIN u.grade g WHERE u.id = :userId")
+  UserGradeDTO findGradeByUserId(@Param("userId") Long userId);
 
 }
 

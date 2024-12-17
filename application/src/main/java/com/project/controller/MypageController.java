@@ -3,6 +3,7 @@ package com.project.controller;
 import com.project.domain.Address;
 import com.project.dto.ResponseDTO;
 import com.project.dto.UserDTO;
+import com.project.dto.UserGradeDTO;
 import com.project.service.MypageService;
 import com.project.dto.CustomUserDetail;
 import com.project.service.UserService;
@@ -111,6 +112,28 @@ public class MypageController {
         return ResponseEntity.ok(response);
 
     }
+
+    @GetMapping("/findGradeByUser")
+    public ResponseEntity<ResponseDTO<UserGradeDTO>> findGradeByUserId(
+            @AuthenticationPrincipal CustomUserDetail customUserDetail) {
+
+        Long userId = customUserDetail.getId();
+
+        // 서비스에서 UserGradeDTO 반환
+        UserGradeDTO userGradeDTO = userService.findGradeByUserId(userId);
+
+        // ResponseDTO 생성
+        ResponseDTO<UserGradeDTO> response = ResponseDTO.<UserGradeDTO>builder()
+                .status("success")
+                .data(userGradeDTO) // UserGradeDTO 객체를 data에 설정
+                .build();
+
+        return ResponseEntity.ok(response); // ResponseEntity로 반환
+    }
+
+
+
+
 
 
 

@@ -59,6 +59,11 @@ const MemberInfo = () => {
         alert('비밀번호가 일치하지 않습니다.');
         return;
       }
+      // 비밀번호 입력값이 비어 있는 경우 처리
+      if (!password || !confirmPassword) {
+        alert('비밀번호와 비밀번호 확인을 모두 입력해주세요.');
+        return;
+      }
 
       try {
         const response = await call('/api/mypage/changePwd', 'PUT', {
@@ -102,12 +107,6 @@ const MemberInfo = () => {
 
       const password = data.password?.trim(); // 입력값 가져오기
       const confirmPassword = data.confirmPassword?.trim(); // 입력값 가져오기
-
-      // 비밀번호 입력값이 비어 있는 경우 처리
-      if (!password || !confirmPassword) {
-        alert('비밀번호와 비밀번호 확인을 모두 입력해주세요.');
-        return;
-      }
 
       try {
         const response = await call(`/api/mypage/changeAddInfo`, 'PUT', {

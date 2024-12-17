@@ -1,6 +1,7 @@
 package com.project.service;
 
 import com.project.dto.UserDTO;
+import com.project.dto.UserGradeDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -110,4 +111,7 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public UserGradeDTO findGradeByUserId(Long userId) {
+        return userRepository.findGradeByUserId(userId);
+    }
 }
