@@ -65,8 +65,7 @@ const Board = () => {
                     <div className="row no-gutters">
                       <div className="col-lg-3 col-md-3 col-sm-12 p-0">
                         <select
-                          className="form-control"
-                          id="exampleFormControlSelect1"
+                          className="form-select"
                           value={condition}
                           onChange={(e) => setCondition(e.target.value)}
                         >
@@ -120,30 +119,21 @@ const Board = () => {
               {error && <p style={{ color: 'red' }}>에러 발생: {error}</p>}
               {currentPosts.length > 0 ? (
                 <div className="table-responsive">
-                  <table className="table widget-26">
+                  <table className="table">
                     <thead>
                       <tr>
-                        <th style={{ textAlign: 'center' }}>프로필</th>
-                        <th
-                          className="highlight bg-soft-base"
-                          style={{ textAlign: 'center' }}
-                        >
-                          제목
+                        <th className="col-2" colSpan={2}>
+                          프로필
                         </th>
-                        <th style={{ textAlign: 'center' }}>닉네임</th>
-                        <th style={{ textAlign: 'center' }}>작성일</th>
-                        <th
-                          className="highlight bg-soft-base"
-                          style={{ textAlign: 'center' }}
-                        >
-                          내용
-                        </th>
+                        <th className="col-2">제목</th>
+                        <th className="col-7">내용</th>
+                        <th className="col-1">작성일</th>
                       </tr>
                     </thead>
                     <tbody>
                       {currentPosts.map((item) => (
                         <tr key={item.id}>
-                          <td style={{ textAlign: 'center' }}>
+                          <td>
                             <div className="widget-26-job-emp-img">
                               <img
                                 src={
@@ -155,36 +145,26 @@ const Board = () => {
                               />
                             </div>
                           </td>
-                          <td
-                            className="highlight bg-soft-base"
-                            style={{ textAlign: 'center' }}
-                          >
-                            <div className="widget-26-job-title">
+                          <td>
+                            <div className="board-user">
+                              <p className="type m-0">{item.nickname}</p>
+                            </div>
+                          </td>
+                          <td>
+                            <div className="board-title">
                               <Link to={`/board/${item.id}`}>
                                 {item.boardTitle}
                               </Link>
                             </div>
                           </td>
-                          <td style={{ textAlign: 'center' }}>
-                            <div className="widget-26-job-info">
-                              <p className="type m-0">{item.nickname}</p>
+                          <td className="col-7">
+                            <div className="board-content">
+                              <span>{item.boardContent}</span>
                             </div>
                           </td>
-                          <td style={{ textAlign: 'center' }}>
+                          <td>
                             <div className="widget-26-job-salary">
                               {new Date(item.createdAt).toLocaleDateString()}
-                            </div>
-                          </td>
-                          <td
-                            className="highlight bg-soft-base"
-                            style={{ textAlign: 'center' }}
-                          >
-                            <div className="widget-26-job-category">
-                              <span>
-                                {item.boardContent.length > 10
-                                  ? `${item.boardContent.substring(0, 10)}...`
-                                  : item.boardContent}
-                              </span>
                             </div>
                           </td>
                         </tr>
