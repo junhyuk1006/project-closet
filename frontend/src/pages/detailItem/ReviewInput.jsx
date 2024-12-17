@@ -178,7 +178,7 @@ function ReviewInput({ activeTab, userId, productId }) {
       const reviewPoint = {
         userId,
         point: 100,
-        pointReason: '일반 리뷰 작성 보상',
+        pointReason: '일반 리뷰',
         pointType: '적립',
         pointInsertType: 'normal_review',
       };
