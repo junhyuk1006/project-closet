@@ -1,10 +1,26 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Form, Button, Row, Col, Table } from 'react-bootstrap';
+import { getOrder } from '../../../../api/admin/order/order';
 
 const Order = () => {
+  const [orders, setOrders] = useState([]);
+
   const [searchParams, setSearchParams] = useState({
     searchKeyword: 'orderNo',
+    searchInput: '',
+    startDate: '',
+    endDate: '',
   });
+
+  useEffect(() => {
+    fetchOrder();
+  }, []);
+
+  const fetchOrder = () => {
+    getOrder().then((response) => {
+      setOrders(response.content);
+    });
+  };
 
   const updateSearchParams = (key, value) => {
     setSearchParams((prev) => ({
@@ -100,26 +116,18 @@ const Order = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>2024/12/04</td>
-            <td>24120410080576</td>
-            <td>cell</td>
-            <td>선인장 자수패치 반팔T</td>
-            <td>2</td>
-            <td>20,000</td>
-            <td>40,000</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>2024/12/05</td>
-            <td>24120510052475</td>
-            <td>cell</td>
-            <td>우븐 숄 머플러 인디라 와인 SA-2HW362WI</td>
-            <td>1</td>
-            <td>34,000</td>
-            <td>34,000</td>
-          </tr>
+          {orders.map((order, index) => (
+            <tr key={order.id}>
+              <td>{index + 1}</td>
+              <td>{order.paymentDate}</td>
+              <td>{order.orderNumber}</td>
+              <td>{order.itemMainImage}</td>
+              <td>{order.itemName}</td>
+              <td>{order.itemCount}</td>
+              <td>{order.itemPrice}</td>
+              <td>{order.finalPaymentAmount}</td>
+            </tr>
+          ))}
         </tbody>
       </Table>
     </div>
