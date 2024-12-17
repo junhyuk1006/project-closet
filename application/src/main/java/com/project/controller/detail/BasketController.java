@@ -33,7 +33,6 @@ public class BasketController {
     @GetMapping("/getBasket/{userId}")
     public ResponseEntity<List<BasketItemDTO>> getBasket(@PathVariable("userId") Long userId) {
         List<BasketItemDTO> basket = basketService.getBasket(userId);
-        System.out.println("basket get basketId" + basket);
         return ResponseEntity.ok(basket);
     }
 

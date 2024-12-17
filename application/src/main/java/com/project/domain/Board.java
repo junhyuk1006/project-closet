@@ -18,7 +18,6 @@ public class Board {
     private Long id;
 
     private Long userId;
-
     private String boardTitle;
     private String boardContent;
     private String boardImage;

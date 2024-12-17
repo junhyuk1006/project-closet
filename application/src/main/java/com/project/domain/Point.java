@@ -27,7 +27,7 @@ public class Point {
     private int point;
     private String pointReason;
     private String pointType;
-    private String pointInsertType;
+    private String pointInsertType; // 지급 사유에 따른 기간 설정을 위해 생성
 
     @CreationTimestamp
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul") // 날짜 포맷 지정

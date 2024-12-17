@@ -11,11 +11,17 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PointRepository  extends JpaRepository<Point, Long> {
 
-    @Query("SELECT new com.project.dto.PointDTO(p.id, u.id, p.point, p.pointReason, p.pointType, p.pointInsertType, p.createdAt, p.deletedAt, p.status) " +
-            "FROM Point p Join p.user u WHERE p.user.id = :userId")
+    /** DTO 에 TotalPoint 추가시, 여기에도 추가를 해야 했었음
+     * 현재는 완벽하게 분리하여 상관 없음 */
+    @Query("SELECT new com.project.dto.PointDTO(" +
+            "p.id, u.id, p.point, p.pointReason, p.pointType, " +
+            "p.pointInsertType, p.createdAt, p.deletedAt, p.status) " +
+            "FROM Point p " +
+            "Join p.user u " +
+            "WHERE p.user.id = :userId")
     Page<PointDTO> findByUserId(long userId, Pageable pageable);
 
-
+    /** 이전 쿼리문과 기능은 같으나 가독성을 향상시킴 */
     @Query("""
                 SELECT SUM(
                     CASE 
