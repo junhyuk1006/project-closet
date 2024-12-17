@@ -276,3 +276,9 @@
   border: 1px solid #e6e4e9;
   border-radius: 8px;
 }
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 0px;
+}

@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,9 +37,11 @@ public class BoardReplyController {
 
     // 댓글 삭제
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteReply(@PathVariable Long id) {
-        replyService.deleteReply(id); // 예외 발생 시 자동으로 500 상태 반환
-        return ResponseEntity.ok("댓글이 성공적으로 삭제되었습니다."); // 성공 메시지 반환
+    public ResponseEntity<Map<String, String>> deleteReply(@PathVariable Long id) {
+        replyService.deleteReply(id); // 댓글 삭제 로직 실행
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "댓글이 성공적으로 삭제되었습니다.");
+        return ResponseEntity.ok(response); // JSON 형식 반환
     }
 
 }
