@@ -10,7 +10,7 @@ import { useUser } from '../../../api/auth/UserContext'; // 사용자 정보 가
 import './BoardReply.css'; // 추가된 스타일링
 
 const BoardReply = () => {
-  const { id } = useParams(); // 게시글 ID 가져오기
+  const { boardId } = useParams(); // 게시글 ID 가져오기
   const { user } = useUser(); // 현재 로그인된 사용자 정보
   const [replies, setReplies] = useState([]);
   const [newReply, setNewReply] = useState('');
@@ -19,7 +19,7 @@ const BoardReply = () => {
   // 댓글 목록 불러오기
   const fetchReplies = async () => {
     try {
-      const data = await getRepliesByBoardId(id);
+      const data = await getRepliesByBoardId(boardId);
       setReplies(data);
     } catch (error) {
       console.error('댓글 불러오기 실패:', error);
@@ -33,7 +33,7 @@ const BoardReply = () => {
       alert('로그인을 먼저 해주세요.');
       return;
     }
-    if (!id) {
+    if (!boardId) {
       alert('게시글 ID가 존재하지 않습니다.');
       return;
     }
@@ -43,7 +43,11 @@ const BoardReply = () => {
     }
 
     try {
-      await addReply({ boardId: id, replyContent: newReply, userId: user.id });
+      await addReply({
+        boardId: boardId,
+        replyContent: newReply,
+        userId: user.id,
+      });
       setNewReply('');
       fetchReplies();
     } catch (error) {
@@ -91,7 +95,7 @@ const BoardReply = () => {
 
   useEffect(() => {
     fetchReplies();
-  }, [id]);
+  }, [boardId]);
 
   return (
     <div className="reply-container">

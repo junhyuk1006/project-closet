@@ -24,44 +24,43 @@ public class BoardController {
     }
 
     // 게시글 상세 조회
-    @GetMapping("/{id}")
-    public ResponseEntity<BoardDTO> getBoardDetail(@PathVariable Long id) {
-        BoardDTO boardDetail = boardService.getBoardDetailWithNickname(id);
+    @GetMapping("/{boardId}")
+    public ResponseEntity<BoardDTO> getBoardDetail(@PathVariable Long boardId) {
+        BoardDTO boardDetail = boardService.getBoardDetailWithNickname(boardId);
         return ResponseEntity.ok(boardDetail);
     }
 
     // 게시글 생성
     @PostMapping("/write")
-    public ResponseEntity<Board> createBoard(@RequestBody Board board) {
-        Board createdBoard = boardService.createBoard(board);
-        return ResponseEntity.ok(createdBoard);
+    public ResponseEntity<BoardDTO> createBoard(@RequestBody BoardDTO boardDTO) {
+        BoardDTO createdBoardDTO = boardService.createBoard(boardDTO);
+        return ResponseEntity.ok(createdBoardDTO);
     }
 
     // 검색 API
     @GetMapping("/search")
-    public ResponseEntity<List<Board>> searchBoards(
+    public ResponseEntity<List<BoardDTO>> searchBoards(
             @RequestParam String keyword,
             @RequestParam String condition) {
-        List<Board> result = boardService.searchBoards(keyword, condition);
+        List<BoardDTO> result = boardService.searchBoards(keyword, condition);
         return ResponseEntity.ok(result);
     }
 
     // 글수정
-    @PutMapping("/update/{id}")
-    public ResponseEntity<Board> updateBoard(
-            @PathVariable Long id,
-            @RequestBody Board updatedBoard) {
-        Board board = boardService.updateBoard(id, updatedBoard);
-        return ResponseEntity.ok(board);
+    @PutMapping("/update/{boardId}")
+    public ResponseEntity<BoardDTO> updateBoard(@PathVariable Long boardId, @RequestBody BoardDTO boardDTO) {
+        boardDTO.setId(boardId); // boardId를 DTO에 설정
+        BoardDTO updatedBoard = boardService.updateBoard(boardDTO); // 서비스 호출
+        return ResponseEntity.ok(updatedBoard);
     }
+
+
 
     // 글삭제
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteBoard(@PathVariable Long id) {
-        boardService.deleteBoard(id);
+    @DeleteMapping("/delete/{boardId}")
+    public ResponseEntity<String> deleteBoard(@PathVariable Long boardId) {
+        boardService.deleteBoard(boardId);
         return ResponseEntity.ok("삭제 성공");
     }
-
-
 
 }

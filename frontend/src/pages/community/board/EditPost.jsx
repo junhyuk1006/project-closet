@@ -7,7 +7,7 @@ import {
 import './WritePost.css'; // 동일한 CSS 재사용
 
 const EditPost = () => {
-  const { id } = useParams(); // URL에서 게시글 ID 가져오기
+  const { boardId } = useParams(); // URL에서 게시글 ID 가져오기
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const navigate = useNavigate();
@@ -16,7 +16,7 @@ const EditPost = () => {
     // 기존 게시글 데이터 가져오기
     const fetchBoard = async () => {
       try {
-        const data = await getBoardDetail(id); // 기존 글 정보 가져오기
+        const data = await getBoardDetail(boardId); // 기존 글 정보 가져오기
         setTitle(data.boardTitle); // 제목 설정
         setContent(data.boardContent); // 내용 설정
       } catch (error) {
@@ -27,7 +27,7 @@ const EditPost = () => {
     };
 
     fetchBoard();
-  }, [id, navigate]);
+  }, [boardId, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -38,9 +38,9 @@ const EditPost = () => {
     };
 
     try {
-      await updateBoard(id, updatedData); // 데이터 전달
+      await updateBoard(boardId, updatedData); // 데이터 전달
       alert('글이 수정되었습니다.');
-      navigate(`/board/${id}`); // 수정 후 상세 페이지로 이동
+      navigate(`/board/${boardId}`); // 수정 후 상세 페이지로 이동
     } catch (error) {
       console.error('서버와의 통신 중 오류:', error);
       alert('글 수정 중 문제가 발생했습니다.');

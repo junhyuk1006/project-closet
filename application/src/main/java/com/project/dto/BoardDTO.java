@@ -10,6 +10,7 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 public class BoardDTO {
     private Long id;
+    private Long userId;
     private String boardTitle;
     private String boardContent;
     private String boardImage;
