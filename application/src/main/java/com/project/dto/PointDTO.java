@@ -16,7 +16,6 @@ public class PointDTO {
      *  참고: PointRepository, PointService
      *  */
 
-
     private long id;
     private long userId;
     private int point;
