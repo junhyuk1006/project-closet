@@ -107,7 +107,7 @@ const BoardReply = () => {
               <div className="reply-content-wrapper">
                 <div>
                   <p className="reply-writer">
-                    작성자: {reply.userName || '익명'} {/* 작성자명 */}
+                    작성자: {reply.nickname || '익명'} {/* 작성자명 */}
                   </p>
                   {editingReply?.id === reply.id ? (
                     <input

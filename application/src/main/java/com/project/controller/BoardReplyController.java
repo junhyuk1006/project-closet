@@ -1,9 +1,9 @@
 package com.project.controller;
 
 import com.project.domain.BoardReply;
+import com.project.dto.BoardReplyDTO;
 import com.project.service.BoardReplyService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,20 +19,22 @@ public class BoardReplyController {
 
     // 댓글 작성
     @PostMapping
-    public ResponseEntity<BoardReply> createReply(@RequestBody BoardReply reply) {
-        return ResponseEntity.ok(replyService.createReply(reply));
+    public ResponseEntity<BoardReplyDTO> createReply(@RequestBody BoardReplyDTO replyDTO) {
+        BoardReplyDTO createdReply = replyService.createReply(replyDTO);
+        return ResponseEntity.ok(createdReply);
     }
 
     // 댓글 조회
     @GetMapping("/board/{boardId}")
-    public ResponseEntity<List<BoardReply>> getReplies(@PathVariable Long boardId) {
+    public ResponseEntity<List<BoardReplyDTO>> getReplies(@PathVariable Long boardId) {
         return ResponseEntity.ok(replyService.getRepliesByBoardId(boardId));
     }
 
     // 댓글 수정
     @PutMapping("/{id}")
-    public ResponseEntity<BoardReply> updateReply(@PathVariable Long id, @RequestBody Map<String, String> request) {
-        return ResponseEntity.ok(replyService.updateReply(id, request.get("replyContent")));
+    public ResponseEntity<BoardReplyDTO> updateReply(@PathVariable Long id, @RequestBody BoardReplyDTO replyDTO) {
+        BoardReplyDTO updatedReply = replyService.updateReply(id, replyDTO);
+        return ResponseEntity.ok(updatedReply);
     }
 
     // 댓글 삭제
