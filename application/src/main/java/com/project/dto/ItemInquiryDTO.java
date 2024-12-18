@@ -29,4 +29,17 @@ public class ItemInquiryDTO {
 
     @CreationTimestamp
     private LocalDateTime createdAt;
+
+    // 엔티티 데이터를 DTO로 변환하는 생성자
+    public ItemInquiryDTO(ItemInquiry itemInquiry) {
+        this.id = itemInquiry.getId();
+        this.userId = itemInquiry.getUsers().getId(); // Users 엔티티의 ID
+        this.itemDetailId = itemInquiry.getItemDetailId();
+        this.content = itemInquiry.getContent();
+        this.inquiryType = itemInquiry.getInquiryType();
+        this.answerStatus = itemInquiry.getAnswerStatus();
+        this.status = itemInquiry.getStatus();
+        this.createdAt = itemInquiry.getCreatedAt();
+    }
+
 }

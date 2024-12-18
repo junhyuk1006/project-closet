@@ -4,7 +4,6 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import { useNavigate } from 'react-router-dom';
 import MyPageHeader from '../../components/myPage/MyPageHeader';
 import { call } from '../../api/auth/ApiService'; // API 호출 함수
-import { RepeatOneSharp } from '@mui/icons-material';
 
 const MyPageHome = () => {
   const navigate = useNavigate();
@@ -73,7 +72,7 @@ const MyPageHome = () => {
               <>
                 {`${user?.nickname || ''}님의 등급은 ${gradeInfo.grade} 등급입니다.`}
                 <br />
-                {`(${gradeInfo.rate}%)`}
+                {`등급에 따른 포인트 적립률은 ${gradeInfo.rate}%입니다.`}
               </>
             }
           />

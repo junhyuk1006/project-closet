@@ -28,7 +28,7 @@ const MyPoint = () => {
   const fetchTotalPoints = async () => {
     try {
       const response = await call(`/api/point/getTotalPointByUserid`, 'GET');
-      setTotalPoints(response.totalPoints); // 백엔드에서 "totalPoints" 필드로 전달된 값
+      setTotalPoints(response.totalUserPoint); // 백엔드에서 "totalPoints" 필드로 전달된 값
     } catch (error) {
       console.error('Error fetching total points:', error);
     }
@@ -46,7 +46,7 @@ const MyPoint = () => {
     <div>
       <MyPageHeader
         title="적립금 조회"
-        description="적립금은 적립일 기준 1년간 사용 가능하며, 만료 기간이 한 달 이내로 남은 포인트는 소멸 예정 포인트에 표시됩니다."
+        description="적립금은 사이트 내에서 상품 구매 시 현금처럼 사용할 수 있습니다."
       />
       {/* 나의 적립금 표시 */}
       <div className="point-label1">

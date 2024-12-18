@@ -37,6 +37,8 @@ public class PointController {
         return ResponseEntity.ok("success");
     }
 
+
+
     @GetMapping("/getPointByUserid")
     public ResponseEntity<Page<PointDTO>> getPointByUserid(
             @AuthenticationPrincipal CustomUserDetail userDetail,
