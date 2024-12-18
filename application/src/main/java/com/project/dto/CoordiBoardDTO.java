@@ -1,5 +1,10 @@
 package com.project.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+@Data
+@AllArgsConstructor
 public class CoordiBoardDTO {
     private Long id;
     private Long userId;

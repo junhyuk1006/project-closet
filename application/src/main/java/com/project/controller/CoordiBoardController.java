@@ -1,6 +1,6 @@
 package com.project.controller;
 
-import com.project.domain.CoordiBoard;
+import com.project.dto.CoordiBoardDTO;
 import com.project.service.CoordiBoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -26,33 +26,34 @@ public class CoordiBoardController {
             @RequestParam("title") String title
     ) {
         try {
-            // 서비스 계층에 처리 위임
-            coordiBoardService.saveCoordi(image, description, userId, title);
-            return ResponseEntity.ok("File uploaded and data saved successfully");
+            CoordiBoardDTO coordiBoardDTO = coordiBoardService.saveCoordi(image, description, userId, title);
+            return ResponseEntity.ok(coordiBoardDTO);
         } catch (IOException e) {
             return ResponseEntity.status(500).body("File upload failed");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(400).body(e.getMessage());
         }
     }
 
-    // 2. 코디 게시글 전체 조회
+    // 2. 코디 게시글 전체 조회 (DTO)
     @GetMapping("/list")
-    public ResponseEntity<List<CoordiBoard>> getCoordiList() {
-        List<CoordiBoard> coordiBoards = coordiBoardService.getAllCoordis();
+    public ResponseEntity<List<CoordiBoardDTO>> getCoordiList() {
+        List<CoordiBoardDTO> coordiBoards = coordiBoardService.getAllCoordis();
         return ResponseEntity.ok(coordiBoards);
     }
 
-    // 3. 특정 게시글 조회
+    // 3. 특정 게시글 조회 (DTO)
     @GetMapping("/{id}")
     public ResponseEntity<?> getCoordiById(@PathVariable Long id) {
-        CoordiBoard coordiBoard = coordiBoardService.getCoordiById(id);
-        if (coordiBoard != null) {
-            return ResponseEntity.ok(coordiBoard);
+        CoordiBoardDTO coordiBoardDTO = coordiBoardService.getCoordiById(id);
+        if (coordiBoardDTO != null) {
+            return ResponseEntity.ok(coordiBoardDTO);
         } else {
             return ResponseEntity.status(404).body("CoordiBoard not found");
         }
     }
 
-    // 4. 코디 게시글 수정
+    // 4. 코디 게시글 수정 (DTO)
     @PutMapping("/{id}")
     public ResponseEntity<?> updateCoordi(
             @PathVariable Long id,
@@ -61,12 +62,12 @@ public class CoordiBoardController {
             @RequestParam("title") String title
     ) {
         try {
-            coordiBoardService.updateCoordi(id, image, description, title);
-            return ResponseEntity.ok("CoordiBoard updated successfully");
+            CoordiBoardDTO updatedCoordiBoardDTO = coordiBoardService.updateCoordi(id, image, description, title);
+            return ResponseEntity.ok(updatedCoordiBoardDTO);
         } catch (IOException e) {
             return ResponseEntity.status(500).body("File upload failed");
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(404).body("CoordiBoard not found");
+            return ResponseEntity.status(404).body(e.getMessage());
         }
     }
 

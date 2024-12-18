@@ -17,7 +17,10 @@ public class CoordiBoard {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long userId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private Users user;
+
     private String coordiTitle;
     private String coordiContent;
     private String coordiImage;

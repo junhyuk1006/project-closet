@@ -86,7 +86,7 @@ const Album = () => {
                       <div className="d-flex justify-content-between align-items-center">
                         <div>
                           <small className="text-muted">
-                            작성자: {coordi.userId || '알 수 없음'}
+                            작성자: {coordi.nickname || '알 수 없음'}
                           </small>
                         </div>
                         <small className="text-muted">
