@@ -91,7 +91,7 @@ function PaymentResult() {
                 pointType: "차감",
                 pointInsertType: "purchase",
             };
-            await axios.post("http://localhost:80/api/point/deduct", pointData);
+            await axios.post("http://localhost:80/api/point/saveReviewPoint", pointData);
             saveLog(`포인트 ${points} 차감 성공`);
         } catch (error) {
             saveLog(`포인트 차감 실패: ${error.message}`);
