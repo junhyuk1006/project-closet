@@ -6,10 +6,10 @@
   min-width: 350px;
 }
 .react-calendar button {
-  border-radius: 5px;
+  border-radius: 3rem;
 }
 .react-calendar__tile--now {
-  background: #ffffb0;
+  background: #f4f159;
 }
 .react-calendar__tile--active {
   background: #379bff;

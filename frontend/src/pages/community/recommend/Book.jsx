@@ -16,7 +16,9 @@ export default function Book({ isOpen, setIsOpen, coordiId, user }) {
     // 초기 상태를 다음날로 지정
     new Date().getTime() + 1000 * 60 * 60 * 24
   );
-  const [select, setSelect] = useState(9);
+  const [select, setSelect] = useState(9); // 선택 시간
+  // const [mark, setMark] = useState([]); // 예약 날짜 배열
+  const mark = ['2024-12-23', '2024-12-26'];
 
   // 스타일링 예약 함수
   async function reserveStyling() {
@@ -32,7 +34,7 @@ export default function Book({ isOpen, setIsOpen, coordiId, user }) {
     };
     console.log(reservation);
 
-    // 서버에 POST 요청 전송
+    // 서버에 예약 데이터 전송
     try {
       const data = await call(`/book/coordi`, 'POST', reservation);
       console.log('서버 반환 데이터:', data);
@@ -111,6 +113,31 @@ export default function Book({ isOpen, setIsOpen, coordiId, user }) {
             value={value}
             onChange={onChange}
             formatDay={(locale, date) => moment(date).format('DD')}
+            showNeighboringMonth={false}
+            tileContent={({ date, view }) => {
+              // 날짜 타일에 컨텐츠 추가하기 (html 태그)
+              // 추가할 html 태그를 변수 초기화
+              let html = [];
+              // 현재 날짜가 post 작성한 날짜 배열(mark)에 있다면, dot div 추가
+              if (mark.find((x) => x === moment(date).format('YYYY-MM-DD'))) {
+                console.log(mark);
+                html.push(<div className={styles.dot}></div>);
+              }
+              // 다른 조건을 주어서 html.push 에 추가적인 html 태그를 적용할 수 있음.
+              return (
+                <>
+                  <div
+                    style={{
+                      position: 'absolute',
+                      display: 'flex',
+                      transform: 'translateX(150%)',
+                    }}
+                  >
+                    {html}
+                  </div>
+                </>
+              );
+            }}
           />
 
           <div style={{ width: '80%', margin: '0 auto' }}>
