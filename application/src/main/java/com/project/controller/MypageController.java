@@ -1,7 +1,9 @@
 package com.project.controller;
 
 import com.project.domain.Address;
+import com.project.dto.ResponseDTO;
 import com.project.dto.UserDTO;
+import com.project.dto.UserGradeDTO;
 import com.project.service.MypageService;
 import com.project.dto.CustomUserDetail;
 import com.project.service.UserService;
@@ -52,7 +54,7 @@ public class MypageController {
 
     // 비밀번호 변경
     @PutMapping("/changePwd")
-    public ResponseEntity<Map<String, Object>> updatePasswordById(
+    public ResponseEntity<ResponseDTO<Void>> updatePasswordById(
             @RequestBody UserDTO userDTO,
             @AuthenticationPrincipal CustomUserDetail userDetails) {
 
@@ -63,52 +65,78 @@ public class MypageController {
         userService.changePwd(userId, newPwd);
 
         // 응답 반환
-        Map<String, Object> response = new HashMap<>();
-        response.put("status", "success");
-        response.put("message", "비밀번호가 성공적으로 변경되었습니다.");
+        ResponseDTO<Void> response = ResponseDTO.<Void>builder()
+                .status("success")
+                .message("비밀번호가 성공적으로 변경되었습니다.")
+                .data(null) // 변경된 비밀번호와 같은 데이터는 응답으로 줄 필요 없으므로 null
+                .build();
 
         return ResponseEntity.ok(response);
     }
 
-    // 신체 정보 변경
+    
+    // 신체 정보 수정
     @PutMapping("/changeBodyInfo")
-    public ResponseEntity <Map<String,Object>> changeBodyInfoById(@RequestBody UserDTO userDTO,
-                                                                  @AuthenticationPrincipal CustomUserDetail userDetails) {
-       Long userId = userDetails.getId();
-       int newHeight = userDTO.getHeight();
-       int newWeight = userDTO.getWeight();
-       String newSize = userDTO.getSize();
-       boolean newIsReleased = userDTO.getIsReleased();
-
-       userService.changeBodyInfo(userId, newHeight,newWeight,newSize,newIsReleased);
-        log.info("newHeight: {}", newHeight);
-        // 응답 반환
-        Map<String, Object> response = new HashMap<>();
-        response.put("status", "success");
-        response.put("message", "신체 정보가 저장되었습니다.");
-
-        return ResponseEntity.ok(response);
-    }
-
-    // 신체 정보 변경
-    @PutMapping("/changeAddInfo")
-    public ResponseEntity <Map<String,Object>> changeAddInfoById(@RequestBody UserDTO userDTO,
-                                                                  @AuthenticationPrincipal CustomUserDetail userDetails) {
+    public  ResponseEntity<ResponseDTO<Void>>  changeBodyInfoById(
+            @RequestBody UserDTO userDTO,
+            @AuthenticationPrincipal CustomUserDetail userDetails
+    ) {
         Long userId = userDetails.getId();
-        String profileImage = userDTO.getProfileImage();
-        String name = userDTO.getName();
-        String phone = userDTO.getPhone();
-        String style = userDTO.getStyle();
-        String introduction = userDTO.getIntroduction();
+        userService.changeBodyInfo(userId, userDTO);
 
-        userService.changeAddInfo(userId, profileImage, name,phone,style,introduction);
 
-        Map<String, Object> response = new HashMap<>();
-        response.put("status", "success");
-        response.put("message", "회원 추가 정보가 수정되었습니다.");
+        // 응답 반환
+        ResponseDTO<Void> response = ResponseDTO.<Void>builder()
+                .status("success")
+                .message("신체 정보가 저장되었습니다.")
+                .data(null) // 변경된 비밀번호와 같은 데이터는 응답으로 줄 필요 없으므로 null
+                .build();
+
 
         return ResponseEntity.ok(response);
     }
+
+    @PutMapping("/changeAddInfo")
+    public  ResponseEntity<ResponseDTO<Void>>  changeAddInfoById(@AuthenticationPrincipal CustomUserDetail userDetails,
+                                                                @RequestBody UserDTO userDTO) {
+        long userId = userDetails.getId();
+        userService.changeAddInfo(userId, userDTO);
+
+        // 응답 반환
+        ResponseDTO<Void> response = ResponseDTO.<Void>builder()
+                .status("success")
+                .message("추가 정보가 저장되었습니다.")
+                .data(null)
+                .build();
+
+        return ResponseEntity.ok(response);
+
+    }
+
+    @GetMapping("/findGradeByUser")
+    public ResponseEntity<ResponseDTO<UserGradeDTO>> findGradeByUserId(
+            @AuthenticationPrincipal CustomUserDetail customUserDetail) {
+
+        Long userId = customUserDetail.getId();
+
+        // 서비스에서 UserGradeDTO 반환
+        UserGradeDTO userGradeDTO = userService.findGradeByUserId(userId);
+
+        // ResponseDTO 생성
+        ResponseDTO<UserGradeDTO> response = ResponseDTO.<UserGradeDTO>builder()
+                .status("success")
+                .data(userGradeDTO) // UserGradeDTO 객체를 data에 설정
+                .build();
+
+        return ResponseEntity.ok(response); // ResponseEntity로 반환
+    }
+
+
+
+
+
+
+
 
 
 }

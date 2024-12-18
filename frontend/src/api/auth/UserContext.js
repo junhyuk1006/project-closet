@@ -16,13 +16,7 @@ export const UserProvider = ({ children }) => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const token = localStorage.getItem('token'); // 토큰 확인
-        if (!token) {
-          setUser(null);
-          return;
-        }
-
-        const userData = await me(); // 백엔드에서 유저 정보 가져오기
+        const userData = await me();
         const { password, ...userWithoutPassword } = userData;
         setUser(userWithoutPassword);
       } catch (error) {

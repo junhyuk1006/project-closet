@@ -1,5 +1,7 @@
 package com.project.service;
 
+import com.project.dto.UserDTO;
+import com.project.dto.UserGradeDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -74,14 +76,39 @@ public class UserService {
         userRepository.changePwd(userId, encodedPwd);
     }
 
-    // 신체 정보 변경
-    @Transactional
-    public void changeBodyInfo(Long userId, int newHeight, int newWeight, String newSize,boolean newIsReleased) {
-        userRepository.changeBodyInfo(userId,newHeight,newWeight,newSize,newIsReleased);
+    // 마이페이지 - 신체 정보 변경
+    public void changeBodyInfo(Long userId, UserDTO userDTO) {
+
+        Users user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
+
+        // DTO에서 엔티티 필드 업데이트
+        user.setHeight(userDTO.getHeight());
+        user.setWeight(userDTO.getWeight());
+        user.setSize(userDTO.getSize());
+        user.setIsReleased(userDTO.getIsReleased());
+
+        // 저장
+        userRepository.save(user);
     }
 
-    @Transactional
-    public void changeAddInfo(Long userId, String profileImage, String name, String phone, String style, String introduction) {
-        userRepository.changeAddInfo(userId, profileImage, name,phone,style,introduction);
+    // 마이페이지 - 추가 정보 변경
+    public void changeAddInfo(Long userId, UserDTO userDTO) {
+
+        Users user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
+
+        // DTO에서 엔티티 필드 업데이트
+        user.setName(userDTO.getName());
+        user.setPhone(userDTO.getPhone());
+        user.setSize(userDTO.getSize());
+        user.setIntroduction(userDTO.getIntroduction());
+
+        // 저장
+        userRepository.save(user);
+    }
+
+    public UserGradeDTO findGradeByUserId(Long userId) {
+        return userRepository.findGradeByUserId(userId);
     }
 }
