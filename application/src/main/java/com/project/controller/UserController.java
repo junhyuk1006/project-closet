@@ -19,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Collections;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -183,6 +184,46 @@ public class UserController {
             return ResponseEntity.badRequest().body(responseDTO);
         }
     }
+
+    @PostMapping("/change-password")
+    public ResponseEntity<?> changePassword(@RequestBody Map<String, String> requestData) {
+        try {
+            String token = requestData.get("token");
+            String newPassword = requestData.get("newPassword");
+
+            if (token == null || newPassword == null) {
+                throw new RuntimeException("토큰 혹은 새 비밀번호가 누락되었습니다.");
+            }
+
+            // 토큰 검증 및 사용자 정보 추출
+            Map<String, Object> userInfo = tokenProvider.validateAndGetUserId(token);
+            Long userId = (Long) userInfo.get("id");
+            if (userId == null) {
+                throw new RuntimeException("유효하지 않은 토큰입니다.");
+            }
+
+            // 비밀번호 변경 수행
+            userService.changePwd(userId, newPassword);
+
+            // 응답 DTO 생성
+            ResponseDTO<String> responseDTO = ResponseDTO.<String>builder()
+                    .status("success")
+                    .message("비밀번호가 성공적으로 변경되었습니다.")
+                    .build();
+
+            return ResponseEntity.ok(responseDTO);
+
+        } catch (Exception e) {
+            // 에러 발생 시 응답
+            ResponseDTO<String> responseDTO = ResponseDTO.<String>builder()
+                    .status("failure")
+                    .message("비밀번호 변경 중 오류가 발생했습니다.")
+                    .error(e.getMessage())
+                    .build();
+            return ResponseEntity.badRequest().body(responseDTO);
+        }
+    }
+
 
 
 

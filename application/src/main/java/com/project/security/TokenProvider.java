@@ -23,6 +23,9 @@ public class TokenProvider {
     @Value("${jwt.expiration-time}")
     private long expiryDate;
 
+    // 비밀번호 재설정 시간
+    private long passwordResetExpiry = 30 * 60 * 1000; // 30분
+
     // 대칭 키 생성
     private Key getSigningKey() {
         return Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
@@ -42,6 +45,23 @@ public class TokenProvider {
                 .setIssuedAt(new Date()) // 발급 시간
                 .setExpiration(new Date(System.currentTimeMillis() + expiryDate)) // 만료 시간
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256) // 서명
+                .compact();
+    }
+
+    // 비밀번호 재설정 토큰 생성 메서드
+    public String createPasswordResetToken(Users user) {
+        Claims claims = Jwts.claims();
+        claims.put("id", user.getId());
+        claims.put("username", user.getUsername());
+        // 추가 정보로 타입을 넣어도 좋음
+        claims.put("type", "password_reset");
+
+        return Jwts.builder()
+                .setClaims(claims)
+                .setIssuer("demo app")
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + passwordResetExpiry))
+                .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
 

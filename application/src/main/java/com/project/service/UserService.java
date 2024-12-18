@@ -1,5 +1,6 @@
 package com.project.service;
 
+import com.project.security.TokenProvider;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -22,6 +23,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JavaMailSenderImpl mailSender;
+    private final TokenProvider tokenProvider;
 
     public Users create(final Users user) {
         // 요청 데이터 검증
@@ -101,12 +103,18 @@ public class UserService {
         Users user = userRepository.findByUsernameAndEmail(username, email)
                 .orElseThrow(() -> new RuntimeException("입력하신 정보와 일치하는 계정이 없습니다."));
 
-        // 비밀번호 재설정 링크 (임시 예제 링크)
-        String resetLink = "http://localhost/reset-password?token=example-token";
+        /// 비밀번호 재설정용 토큰 생성
+        String token = tokenProvider.createPasswordResetToken(user);
+
+        // 실제 비밀번호 재설정 페이지의 호스트/도메인에 맞춰 URL을 구성
+        String resetLink = "http://localhost:3000/change-password?token=" + token;
 
         // 이메일 전송
-        sendEmail(email, "비밀번호 재설정 요청",
-                "안녕하세요. 아래 링크를 클릭하여 비밀번호를 재설정해 주세요. \n\n" + resetLink);
+        sendEmail(
+                email,
+                "비밀번호 재설정 요청",
+                "안녕하세요. 아래 링크를 클릭하여 비밀번호를 재설정해 주세요.\n\n" + resetLink
+        );
     }
 
     // 이메일 전송 메서드
@@ -122,4 +130,5 @@ public class UserService {
             throw new RuntimeException("이메일 전송 중 오류가 발생했습니다.");
         }
     }
+
 }
