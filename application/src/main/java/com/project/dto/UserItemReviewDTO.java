@@ -22,4 +22,5 @@ public class UserItemReviewDTO {
     private String review_content;
     private String status;
     private LocalDateTime created_at;
+    
 }

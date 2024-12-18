@@ -47,7 +47,7 @@ const MyPoint = () => {
     console.log(userId);
     try {
       const response = await call(`/api/point/getTotalPointByUserid`, 'GET');
-      setTotalPoints(response.totalUserPoint); // 백엔드에서 "totalPoints" 필드로 전달된 값
+      setTotalPoints(response); // 백엔드에서 "totalPoints" 필드로 전달된 값
     } catch (error) {
       console.error('Error fetching total points:', error);
     }
