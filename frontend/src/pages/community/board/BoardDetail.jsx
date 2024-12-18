@@ -9,7 +9,7 @@ import './BoardDetail.css'; // 스타일을 위한 CSS 파일
 import BoardReply from './BoardReply';
 
 const BoardDetail = () => {
-  const { id } = useParams();
+  const { boardId } = useParams();
   const [boardDetail, setBoardDetail] = useState(null);
   const { user } = useUser(); // 현재 로그인된 사용자 정보
   const [loading, setLoading] = useState(true);
@@ -18,7 +18,7 @@ const BoardDetail = () => {
   useEffect(() => {
     const fetchBoardDetail = async () => {
       try {
-        const data = await getBoardDetail(id);
+        const data = await getBoardDetail(boardId);
         setBoardDetail(data);
       } catch (error) {
         alert('게시글을 불러오는 중 오류가 발생했습니다.');
@@ -28,7 +28,7 @@ const BoardDetail = () => {
       }
     };
     fetchBoardDetail();
-  }, [id, navigate]);
+  }, [boardId, navigate]);
 
   if (loading) return <p>로딩 중...</p>;
 
@@ -36,14 +36,14 @@ const BoardDetail = () => {
 
   // 수정 버튼 클릭 이벤트
   const handleEditClick = () => {
-    navigate(`/board/edit/${id}`); // 수정 페이지로 이동
+    navigate(`/board/edit/${boardId}`); // 수정 페이지로 이동
   };
 
   // 글 삭제 버튼 클릭 이벤트
   const handleDeleteClick = async () => {
     if (window.confirm('정말 이 게시글을 삭제하시겠습니까?')) {
       try {
-        await deleteBoard(id); // 삭제 API 호출
+        await deleteBoard(boardId); // 삭제 API 호출
         alert('게시글이 삭제되었습니다.');
         navigate('/community'); // 삭제 후 게시판 목록으로 이동
       } catch (error) {
@@ -58,7 +58,7 @@ const BoardDetail = () => {
         <h2 className="board-title">{boardDetail.boardTitle}</h2>
         <div className="board-info">
           <span className="board-author">
-            작성자 ID: <strong>{boardDetail.userId}</strong>
+            닉네임: <strong>{boardDetail.nickname}</strong>
           </span>
           <span className="board-date">
             작성일: {new Date(boardDetail.createdAt).toLocaleString()}
