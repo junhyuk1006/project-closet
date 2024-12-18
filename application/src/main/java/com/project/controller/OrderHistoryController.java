@@ -20,6 +20,7 @@ public class OrderHistoryController {
      */
     @PostMapping
     public ResponseEntity<Long> saveOrderHistory(@RequestBody OrderHistoryDTO orderHistoryDTO) {
+        System.out.println("save order history");
         Long savedOrderId = orderHistoryService.saveOrderHistory(orderHistoryDTO).getId();
         return ResponseEntity.ok(savedOrderId);
     }

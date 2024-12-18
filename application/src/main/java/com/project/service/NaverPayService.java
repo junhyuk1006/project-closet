@@ -17,42 +17,35 @@ public class NaverPayService {
 
     private static final Logger logger = LoggerFactory.getLogger(NaverPayService.class);
 
-    @Value("${naverpay.client-id}")
-    private String clientId;
-
-    @Value("${naverpay.client-secret}")
-    private String clientSecret;
-
     @Value("${naverpay.base-api-url}")
     private String baseApiUrl;
 
     private final RestTemplate restTemplate; // RestTemplate를 빈으로 주입받습니다.
 
-    public boolean approvePayment(String merchantPayKey) {
-        // API 엔드포인트 설정 (승인 URL)
-        String apiUrl = baseApiUrl + "/payments/v1/payments/approve";
+    public boolean approvePayment(String merchantPayKey, String paymentId) {
+        // 샌드박스 API 베이스 URL 설정 (문서에 나오는 정확한 URL로 교체 필요)
+        String apiUrl = "https://dev-pub.apis.naver.com/naverpay-partner/naverpay/payments/v2.2/apply/payment";
+        // 승인 API 경로 추가
 
-        // 요청 헤더 설정
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set("X-Naver-Client-Id", clientId);
-        headers.set("X-Naver-Client-Secret", clientSecret);
+        headers.set("X-Naver-Client-Id", "HN3GGCMDdTgGUfl0kFCo");
+        headers.set("X-Naver-Client-Secret", "dk5nR1JxcmM2MU1");
 
-        // 요청 바디 설정
         Map<String, String> requestBody = new HashMap<>();
         requestBody.put("merchantPayKey", merchantPayKey);
+        requestBody.put("paymentId", paymentId);
 
         HttpEntity<Map<String, String>> requestEntity = new HttpEntity<>(requestBody, headers);
 
         try {
-            // 네이버페이 API 호출
-            logger.info("네이버페이 승인 요청: {}", requestBody);
+            logger.info("네이버페이 승인 요청 URL: {}", apiUrl);
+            logger.info("네이버페이 승인 요청 바디: {}", requestBody);
+
             ResponseEntity<Map> response = restTemplate.exchange(apiUrl, HttpMethod.POST, requestEntity, Map.class);
 
-            // 응답 로깅
             logger.info("네이버페이 승인 응답: {}", response.getBody());
 
-            // 응답 처리
             if (response.getStatusCode() == HttpStatus.OK) {
                 String code = (String) response.getBody().get("code");
                 if ("SUCCESS".equalsIgnoreCase(code)) {

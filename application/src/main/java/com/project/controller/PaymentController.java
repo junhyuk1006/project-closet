@@ -4,6 +4,8 @@ import com.project.service.NaverPayService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,12 +16,15 @@ import java.util.Map;
 public class PaymentController {
 
     private final NaverPayService naverPayService;
+    private static final Logger logger = LoggerFactory.getLogger(PaymentController.class);
 
     @PostMapping("/approve")
     public ResponseEntity<Map<String, Object>> approvePayment(@RequestBody Map<String, String> payload) {
         String merchantPayKey = payload.get("merchantPayKey");
+        String paymentId = payload.get("paymentId");
+        logger.info("merchantPayKey: {}, paymentId: {}", merchantPayKey, paymentId);
 
-        boolean isApproved = naverPayService.approvePayment(merchantPayKey);
+        boolean isApproved = naverPayService.approvePayment(merchantPayKey, paymentId);
 
         Map<String, Object> response = new HashMap<>();
         if (isApproved) {

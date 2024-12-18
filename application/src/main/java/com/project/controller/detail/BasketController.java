@@ -3,6 +3,7 @@ package com.project.controller.detail;
 import com.project.dto.BasketItemDTO;
 import com.project.dto.ItemInquiryDTO;
 import com.project.service.BasketService;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,5 +47,25 @@ public class BasketController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while removing the item.");
         }
+    }
+
+    @PatchMapping("/updateStatus")
+    public ResponseEntity<Map<String, Object>> updateBasketStatus(@RequestBody UpdateStatusRequest request) {
+        try {
+            boolean updated = basketService.updateBasketStatus(request.getBasketIds(), request.getStatus());
+            if (updated) {
+                return ResponseEntity.ok(Map.of("success", true, "message", "Basket status updated successfully."));
+            } else {
+                return ResponseEntity.badRequest().body(Map.of("success", false, "message", "Failed to update basket status."));
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(Map.of("success", false, "message", "Server error occurred."));
+        }
+    }
+
+    @Data
+    static class UpdateStatusRequest {
+        private List<Long> basketIds;
+        private String status;
     }
 }

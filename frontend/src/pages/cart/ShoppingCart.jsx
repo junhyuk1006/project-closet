@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PriceDisplay from "../../hooks/PriceDisplay";
-import { savePoint } from '../../api/point/FetchSavePoint';
 import axios from "axios";
+import ClearIcon from '@mui/icons-material/Clear';
 
 // CSS Imports
 import "../../assets/styles/components/main.css";
@@ -11,88 +11,112 @@ import "slick-carousel/slick/slick-theme.css";
 import "font-awesome/css/font-awesome.min.css";
 import "material-design-iconic-font/dist/css/material-design-iconic-font.min.css";
 
-// Component Imports
-import Footer from "../../components/Footer";
-
 // Hook Imports
 import { useUser } from "../../api/auth/UserContext"; // 사용자 정보를 가져오는 Hook
 import { useCart } from "../../api/basket/BasketContext"; // 장바구니 관련 상태 관리
 
 function ShoppingCart() {
   const { user } = useUser(); // 사용자 정보 로드
-  const { baskets, fetchBaskets } = useCart(); // 장바구니 데이터 관리
+  const { baskets, fetchBaskets, removeFromCart } = useCart(); // 장바구니 데이터 관리 및 삭제 함수
   const [quantities, setQuantities] = useState({}); // 각 제품의 수량 관리
+  const [selectedItems, setSelectedItems] = useState({}); // 각 상품의 체크박스 상태 관리
   const [totalPoints, setTotalPoints] = useState(0); // 사용자 포인트
-  const [usePoints, setUsePoints] = useState(""); // 사용할 포인트 (빈 상태 초기화)
+  const [usePoints, setUsePoints] = useState(""); // 사용할 포인트
   const [finalPrice, setFinalPrice] = useState(0); // 최종 결제 금액
+
+  const userId = user?.id || "";
+
+  useEffect(() => {
+    if (userId) {
+      fetchBaskets(userId);
+      fetchTotalPoints();
+    }
+  }, [fetchBaskets, userId]);
 
   useEffect(() => {
     const script = document.createElement("script");
     script.src = "https://nsp.pay.naver.com/sdk/js/naverpay.min.js";
     script.async = true;
-    script.onload = () => console.log("Naver Pay SDK loaded successfully");
+
+    script.onload = () => {
+      console.log("Naver Pay SDK loaded successfully");
+      window.isNaverPayLoaded = true; // 로드 완료 상태를 설정
+    };
+
+    script.onerror = () => {
+      console.error("Failed to load Naver Pay SDK");
+    };
+
     document.body.appendChild(script);
   }, []);
-
-  const userId =  user?.id || '';
-
-  console.log("현재 장바구니 데이터:", baskets);
-
-  // 사용자 포인트와 장바구니 데이터를 가져오기
-  useEffect(() => {
-      fetchBaskets(userId); // 장바구니 데이터 가져오기
-      fetchTotalPoints(); // 사용자 포인트 가져오기
-  }, [fetchBaskets]);
 
   const fetchTotalPoints = async () => {
     try {
       const response = await axios.post("http://localhost:80/api/point/getTotalPointByUserid", {
-        userId: user.id, // JSON 형태로 사용자 ID 전달
+        userId: user.id,
       });
-      console.log("Total points:", response.data);
-      setTotalPoints(response.data); // 사용자 포인트 설정
+      setTotalPoints(response.data);
     } catch (error) {
       console.error("Error fetching total points:", error);
     }
   };
 
+  // 선택된 상품만 대상으로 서브토탈 계산
+  const calculateSubtotal = () => {
+    return baskets.reduce((total, item) => {
+      if (selectedItems[item.basketId]) {
+        return total + (quantities[item.basketId] || item.itemCount) * item.itemPrice;
+      }
+      return total;
+    }, 0);
+  };
+
   // 최종 결제 금액 계산
   useEffect(() => {
-    const calculateFinalPrice = () => {
-      const subtotal = baskets.reduce(
-          (total, item) =>
-              total + (quantities[item.basketId] || item.itemCount) * item.itemPrice,
-          0
-      );
-      const pointsToUse = usePoints ? parseInt(usePoints, 10) : 0; // 입력값이 없을 때 0 처리
-      setFinalPrice(Math.max(subtotal - pointsToUse, 0)); // 포인트 차감 후 금액
-    };
-    calculateFinalPrice();
-  }, [usePoints, baskets, quantities]);
+    const subtotal = calculateSubtotal();
+    const pointsToUse = usePoints ? parseInt(usePoints, 10) : 0;
+    setFinalPrice(Math.max(subtotal - pointsToUse, 0));
+  }, [usePoints, baskets, quantities, selectedItems]);
 
   const calculatePointsEarned = () => {
     const earnedRate = 0.01; // 포인트 적립 비율 (1%)
-    return Math.floor(finalPrice * earnedRate); // 소수점 제거 후 반환
+    return Math.floor(finalPrice * earnedRate);
   };
 
   // 포인트 사용 입력 핸들러
   const handleUsePointsChange = (e) => {
-    const value = e.target.value.replace(/[^0-9]/g, ""); // 숫자만 입력 가능
+    const value = e.target.value.replace(/[^0-9]/g, "");
     if (value === "") {
-      setUsePoints(""); // 아무 입력이 없으면 빈 상태 유지
+      setUsePoints("");
     } else {
-      const subtotal = baskets.reduce(
-          (total, item) =>
-              total + (quantities[item.basketId] || item.itemCount) * item.itemPrice,
-          0
-      ); // 결제 예정 금액 계산
+      const subtotal = calculateSubtotal();
+      const maxUsablePoints = Math.min(Math.floor(subtotal * 0.8), totalPoints);
+      const validPoints = Math.min(parseInt(value, 10), maxUsablePoints);
+      setUsePoints(validPoints.toString());
+    }
+  };
 
-      const maxUsablePoints = Math.min(
-          Math.floor(subtotal * 0.8), // 결제 금액의 최대 80% 포인트 사용 가능
-          totalPoints // 보유 포인트
-      );
-      const validPoints = Math.min(parseInt(value, 10), maxUsablePoints); // 최대 포인트 제한
-      setUsePoints(validPoints.toString()); // 유효 포인트만 설정
+  // 체크박스 변경 핸들러
+  const handleCheckboxChange = (basketId) => {
+    setSelectedItems((prevSelected) => ({
+      ...prevSelected,
+      [basketId]: !prevSelected[basketId],
+    }));
+  };
+
+  // 장바구니 상품 삭제 핸들러
+  const handleRemoveItem = async (basketId) => {
+    if (!basketId) {
+      console.error("basketId is undefined");
+      return;
+    }
+    try {
+      await removeFromCart(basketId);
+      await fetchBaskets(user.id); // 삭제 후 장바구니 새로고침
+      alert("Item removed successfully.");
+    } catch (error) {
+      console.error("Error removing item:", error);
+      alert("Failed to remove item. Please try again.");
     }
   };
 
@@ -105,160 +129,74 @@ function ShoppingCart() {
         chainId: "dk5nR1JxcmM2MU1",
       });
 
+      // 주문 데이터를 localStorage에 저장
+      const orderHistoryDTO = createOrderHistoryDTO();
+      localStorage.setItem("orderData", JSON.stringify(orderHistoryDTO));
+      localStorage.setItem("usePoints", usePoints);
+
+      const merchantPayKey = "20241215HvZTrw"; // 유니크한 주문 번호
+      localStorage.setItem("merchantPayKey", merchantPayKey);
+
       oPay.open({
-        merchantPayKey: "20241215HvZTrw",
+        merchantPayKey: merchantPayKey,
         productName: "장바구니 상품",
         productCount: "1",
-        totalPayAmount: finalPrice, // 최종 결제 금액
+        totalPayAmount: finalPrice,
         taxScopeAmount: finalPrice,
         taxExScopeAmount: "0",
-        returnUrl: "http://localhost:3000/",
+        returnUrl: "http://localhost:3000/PaymentResult",
       });
     } else {
       console.error("Naver Pay SDK is not loaded.");
     }
   };
 
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const merchantPayKey = params.get("merchantPayKey");
-    if (merchantPayKey) {
-      handlePaymentApproval(merchantPayKey);
-    }
-  }, []);
-
-
-  const handlePaymentApproval = async (merchantPayKey) => {
-    try {
-      // 네이버페이 결제 승인 API 호출
-      const response = await axios.post("http://localhost:80/api/payment/approve", {
-        merchantPayKey,
-      });
-
-      console.log("결제 승인 응답:", response.data);
-
-      if (response.data.success) {
-        // 주문 데이터 생성 및 저장
-        const orderHistoryDTO = createOrderHistoryDTO();
-        const saveOrderResponse = await saveOrder(orderHistoryDTO);
-
-        if (saveOrderResponse.success) {
-          alert("결제가 성공적으로 완료되었습니다!");
-          fetchBaskets(user.id); // 장바구니 초기화
-          fetchTotalPoints(); // 포인트 업데이트
-        } else {
-          console.error("주문 저장 실패:", saveOrderResponse);
-          alert("주문 내역 저장 중 문제가 발생했습니다.");
-        }
-      } else {
-        console.error("결제 승인 실패 상태:", response.data);
-        alert("결제 승인에 실패했습니다.");
-      }
-    } catch (error) {
-      console.error("결제 승인 중 오류 발생:", error);
-      alert("결제 승인 중 오류가 발생했습니다.");
-    }
-  };
-
-  const handleSaveOrder = async () => {
-    try {
-      // 주문 데이터 생성 DTO 생성
-      const orderHistoryDTO = createOrderHistoryDTO();
-      console.log("생성된 DTO:", orderHistoryDTO); // DTO 확인용 콘솔 로그
-
-      // 서버로 주문 데이터 전송
-      const saveOrderResponse = await saveOrder(orderHistoryDTO);
-
-      // 응답 처리
-      if (saveOrderResponse.success) {
-        alert("주문 내역이 성공적으로 저장되었습니다!");
-        console.log("주문 내역 저장 성공:", saveOrderResponse.data);
-      } else {
-        console.error("주문 내역 저장 실패:", saveOrderResponse);
-        alert("주문 내역 저장 중 문제가 발생했습니다.");
-      }
-    } catch (error) {
-      console.error("주문 내역 저장 중 오류 발생:", error);
-      alert("주문 내역 저장 중 오류가 발생했습니다.");
-    }
-  };
-
   // 주문 내역 생성 DTO 함수
   const createOrderHistoryDTO = () => {
-    const dto = {
+    // 선택된 상품만 주문 내역에 포함
+    const selectedOrderDetails = baskets
+        .filter((item) => selectedItems[item.basketId])
+        .map((item) => ({
+          basketId: item.basketId,
+          itemName: item.itemName,
+          itemPrice: item.itemPrice,
+          itemCount: quantities[item.basketId] || item.itemCount,
+          color: item.color,
+          size: item.size,
+          itemMainImage: item.mainImage,
+        }));
+
+    return {
       userId: user.id,
-      orderDetails: baskets.map((item) => ({
-        itemName: item.itemName,
-        itemPrice: item.itemPrice,
-        itemCount: quantities[item.basketId] || item.itemCount,
-        color: item.color,
-        size: item.size,
-        itemMainImage: item.mainImage,
-      })),
-      pointEarnedAmount: calculatePointsEarned(),
+      orderDetails: selectedOrderDetails,
       pointUsedAmount: usePoints || 0,
-      totalPaymentAmount: baskets.reduce(
-          (total, item) =>
-              total + (quantities[item.basketId] || item.itemCount) * item.itemPrice,
-          0
-      ),
+      totalPaymentAmount: baskets.reduce((total, item) => {
+        if (selectedItems[item.basketId]) {
+          return total + (quantities[item.basketId] || item.itemCount) * item.itemPrice;
+        }
+        return total;
+      }, 0),
       finalPaymentAmount: finalPrice,
       paymentStatus: "COMPLETED",
       paymentMethod: "NAVER_PAY",
     };
-    return dto;
   };
 
-  // 주문 내역 저장 API 호출
-  const saveOrder = async (orderHistoryDTO) => {
-    try {
-      const response = await axios.post(
-          "http://localhost:80/api/orders",
-          orderHistoryDTO
-      );
-      console.log("주문 내역 저장 응답:", response.data);
-      return { success: true, data: response.data };
-    } catch (error) {
-      console.error("주문 내역 저장 중 오류 발생:", error);
-      return { success: false, error };
-    }
-  };
-
-
-// 결제 버튼 핸들러 수정
   const handlePayment = async (e) => {
     e.preventDefault();
 
-    const usePointForPayment = {
-      userId: user.id,
-      point: usePoints,
-      pointReason: "상품 구매",
-      pointType: "차감",
-      pointInsertType: "purchase",
-    };
-
     try {
-      openNaverPay(); // 네이버페이 결제창 호출
-
-      // 포인트 차감
-      await savePoint(usePointForPayment);
-      fetchTotalPoints(); // 포인트 업데이트
-
-      // 주문 내역 저장
-      const orderHistoryDTO = createOrderHistoryDTO();
-      const saveOrderResponse = await saveOrder(orderHistoryDTO);
-
-      if (saveOrderResponse.success) {
-        alert("결제가 성공적으로 완료되었습니다!");
-        fetchBaskets(user.id); // 장바구니 초기화
-        fetchTotalPoints(); // 포인트 재확인
-      } else {
-        console.error("주문 저장 실패:", saveOrderResponse);
-        alert("주문 내역 저장 중 문제가 발생했습니다.");
+      // 선택된 상품이 하나도 없으면 결제 진행 불가
+      const hasSelectedItems = baskets.some((item) => selectedItems[item.basketId]);
+      if (!hasSelectedItems) {
+        alert("결제할 상품을 선택해주세요.");
+        return;
       }
+
+      openNaverPay();
     } catch (error) {
-      console.error("결제 처리 중 오류 발생:", error);
-      alert("결제 처리 중 문제가 발생했습니다.");
+      console.error("네이버페이 결제창 오류:", error);
+      alert("결제창을 여는 중 문제가 발생했습니다.");
     }
   };
 
@@ -300,66 +238,83 @@ function ShoppingCart() {
                     <table className="table-shopping-cart">
                       <thead>
                       <tr className="table_head">
+                        <th className="column-1" style={{ width: "50px", textAlign: "center" }}>
+                          Select
+                        </th>
                         <th className="column-1">Product</th>
                         <th className="column-2"></th>
                         <th className="column-3">Price</th>
                         <th className="column-4">Quantity</th>
                         <th className="column-5">Total</th>
+                        <th className="column-6" style={{ width: "100px"}}>
+                        </th>
                       </tr>
                       </thead>
                       <tbody>
-                      {baskets.map((item) => (
-                          <tr className="table_row" key={item.basketId}>
-                            <td className="column-1">
-                              <div className="how-itemcart1">
-                                <img
-                                    src={`images/${item.mainImage}`}
-                                    alt={item.itemName}
-                                />
-                              </div>
-                            </td>
-                            <td className="column-2">{item.itemName}</td>
-                            <td className="column-3">
-                              <PriceDisplay price={item.itemPrice} />
-                            </td>
-                            <td className="column-4">
-                              <div className="wrap-num-product flex-w m-l-auto m-r-0">
-                                <div
-                                    className="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m"
-                                    onClick={() => decreaseQuantity(item.basketId)}
-                                    style={{ cursor: "pointer" }}
-                                >
-                                  <i className="fs-16 zmdi zmdi-minus"></i>
-                                </div>
-                                <input
-                                    className="mtext-104 cl3 txt-center num-product"
-                                    type="number"
-                                    value={
-                                        quantities[item.basketId] || item.itemCount
-                                    }
-                                    readOnly
-                                />
-                                <div
-                                    className="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m"
-                                    onClick={() => increaseQuantity(item.basketId)}
-                                    style={{ cursor: "pointer" }}
-                                >
-                                  <i className="fs-16 zmdi zmdi-plus"></i>
-                                </div>
-                              </div>
-                            </td>
-                            <td className="column-5">
-                              {new Intl.NumberFormat("ko-KR", {
-                                style: "currency",
-                                currency: "KRW",
-                                maximumFractionDigits: 0,
-                              }).format(
-                                  (quantities[item.basketId] || item.itemCount) *
-                                  item.itemPrice
-                              )}
-                            </td>
-                          </tr>
-                      ))}
+                      {baskets
+                          .filter(item => item.status === "active") // status가 active인 항목만 표시
+                          .map((item) => (
+                              <tr className="table_row" key={item.basketId}>
+                                <td className="column-1" style={{ width: "50px", textAlign: "center" }}>
+                                  <input
+                                      type="checkbox"
+                                      checked={!!selectedItems[item.basketId]}
+                                      onChange={() => handleCheckboxChange(item.basketId)}
+                                  />
+                                </td>
+                                <td className="column-1">
+                                  <div className="how-itemcart1">
+                                    <img src={`images/${item.mainImage}`} alt={item.itemName} />
+                                  </div>
+                                </td>
+                                <td className="column-2">{item.itemName}</td>
+                                <td className="column-3">
+                                  <PriceDisplay price={item.itemPrice} />
+                                </td>
+                                <td className="column-4">
+                                  <div className="wrap-num-product flex-w m-l-auto m-r-0">
+                                    <div
+                                        className="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m"
+                                        onClick={() => decreaseQuantity(item.basketId)}
+                                        style={{ cursor: "pointer" }}
+                                    >
+                                      <i className="fs-16 zmdi zmdi-minus"></i>
+                                    </div>
+                                    <input
+                                        className="mtext-104 cl3 txt-center num-product"
+                                        type="number"
+                                        value={quantities[item.basketId] || item.itemCount}
+                                        readOnly
+                                    />
+                                    <div
+                                        className="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m"
+                                        onClick={() => increaseQuantity(item.basketId)}
+                                        style={{ cursor: "pointer" }}
+                                    >
+                                      <i className="fs-16 zmdi zmdi-plus"></i>
+                                    </div>
+                                  </div>
+                                </td>
+                                <td className="column-5">
+                                  {new Intl.NumberFormat("ko-KR", {
+                                    style: "currency",
+                                    currency: "KRW",
+                                    maximumFractionDigits: 0,
+                                  }).format(
+                                      (quantities[item.basketId] || item.itemCount) * item.itemPrice
+                                  )}
+                                </td>
+                                <td className="column-6" style={{ textAlign: "center" }}>
+                                  <button
+                                      className="btn-remove-item hov-cl1 trans-04"
+                                      onClick={() => handleRemoveItem(item.basketId)}
+                                      style={{ cursor: "pointer", border: "none", background: "none" }}
+                                  >
+                                    <ClearIcon/>
+                                  </button>
+                                </td>
+                              </tr>
+                          ))}
                       </tbody>
                     </table>
                   </div>
@@ -379,15 +334,7 @@ function ShoppingCart() {
                         style: "currency",
                         currency: "KRW",
                         maximumFractionDigits: 0,
-                      }).format(
-                          baskets.reduce(
-                              (total, item) =>
-                                  total +
-                                  (quantities[item.basketId] || item.itemCount) *
-                                  item.itemPrice,
-                              0
-                          )
-                      )}
+                      }).format(calculateSubtotal())}
                     </span>
                     </div>
                   </div>
@@ -400,7 +347,7 @@ function ShoppingCart() {
                     <p>
                       최대 사용 가능 포인트 (80%):{" "}
                       {new Intl.NumberFormat("ko-KR").format(
-                          Math.min(Math.floor(finalPrice * 0.8), totalPoints)
+                          Math.min(Math.floor(calculateSubtotal() * 0.8), totalPoints)
                       )}
                       P
                     </p>
@@ -429,7 +376,7 @@ function ShoppingCart() {
 
                   <button
                       className="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer"
-                      onClick={handlePayment} // onClick 이벤트에 handlePayment 연결
+                      onClick={handlePayment}
                   >
                     Proceed to Checkout
                   </button>

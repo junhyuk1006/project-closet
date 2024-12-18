@@ -14,6 +14,7 @@ public class BasketItemDTO {
     private int itemCount;
     private String size;
     private String color;
+    private String status = "active";
 
     // User
     private Long userId;

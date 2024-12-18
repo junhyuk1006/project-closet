@@ -132,7 +132,6 @@ jwt:
 
   # Naver Pay API 설정
 naverpay:
-  client-id: "HN3GGCMDdTgGUfl0kFCo"       # 네이버페이 Client ID (환경 변수로 설정)
-  client-secret: "dk5nR1JxcmM2MU1" # 네이버페이 Client Secret (환경 변수로 설정)
-  base-api-url: https://dev.apis.naver.com/naverpay/payments/v2.0/apply # 네이버페이 API URL
-  return-url: http://localhost:3000/      # 결제 완료 후 리디렉션될 URL
+  client-id: "HN3GGCMDdTgGUfl0kFCo"       # 네이버페이 Client ID
+  client-secret: "dk5nR1JxcmM2MU1"        # 네이버페이 Client Secret
+  base-api-url: "https://dev.apis.naver.com" # 개발 환경용 API URL
