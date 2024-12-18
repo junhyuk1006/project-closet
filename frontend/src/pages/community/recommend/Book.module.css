@@ -1,0 +1,31 @@
+.container {
+  position: relative;
+}
+.calendarContainer {
+  width: 40%;
+  min-width: 500px;
+  margin: 0 30%;
+  background-color: #fff;
+  border: 1px solid #000;
+  position: absolute;
+  z-index: 3000;
+}
+
+.btn-blue {
+  background-color: #6890ff;
+  color: #fff;
+}
+.btn-blue:hover {
+  background-color: #356bff;
+}
+.btn-red {
+  background-color: #ff8383;
+  color: #fff;
+}
+.btn-red:hover {
+  background-color: #ff5656;
+}
+
+.b-r-10 {
+  border-radius: 10px;
+}

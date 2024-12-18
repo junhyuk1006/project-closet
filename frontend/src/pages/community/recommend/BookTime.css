@@ -1,0 +1,27 @@
+.book-time-container .slick-track .slick-slide {
+  /* border-radius: 3.5rem; */
+}
+.book-time-container .slick-track .slick-slide h3 {
+  text-align: center;
+  font-size: 15px;
+  margin: 0 10px;
+  line-height: 2;
+  border: 1px solid #aaa;
+  border-radius: 3.5rem;
+  cursor: pointer;
+}
+.book-time-container .slick-track .slick-slide h3.active {
+  background-color: #5e88ff;
+  color: #fff;
+}
+
+.slick-prev:before,
+.slick-next:before {
+  font-size: 20px;
+}
+.slick-prev {
+  left: -20px;
+}
+.slick-next {
+  right: -20px;
+}

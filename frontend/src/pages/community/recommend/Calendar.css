@@ -1,0 +1,21 @@
+.react-calendar {
+  margin: 0 auto;
+  margin-top: 50px;
+  margin-bottom: 40px;
+  border-radius: 8px;
+  min-width: 350px;
+}
+.react-calendar button {
+  border-radius: 5px;
+}
+.react-calendar__tile--now {
+  background: #ffffb0;
+}
+.react-calendar__tile--active {
+  background: #379bff;
+  color: white;
+}
+
+.react-calendar__month-view__days__day--neighboringMonth {
+  color: #d1d1d1;
+}
