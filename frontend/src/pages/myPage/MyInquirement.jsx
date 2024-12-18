@@ -45,6 +45,7 @@ const MyInquirement = () => {
         description="내가 등록한 모든 문의 내역을 조회할 수 있습니다."
       />
       <div className="inquiry-rounded-box">
+        <hr className="my-4" />
         {myInquiries.length > 0 ? (
           myInquiries.map((inquiry) => (
             <div key={inquiry.inquiryId} className="inquiry-container">
