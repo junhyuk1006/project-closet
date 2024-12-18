@@ -1,6 +1,9 @@
 package com.project.service;
 
+import jakarta.mail.internet.MimeMessage;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,6 +21,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JavaMailSenderImpl mailSender;
 
     public Users create(final Users user) {
         // 요청 데이터 검증
@@ -83,5 +87,39 @@ public class UserService {
     @Transactional
     public void changeAddInfo(Long userId, String profileImage, String name, String phone, String style, String introduction) {
         userRepository.changeAddInfo(userId, profileImage, name,phone,style,introduction);
+    }
+
+    // 아이디 찾기
+    public String findUsernameByEmail(String email) {
+        Users user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("해당 이메일로 등록된 계정을 찾을 수 없습니다."));
+        return user.getUsername();
+    }
+
+    // 비밀번호 재설정 링크 전송
+    public void sendPasswordResetLink(String email, String username) {
+        Users user = userRepository.findByUsernameAndEmail(username, email)
+                .orElseThrow(() -> new RuntimeException("입력하신 정보와 일치하는 계정이 없습니다."));
+
+        // 비밀번호 재설정 링크 (임시 예제 링크)
+        String resetLink = "http://localhost/reset-password?token=example-token";
+
+        // 이메일 전송
+        sendEmail(email, "비밀번호 재설정 요청",
+                "안녕하세요. 아래 링크를 클릭하여 비밀번호를 재설정해 주세요. \n\n" + resetLink);
+    }
+
+    // 이메일 전송 메서드
+    private void sendEmail(String to, String subject, String text) {
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            helper.setTo(to);
+            helper.setSubject(subject);
+            helper.setText(text, false);
+            mailSender.send(message);
+        } catch (Exception e) {
+            throw new RuntimeException("이메일 전송 중 오류가 발생했습니다.");
+        }
     }
 }

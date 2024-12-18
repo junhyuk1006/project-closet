@@ -13,18 +13,23 @@ const FindIdForm = () => {
     setErrorMessage('');
     setFoundId(null);
     try {
-      // 백엔드에 아이디 찾기 API 요청
-      const response = await fetch('http://localhost/api/auth/find-id', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
-      });
+      const response = await fetch(
+        `http://localhost/api/auth/find-username?email=${email}`,
+        {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
       const data = await response.json();
-      if (response.ok) {
-        setFoundId(data.username); // 성공 시 아이디 표시
-      } else {
-        throw new Error(data.message || '아이디를 찾을 수 없습니다.');
+
+      if (!response.ok) {
+        const errorToShow =
+          data.error || data.message || '아이디를 찾을 수 없습니다.';
+        throw new Error(errorToShow);
       }
+
+      // 성공 시 아이디 표시
+      setFoundId(data.data[0]);
     } catch (error) {
       setErrorMessage(error.message);
     }
@@ -57,8 +62,9 @@ const FindIdForm = () => {
         )}
       </form>
       <div className="text-center mt-3">
-        <a onClick={() => navigate('/find-password')} className="auth-link">
-          비밀번호 찾기
+        {/* 비밀번호 재설정 페이지로 이동하도록 변경 */}
+        <a onClick={() => navigate('/reset-password')} className="auth-link">
+          비밀번호 재설정
         </a>
       </div>
     </div>

@@ -1,31 +1,38 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './Find.css';
+import './Find.css'; // 기존 CSS 사용
 
-const FindPasswordForm = () => {
-  const [username, setUsername] = useState('');
+const ResetPasswordForm = () => {
   const [email, setEmail] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
+  const [username, setUsername] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
   const navigate = useNavigate();
 
-  const handleFindPassword = async (e) => {
+  const handleResetPassword = async (e) => {
     e.preventDefault();
     setErrorMessage('');
     setSuccessMessage('');
+
     try {
-      // 백엔드에 비밀번호 재설정 API 요청
-      const response = await fetch('http://localhost/api/auth/find-password', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, email }),
-      });
+      const response = await fetch(
+        `http://localhost/api/auth/reset-password?email=${email}&username=${username}`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
       const data = await response.json();
-      if (response.ok) {
-        setSuccessMessage('비밀번호 재설정 메일이 전송되었습니다.');
-      } else {
-        throw new Error(data.message || '비밀번호 찾기에 실패했습니다.');
+
+      if (!response.ok) {
+        const errorToShow =
+          data.error ||
+          data.message ||
+          '비밀번호 재설정 링크 전송에 실패했습니다.';
+        throw new Error(errorToShow);
       }
+
+      setSuccessMessage('비밀번호 재설정 링크가 이메일로 전송되었습니다.');
     } catch (error) {
       setErrorMessage(error.message);
     }
@@ -33,8 +40,8 @@ const FindPasswordForm = () => {
 
   return (
     <div className="form-container">
-      <h2 className="text-center">비밀번호 찾기</h2>
-      <form onSubmit={handleFindPassword}>
+      <h2>비밀번호 재설정</h2>
+      <form onSubmit={handleResetPassword}>
         <div className="form-group mb-3">
           <label htmlFor="username">아이디</label>
           <input
@@ -60,7 +67,7 @@ const FindPasswordForm = () => {
           />
         </div>
         <button type="submit" className="btn btn-secondary w-100">
-          비밀번호 찾기
+          비밀번호 재설정 링크 보내기
         </button>
         {errorMessage && <p className="text-danger mt-3">{errorMessage}</p>}
         {successMessage && (
@@ -68,12 +75,12 @@ const FindPasswordForm = () => {
         )}
       </form>
       <div className="text-center mt-3">
-        <a onClick={() => navigate('/find-id')} className="auth-link">
+        <span className="auth-link" onClick={() => navigate('/find-id')}>
           아이디 찾기
-        </a>
+        </span>
       </div>
     </div>
   );
 };
 
-export default FindPasswordForm;
+export default ResetPasswordForm;

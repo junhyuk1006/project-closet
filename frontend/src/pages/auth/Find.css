@@ -1,10 +1,10 @@
 .form-container {
   max-width: 400px;
-  margin: 5% auto;
-  padding: 20px;
+  margin: 7% auto;
+  padding: 30px;
   background-color: #fff;
   border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .form-container h2 {
@@ -25,7 +25,14 @@
   cursor: pointer;
 }
 
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
 .form-control {
   box-shadow: none;
   border: 1px solid #ced4da;
+  padding: 10px;
 }

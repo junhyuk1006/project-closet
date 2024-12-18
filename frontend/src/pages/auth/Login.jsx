@@ -218,7 +218,7 @@ const LoginForm = () => {
             </a>
             <span className="mx-2">|</span> {/* 구분선 */}
             <a
-              onClick={() => navigator('/find-password')}
+              onClick={() => navigator('/reset-password')}
               className="auth-link"
               role="button"
             >

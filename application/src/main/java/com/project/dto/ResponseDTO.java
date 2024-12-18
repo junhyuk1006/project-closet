@@ -11,6 +11,8 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 public class ResponseDTO<T> {
+    private String status;
+    private String message;
     private String error;
     private List<T> data;
 }
