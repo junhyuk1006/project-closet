@@ -48,6 +48,7 @@ import Agreement from './pages/main/Agreement';
 import Guide from './pages/main/Guide';
 import Privacy from './pages/main/Privacy';
 import PaymentResult from './pages/cart/PaymentResult';
+import Shop from './pages/shop/Shop';
 
 /**
  * 공통적으로 사용하는 Route 생성 함수
@@ -107,6 +108,7 @@ const AppRoutes = () => (
           {/* -------------------------------------------------------------------------- */}
           {/* -------------------------------------------------------------------------- */}
           {/* 상품 관련 페이지  */}
+          {renderRoute('/shop', <Shop />)} {/* 상품 페이지 */}
           {renderRoute('/Detail/*', <Detail />)} {/* 상품 상세 페이지 */}
           {renderRoute('/Recommend', <Recommend />)} {/* 추천 페이지 */}
           {/* 장바구니 페이지 */}
