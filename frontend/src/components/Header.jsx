@@ -19,6 +19,7 @@ import Slider from 'react-slick';
 import { call } from '../api/auth/ApiService';
 import Alarm from './main/Alarm';
 import { useUser } from '../api/auth/UserContext';
+import NoticeModal from '../pages/main/NoticeModal';
 
 function Header({ user }) {
   const navigate = useNavigate();
@@ -31,6 +32,7 @@ function Header({ user }) {
   const [isDesktopCategoryOpen, setIsDesktopCategoryOpen] = useState(false); // 데스크탑 카테고리 open 상태
   const [isDesktopCommunityOpen, setIsDesktopCommunityOpen] = useState(false); // 데스크탑 커뮤니티 open 상태
   const [notices, setNotices] = useState([]); // 공지사항 상태
+  const [noticeId, setNoticeId] = useState(null); // 공지사항 id
   const [baskets, setBaskets] = useState([]); // 장바구니 상태
   const { logout } = useUser();
 
@@ -53,7 +55,7 @@ function Header({ user }) {
   useEffect(() => {
     const getNotices = async () => {
       try {
-        const newNotices = await call('/notice/all');
+        const newNotices = await call('/notices');
         setNotices(newNotices);
       } catch (err) {
         console.error('공지사항을 불러오는 데 실패했습니다:', err);
@@ -61,6 +63,11 @@ function Header({ user }) {
     };
     getNotices();
   }, []);
+
+  // 공지사항 클릭
+  const handleNotice = (id) => {
+    setNoticeId(id);
+  };
 
   // 카테고리 dropdown 열기/닫기 토글
   const toggleCategoryEnter = () => setIsDesktopCategoryOpen(true);
@@ -75,19 +82,20 @@ function Header({ user }) {
     setInputValue('');
   }, [isSearching]);
 
+  // 유저 정보가 변경될 때마다 Jwt 토큰에 따른 인증 상태 변경
   useEffect(() => {
     setIsAuthenticated(isValidJwtToken());
   }, [user]);
 
   // 로그인 상태 확인 함수
   const isLoggedIn = (e) => {
+    e.preventDefault();
+
     if (!isAuthenticated) {
       alert('로그인이 필요합니다.');
-      e.preventDefault();
     } else if (!isValidJwtToken()) {
       alert('토큰이 유효하지 않습니다.');
       setIsAuthenticated(false);
-      e.preventDefault();
     }
   };
 
@@ -135,6 +143,7 @@ function Header({ user }) {
   return (
     <header className="header">
       <Cart isCartOpen={isCartOpen} toggleCart={toggleCart} baskets={baskets} />
+      <NoticeModal id={noticeId} onClose={() => setNoticeId(null)} />
 
       {/* 모바일 헤더 ( 화면 너비가 991px보다 작을 때 ) */}
       <div className="wrap-header-mobile">
@@ -226,7 +235,14 @@ function Header({ user }) {
                 <Slider {...settings}>
                   {notices.map((notice) => (
                     <div key={notice.id}>
-                      <Link to="#" className="notice-link">
+                      <Link
+                        to="#"
+                        className="notice-link"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleNotice(notice.id);
+                        }}
+                      >
                         {notice.subject}
                       </Link>
                     </div>
