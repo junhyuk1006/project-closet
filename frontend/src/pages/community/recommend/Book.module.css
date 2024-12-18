@@ -1,7 +1,7 @@
 .container {
   position: relative;
 }
-.calendarContainer {
+.calendar-container {
   width: 40%;
   min-width: 500px;
   margin: 0 30%;
@@ -9,6 +9,14 @@
   border: 1px solid #000;
   position: absolute;
   z-index: 3000;
+  top: -30px;
+}
+.calendar-container .calendar-title {
+  margin-top: 40px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: #000;
 }
 
 .btn-blue {

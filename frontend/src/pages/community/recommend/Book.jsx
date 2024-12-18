@@ -52,9 +52,40 @@ export default function Book({ isOpen, setIsOpen, coordiId, user }) {
     }
   }
 
-  // Modal의 상태 변경마다 캘린더 날짜 초기화
+  // Modal의 상태 변경마다 실행
   useEffect(() => {
-    onChange(new Date().getTime() + 1000 * 60 * 60 * 24);
+    // 캘린더 초기화
+    const initializeCalendar = () => {
+      onChange(new Date().getTime() + 1000 * 60 * 60 * 24);
+    };
+
+    // 스크롤 최상단으로 이동
+    const resetScrollPosition = () => {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'smooth',
+      });
+    };
+
+    // 스크롤 비활성화
+    const disableScroll = () => {
+      document.querySelector('html').setAttribute('style', 'overflow: hidden');
+    };
+
+    // 스크롤 활성화
+    const enableScroll = () => {
+      document.querySelector('html').removeAttribute('style');
+    };
+
+    // 각 함수 캡슐화
+    if (isOpen) {
+      initializeCalendar();
+      resetScrollPosition();
+      disableScroll();
+    } else {
+      enableScroll();
+    }
   }, [isOpen]);
 
   // 날짜를 변경할 때마다 시간을 9시로 초기화
@@ -73,7 +104,9 @@ export default function Book({ isOpen, setIsOpen, coordiId, user }) {
   return (
     isOpen && (
       <div className={styles.container}>
-        <div className={`${styles.calendarContainer}`}>
+        <div className={`${styles['calendar-container']}`}>
+          <h3 className={styles['calendar-title']}>스타일링 예약</h3>
+
           <Calendar
             value={value}
             onChange={onChange}
