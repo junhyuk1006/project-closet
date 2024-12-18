@@ -39,6 +39,7 @@ import Layout from './layouts/Layout'; // Header/Footer 포함 여부를 제어�
 import Agreement from './pages/main/Agreement';
 import Guide from './pages/main/Guide';
 import Privacy from './pages/main/Privacy';
+import PaymentResult from "./pages/cart/PaymentResult";
 
 /**
  * 공통적으로 사용하는 Route 생성 함수
@@ -91,7 +92,11 @@ const AppRoutes = () => (
                         {renderRoute('/Recommend', <Recommend />)} {/* 추천 페이지 */}
                         {renderRoute('/ShoppingCart', <ShoppingCart />)}{' '}
                         {/* 장바구니 페이지 */}
-                        {renderRoute('/*', <Page404 />, false)} {/* 에러 페이지 */}
+{/*
+                        {renderRoute('/*', <Page404 />, false)}  에러 페이지
+*/}
+                        {renderRoute('/PaymentResult', <PaymentResult />, false)}
+
                     </Routes>
                 </Animation>
             </Router>

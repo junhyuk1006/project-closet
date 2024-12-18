@@ -16,5 +16,6 @@ public class BasketDTO {
     private int itemCount;
     private String size;
     private String color;
+    private String status = "active";
 
 }

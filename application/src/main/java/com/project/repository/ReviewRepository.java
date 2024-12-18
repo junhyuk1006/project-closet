@@ -3,6 +3,7 @@ package com.project.repository;
 import com.project.domain.detail.ItemReview;
 import com.project.dto.UserItemReviewDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -24,4 +25,5 @@ public interface ReviewRepository extends JpaRepository<ItemReview, Long> {
 
     @Query("SELECT count(i) from ItemReview i where i.itemId = :itemId")
     Long countInquiry(@Param("itemId") Long itemId);
+
 }
