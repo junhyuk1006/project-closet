@@ -65,8 +65,7 @@ const Board = () => {
                     <div className="row no-gutters">
                       <div className="col-lg-3 col-md-3 col-sm-12 p-0">
                         <select
-                          className="form-control"
-                          id="exampleFormControlSelect1"
+                          className="form-select"
                           value={condition}
                           onChange={(e) => setCondition(e.target.value)}
                         >
@@ -120,90 +119,52 @@ const Board = () => {
               {error && <p style={{ color: 'red' }}>에러 발생: {error}</p>}
               {currentPosts.length > 0 ? (
                 <div className="table-responsive">
-                  <table className="table widget-26">
+                  <table className="table">
                     <thead>
                       <tr>
-                        <th style={{ textAlign: 'center' }}>프로필</th>
-                        <th
-                          className="highlight bg-soft-base"
-                          style={{ textAlign: 'center' }}
-                        >
-                          제목
+                        <th className="col-2" colSpan={2}>
+                          프로필
                         </th>
-                        <th style={{ textAlign: 'center' }}>작성자 ID</th>
-                        <th style={{ textAlign: 'center' }}>작성일</th>
-                        <th
-                          className="highlight bg-soft-base"
-                          style={{ textAlign: 'center' }}
-                        >
-                          내용
-                        </th>
-                        <th style={{ textAlign: 'center' }}>즐겨찾기</th>
+                        <th className="col-2">제목</th>
+                        <th className="col-7">내용</th>
+                        <th className="col-1">작성일</th>
                       </tr>
                     </thead>
                     <tbody>
                       {currentPosts.map((item) => (
                         <tr key={item.id}>
-                          <td style={{ textAlign: 'center' }}>
+                          <td>
                             <div className="widget-26-job-emp-img">
                               <img
                                 src={
                                   item.boardImage
                                     ? `http://localhost/images/${item.boardImage}`
-                                    : 'https://bootdey.com/img/Content/avatar/avatar5.png'
+                                    : 'https://bootdey.com/img/Content/avatar/avatar7.png'
                                 }
                                 alt={item.boardTitle}
                               />
                             </div>
                           </td>
-                          <td
-                            className="highlight bg-soft-base"
-                            style={{ textAlign: 'center' }}
-                          >
-                            <div className="widget-26-job-title">
+                          <td>
+                            <div className="board-user">
+                              <p className="type m-0">{item.nickname}</p>
+                            </div>
+                          </td>
+                          <td>
+                            <div className="board-title">
                               <Link to={`/board/${item.id}`}>
                                 {item.boardTitle}
                               </Link>
                             </div>
                           </td>
-                          <td style={{ textAlign: 'center' }}>
-                            <div className="widget-26-job-info">
-                              <p className="type m-0">{item.userId}</p>
+                          <td className="col-7">
+                            <div className="board-content">
+                              <span>{item.boardContent}</span>
                             </div>
                           </td>
-                          <td style={{ textAlign: 'center' }}>
+                          <td>
                             <div className="widget-26-job-salary">
                               {new Date(item.createdAt).toLocaleDateString()}
-                            </div>
-                          </td>
-                          <td
-                            className="highlight bg-soft-base"
-                            style={{ textAlign: 'center' }}
-                          >
-                            <div className="widget-26-job-category">
-                              <span>
-                                {item.boardContent.length > 10
-                                  ? `${item.boardContent.substring(0, 10)}...`
-                                  : item.boardContent}
-                              </span>
-                            </div>
-                          </td>
-                          <td style={{ textAlign: 'center' }}>
-                            <div className="widget-26-job-starred">
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="24"
-                                height="24"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                className="feather feather-star"
-                              >
-                                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                              </svg>
                             </div>
                           </td>
                         </tr>

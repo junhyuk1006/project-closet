@@ -1,5 +1,6 @@
 package com.project.repository;
 
+import com.project.dto.UserGradeDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -36,10 +37,9 @@ public interface UserRepository extends JpaRepository<Users, Long> {
                       @Param("newWeight") int newWeight,
                       @Param("newSize") String newSize,
                       @Param("newIsReleased") boolean newIsReleased);
-  
+
   // 회원 추가 정보 수정
   @Modifying
   @Query("UPDATE Users u SET u.profileImage = :profileImage, u.name = :name, u.phone = :phone, u.style = :style, u.introduction = :introduction WHERE u.id = :userId")
   void changeAddInfo(@Param("userId") Long userId,@Param("profileImage") String profileImage, @Param("name") String name, @Param("phone") String phone, @Param("style") String style,@Param("introduction") String introduction);
 }
-

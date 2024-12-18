@@ -3,12 +3,27 @@ import { useUser } from '../../api/auth/UserContext';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { useNavigate } from 'react-router-dom';
 import MyPageHeader from '../../components/myPage/MyPageHeader';
+import { call } from '../../api/auth/ApiService'; // API 호출 함수
+import { RepeatOneSharp } from '@mui/icons-material';
 
 const MyPageHome = () => {
   const navigate = useNavigate();
   const { user } = useUser();
+  const [gradeInfo, setGradeInfo] = useState('');
 
-  console.log('User in MyPageHome:', user);
+  const fetchGradeInfo = async () => {
+    try {
+      const response = await call(`/api/mypage/findGradeByUser`, 'GET');
+      setGradeInfo(response.data);
+    } catch (error) {
+      console.error('에러발생 , 등급조회 에러', error);
+    }
+  };
+  // 사용자 정보와 등급 정보를 가져옴
+  useEffect(() => {
+    fetchGradeInfo(); // 등급 정보 호출
+  }, []);
+
   const features = [
     {
       icon: 'bi-info-circle',
@@ -54,7 +69,13 @@ const MyPageHome = () => {
         <div>
           <MyPageHeader
             title="마이페이지"
-            description={`${user?.nickname || ''}님, 환영합니다.`}
+            description={
+              <>
+                {`${user?.nickname || ''}님의 등급은 ${gradeInfo.grade} 등급입니다.`}
+                <br />
+                {`(${gradeInfo.rate}%)`}
+              </>
+            }
           />
         </div>
 

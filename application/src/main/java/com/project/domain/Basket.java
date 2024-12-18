@@ -27,6 +27,7 @@ public class Basket {
     private int itemCount;
     private String color;
     private String size;
+    private String status= "active";
 
     private boolean isRecommendation = false;
 }

@@ -1,4 +1,3 @@
-import { param } from 'jquery';
 import { fetchAPI } from '../common/config';
 
 export const getAllUsers = async () => {

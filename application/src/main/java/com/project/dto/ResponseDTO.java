@@ -4,13 +4,15 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.util.List;
 
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+// CRUD 모두 사용 가능한 ResponseDTO
 public class ResponseDTO<T> {
-    private String error;
-    private List<T> data;
+    private String status;   // 성공 여부
+    private String message;  // 결과 메시지
+    private String error;    // 에러 메시지
+    private T data;          // 데이터
 }
