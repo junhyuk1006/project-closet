@@ -15,6 +15,8 @@ import Home from './pages/main/Home';
 import Login from './pages/auth/Login';
 import OAuth2RedirectHandler from './pages/auth/OAuth2RedirectHandler ';
 import SignUp from './pages/auth/SignUp';
+import FindIdForm from './pages/auth/FindIdForm';
+import FindPasswordForm from './pages/auth/FindPasswordForm';
 
 /** ./pages/MyPage  */
 import MyMemberInfo from './pages/myPage/MyMemberInfo';
@@ -92,6 +94,9 @@ const AppRoutes = () => (
           {renderRoute('/Login', <Login />)} {/* 로그인 페이지 */}
           <Route path="/oauth2/redirect" element={<OAuth2RedirectHandler />} />
           {renderRoute('/SignUp', <SignUp />)} {/* 회원가입 페이지 */}
+          {renderRoute('/find-id', <FindIdForm />)} {/* 아이디 찾기 페이지*/}
+          {renderRoute('/find-password', <FindPasswordForm />)}{' '}
+          {/* 비밀번호 찾기 페이지*/}
           {/** ./pages/MyPage */}
           {renderRoute('/MyPageHome', <MyPageHome />)} {/* 마이페이지 홈 */}
           {renderRoute('/MyPoint', <MyPoint />)} {/* 포인트 페이지 */}
