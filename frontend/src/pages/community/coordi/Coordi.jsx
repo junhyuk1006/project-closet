@@ -186,7 +186,7 @@ const Album = () => {
                       src={`/images/${coordi.coordiImage}`}
                       className="card-img-top"
                       alt={coordi.coordiTitle}
-                      style={{ height: '225px', objectFit: 'cover' }}
+                      style={{ height: '350px', objectFit: 'cover' }}
                     />
                     <div className="card-body">
                       <h5 className="card-title">{coordi.coordiTitle}</h5>
