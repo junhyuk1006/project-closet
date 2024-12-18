@@ -29,6 +29,7 @@ import Admin from './pages/admin/Admin';
 import ShoppingCart from './pages/cart/ShoppingCart';
 import Recommend from './pages/community/recommend/Recommend';
 import Detail from './pages/detailItem/Detail';
+import { BasketProvider } from './api/basket/BasketContext';
 
 /** ./pages/community  */
 import Board from './pages/community/board/Board';
@@ -46,6 +47,7 @@ import Layout from './layouts/Layout'; // Header/Footer 포함 여부를 제어�
 import Agreement from './pages/main/Agreement';
 import Guide from './pages/main/Guide';
 import Privacy from './pages/main/Privacy';
+import PaymentResult from './pages/cart/PaymentResult';
 
 /**
  * 공통적으로 사용하는 Route 생성 함수
@@ -78,69 +80,60 @@ const renderRoute = (
 
 const AppRoutes = () => (
   <UserProvider>
-    <Router>
-      <ScrollToTop />
-      <Animation>
+    <BasketProvider>
+      <Router>
+        <ScrollToTop />
         <Routes>
-          {/** ./pages/main */}
-          {renderRoute('/', <Home />)} {/* 메인 페이지 */}
+          {/* -------------------------------------------------------------------------- */}
+          {/* 메인 페이지 */}
+          {renderRoute('/', <Home />, true, 't10')} {/* 메인 페이지 */}
           {renderRoute('/guide', <Guide />)} {/* 이용안내 페이지 */}
           {renderRoute('/agreement', <Agreement />)} {/* 이용약관 페이지 */}
           {renderRoute('/privacy', <Privacy />)} {/* 개인정보처리방침 페이지 */}
-          {/** ./pages/auth */}
+          {/* -------------------------------------------------------------------------- */}
+          {/* -------------------------------------------------------------------------- */}
+          {/* 회원 관련 페이지 */}
           {renderRoute('/Login', <Login />)} {/* 로그인 페이지 */}
           <Route path="/oauth2/redirect" element={<OAuth2RedirectHandler />} />
           {renderRoute('/SignUp', <SignUp />)} {/* 회원가입 페이지 */}
-          {/** ./pages/MyPage */}
+          {/* -------------------------------------------------------------------------- */}
+          {/* -------------------------------------------------------------------------- */}
+          {/* 마이페이지 */}
           {renderRoute('/MyPageHome', <MyPageHome />)} {/* 마이페이지 홈 */}
           {renderRoute('/MyPoint', <MyPoint />)} {/* 포인트 페이지 */}
-          {renderRoute('/MyMemberInfo', <MyMemberInfo />)}{' '}
-          {/* 회원정보 페이지 */}
-          {renderRoute('/MyInquirement', <MyInquirement />)}{' '}
+          {renderRoute('/MyMemberInfo', <MyMemberInfo />)} {/* 내정보 페이지 */}
           {/* 문의내역 페이지 */}
-          {/**./pages/admin */}
-          {renderRoute('/admin/*', <Admin />, false)} {/* 관리자 페이지 */}
-          {/** ./pages/Other  */}
+          {renderRoute('/MyInquirement', <MyInquirement />)}
+          {/* -------------------------------------------------------------------------- */}
+          {/* -------------------------------------------------------------------------- */}
+          {/* 상품 관련 페이지  */}
           {renderRoute('/Detail/*', <Detail />)} {/* 상품 상세 페이지 */}
           {renderRoute('/Recommend', <Recommend />)} {/* 추천 페이지 */}
-          {renderRoute('/ShoppingCart', <ShoppingCart />)}{' '}
           {/* 장바구니 페이지 */}
-          {renderRoute('/board', <Board />, false)} {/* 일반게시판 페이지 */}
+          {renderRoute('/ShoppingCart', <ShoppingCart />)}
+          {renderRoute('/PaymentResult', <PaymentResult />, false)}
+          {/* -------------------------------------------------------------------------- */}
+          {/* -------------------------------------------------------------------------- */}
+          {/* 커뮤니티 페이지 */}
+          {renderRoute('/Community', <Board />)} {/* 일반게시판 페이지 */}
+          {renderRoute('/WritePost', <WritePost />)} {/* 글 작성페이지 */}
+          {renderRoute('/board/:boardId', <BoardDetail />)}{' '}
+          {/* 글 상세페이지 */}
+          {renderRoute('/board/edit/:boardId', <EditPost />)}{' '}
+          {/* 글 수정페이지 */}
+          {renderRoute('/Coordi', <Coordi />)} {/* 코디자랑 페이지 */}
+          {renderRoute('/Upload', <UploadForm />)} {/* 코디업로드 페이지 */}
+          {/* -------------------------------------------------------------------------- */}
+          {/* -------------------------------------------------------------------------- */}
+          {/* 관리자 페이지 */}
+          {renderRoute('/admin/*', <Admin />, false)} {/* 관리자 페이지 */}
+          {/* ------------------------------------------------------------------- */}
+          {/* ------------------------------------------------------------------- */}
+          {/* 에러 페이지 */}
           {renderRoute('/*', <Page404 />, false)} {/* 에러 페이지 */}
         </Routes>
-      </Animation>
-      <Routes>
-        {/** ./pages/main */}
-        {renderRoute('/', <Home />, true, 't10')} {/* 메인 페이지 */}
-        {renderRoute('/guide', <Guide />)} {/* 이용안내 페이지 */}
-        {renderRoute('/agreement', <Agreement />)} {/* 이용약관 페이지 */}
-        {renderRoute('/privacy', <Privacy />)} {/* 개인정보처리방침 페이지 */}
-        {/** ./pages/auth */}
-        {renderRoute('/Login', <Login />)} {/* 로그인 페이지 */}
-        <Route path="/oauth2/redirect" element={<OAuth2RedirectHandler />} />
-        {renderRoute('/SignUp', <SignUp />)} {/* 회원가입 페이지 */}
-        {/** ./pages/MyPage */}
-        {renderRoute('/MyPageHome', <MyPageHome />)} {/* 마이페이지 홈 */}
-        {renderRoute('/MyPoint', <MyPoint />)} {/* 포인트 페이지 */}
-        {/* 회원정보 페이지 */}
-        {renderRoute('/MyInquirement', <MyInquirement />)}{' '}
-        {/* 문의내역 페이지 */}
-        {/**./pages/admin */}
-        {renderRoute('/admin/*', <Admin />, false)} {/* 관리자 페이지 */}
-        {/** ./pages/Other  */}
-        {renderRoute('/Detail/*', <Detail />)} {/* 상품 상세 페이지 */}
-        {renderRoute('/Recommend', <Recommend />)} {/* 추천 페이지 */}
-        {renderRoute('/ShoppingCart', <ShoppingCart />)} {/* 장바구니 페이지 */}
-        {renderRoute('/*', <Page404 />, false)} {/* 에러 페이지 */}
-        {/** ./pages/community  */}
-        {renderRoute('/Community', <Board />)} {/* 일반게시판 페이지 */}
-        {renderRoute('/WritePost', <WritePost />)} {/* 글 작성페이지 */}
-        {renderRoute('/board/:id', <BoardDetail />)} {/* 글 상세페이지 */}
-        {renderRoute('/board/edit/:id', <EditPost />)} {/* 글 수정페이지 */}
-        {renderRoute('/Coordi', <Coordi />)} {/* 코디자랑 페이지 */}
-        {renderRoute('/Upload', <UploadForm />)} {/* 코디업로드 페이지 */}
-      </Routes>
-    </Router>
+      </Router>
+    </BasketProvider>
   </UserProvider>
 );
 

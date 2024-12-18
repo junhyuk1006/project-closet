@@ -1,0 +1,85 @@
+.reply-container {
+  margin-top: 20px;
+  border: 1px solid #ddd; /* 전체 댓글 영역 테두리 추가 */
+  border-radius: 8px;
+  padding: 20px;
+  background-color: #fafafa;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.reply-title {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+}
+
+.reply-list {
+  border-top: 1px solid #ddd;
+  padding-top: 10px;
+}
+
+.reply-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.reply-content-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.reply-writer {
+  font-size: 0.9em;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+.reply-content {
+  margin: 0;
+  font-size: 1em;
+}
+
+.reply-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.reply-button {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #279bee;
+  color: white;
+  font-size: 0.9em;
+}
+
+.reply-button.reply-delete {
+  background-color: #e74c3c;
+}
+
+.reply-button:hover {
+  opacity: 0.8;
+}
+
+.reply-input-container {
+  display: flex;
+  margin-top: 10px;
+}
+
+.reply-input {
+  flex-grow: 1;
+  padding: 8px;
+  margin-right: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.reply-submit {
+  background-color: #555555;
+}

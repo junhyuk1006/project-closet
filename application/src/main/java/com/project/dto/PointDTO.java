@@ -1,40 +1,29 @@
 package com.project.dto;
 
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
-
 public class PointDTO {
 
+    /** 변동 사항
+     *  생성자 삭제
+     *  사유: TotalPoint 를 별도로 계산 및 변수 저장하여 front로 호출 성공
+     *  참고: PointRepository, PointService
+     *  */
 
     private long id;
     private long userId;
     private int point;
     private String pointReason;
     private String pointType;
+    private String pointInsertType;
 
     private Timestamp createdAt;
     private Timestamp deletedAt;
-    private String status;
-
-    private int totalUserPoint;
-
-    public PointDTO(long id, long userId, int point, String pointReason, String pointType, Timestamp createdAt, Timestamp deletedAt, String status) {
-        this.id = id;
-        this.userId = userId;
-        this.point = point;
-        this.pointReason = pointReason;
-        this.pointType = pointType;
-        this.createdAt = createdAt;
-        this.deletedAt = deletedAt;
-        this.status = status;
-    }
+    private String status ="active";
 }

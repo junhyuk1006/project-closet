@@ -76,7 +76,9 @@ function Home() {
         <div className="container">
           <FetchAllProduct onItemFetch={setProducts} />
           <div className="p-b-10">
-            <h3 className="ltext-103 cl5">Product Overview</h3>
+            <h3 className="ltext-103 cl5">
+              <b>상품 미리보기</b>
+            </h3>
           </div>
 
           {/* Category & Filter & Search */}

@@ -65,11 +65,17 @@ const Checkout = () => {
       return;
     }
 
-    const result = await verifyCode(email, code);
-    alert(result.message);
+    try {
+      const result = await verifyCode(email, code);
+      alert(result.message); // 서버에서 반환한 메시지 표시
 
-    if (result.success) {
-      setIsEmailVerified(true);
+      if (result.success) {
+        setIsEmailVerified(true);
+      }
+    } catch (error) {
+      // 에러 발생 시 alert 창 표시
+      console.error('이메일 인증 실패:', error);
+      alert('인증 코드가 올바르지 않습니다. 다시 확인해주세요.');
     }
   };
 

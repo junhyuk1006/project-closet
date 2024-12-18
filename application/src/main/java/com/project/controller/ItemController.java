@@ -36,7 +36,9 @@ public class ItemController {
 
 
     @GetMapping("/itemDetail/{itemDetailId}")
-    public List<ItemDetailItemDTO> getItemDetail(@PathVariable Long itemDetailId) {return itemService.getItemsByItemDetailId(itemDetailId);}
+    public List<ItemDetailItemDTO> getItemDetail(@PathVariable Long itemDetailId) {
+        return itemService.getItemsByItemDetailId(itemDetailId);
+    }
 
     // 상위 3개의 아이템을 category(조회수, 좋아요 순위 등)로 조회하는 메서드
     @GetMapping("/items/top/{category}")

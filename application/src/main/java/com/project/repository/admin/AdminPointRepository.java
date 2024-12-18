@@ -21,7 +21,7 @@ public interface AdminPointRepository extends JpaRepository<Point,Long> {
             "(:searchKeyword ='nickname' AND u.nickname LIKE CONCAT('%',:searchInput,'%')) OR " +
             "(:searchKeyword ='email' AND u.email LIKE CONCAT('%',:searchInput,'%')))"+
             "AND (:startDate IS NULL OR p.createdAt >= :startDate)" +
-            "AND (:endDate IS NULL OR p.deletedAt <= :endDate)")
+            "AND (:endDate IS NULL OR p.createdAt <= :endDate)")
     Page<AdminPointDTO> findAllPointUser(Pageable pageable,
                                          @Param("searchKeyword")String searchKeyword,
                                          @Param("searchInput")String searchInput,

@@ -29,10 +29,11 @@ public class PointController {
     private final PointService pointService;
     private final UserService userService;
 
-    /** 리뷰 포인트 저장*/
+/** 리뷰 포인트 저장*/
+
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/saveReviewPoint")
-    public ResponseEntity<String> savePoint(@RequestBody Point point) {
+    public ResponseEntity<String> savePoint(@RequestBody PointDTO point) {
         pointService.save(point);
         return ResponseEntity.ok("success");
     }
@@ -51,12 +52,40 @@ public class PointController {
         return ResponseEntity.ok(points);
     }
 
-    @GetMapping("/getTotalPointByUserid")
-    public ResponseEntity<PointDTO> getTotalPointByUserid(@AuthenticationPrincipal CustomUserDetail userDetail) {
-        long userId = userDetail.getId();
-        PointDTO dto = pointService.getTotalPointByUserId(userId);
-        return ResponseEntity.ok(dto);
+    @RequestMapping(value = "/getTotalPointByUserid", method = {RequestMethod.GET, RequestMethod.POST})
+    public int getTotalPointByUserId(@RequestParam(required = false) Long userId,
+                                     @RequestBody(required = false) Map<String, Long> body) {
+        try {
+            // 1. userId가 @RequestParam으로 전달된 경우
+            if (userId != null) {
+                return pointService.getTotalPointByUserId(userId);
+            }
+
+            // 2. body에 "userId"가 포함된 경우
+            if (body != null && body.containsKey("userId")) {
+                Long extractedUserId = body.get("userId");
+                if (extractedUserId == null) {
+                    throw new IllegalArgumentException("Invalid request: userId in body is null");
+                }
+                return pointService.getTotalPointByUserId(extractedUserId);
+            }
+
+            // 3. 요청 데이터가 모두 없는 경우
+            throw new IllegalArgumentException("Invalid request: userId is missing in both request parameters and body");
+        } catch (IllegalArgumentException e) {
+            // 요청 유효성 문제에 대한 예외 처리
+            throw new IllegalArgumentException("Error processing request: " + e.getMessage(), e);
+        } catch (Exception e) {
+            // 기타 예외 처리
+            throw new RuntimeException("An unexpected error occurred while processing the request", e);
+        }
     }
 
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleException(Exception ex) {
+        log.error("Exception occurred: ", ex);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal Server Error");
+    }
 
 }

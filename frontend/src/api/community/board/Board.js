@@ -12,8 +12,8 @@ export const getAllboard = async () => {
 };
 
 // 게시판 상세 조회
-export const getBoardDetail = async (id) => {
-  return await call(`/api/board/${id}`);
+export const getBoardDetail = async (boardId) => {
+  return await call(`/api/board/${boardId}`);
 };
 
 // 검색 요청 API
@@ -30,8 +30,8 @@ export const searchBoards = async (keyword, condition) => {
 };
 
 // 글 수정
-export const updateBoard = async (id, updatedData) => {
-  return await fetchAPI(`/api/board/update/${id}`, {
+export const updateBoard = async (boardId, updatedData) => {
+  return await fetchAPI(`/api/board/update/${boardId}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -42,8 +42,8 @@ export const updateBoard = async (id, updatedData) => {
 };
 
 // 글 삭제
-export const deleteBoard = async (id) => {
-  const response = await fetch(`http://localhost/api/board/delete/${id}`, {
+export const deleteBoard = async (boardId) => {
+  const response = await fetch(`http://localhost/api/board/delete/${boardId}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',

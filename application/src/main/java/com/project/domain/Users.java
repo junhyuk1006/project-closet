@@ -20,9 +20,8 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
 import lombok.Data;
-import org.hibernate.annotations.DynamicInsert;
+
 import java.sql.Timestamp;
 
 @Entity
@@ -91,5 +90,7 @@ public class Users {
     @JsonIgnore
     private List<Point> point;
 
-
+    @OneToMany(mappedBy = "user" , cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<OrderHistory> orderList;
 }

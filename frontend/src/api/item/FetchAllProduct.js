@@ -14,7 +14,7 @@ function FetchAllProduct ({ onItemFetch }) {
         }).catch((error) =>
             console.log("Error fetching item data:", error)
         );
-    }, []);
+    }, [onItemFetch]);
     return null;
 }
 

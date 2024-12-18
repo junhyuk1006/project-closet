@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useUser } from '../../../api/auth/UserContext'; // 유저 데이터 가져오기 위한 훅
 
 const UploadForm = () => {
-  const [title, setTitle] = useState(''); // 코디 제목 상태 추가
+  const [title, setTitle] = useState(''); // 코디 제목(스타일) 상태
   const [image, setImage] = useState(null);
   const [description, setDescription] = useState('');
   const [preview, setPreview] = useState(null);
@@ -21,8 +21,8 @@ const UploadForm = () => {
     }
   };
 
-  // 제목 입력 이벤트
-  const handleTitleChange = (event) => {
+  // 셀렉트 변경 이벤트
+  const handleSelectChange = (event) => {
     setTitle(event.target.value);
   };
 
@@ -35,7 +35,7 @@ const UploadForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (!title || !image || !description) {
+    if (!title || title === '선택' || !image || !description) {
       setMessage('모든 필드를 채워주세요!');
       return;
     }
@@ -46,15 +46,20 @@ const UploadForm = () => {
     }
 
     const formData = new FormData();
-    formData.append('title', title); // 제목 추가
+    formData.append('title', title); // 선택한 스타일
     formData.append('image', image);
     formData.append('description', description);
     formData.append('userId', user.id); // userId 추가
+
+    console.log('user.id:', user.id);
 
     try {
       const response = await fetch('http://localhost/api/coordi/upload', {
         method: 'POST',
         body: formData,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`, // Authorization 헤더 추가
+        },
       });
 
       if (response.ok) {
@@ -77,19 +82,24 @@ const UploadForm = () => {
     <div className="upload-form-container">
       <h2 className="upload-title">나의 코디 업로드</h2>
       <form onSubmit={handleSubmit}>
-        {/* 제목 입력 */}
+        {/* 코디 스타일 선택(셀렉트) */}
         <div className="form-group">
-          <label htmlFor="title" className="form-label">
-            코디 제목
+          <label htmlFor="styleSelect" className="form-label">
+            코디 스타일 선택
           </label>
-          <input
-            type="text"
-            id="title"
+          <select
+            id="styleSelect"
             value={title}
-            onChange={handleTitleChange}
-            placeholder="코디 제목을 입력해주세요."
+            onChange={handleSelectChange}
             className="text-input"
-          />
+          >
+            <option value="선택">선택</option>
+            <option value="데일리">데일리</option>
+            <option value="캐주얼">캐주얼</option>
+            <option value="포멀">포멀</option>
+            <option value="스트릿">스트릿</option>
+            <option value="빈티지">빈티지</option>
+          </select>
         </div>
 
         {/* 이미지 업로드 */}

@@ -2,16 +2,16 @@ package com.project.service;
 
 import com.project.dto.UserDTO;
 import com.project.dto.UserGradeDTO;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import com.project.domain.Users;
 import com.project.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Slf4j // 로깅 객체 자동 생성 (log 변수 사용 가능)
 @Service
@@ -65,9 +65,6 @@ public class UserService {
         return !userRepository.existsByEmail(email); // 중복 여부 반환
     }
 
-
-
-
     // 마이페이지 - 비밀번호 변경
     @Transactional
     public void changePwd(Long userId, String newPwd) {
@@ -112,6 +109,15 @@ public class UserService {
     }
 
     public UserGradeDTO findGradeByUserId(Long userId) {
-        return userRepository.findGradeByUserId(userId);
+        Optional<Users> user = userRepository.findById(userId);
+        if(user.isPresent()) {
+            UserGradeDTO userGradeDTO = new UserGradeDTO();
+            userGradeDTO.setGrade(user.get().getGrade().getGrade());
+            userGradeDTO.setRate(user.get().getGrade().getRate());
+
+            return userGradeDTO;
+        }
+
+        return null;
     }
 }

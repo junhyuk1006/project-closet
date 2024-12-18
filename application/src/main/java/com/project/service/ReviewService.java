@@ -42,10 +42,6 @@ public class ReviewService {
         reviewRepository.save(review);
     }
 
-
-
-
-
     public List<UserItemReviewDTO> findAllReviews(Long item_id) {
         return reviewRepository.findUserItemReviewDTOByItemId(item_id);
     }

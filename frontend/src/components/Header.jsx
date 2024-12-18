@@ -29,6 +29,7 @@ function Header({ user }) {
   const [isSearching, setIsSearching] = useState(false); // 데스크탑의 검색창 open 상태
   const [inputValue, setInputValue] = useState(''); // 검색창 입력값 상태
   const [isDesktopCategoryOpen, setIsDesktopCategoryOpen] = useState(false); // 데스크탑 카테고리 open 상태
+  const [isDesktopCommunityOpen, setIsDesktopCommunityOpen] = useState(false); // 데스크탑 커뮤니티 open 상태
   const [notices, setNotices] = useState([]); // 공지사항 상태
   const [baskets, setBaskets] = useState([]); // 장바구니 상태
   const { logout } = useUser();
@@ -62,8 +63,12 @@ function Header({ user }) {
   }, []);
 
   // 카테고리 dropdown 열기/닫기 토글
-  const toggleMouseEnter = () => setIsDesktopCategoryOpen(true);
-  const toggleMouseLeave = () => setIsDesktopCategoryOpen(false);
+  const toggleCategoryEnter = () => setIsDesktopCategoryOpen(true);
+  const toggleCategoryLeave = () => setIsDesktopCategoryOpen(false);
+
+  // 커뮤니티 dropdown 열기/닫기 토글
+  const toggleCommunityEnter = () => setIsDesktopCommunityOpen(true);
+  const toggleCommunityLeave = () => setIsDesktopCommunityOpen(false);
 
   // 검색창 상태가 변경될 때마다 입력값을 초기화
   useEffect(() => {
@@ -71,8 +76,8 @@ function Header({ user }) {
   }, [isSearching]);
 
   useEffect(() => {
-    setIsAuthenticated(isValidJwtToken()); // JWT 토큰 검증 후 상태 업데이트
-  }, [isAuthenticated]);
+    setIsAuthenticated(isValidJwtToken());
+  }, [user]);
 
   // 로그인 상태 확인 함수
   const isLoggedIn = (e) => {
@@ -185,9 +190,9 @@ function Header({ user }) {
       {/* 모바일 메뉴 */}
       <MobileMenu
         isMenuOpen={isMenuOpen}
+        setIsMenuOpen={setIsMenuOpen}
         isLoggedIn={isLoggedIn}
         user={user}
-        setIsAuthenticated={setIsAuthenticated}
         handleLogout={handleLogout}
       />
 
@@ -283,8 +288,8 @@ function Header({ user }) {
               <ul className="main-menu">
                 <li>
                   <Dropdown
-                    onMouseEnter={toggleMouseEnter}
-                    onMouseLeave={toggleMouseLeave}
+                    onMouseEnter={toggleCategoryEnter}
+                    onMouseLeave={toggleCategoryLeave}
                     show={isDesktopCategoryOpen}
                   >
                     <Dropdown.Toggle variant="" id="">
@@ -310,7 +315,22 @@ function Header({ user }) {
                   <Link to="/Recommend">스타일링</Link>
                 </li>
                 <li>
-                  <Link to="/Community">커뮤니티</Link>
+                  <Dropdown
+                    onMouseEnter={toggleCommunityEnter}
+                    onMouseLeave={toggleCommunityLeave}
+                    show={isDesktopCommunityOpen}
+                  >
+                    <Dropdown.Toggle variant="" id="">
+                      <Link to="#">커뮤니티</Link>
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu>
+                      <Dropdown.Item href="/Community">
+                        자유게시판
+                      </Dropdown.Item>
+                      <Dropdown.Item href="/Coordi">코디자랑</Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
                 </li>
               </ul>
             </div>

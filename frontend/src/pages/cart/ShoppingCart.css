@@ -1,0 +1,30 @@
+/* 모달 창 */
+.modal-payment {
+    background: white;
+    border-radius: 10px;
+    max-width: 500px;
+    margin: auto;
+    padding: 20px;
+    position: relative;
+    z-index: 1115;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* 모달 오버레이 */
+.modal-payment-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1114;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.table-shopping-cart .column-1 {
+    width: 10px;
+    padding-left: 5px;
+}

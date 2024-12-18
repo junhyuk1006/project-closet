@@ -29,9 +29,17 @@ public interface UserRepository extends JpaRepository<Users, Long> {
   @Query("Update Users u SET u.password = :encodedPwd WHERE u.id = :userId")
   void changePwd(@Param("userId") Long userId, @Param("encodedPwd") String encodedPwd);
 
-  @Query("SELECT new com.project.dto.UserGradeDTO(g.grade, g.rate) " +
-          "FROM Users u JOIN u.grade g WHERE u.id = :userId")
-  UserGradeDTO findGradeByUserId(@Param("userId") Long userId);
+  // 회원 신체 정보 수정
+  @Modifying
+  @Query("UPDATE Users u SET u.height = :newHeight, u.weight = :newWeight, u.size = :newSize, u.isReleased = :newIsReleased WHERE u.id = :userId")
+  void changeBodyInfo(@Param("userId") Long userId,
+                      @Param("newHeight") int newHeight,
+                      @Param("newWeight") int newWeight,
+                      @Param("newSize") String newSize,
+                      @Param("newIsReleased") boolean newIsReleased);
 
+  // 회원 추가 정보 수정
+  @Modifying
+  @Query("UPDATE Users u SET u.profileImage = :profileImage, u.name = :name, u.phone = :phone, u.style = :style, u.introduction = :introduction WHERE u.id = :userId")
+  void changeAddInfo(@Param("userId") Long userId,@Param("profileImage") String profileImage, @Param("name") String name, @Param("phone") String phone, @Param("style") String style,@Param("introduction") String introduction);
 }
-

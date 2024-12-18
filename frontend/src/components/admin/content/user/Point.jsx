@@ -9,7 +9,6 @@ const Point = () => {
   const [size, setSize] = useState(20);
   const [pageGroup, setPageGroup] = useState(0);
 
-  const [grades, setGrades] = useState([]);
   // 검색 상태 하나의 객체로 관리
   const [searchParams, setSearchParams] = useState({
     searchKeyword: 'email',

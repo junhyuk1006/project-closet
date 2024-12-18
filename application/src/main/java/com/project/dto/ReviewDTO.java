@@ -29,6 +29,4 @@ public class ReviewDTO {
     @CreationTimestamp
     private LocalDateTime created_at;
 
-
-
 }
