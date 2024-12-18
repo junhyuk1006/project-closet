@@ -235,11 +235,7 @@ const Album = () => {
           </Modal.Body>
           <Modal.Footer>
             {/* 좋아요 버튼 */}
-            <Button
-              variant="light"
-              onClick={handleLikeToggle}
-              disabled={!user} // 로그인 안한 경우 좋아요 불가능
-            >
+            <Button variant="light" onClick={handleLikeToggle}>
               {liked ? (
                 <FaHeart style={{ color: 'red' }} />
               ) : (
