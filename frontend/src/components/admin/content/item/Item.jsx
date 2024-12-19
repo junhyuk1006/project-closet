@@ -9,7 +9,7 @@ const Item = () => {
   const [pageGroup, setPageGroup] = useState(0);
 
   const [searchParams, setSearchParams] = useState({
-    searchKeyword: 'orderNo',
+    searchKeyword: 'itemName',
     searchInput: '',
     startDate: '',
     endDate: '',
@@ -93,7 +93,7 @@ const Item = () => {
 
   const handleReset = () => {
     setSearchParams({
-      searchKeyword: 'orderNo',
+      searchKeyword: 'itemName',
       searchInput: '',
       startDate: '',
       endDate: '',
@@ -125,16 +125,30 @@ const Item = () => {
             <Col xs={12} md={4} lg={3}>
               <Form.Group controlId="searchKeyword">
                 <Form.Label>검색어</Form.Label>
-                <Form.Control as="select">
+                <Form.Control
+                  as="select"
+                  name="searchKeyword"
+                  value={searchParams.searchKeyword}
+                  onChange={(e) =>
+                    updateSearchParams('searchKeyword', e.target.value)
+                  }
+                >
                   <option>상품명</option>
-                  <option>상품코드</option>
                 </Form.Control>
               </Form.Group>
             </Col>
             <Col xs={12} md={8} lg={6}>
               <Form.Group controlId="searchInput">
                 <Form.Label>검색값</Form.Label>
-                <Form.Control type="text" placeholder="검색어 입력" />
+                <Form.Control
+                  type="text"
+                  name="searchInput"
+                  value={searchParams.searchInput}
+                  onChange={(e) =>
+                    updateSearchParams('searchInput', e.target.value)
+                  }
+                  placeholder="검색어 입력"
+                />
               </Form.Group>
             </Col>
           </Row>
@@ -144,13 +158,20 @@ const Item = () => {
             <Col xs={12} md={6} lg={4}>
               <Form.Group controlId="categorySelect">
                 <Form.Label>카테고리</Form.Label>
-                <Form.Control as="select">
-                  <option>전체</option>
-                  <option>아우터</option>
-                  <option>셔츠</option>
-                  <option>청바지</option>
-                  <option>a</option>
-                  <option>b</option>
+                <Form.Control
+                  as="select"
+                  name="category"
+                  value={searchParams.category}
+                  onChange={(e) =>
+                    updateSearchParams('category', e.target.value)
+                  }
+                >
+                  <option value="all">전체</option>
+                  <option value="OuterWear">아우터</option>
+                  <option value="Tops">상의</option>
+                  <option value="Bottoms">하의</option>
+                  <option value="Sportswear">스포츠웨어어</option>
+                  <option value="Dresses">b</option>
                 </Form.Control>
               </Form.Group>
             </Col>
@@ -164,10 +185,23 @@ const Item = () => {
                 <div className="d-flex align-items-center">
                   <Form.Control
                     type="number"
+                    name="minPrice"
+                    value={searchParams.minPrice}
                     className="me-2"
                     placeholder="최소 가격"
+                    onChange={(e) => {
+                      updateSearchParams('minPrice', e.target.value);
+                    }}
                   />
-                  <Form.Control type="number" placeholder="최대 가격" />
+                  <Form.Control
+                    type="number"
+                    name="maxPrice"
+                    value={searchParams.maxPrice}
+                    placeholder="최대 가격"
+                    onChange={(e) => {
+                      updateSearchParams('maxPrice', e.target.value);
+                    }}
+                  />
                 </div>
               </Form.Group>
             </Col>
@@ -178,8 +212,23 @@ const Item = () => {
               <Form.Group controlId="dateRange">
                 <Form.Label>기간검색(상품등록일)</Form.Label>
                 <div className="d-flex align-items-center">
-                  <Form.Control type="date" className="me-2" />
-                  <Form.Control type="date" />
+                  <Form.Control
+                    type="date"
+                    name="startDate"
+                    value={searchParams.startDate}
+                    onChange={(e) =>
+                      updateSearchParams('startDate', e.target.value)
+                    }
+                    className="me-2"
+                  />
+                  <Form.Control
+                    type="date"
+                    name="endDate"
+                    value={searchParams.endDate}
+                    onChange={(e) =>
+                      updateSearchParams('endDate', e.target.value)
+                    }
+                  />
                 </div>
               </Form.Group>
             </Col>
@@ -189,10 +238,30 @@ const Item = () => {
             <Col xs={12} md={6} lg={4}>
               <Form.Group>
                 <div className="d-flex gap-2">
-                  <Button variant="outline-dark">오늘</Button>
-                  <Button variant="outline-dark">일주일</Button>
-                  <Button variant="outline-dark">한 달</Button>
-                  <Button variant="outline-dark">전체</Button>
+                  <Button
+                    variant="outline-dark"
+                    onClick={() => setDateRange('today')}
+                  >
+                    오늘
+                  </Button>
+                  <Button
+                    variant="outline-dark"
+                    onClick={() => setDateRange('week')}
+                  >
+                    일주일
+                  </Button>
+                  <Button
+                    variant="outline-dark"
+                    onClick={() => setDateRange('month')}
+                  >
+                    한 달
+                  </Button>
+                  <Button
+                    variant="outline-dark"
+                    onClick={() => setDateRange('all')}
+                  >
+                    전체
+                  </Button>
                 </div>
               </Form.Group>
             </Col>
@@ -201,28 +270,54 @@ const Item = () => {
           <Row className="align-items-center">
             <Col xs={12}>
               <Form.Group controlId="levelSearch">
-                <Form.Label>판매여부</Form.Label>
+                <Form.Label>활성화여부</Form.Label>
                 <div>
                   <Form.Check
                     inline
                     label="전체"
                     type="radio"
-                    name="level"
+                    name="status"
+                    value=""
+                    checked={searchParams.status === ''}
+                    onChange={(e) =>
+                      updateSearchParams('status', e.target.value)
+                    }
                     defaultChecked
                   />
-                  <Form.Check inline label="판매" type="radio" name="level" />
-                  <Form.Check inline label="품절" type="radio" name="level" />
-                  <Form.Check inline label="중지" type="radio" name="level" />
+                  <Form.Check
+                    inline
+                    label="활성화"
+                    type="radio"
+                    name="status"
+                    value={searchParams.status}
+                    checked={searchParams.status === 'active'}
+                    onChange={(e) => {
+                      updateSearchParams('status', e.target.value);
+                    }}
+                  />
+                  <Form.Check
+                    inline
+                    label="비활성화"
+                    type="radio"
+                    name="status"
+                    value={searchParams.status}
+                    checked={searchParams.status === 'inactive'}
+                    onChange={(e) => {
+                      updateSearchParams('status', e.target.value);
+                    }}
+                  />
                 </div>
               </Form.Group>
             </Col>
           </Row>
 
           <div className="d-flex justify-content-end mt-3">
-            <Button variant="dark" className="me-2">
+            <Button variant="dark" className="me-2" onClick={handleSearch}>
               검색
             </Button>
-            <Button variant="outline-secondary">초기화</Button>
+            <Button variant="outline-secondary" onClick={handleReset}>
+              초기화
+            </Button>
           </div>
         </Form>
       </div>

@@ -22,16 +22,16 @@ public interface AdminItemRepository extends JpaRepository<ItemDetail, Long> {
             "AND (:category ='' OR id.item_category = :category)" +
             "AND (:startDate IS NULL OR id.created_at >= :startDate)"+
             "AND (:endDate IS NULL OR id.created_at <= :endDate)" +
-            "AND (:minPrice IS NULL OR id.item_price >= :minPrice)" +
-            "AND (:maxPrice IS NULL OR id.item_price <= :maxPrice)" +
-            "AND (:status IS NULL OR id.status = :status )")
+            "AND (:minPrice = 0 OR id.item_price >= :minPrice)" +
+            "AND (:maxPrice = 0 OR id.item_price <= :maxPrice)" +
+            "AND (:status ='' OR id.status = :status )")
     Page<AdminItemDTO> findItem(Pageable pageable,
                                 @Param("searchKeyword")String searchKeyword,
                                 @Param("searchInput")String searchInput,
                                 @Param("startDate")Timestamp startDate,
                                 @Param("endDate")Timestamp endDate,
-                                @Param("minPrice")int minPrice,
-                                @Param("maxPrice")int maxPrice,
+                                @Param("minPrice")Integer minPrice,
+                                @Param("maxPrice")Integer maxPrice,
                                 @Param("category")String category,
                                 @Param("status")String status);
 }
