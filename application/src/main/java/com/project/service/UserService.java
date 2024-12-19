@@ -120,4 +120,19 @@ public class UserService {
 
         return null;
     }
+
+    public void save(Users user) {
+        userRepository.save(user);
+    }
+
+    @Transactional
+    public UserDTO updateProfileImage(Long userId, String fileName) {
+        // 프로필 이미지 업데이트
+        userRepository.updateProfileImage(userId, fileName);
+
+        // 업데이트된 사용자 정보 반환
+        Users user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
+        return new UserDTO(user);
+    }
 }
