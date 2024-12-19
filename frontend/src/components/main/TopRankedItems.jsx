@@ -17,8 +17,6 @@ export default function TopRankedItems() {
     error,
     loading,
   } = useFetch(`/api/items/top/itemName`);
-  const [subject, setSubject] = useState('week'); // 주간, 월간 랭킹 등을 위한 상태값
-  const [category, setCategory] = useState('itemPrice'); // 좋아요 개수, 리뷰 개수 순위를 위한 상태값
 
   // 날짜 필터링에 따른 소제목 한글화
   const titleBySubject = {
