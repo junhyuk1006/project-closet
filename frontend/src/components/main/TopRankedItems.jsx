@@ -13,9 +13,9 @@ export default function TopRankedItems() {
     data: rankedItems,
     error,
     loading,
-  } = useFetch(`/api/items/top/item_name`);
+  } = useFetch(`/api/items/top/itemName`);
   const [subject, setSubject] = useState('week'); // 주간, 월간 랭킹 등을 위한 상태값
-  const [category, setCategory] = useState('item_price'); // 좋아요 개수, 리뷰 개수 순위를 위한 상태값
+  const [category, setCategory] = useState('itemPrice'); // 좋아요 개수, 리뷰 개수 순위를 위한 상태값
 
   // 날짜 필터링에 따른 소제목 한글화
   const titleBySubject = {
@@ -69,7 +69,7 @@ export default function TopRankedItems() {
               >
                 <div className="block1 wrap-pic-w">
                   <img
-                    src={`images/${rankedItem.main_image}`}
+                    src={`images/${rankedItem.mainImage}`}
                     alt="IMG-BANNER"
                   />
 
@@ -79,11 +79,11 @@ export default function TopRankedItems() {
                   >
                     <div className="block1-txt-child1 flex-col-l">
                       <span className="block1-name ltext-102 trans-04 p-b-8">
-                        {rankedItem.item_name}
+                        {rankedItem.itemName}
                       </span>
 
                       <span className="block1-info stext-102 trans-04">
-                        {rankedItem.item_price.toLocaleString()}원
+                        {rankedItem.itemPrice.toLocaleString()}원
                       </span>
                     </div>
 
@@ -109,7 +109,7 @@ export default function TopRankedItems() {
               >
                 <div className="block1 wrap-pic-w">
                   <img
-                    src={`images/${rankedItem.main_image}`}
+                    src={`images/${rankedItem.mainImage}`}
                     alt="IMG-BANNER"
                   />
 
@@ -119,11 +119,11 @@ export default function TopRankedItems() {
                   >
                     <div className="block1-txt-child1 flex-col-l">
                       <span className="block1-name ltext-102 trans-04 p-b-8">
-                        {rankedItem.item_name}
+                        {rankedItem.itemName}
                       </span>
 
                       <span className="block1-info stext-102 trans-04">
-                        {rankedItem.item_price.toLocaleString()}원
+                        {rankedItem.itemPrice.toLocaleString()}원
                       </span>
                     </div>
 

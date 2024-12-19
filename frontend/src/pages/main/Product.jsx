@@ -22,9 +22,9 @@ export default function Product({ products, activeCategory, activeFilter }) {
   };
 
   const uniqueProducts = products.reduce((acc, product) => {
-    const existing = acc.find((p) => p.item_name === product.item_name);
+    const existing = acc.find((p) => p.itemName === product.itemName);
     if (!existing || product.id < existing.id) {
-      return [...acc.filter((p) => p.item_name !== product.item_name), product];
+      return [...acc.filter((p) => p.itemName !== product.itemName), product];
     }
     return acc;
   }, []);
@@ -50,20 +50,20 @@ export default function Product({ products, activeCategory, activeFilter }) {
       {uniqueProducts
         .filter(
           (product) =>
-            activeCategory === '*' || product.item_category === activeCategory
+            activeCategory === '*' || product.itemCategory === activeCategory
         )
         .sort((a, b) => {
           if (activeFilter === 'sortByRecent') {
-            return b.created_at - a.created_at; // 최신순
+            return b.createdAt - a.createdAt; // 최신순
           } else if (activeFilter === 'sortByPriceDesc') {
             return (
-              parseInt(b.item_price, 10) - // 높은 가격순
-              parseInt(a.item_price, 10)
+              parseInt(b.itemPrice, 10) - // 높은 가격순
+              parseInt(a.itemPrice, 10)
             );
           } else if (activeFilter === 'sortByPriceAsc') {
             return (
-              parseInt(a.item_price, 10) - // 낮은 가격순
-              parseInt(b.item_price, 10)
+              parseInt(a.itemPrice, 10) - // 낮은 가격순
+              parseInt(b.itemPrice, 10)
             );
           } else if (activeFilter === 'sortByRating') {
             // return b.rating - a.rating; // 평점
@@ -75,11 +75,11 @@ export default function Product({ products, activeCategory, activeFilter }) {
         .map((product) => (
           <div
             key={product.id}
-            className={`col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item ${product.item_category}`}
+            className={`col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item ${product.itemCategory}`}
           >
             <div className="block2">
               <div className="block2-pic hov-img0">
-                <img src={`images/${product.main_image}`} alt="IMG-PRODUCT" />
+                <img src={`images/${product.mainImage}`} alt="IMG-PRODUCT" />
 
                 <button
                   className="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04"
@@ -95,11 +95,11 @@ export default function Product({ products, activeCategory, activeFilter }) {
                     className="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6"
                     onClick={() => handleNavigate(product)}
                   >
-                    {product.item_name}
+                    {product.itemName}
                   </button>
 
                   <span className="stext-105 cl3">
-                    {product.item_price.toLocaleString()}원
+                    {product.itemPrice.toLocaleString()}원
                   </span>
                 </div>
 

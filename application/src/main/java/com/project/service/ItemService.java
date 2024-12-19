@@ -32,11 +32,11 @@ public class ItemService {
                 .stream()
                 .map(item -> new ItemAllDTO(
                         item.getId(),
-                        item.getItem_name(),
-                        item.getItem_category(),
-                        item.getItem_price(),
-                        item.getMain_image(),
-                        item.getDetail_image(),
+                        item.getItemName(),
+                        item.getItemCategory(),
+                        item.getItemPrice(),
+                        item.getMainImage(),
+                        item.getDetailImage(),
                         item.getViews(),
                         item.getStatus()
                 ))

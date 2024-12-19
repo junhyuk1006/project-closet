@@ -17,7 +17,7 @@ public interface ReviewRepository extends JpaRepository<ItemReview, Long> {
 
     @Query("SELECT new com.project.dto.UserItemReviewDTO(" +
             "u.id, u.username, u.nickname, u.profileImage, " +
-            "ir.id, ir.score, ir.review_image, ir.review_content, ir.status, ir.created_at) " +
+            "ir.id, ir.score, ir.reviewImage, ir.reviewContent, ir.status, ir.createdAt) " +
             "FROM ItemReview ir " +
             "JOIN ir.users u " +
             "WHERE ir.itemId = :itemId")

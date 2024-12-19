@@ -12,8 +12,8 @@ import java.util.List;
 @Repository
 public interface ItemDetailRepository extends JpaRepository<Item, Long> {
 
-    @Query("SELECT new com.project.dto.ItemDetailItemDTO(i.id, i.item_count, i.color, i.size, i.status, i.created_at, " +
-            "d.id, d.item_price, d.views, d.item_name, d.item_category, d.main_image, d.detail_image, d.status, d.created_at) " +
+    @Query("SELECT new com.project.dto.ItemDetailItemDTO(i.id, i.itemCount, i.color, i.size, i.status, i.createdAt, " +
+            "d.id, d.itemPrice, d.views, d.itemName, d.itemCategory, d.mainImage, d.detailImage, d.status, d.created_at) " +
             "FROM Item i JOIN i.itemDetail d WHERE d.id = :itemDetailId")
     List<ItemDetailItemDTO> findItemDetailWithItem(@Param("itemDetailId") Long itemDetailId);
 }

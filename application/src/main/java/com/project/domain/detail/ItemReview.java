@@ -20,12 +20,12 @@ public class ItemReview {
     private Long itemId;
 
     private int score;
-    private String review_image;
-    private String review_content;
+    private String reviewImage;
+    private String reviewContent;
     private String status = "active";
 
     @CreationTimestamp
-    private LocalDateTime created_at;
+    private LocalDateTime createdAt;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
