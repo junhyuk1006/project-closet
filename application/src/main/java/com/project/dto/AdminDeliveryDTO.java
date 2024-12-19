@@ -7,15 +7,11 @@ import java.sql.Timestamp;
 
 @Data
 @AllArgsConstructor
-public class AdminOrderDTO {
+public class AdminDeliveryDTO {
     private Long id;
+    private String deliveryNumber;
     private int orderNumber;
     private String email;
-    private String itemMainImage;
-    private String itemName;
-    private int itemCount;
-    private int itemPrice;
-    private int pointUsedAmount;
-    private int finalPaymentAmount;
+    private String deliveryStatus;
     private Timestamp paymentDate;
 }

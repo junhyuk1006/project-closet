@@ -1,5 +1,111 @@
-import { Form, Button, Row, Col, Table } from 'react-bootstrap';
-const Review = () => {
+import { useEffect, useState } from 'react';
+import { Form, Button, Row, Col, Table, Pagination } from 'react-bootstrap';
+import { getItem } from '../../../../api/admin/item/item';
+const Item = () => {
+  const [items, setItems] = useState([]);
+  const [totalPages, setTotalPages] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [size, setSize] = useState(20);
+  const [pageGroup, setPageGroup] = useState(0);
+
+  const [searchParams, setSearchParams] = useState({
+    searchKeyword: 'orderNo',
+    searchInput: '',
+    startDate: '',
+    endDate: '',
+    category: '',
+    minPrice: 0,
+    maxPrice: 0,
+    status: '',
+  });
+
+  useEffect(() => {
+    fetchItem(currentPage, size, searchParams);
+  }, []);
+
+  const fetchItem = (page, size, searchParams) => {
+    const params = {
+      page,
+      size,
+      ...searchParams,
+    };
+    getItem(params)
+      .then((response) => {
+        setItems(response.content);
+        setTotalPages(response.totalPages);
+      })
+      .catch((error) => console.error(error));
+  };
+
+  const updateSearchParams = (key, value) => {
+    setSearchParams((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
+  };
+
+  const setDateRange = (range) => {
+    const today = new Date();
+
+    switch (range) {
+      case 'today':
+        updateSearchParams('startDate', formatDate(today));
+        updateSearchParams('endDate', formatDate(today));
+        break;
+
+      case 'week':
+        const oneWeekAgo = new Date(today);
+        oneWeekAgo.setDate(today.getDate() - 7);
+        updateSearchParams('startDate', formatDate(oneWeekAgo));
+        updateSearchParams('endDate', formatDate(today));
+        break;
+
+      case 'month':
+        const oneMonthAgo = new Date(today);
+        oneMonthAgo.setMonth(today.getMonth() - 1);
+        updateSearchParams('startDate', formatDate(oneMonthAgo));
+        updateSearchParams('endDate', formatDate(today));
+        break;
+
+      case 'all':
+        updateSearchParams('startDate', '');
+        updateSearchParams('endDate', '');
+        break;
+
+      default:
+        break;
+    }
+  };
+
+  const formatDate = (date) => {
+    return date.toISOString().split('T')[0];
+  };
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    fetchItem(page, size, searchParams);
+  };
+
+  const handleSearch = () => {
+    setCurrentPage(0);
+    fetchItem(0, size, searchParams);
+  };
+
+  const handleReset = () => {
+    setSearchParams({
+      searchKeyword: 'orderNo',
+      searchInput: '',
+      startDate: '',
+      endDate: '',
+      category: '',
+      minPrice: 0,
+      maxPrice: 0,
+      status: '',
+    });
+    setCurrentPage(0);
+    setSize(20);
+  };
+
   return (
     <div>
       <h2>상품</h2>
@@ -134,28 +240,58 @@ const Review = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>Cell</td>
-            <td>우븐 숄 머플러 인디라 와인 SA-2HW362WI</td>
-            <td>23/11/01</td>
-            <td>판매</td>
-            <td>45,000</td>
-            <td>26</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Cell</td>
-            <td>Guy Laroche 토리노 지퍼 동전 카드케이스 GL-9300-TR-NY</td>
-            <td>23/11/04</td>
-            <td>품절</td>
-            <td>56,000</td>
-            <td>0</td>
-          </tr>
+          {items.map((item, index) => (
+            <tr key={item.id}>
+              <td>{index + 1 + currentPage * size}</td>
+              <td>{item.mainImage}</td>
+              <td>{item.itemName}</td>
+              <td>{item.itemCategory}</td>
+              <td>{item.itemPrice}</td>
+              <td>{item.createdAt}</td>
+              <td>{item.status}</td>
+            </tr>
+          ))}
         </tbody>
       </Table>
+      <div className="d-flex justify-content-center mt-5">
+        {/* Pagination */}
+        <Pagination>
+          {/** 이전 그룹 버튼 */}
+          <Pagination.Prev
+            hidden={pageGroup === 0}
+            onClick={() => setPageGroup(pageGroup - 1)}
+          >
+            이전
+          </Pagination.Prev>
+          {/** 현재 그룹의 페이지 번호 */}
+          {Array.from(
+            { length: Math.min(10, totalPages - pageGroup * 10) },
+            (_, i) => {
+              const pageNumber = pageGroup * 10 + i;
+              return (
+                <Pagination.Item
+                  key={pageNumber}
+                  active={pageNumber === currentPage}
+                  className={`custom-page-item ${pageNumber === currentPage ? 'custom-active' : ''}`}
+                  onClick={() => handlePageChange(pageNumber)}
+                >
+                  {pageNumber + 1}
+                </Pagination.Item>
+              );
+            }
+          )}
+
+          {/** 다음 그룹 버튼 */}
+          <Pagination.Next
+            hidden={(pageGroup + 1) * 10 >= totalPages}
+            onClick={() => setPageGroup(pageGroup + 1)}
+          >
+            다음
+          </Pagination.Next>
+        </Pagination>
+      </div>
     </div>
   );
 };
 
-export default Review;
+export default Item;

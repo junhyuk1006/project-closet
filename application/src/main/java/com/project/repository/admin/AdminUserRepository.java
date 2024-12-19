@@ -11,12 +11,12 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
 public interface AdminUserRepository extends JpaRepository<Users, Long> {
+
     @Query("SELECT new com.project.dto.AdminUserDTO( " +
             "u.id,u.email, u.nickname, g.grade, u.birth, " +
             "(SELECT COALESCE(SUM(p.point), 0) FROM Point p WHERE p.user.id = u.id), " +
@@ -44,7 +44,6 @@ public interface AdminUserRepository extends JpaRepository<Users, Long> {
             "GROUP BY YEAR(u.createdAt), MONTH(u.createdAt) " +
             "ORDER BY YEAR(u.createdAt) ASC, MONTH(u.createdAt) ASC")
     List<AdminUserMonthDTO> findUserMonth(@Param("startDate") LocalDateTime startDate , @Param("endDate")LocalDateTime endDate);
-
 
     @Query("SELECT COUNT(u) "+
             "FROM Users u " +

@@ -6,8 +6,8 @@ import lombok.Data;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
-@Data
 @AllArgsConstructor
+@Data
 public class PageRequestDTO {
     private String searchKeyword;
     private String searchInput;
@@ -16,6 +16,10 @@ public class PageRequestDTO {
 
     private Timestamp endDate;
     private String grade;
+    private Integer minPrice;
+    private Integer maxPrice;
+    private String category;
+    private String status;
 
     public Timestamp getEndDate() {
         if(this.endDate != null){

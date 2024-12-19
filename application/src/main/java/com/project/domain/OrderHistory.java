@@ -29,7 +29,7 @@ public class OrderHistory {
     private Users user; // Users 테이블의 ID와 매핑
 
     @OneToOne
-    @JoinColumn(name = "delivery_id")
+    @JoinColumn(name = "delivery_id",referencedColumnName = "id", nullable = false)
     private Delivery delivery;
 
 
