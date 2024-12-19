@@ -15,5 +15,5 @@ public class AdminItemDTO {
     private String itemCategory;
     private int itemPrice;
     private String status;
-    private LocalDateTime createdAt;
+    private Timestamp createdAt;
 }

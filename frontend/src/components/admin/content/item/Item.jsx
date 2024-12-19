@@ -289,7 +289,7 @@ const Item = () => {
                     label="활성화"
                     type="radio"
                     name="status"
-                    value={searchParams.status}
+                    value="active"
                     checked={searchParams.status === 'active'}
                     onChange={(e) => {
                       updateSearchParams('status', e.target.value);
@@ -300,7 +300,7 @@ const Item = () => {
                     label="비활성화"
                     type="radio"
                     name="status"
-                    value={searchParams.status}
+                    value="inactive"
                     checked={searchParams.status === 'inactive'}
                     onChange={(e) => {
                       updateSearchParams('status', e.target.value);
@@ -328,10 +328,10 @@ const Item = () => {
             <th>번호</th>
             <th>이미지</th>
             <th>상품명</th>
-            <th>상품등록일</th>
-            <th>판매여부</th>
+            <th>카테고리</th>
             <th>가격</th>
-            <th>재고</th>
+            <th>상품등록일</th>
+            <th>상태</th>
           </tr>
         </thead>
         <tbody>

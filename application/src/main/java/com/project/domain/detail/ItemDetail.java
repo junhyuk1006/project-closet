@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class ItemDetail {
     private String status;
 
     @CreationTimestamp
-    private LocalDateTime created_at;
+    private Timestamp created_at;
 
     @OneToMany(mappedBy = "itemDetail")
     private List<Item> items;
