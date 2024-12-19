@@ -16,7 +16,7 @@ public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private int item_count;
+    private int itemCount;
 
     private String color;
     private String size;
@@ -26,7 +26,7 @@ public class Item {
     private String status;
 
     @CreationTimestamp
-    private LocalDateTime created_at;
+    private LocalDateTime createdAt;
 
     @ManyToOne
     @JoinColumn(name = "item_detail_id")

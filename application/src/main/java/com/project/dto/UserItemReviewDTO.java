@@ -16,6 +16,19 @@ public class UserItemReviewDTO {
     private String nickname;
     private String profileImage;
 
+    public UserItemReviewDTO(Long userId, String username, String nickname, String profileImage, Long reviewId, int score, String reviewImage, String reviewContent, String status, LocalDateTime createdAt) {
+        UserId = userId;
+        this.username = username;
+        this.nickname = nickname;
+        this.profileImage = profileImage;
+        ReviewId = reviewId;
+        this.score = score;
+        this.reviewImage = reviewImage;
+        this.reviewContent = reviewContent;
+        this.status = status;
+        this.createdAt = createdAt;
+    }
+
     //Review 필드
     private Long ReviewId;
     private int score;
@@ -27,19 +40,5 @@ public class UserItemReviewDTO {
     //Item field
     private String itemName;
 
-
-    //생성자
-    public UserItemReviewDTO(Long userId, String username, String nickname, String profileImage, Long reviewId, int score, String review_image, String review_content, String status, LocalDateTime created_at) {
-        UserId = userId;
-        this.username = username;
-        this.nickname = nickname;
-        this.profileImage = profileImage;
-        ReviewId = reviewId;
-        this.score = score;
-        this.review_image = review_image;
-        this.review_content = review_content;
-        this.status = status;
-        this.createdAt = created_at;
-    }
 
 }

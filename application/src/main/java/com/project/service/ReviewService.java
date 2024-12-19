@@ -21,21 +21,21 @@ public class ReviewService {
 
     public void saveReview(ReviewDTO reviewDTO) {
         // 중복 확인
-        if (reviewRepository.existsByUsersIdAndItemId(reviewDTO.getUser_id(), reviewDTO.getItem_id())) {
+        if (reviewRepository.existsByUsersIdAndItemId(reviewDTO.getUserId(), reviewDTO.getItemId())) {
             throw new IllegalStateException("이미 리뷰를 작성 하셨습니다.");
         }
 
         // DTO → 엔티티 변환
         ItemReview review = new ItemReview();
         review.setId(reviewDTO.getId());
-        review.setItemId(reviewDTO.getItem_id());
+        review.setItemId(reviewDTO.getItemId());
         review.setScore(reviewDTO.getScore());
-        review.setReview_image(reviewDTO.getReview_image());
-        review.setReview_content(reviewDTO.getReview_content());
+        review.setReviewImage(reviewDTO.getReviewImage());
+        review.setReviewContent(reviewDTO.getReviewContent());
         review.setStatus(reviewDTO.getStatus() != null ? reviewDTO.getStatus() : "active");
 
         // 유저 설정
-        review.setUsers(userRepository.findById(reviewDTO.getUser_id())
+        review.setUsers(userRepository.findById(reviewDTO.getUserId())
                 .orElseThrow(() -> new RuntimeException("User not found")));
 
         // 엔티티 저장
@@ -51,8 +51,8 @@ public class ReviewService {
                 .orElseThrow(() -> new IllegalStateException("Review not found"));
 
         // 기존 리뷰 내용 업데이트
-        review.setReview_content(reviewDTO.getReview_content());
-        review.setReview_image(reviewDTO.getReview_image());
+        review.setReviewContent(reviewDTO.getReviewContent());
+        review.setReviewImage(reviewDTO.getReviewImage());
 
         reviewRepository.save(review);
     }

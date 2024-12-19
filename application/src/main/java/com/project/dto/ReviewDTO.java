@@ -19,14 +19,14 @@ public class ReviewDTO {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long user_id;
-    private Long item_id;
+    private Long userId;
+    private Long itemId;
     private int score;
-    private String review_image;
-    private String review_content;
+    private String reviewImage;
+    private String reviewContent;
     private String status;
 
     @CreationTimestamp
-    private LocalDateTime created_at;
+    private LocalDateTime createdAt;
 
 }
