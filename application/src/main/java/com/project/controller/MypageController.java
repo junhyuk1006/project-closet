@@ -7,13 +7,17 @@ import com.project.dto.*;
 import com.project.service.MypageService;
 import com.project.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -43,7 +47,7 @@ public class MypageController {
     public List<Address> findByUserId(@RequestParam("userId") long userId) {
         return mypageService.findByUserId(userId);  // Address 테이블의 모든 데이터 조회
     }
-    
+
     // 회원 주소 삭제
     @DeleteMapping("/deleteAddress/{id}")
     public void deleteByUserId(@PathVariable("id") long id) {
@@ -82,10 +86,10 @@ public class MypageController {
         return ResponseEntity.ok(response);
     }
 
-    
+
     // 신체 정보 수정
     @PutMapping("/changeBodyInfo")
-    public  ResponseEntity<ResponseDTO<Void>>  changeBodyInfoById(
+    public ResponseEntity<ResponseDTO<Void>> changeBodyInfoById(
             @RequestBody UserDTO userDTO,
             @AuthenticationPrincipal CustomUserDetail userDetails
     ) {
@@ -105,8 +109,8 @@ public class MypageController {
     }
 
     @PutMapping("/changeAddInfo")
-    public  ResponseEntity<ResponseDTO<Void>>  changeAddInfoById(@AuthenticationPrincipal CustomUserDetail userDetails,
-                                                                @RequestBody UserDTO userDTO) {
+    public ResponseEntity<ResponseDTO<Void>> changeAddInfoById(@AuthenticationPrincipal CustomUserDetail userDetails,
+                                                               @RequestBody UserDTO userDTO) {
         long userId = userDetails.getId();
         userService.changeAddInfo(userId, userDTO);
 
@@ -159,59 +163,53 @@ public class MypageController {
 
         return ResponseEntity.ok(response);
     }
-    
-    // 마이페이지 - 프로필명만 업로드(추후 수정예정)
-    @PostMapping("/uploadProfile/{fileName}")
-    public ResponseEntity<ResponseDTO<UserDTO>> uploadProfileImage(
-            @AuthenticationPrincipal CustomUserDetail customUserDetail,
-            @PathVariable("fileName") String fileName) {
+
+    // 마이페이지 - 나의 리뷰 조회
+    @GetMapping("/getMyReviews")
+    public ResponseEntity<ResponseDTO<Page<UserItemReviewDTO>>> getMyReviews(@AuthenticationPrincipal CustomUserDetail customUserDetail,
+                                                                             @RequestParam(defaultValue = "0") int page,
+                                                                             @RequestParam(defaultValue = "5") int size) {
+
 
         Long userId = customUserDetail.getId();
+        Pageable pageable = PageRequest.of(page, size);
 
+        Page<UserItemReviewDTO> dtoPage = mypageService.getMyReviews(userId, pageable);
 
+        ResponseDTO<Page<UserItemReviewDTO>> response = ResponseDTO.<Page<UserItemReviewDTO>>builder()
+                .status("success")
+                .data(dtoPage)
+                .build();
 
-            try {
+        return ResponseEntity.ok(response);
+    }
 
-                // 서비스로 사용자 ID와 파일명 전달
-                UserDTO userDTO = userService.updateProfileImage(userId, fileName);
-
-                // 성공 응답 반환
-                return ResponseEntity.ok(ResponseDTO.<UserDTO>builder()
-                        .status("success")
-                        .data(userDTO)
-                        .message("프로필 이미지가 업데이트되었습니다.")
-                        .build());
-
-            } catch (Exception e) {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                        .body(ResponseDTO.<UserDTO>builder()
-                                .status("error")
-                                .message("프로필 이미지 업데이트에 실패했습니다.")
-                                .build());
-            }
+    // 마이페이지 - 프로필 조회
+    @GetMapping("/getProfileImage")
+    public ResponseEntity<Resource> getProfileImage(@AuthenticationPrincipal CustomUserDetail user) {
+        String fileName = user.getProfileImage();
+        if (fileName == null || fileName.isEmpty()) {
+            fileName = "basicImage.png"; // 기본 이미지 파일 이름
         }
 
+        try {
+            Path imagePath = Paths.get("src/main/resources/static/images/profile/" + fileName);
+            Resource imageResource = new UrlResource(imagePath.toUri());
 
-        // 마이페이지 - 나의 리뷰 조회
-        @GetMapping("/getMyReviews")
-        public ResponseEntity<ResponseDTO<Page<UserItemReviewDTO>>> getMyReviews(@AuthenticationPrincipal CustomUserDetail customUserDetail,
-                                                                           @RequestParam(defaultValue = "0") int page,
-                                                                           @RequestParam(defaultValue = "5") int size) {
+            if (!imageResource.exists()) {
+                return ResponseEntity.notFound().build();
+            }
 
-
-            Long userId = customUserDetail.getId();
-            Pageable pageable = PageRequest.of(page, size);
-
-            Page<UserItemReviewDTO> dtoPage =    mypageService.getMyReviews(userId,pageable);
-
-            ResponseDTO<Page<UserItemReviewDTO>> response = ResponseDTO.<Page<UserItemReviewDTO>>builder()
-                    .status("success")
-                    .data(dtoPage)
-                    .build();
-
-            return ResponseEntity.ok(response);
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + fileName + "\"")
+                    .contentType(MediaType.IMAGE_PNG)
+                    .body(imageResource);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
+}
 
 
 
