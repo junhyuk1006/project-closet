@@ -28,11 +28,11 @@ public interface ReviewRepository extends JpaRepository<ItemReview, Long> {
 
     @Query("SELECT new com.project.dto.UserItemReviewDTO(" +
             "u.id, u.username, u.nickname, u.profileImage, " +
-            "ir.id, ir.score, ir.reviewImage, ir.reviewContent, ir.status, ir.createdAt, " +
+            "ir.id, ir.score, ir.itemId, ir.reviewImage, ir.reviewContent, ir.status, ir.createdAt, " +
             "id.itemName) " +
             "FROM ItemReview ir " +
-            "JOIN ir.users u " + // 연관 관계를 통해 Users 조인
-            "JOIN ItemDetail id ON ir.itemId = id.id " + // itemId를 사용해 ItemDetail 조인
+            "JOIN ir.users u " +
+            "JOIN ItemDetail id ON ir.itemId = id.id " +
             "WHERE u.id = :userId")
     Page<UserItemReviewDTO> getMyReviews(Long userId, Pageable pageable);
 }

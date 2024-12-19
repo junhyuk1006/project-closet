@@ -32,6 +32,7 @@ public class UserItemReviewDTO {
     //Review 필드
     private Long ReviewId;
     private int score;
+    private Long itemId;
     private String reviewImage;
     private String reviewContent;
     private String status;
@@ -39,6 +40,8 @@ public class UserItemReviewDTO {
 
     //Item field
     private String itemName;
+
+
 
 
 }
