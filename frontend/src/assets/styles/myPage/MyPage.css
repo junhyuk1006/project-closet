@@ -65,6 +65,7 @@
   padding: 10px;
   background-color: #f9f9f9; /* 배경색 */
   border-radius: 8px; /* 둥근 모서리 */
+  margin-bottom: 30px;
 }
 
 /* 각 항목 스타일 */
@@ -367,7 +368,128 @@
 }
 
 /* 문의내역 */
+
 .inquiry-rounded-box {
+  width: 80%; /* 화면 크기에 비례하여 크기 조정 */
+  max-width: 800px; /* 최대 너비 */
+  height: 70%; /* 높이 비율 */
+  background-color: white; /* 배경색을 하얀색으로 설정 */
+  border-radius: 15px; /* 모서리 둥글기 */
+  padding: 20px;
+  color: black; /* 글자 색상 */
+  box-sizing: border-box; /* padding을 포함한 크기 계산 */
+  text-align: center; /* 글자를 중앙에 배치 */
+  border: 2px solid #b0b0b0; /* 회색 테두리 */
+
+  /* 화면 중앙에 위치시키기 위한 flexbox 스타일 */
+  display: block; /* 블록 배치 */
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto; /* 수평 중앙 정렬 */
+  margin-bottom: 50px;
+
+  /* 텍스트가 박스 밖으로 삐져나가지 않도록 설정 */
+  overflow-wrap: break-word; /* 긴 단어를 줄바꿈 */
+  word-wrap: break-word; /* 구형 브라우저 지원 */
+  word-break: break-word; /* 긴 텍스트 강제 줄바꿈 */
+  overflow: hidden; /* 내용이 박스를 넘지 않도록 */
+}
+
+/* 기본 스타일 유지 */
+.mypage-inquiry-type {
+  display: inline-block;
+  padding: 3px 8px;
+  font-size: 0.9rem;
+  background-color: #f2f2f2; /* 회색 배경 */
+  border-radius: 5px; /* 둥근 모서리 */
+  color: #333; /* 글자 색 */
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+/* 문의 유형 배지 스타일 */
+.mypage-inquiry-type {
+  display: inline-block;
+  padding: 3px 8px;
+  font-size: 0.9rem;
+  background-color: #f2f2f2; /* 회색 배경 */
+  border-radius: 5px; /* 둥근 모서리 */
+  color: #333; /* 글자 색 */
+  font-weight: bold;
+  margin-right: 10px;
+  word-wrap: break-word; /* 긴 텍스트 줄바꿈 처리 */
+  word-break: break-word; /* 긴 단어도 줄바꿈 처리 */
+  overflow-wrap: break-word; /* 텍스트가 넘지 않도록 처리 */
+  max-width: 100%; /* 너비가 넘어가지 않도록 설정 */
+  white-space: normal; /* 줄바꿈 허용 */
+}
+
+/* 답변 상태 배지 스타일 */
+.mypage-inquiry-status {
+  display: inline-block;
+  padding: 3px 8px;
+  font-size: 0.9rem;
+  background-color: #f2f2f2; /* 회색 배경 */
+  border-radius: 5px; /* 둥근 모서리 */
+  color: #333; /* 글자 색 */
+  font-weight: bold;
+  margin-right: 10px;
+  word-wrap: break-word; /* 긴 텍스트 줄바꿈 처리 */
+  word-break: break-word; /* 긴 단어도 줄바꿈 처리 */
+  overflow-wrap: break-word; /* 텍스트가 넘지 않도록 처리 */
+  max-width: 100%; /* 너비가 넘어가지 않도록 설정 */
+  white-space: normal; /* 줄바꿈 허용 */
+}
+/* 내용 스타일 */
+.mypage-inquiry-content {
+  display: block;
+  margin-bottom: 5px;
+  word-break: break-word; /* 긴 단어 줄바꿈 */
+}
+
+/* 날짜 스타일 */
+.mypage-inquiry-date {
+  display: block;
+  color: gray;
+  font-size: 0.9rem;
+  margin-top: 5px;
+}
+@media (max-width: 768px) {
+  .inquiry-rounded-box {
+    flex-direction: column; /* 세로 정렬 */
+    align-items: flex-start; /* 왼쪽 정렬 */
+  }
+
+  /* 내용 스타일 */
+  .mypage-inquiry-content {
+    margin-bottom: 5px; /* 요소 아래 여백 추가 */
+  }
+
+  /* 날짜 스타일 */
+  .mypage-inquiry-date {
+    width: 100%; /* 전체 너비 사용 */
+    margin-bottom: 5px; /* 요소 아래 여백 추가 */
+  }
+}
+
+/* 프로필 */
+.profile-circle {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: #f0f0f0;
+  border: 2px solid #ccc;
+}
+
+.profile-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 마이페이지 - 리뷰 */
+/* 각 박스를 화면 중앙에 위치시키는 스타일 */
+.review-rounded-box {
   width: 80%; /* 화면 크기에 비례하여 크기 조정 */
   max-width: 800px; /* 최대 너비 */
   height: 70%; /* 높이 비율 */
@@ -395,7 +517,7 @@
 
 /* 화면 크기가 768px 이상일 때 (태블릿 이상) */
 @media (min-width: 768px) {
-  .rounded-box {
+  .review-rounded-box {
     width: 70%; /* 화면 크기에 비례하여 크기 조정 */
     max-width: 600px; /* 최대 너비 */
     height: 40%; /* 높이 비율 */
@@ -407,7 +529,7 @@
 
 /* 화면 크기가 1024px 이상일 때 (데스크탑 이상) */
 @media (min-width: 1024px) {
-  .rounded-box {
+  .review-rounded-box {
     width: 60%; /* 화면 크기에 비례하여 크기 조정 */
     max-width: 1000px; /* 최대 너비 */
     height: 60%; /* 높이 비율 */
@@ -417,4 +539,40 @@
     border-radius: 25px; /* 둥글기 증가 */
     margin-bottom: 50px;
   }
+}
+
+.review-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 15px;
+}
+
+.review-details {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.review-name {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.review-score {
+  display: flex;
+  gap: 2px;
+  font-size: 14px;
+  color: #f5c518;
+}
+
+.review-content {
+  font-size: 14px;
+  color: #555;
+  margin-top: 5px;
+}
+
+.menu-icon {
+  cursor: pointer;
+  font-size: 20px;
 }

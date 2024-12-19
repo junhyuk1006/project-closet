@@ -26,7 +26,7 @@ public class ItemDetail {
     private String status;
 
     @CreationTimestamp
-    private LocalDateTime created_at;
+    private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "itemDetail")
     private List<Item> items;

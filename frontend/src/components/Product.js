@@ -1,14 +1,15 @@
 import { useState } from 'react';
-import {Link, useNavigate} from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Product({ products, activeCategory, activeFilter }) {
   const [isLiked, setIsLiked] = useState({});
-  const navigator = useNavigate()
+  const navigator = useNavigate();
 
   const handleNavigate = (product) => {
-    navigator(`/Detail`, {state: { productId : product.id}})
+    navigator(`/Detail`, { state: { productId: product.id } });
   };
 
+  // itemName과 같이 camelCase로 수정
   const uniqueProducts = products.reduce((acc, product) => {
     const existing = acc.find((p) => p.itemName === product.itemName);
     if (!existing || product.id < existing.id) {
@@ -26,7 +27,6 @@ function Product({ products, activeCategory, activeFilter }) {
   };
 
   if (products.length === 0) {
-    // 로드 중이거나 데이터가 없는 경우 처리
     return <div className="row isotope-grid">No products available</div>;
   }
 
@@ -64,13 +64,14 @@ function Product({ products, activeCategory, activeFilter }) {
                     <div className="block2-pic hov-img0">
                       <img src={`images/${product.mainImage}`} alt="IMG-PRODUCT" />
 
-                      <Link
-                          to={`/product/${product.id}`}
-                          className="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1"
-                      >
-                        Quick View
-                      </Link>
-                    </div>
+              <div className="block2-txt flex-w flex-t p-t-14">
+                <div className="block2-txt-child1 flex-col-l ">
+                  <button
+                    className="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6"
+                    onClick={() => handleNavigate(product)}
+                  >
+                    {product.itemName}
+                  </button>
 
                     <div className="block2-txt flex-w flex-t p-t-14">
                       <div className="block2-txt-child1 flex-col-l ">
@@ -106,9 +107,34 @@ function Product({ products, activeCategory, activeFilter }) {
                     </div>
                   </div>
                 </div>
-            ))}
-      </div>
+
+                <div className="block2-txt-child2 flex-r p-t-3">
+                  <button
+                    className="btn-addwish-b2 dis-block pos-relative js-addwish-b2"
+                    onClick={() => toggleLike(product.id)}
+                  >
+                    <img
+                      className="icon-heart1 dis-block trans-04"
+                      src="images/icons/icon-heart-01.png"
+                      alt="ICON"
+                    />
+                    <img
+                      className={`${
+                        isLiked[product.id] === true
+                          ? 'icon-heart2-liked'
+                          : 'icon-heart2'
+                      } dis-block trans-04 ab-t-l`}
+                      src="images/icons/icon-heart-02.png"
+                      alt="ICON"
+                    />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+    </div>
   );
 }
 
-export default Product
+export default Product;
