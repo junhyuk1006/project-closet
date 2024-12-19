@@ -56,6 +56,13 @@ function Header({ user }) {
     const getNotices = async () => {
       try {
         const newNotices = await call('/notices');
+        // 공지사항 데이터가 없는 경우
+        if (newNotices.length === 0) {
+          console.log('공지사항이 없습니다.');
+          setNotices([]);
+          return;
+        }
+
         setNotices(newNotices);
       } catch (err) {
         console.error('공지사항을 불러오는 데 실패했습니다:', err);
