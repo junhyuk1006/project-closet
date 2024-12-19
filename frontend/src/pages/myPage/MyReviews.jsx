@@ -2,6 +2,15 @@ import React, { useEffect, useState } from 'react';
 import MyPageHeader from '../../components/myPage/MyPageHeader';
 import Pagination from '../public/Pagination'; // 페이지네이션 컴포넌트
 import { call } from '../../api/auth/ApiService';
+import '../../assets/styles/myPage/MyPage.css';
+import '../../assets/styles/detailItem/ReviewInput.css';
+
+/** Material-UI Icons */
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import LockIcon from '@mui/icons-material/Lock';
+
+/** components */
+import StarRating from '../../components/rating/StarRating';
 
 const MyReviews = () => {
   const [reviews, setReviews] = useState([]); // 리뷰 데이터를 저장
@@ -15,7 +24,7 @@ const MyReviews = () => {
     try {
       const response = await call(
         `/api/mypage/getMyReviews?page=${page}&size=${pageSize}`,
-        'GET' // HTTP 메서드 설정 수정
+        'GET'
       );
 
       // 응답 데이터 처리
@@ -41,26 +50,12 @@ const MyReviews = () => {
   };
 
   return (
-    <div>
+    <div className="my-reviews-container">
       <MyPageHeader
         title="나의 리뷰"
         description="내가 등록한 상품 리뷰를 수정 및 비활성화 할 수 있습니다."
       />
-      {loading ? (
-        <p>로딩 중...</p>
-      ) : reviews.length === 0 ? (
-        <p>등록된 리뷰가 없습니다.</p>
-      ) : (
-        <div className="inquiry-rounded-box">
-          {reviews.map((review) => (
-            <div key={review.reviewId} className="review-item">
-              <h3>{review.itemName}</h3>
-              <p>{review.reviewContent}</p>
-              <p>점수: {review.score}</p>
-            </div>
-          ))}
-        </div>
-      )}
+      <div className="review-rounded-box">상품명</div>
       {/* 페이지네이션 컴포넌트 */}
       <Pagination
         currentPage={currentPage}
