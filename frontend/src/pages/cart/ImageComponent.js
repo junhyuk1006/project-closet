@@ -6,7 +6,7 @@ const ImageComponent = () => {
 
     return (
         <div>
-            <img src={imageUrl} alt={filename} style={{ width: "300px", height: "auto" }} />
+            <img src={imageUrl} alt={filename} style={{ width: "1000px", height: "auto" }} />
         </div>
     );
 };

@@ -158,8 +158,6 @@ function Videoroomtest() {
 
     return (
         <div className="container mt-5">
-            <h1 className="text-center">React WebRTC - Janus Video Room</h1>
-
             {/* 사용자 이름 입력 및 회의실 입장 버튼 */}
             {!isJoined && !showCameraMenu && (
                 <div className="text-center mt-3">
@@ -225,7 +223,6 @@ function Videoroomtest() {
             {localStream && (
                 <div className="row mt-4">
                     <div className="col-md-6">
-                        <h3>Local Stream</h3>
                         <video
                             ref={localVideoRef}
                             autoPlay
@@ -235,7 +232,6 @@ function Videoroomtest() {
                     </div>
                     {isJoined && (
                         <div className="col-md-6">
-                            <h3>Remote Stream</h3>
                             <video
                                 ref={remoteVideoRef}
                                 autoPlay
