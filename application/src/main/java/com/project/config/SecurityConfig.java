@@ -48,6 +48,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/","/api/images/**", "/error", "/**", "/MyPoint","/login", "/oauth2/authorization/**", "/api/auth/signup", "/api/auth/signin",  "/api/email/**").permitAll() // 메인 홈 및 로그인 경로 접근 허용
                 .requestMatchers("/api/itemDetail/**", "/api/posts", "/api/board", "/api/basket/**", "/api/coordi", "/api/replies", "/api/posts", "/api/orders/**", "/api/payment/**").permitAll() // 특정 경로 인증 없이 접근 허용
+                .requestMatchers("/book/coordi/**").permitAll()
                 .requestMatchers("/admin/**").hasRole("admin") // 관리자 전용
                 .anyRequest().authenticated() // 그 외 요청은 인증 필요
             )
