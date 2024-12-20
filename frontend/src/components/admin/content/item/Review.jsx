@@ -221,12 +221,13 @@ const Review = () => {
         <thead>
           <tr>
             <th>번호</th>
+            <th>이메일</th>
+            <th>닉네임</th>
             <th>이미지</th>
             <th>상품명</th>
             <th>내용</th>
-            <th>작성자</th>
-            <th>작성일</th>
             <th>평점</th>
+            <th>작성일</th>
             <th>상태</th>
           </tr>
         </thead>
