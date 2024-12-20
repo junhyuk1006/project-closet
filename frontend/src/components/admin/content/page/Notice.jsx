@@ -29,6 +29,7 @@ const Notice = () => {
     };
     getNotice(params)
       .then((response) => {
+        console.log(response.content);
         setNotices(response.content);
         setTotalPages(response.totalPages);
       })
@@ -91,11 +92,10 @@ const Notice = () => {
 
   const handleReset = () => {
     setSearchParams({
-      searchKeyword: 'email',
+      searchKeyword: 'title',
       searchInput: '',
       startDate: '',
       endDate: '',
-      grade: '',
     });
     setCurrentPage(0);
     setSize(20);
@@ -223,22 +223,19 @@ const Notice = () => {
         <thead>
           <tr>
             <th>번호</th>
+            <th>제목</th>
             <th>내용</th>
             <th>생성날짜</th>
-            <th>만료날짜</th>
+            <th>상태</th>
           </tr>
         </thead>
         <tbody>
           {notices.map((notice, index) => (
             <tr key={notice.id}>
               <td>{index + 1 + currentPage * size}</td>
-              <td>{notice.email}</td>
-              <td>{notice.nickname}</td>
-              <td>{notice.pointReason}</td>
-              <td>{notice.pointType}</td>
+              <td>{notice.subject}</td>
+              <td>{notice.content}</td>
               <td>{notice.createdAt}</td>
-              <td>{notice.deletedAt}</td>
-              <td>{notice.point}</td>
               <td>{notice.status}</td>
             </tr>
           ))}

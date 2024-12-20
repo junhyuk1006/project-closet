@@ -1,18 +1,14 @@
-package com.project.domain;
+package com.project.dto;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.sql.Timestamp;
 
-@Entity
 @Data
-@Table(name = "notice")
-public class Notice {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+@AllArgsConstructor
+public class AdminNoticeDTO {
+    private Long id;
     private String subject;
     private String content;
     private Timestamp createdAt;

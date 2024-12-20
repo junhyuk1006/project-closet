@@ -30,6 +30,7 @@ const Point = () => {
     };
     getPointUser(params)
       .then((response) => {
+        console.log(response.content);
         setPoints(response.content);
         setTotalPages(response.totalPages);
       })

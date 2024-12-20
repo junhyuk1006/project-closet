@@ -9,7 +9,7 @@ ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels);
 
 const Dashboard = () => {
   const chartData = {
-    labels: ['T-Shirts', 'Jeans', 'Jackets', 'Shoes', 'a', 'b'], // 옷의 종류
+    labels: ['Tops', 'Bottoms', 'Outerwear', 'Skirts', 'Dresses', 'Sportswear'], // 옷의 종류
     datasets: [
       {
         label: '판매량',
@@ -162,15 +162,15 @@ const Dashboard = () => {
         <tbody>
           <tr>
             <td>1</td>
-            <td>Cell</td>
-            <td>Cell</td>
-            <td>Cell</td>
+            <td>Classic T-shirt</td>
+            <td>Tops</td>
+            <td>45</td>
           </tr>
           <tr>
             <td>2</td>
-            <td>Cell</td>
-            <td>Cell</td>
-            <td>Cell</td>
+            <td>Leathre Jacket</td>
+            <td>Outerwear</td>
+            <td>25</td>
           </tr>
         </tbody>
       </Table>
