@@ -8,6 +8,9 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 /** components */
 import StarRating from '../../components/rating/StarRating';
 
+/** import Hook */
+import { call } from '../../api/auth/ApiService';
+
 /** api */
 import FetchAllReview from '../../api/review/FetchAllReview';
 import LockIcon from '@mui/icons-material/Lock';
@@ -28,12 +31,10 @@ function ReviewInput({ activeTab, userId, productId }) {
   /** 특정 상품에 대한 리뷰 데이터를 가져오는 함수 */
   const fetchReviews = async () => {
     try {
-      const response = await fetch(
-        `http://localhost:80/api/findAllReview/${productId}`
-      );
-      const data = await response.json();
-      setReviews(data);
-      console.log("asdasd",setReviews(data));
+      const response = await call(`/api/findAllReview/${productId}`);
+      setReviews(response);
+      console.log('리뷰 데이터를 성공적으로 불러왔습니다.');
+      console.log(response);
     } catch (error) {
       console.error('리뷰 데이터를 가져오는 중 오류 발생:', error);
     }
@@ -210,10 +211,7 @@ function ReviewInput({ activeTab, userId, productId }) {
             <div className="p-b-30 m-lr-15-sm">
               {/** 리뷰 목록 렌더링 */}
               {currentReviews.map((review) => (
-                <div
-                  key={review.id}
-                  className="flex-w-review flex-t p-bst-68"
-                >
+                <div key={review.id} className="flex-w-review flex-t p-bst-68">
                   <div className="wrap-pic-s size-109 bor0 of-hidden m-r-18 m-t-6">
                     <img
                       src={`images/${review.profileImage}`}
@@ -247,9 +245,7 @@ function ReviewInput({ activeTab, userId, productId }) {
                               >
                                 {review.status === 'inactive' ? (
                                   <button
-                                    onClick={() =>
-                                      handleActivate(review.id)
-                                    }
+                                    onClick={() => handleActivate(review.id)}
                                     className="dropdown-item"
                                   >
                                     활성화
