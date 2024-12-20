@@ -1,28 +1,24 @@
 package com.project.domain;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import net.minidev.json.annotate.JsonIgnore;
 
-@Entity
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
+@Entity
+@Table(name = "order_detail")
 public class OrderDetail {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_history_id", referencedColumnName = "id", nullable = false)
-    @JsonIgnore
-    private OrderHistory orderHistory;
+    private OrderHistory orderHistory; // 주문 내역 (N:1 관계)
 
-    private String itemName;
     private int itemPrice;
     private int itemCount;
+    private String itemName;
     private String color;
     private String size;
     private String itemMainImage;

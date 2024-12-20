@@ -52,4 +52,7 @@ public class InquiryController {
         itemInquiryService.activateInquiry(inquiryId);
         return ResponseEntity.ok("상품 문의 활성화가 완료 되었습니다");
     }
+
+
+
 }

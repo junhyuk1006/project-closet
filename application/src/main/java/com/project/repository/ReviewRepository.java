@@ -2,11 +2,12 @@ package com.project.repository;
 
 import com.project.domain.detail.ItemReview;
 import com.project.dto.UserItemReviewDTO;
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 @Repository
@@ -16,7 +17,7 @@ public interface ReviewRepository extends JpaRepository<ItemReview, Long> {
 
     @Query("SELECT new com.project.dto.UserItemReviewDTO(" +
             "u.id, u.username, u.nickname, u.profileImage, " +
-            "ir.id, ir.score, ir.review_image, ir.review_content, ir.status, ir.created_at) " +
+            "ir.id, ir.score, ir.reviewImage, ir.reviewContent, ir.status, ir.createdAt) " +
             "FROM ItemReview ir " +
             "JOIN ir.users u " +
             "WHERE ir.itemId = :itemId")
@@ -24,4 +25,14 @@ public interface ReviewRepository extends JpaRepository<ItemReview, Long> {
 
     @Query("SELECT count(i) from ItemReview i where i.itemId = :itemId")
     Long countInquiry(@Param("itemId") Long itemId);
+
+    @Query("SELECT new com.project.dto.UserItemReviewDTO(" +
+            "u.id, u.username, u.nickname, u.profileImage, " +
+            "ir.id, ir.score, ir.itemId, ir.reviewImage, ir.reviewContent, ir.status, ir.createdAt, " +
+            "id.itemName) " +
+            "FROM ItemReview ir " +
+            "JOIN ir.users u " +
+            "JOIN ItemDetail id ON ir.itemId = id.id " +
+            "WHERE u.id = :userId")
+    Page<UserItemReviewDTO> getMyReviews(Long userId, Pageable pageable);
 }

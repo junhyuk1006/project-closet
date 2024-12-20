@@ -29,22 +29,11 @@ function Detail() {
     useProductQuantity(1);
   const { addToCart } = useCart();
 
+  const userId = user?.id || '';
+
   useEffect(() => {
-    if (!loading && user) {
-      setBasket([]); // 초기화
-      console.log('Current baskets state:', baskets);
-      console.log('장바구니 초기화됨');
-    }
-  }, [loading, user]);
-
-  // 로딩 상태 처리
-  if (loading) {
-  }
-
-  // 로그인되지 않은 경우 처리
-  if (!user || !user.id) {
-    return user;
-  }
+    setBasket([]); // 초기화
+  }, []);
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
@@ -91,7 +80,7 @@ function Detail() {
     }
 
     const basketData = {
-      userId: user.id,
+      userId: userId,
       itemDetailId: productId,
       itemCount: quantity,
       size: selectedSize,
@@ -461,14 +450,14 @@ function Detail() {
                 {/** Reviews Tab */}
                 <ReviewInput
                   activeTab={activeTab}
-                  userId={user.id}
+                  userId={userId}
                   productId={productId}
                 />
 
                 {/** Inquiry Tab */}
                 <ItemInquiry
                   activeTab={activeTab}
-                  userId={user.id}
+                  userId={userId}
                   productId={productId}
                 />
               </div>

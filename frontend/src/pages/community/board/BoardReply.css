@@ -1,93 +1,85 @@
-/* 전체 댓글 컨테이너 스타일 */
 .reply-container {
   margin-top: 20px;
-  padding: 15px;
-  background-color: #f9f9f9;
+  border: 1px solid #ddd; /* 전체 댓글 영역 테두리 추가 */
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  background-color: #fafafa;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-/* 제목 스타일 */
 .reply-title {
-  font-size: 1.2rem;
-  margin-bottom: 15px;
-  color: #333;
+  font-size: 1.2em;
+  margin-bottom: 10px;
 }
 
-/* 댓글 리스트 스타일 */
 .reply-list {
-  margin-bottom: 15px;
+  border-top: 1px solid #ddd;
+  padding-top: 10px;
 }
 
-/* 댓글 아이템 스타일 */
 .reply-item {
   display: flex;
-  flex-direction: column;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-bottom: 1px solid #ddd;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #f1f1f1;
 }
 
-/* 댓글 내용 텍스트 */
-.reply-content {
-  font-size: 0.9rem;
-  color: #555;
+.reply-content-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.reply-writer {
+  font-size: 0.9em;
+  font-weight: bold;
   margin-bottom: 5px;
+  color: #555;
 }
 
-/* 댓글 액션 버튼들 */
+.reply-content {
+  margin: 0;
+  font-size: 1em;
+}
+
 .reply-actions {
   display: flex;
-  gap: 10px;
+  gap: 8px;
 }
 
-/* 입력 필드 */
-.reply-input {
-  width: 100%;
-  padding: 8px;
-  font-size: 0.9rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  margin-bottom: 10px;
-}
-
-/* 버튼 스타일 */
 .reply-button {
-  padding: 6px 12px;
-  font-size: 0.9rem;
-  color: #fff;
-  background-color: #007bff;
+  padding: 5px 10px;
   border: none;
-  border-radius: 4px;
+  border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  background-color: #279bee;
+  color: white;
+  font-size: 0.9em;
+}
+
+.reply-button.reply-delete {
+  background-color: #e74c3c;
 }
 
 .reply-button:hover {
-  background-color: #0056b3;
+  opacity: 0.8;
 }
 
-/* 삭제 버튼 스타일 */
-.reply-delete {
-  background-color: #dc3545;
+.reply-input-container {
+  display: flex;
+  margin-top: 10px;
 }
 
-.reply-delete:hover {
-  background-color: #b02a37;
+.reply-input {
+  flex-grow: 1;
+  padding: 8px;
+  margin-right: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
 }
 
-/* 등록 버튼 스타일 */
 .reply-submit {
-  background-color: #919492;
-}
-
-.reply-submit:hover {
-  background-color: #1d1d1d;
-}
-
-.no-replies {
-  text-align: center;
-  color: #999;
-  font-size: 14px;
-  margin: 20px 0;
+  background-color: #555555;
 }

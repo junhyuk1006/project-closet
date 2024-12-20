@@ -16,7 +16,10 @@ public class BoardReply {
     private Long id;
 
     private Long boardId; // 게시글 ID
-    private Long userId;  // 댓글 작성자 ID
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private Users user;
 
     private String replyContent; // 댓글 내용
     private int parentId; // 부모 댓글 ID (대댓글 용도)

@@ -38,6 +38,8 @@ public class PointController {
         return ResponseEntity.ok("success");
     }
 
+
+
     @GetMapping("/getPointByUserid")
     public ResponseEntity<Page<PointDTO>> getPointByUserid(
             @AuthenticationPrincipal CustomUserDetail userDetail,
@@ -51,14 +53,34 @@ public class PointController {
     }
 
     @RequestMapping(value = "/getTotalPointByUserid", method = {RequestMethod.GET, RequestMethod.POST})
-    public int getTotalPointByUserId(@RequestParam(required = false) Long userId,
+    public int getTotalPointByUserId(@AuthenticationPrincipal CustomUserDetail customUserDetail,
                                      @RequestBody(required = false) Map<String, Long> body) {
-        if (userId != null) {
-            return pointService.getTotalPointByUserId(userId);
-        } else if (body != null && body.containsKey("userId")) {
-            return pointService.getTotalPointByUserId(body.get("userId"));
+
+        Long userId = customUserDetail.getId();
+        try {
+            // 1. userId가 @RequestParam으로 전달된 경우
+            if (userId != null) {
+                return pointService.getTotalPointByUserId(userId);
+            }
+
+            // 2. body에 "userId"가 포함된 경우
+            if (body != null && body.containsKey("userId")) {
+                Long extractedUserId = body.get("userId");
+                if (extractedUserId == null) {
+                    throw new IllegalArgumentException("Invalid request: userId in body is null");
+                }
+                return pointService.getTotalPointByUserId(extractedUserId);
+            }
+
+            // 3. 요청 데이터가 모두 없는 경우
+            throw new IllegalArgumentException("Invalid request: userId is missing in both request parameters and body");
+        } catch (IllegalArgumentException e) {
+            // 요청 유효성 문제에 대한 예외 처리
+            throw new IllegalArgumentException("Error processing request: " + e.getMessage(), e);
+        } catch (Exception e) {
+            // 기타 예외 처리
+            throw new RuntimeException("An unexpected error occurred while processing the request", e);
         }
-        throw new IllegalArgumentException("Invalid request: userId is missing");
     }
 
 

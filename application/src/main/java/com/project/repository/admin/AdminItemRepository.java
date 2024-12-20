@@ -15,15 +15,15 @@ import java.sql.Timestamp;
 public interface AdminItemRepository extends JpaRepository<ItemDetail, Long> {
 
     @Query("SELECT new com.project.dto.AdminItemDTO(" +
-            "id.id, id.main_image,id.item_name,id.item_category,id.item_price,id.status,id.created_at)" +
+            "id.id, id.mainImage,id.itemName,id.itemCategory,id.itemPrice,id.status,id.createdAt)" +
             "FROM ItemDetail id " +
             "WHERE ((:searchKeyword IS NULL OR :searchInput ='') OR " +
-            " (:searchKeyword ='itemName' AND id.item_name LIKE CONCAT('%',:searchInput,'%'))) " +
-            "AND (:category ='' OR id.item_category = :category)" +
-            "AND (:startDate IS NULL OR id.created_at >= :startDate)"+
-            "AND (:endDate IS NULL OR id.created_at <= :endDate)" +
-            "AND (:minPrice = 0 OR id.item_price >= :minPrice)" +
-            "AND (:maxPrice = 0 OR id.item_price <= :maxPrice)" +
+            " (:searchKeyword ='itemName' AND id.itemName LIKE CONCAT('%',:searchInput,'%'))) " +
+            "AND (:category ='' OR id.itemCategory = :category)" +
+            "AND (:startDate IS NULL OR id.createdAt >= :startDate)"+
+            "AND (:endDate IS NULL OR id.createdAt <= :endDate)" +
+            "AND (:minPrice = 0 OR id.itemPrice >= :minPrice)" +
+            "AND (:maxPrice = 0 OR id.itemPrice <= :maxPrice)" +
             "AND (:status ='' OR id.status = :status )")
     Page<AdminItemDTO> findItem(Pageable pageable,
                                 @Param("searchKeyword")String searchKeyword,

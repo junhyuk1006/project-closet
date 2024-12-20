@@ -1,14 +1,54 @@
-import React, { useState, useEffect } from 'react'; // useContext 임포트 추가
+import React, { useState, useEffect } from 'react';
 import { useUser } from '../../api/auth/UserContext';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { useNavigate } from 'react-router-dom';
 import MyPageHeader from '../../components/myPage/MyPageHeader';
+import { call } from '../../api/auth/ApiService';
 
 const MyPageHome = () => {
   const navigate = useNavigate();
   const { user } = useUser();
+  const [gradeInfo, setGradeInfo] = useState('');
+  const [profileImageUrl, setProfileImageUrl] = useState('');
 
-  console.log('User in MyPageHome:', user);
+  const fetchGradeInfo = async () => {
+    try {
+      const response = await call(`/api/mypage/findGradeByUser`, 'GET');
+      setGradeInfo(response.data);
+    } catch (error) {
+      console.error('에러발생 , 등급조회 에러', error);
+    }
+  };
+  useEffect(() => {
+    const fetchProfileImage = async () => {
+      try {
+        const response = await fetch(
+          'http://localhost:80/api/mypage/getProfileImage',
+          {
+            method: 'GET',
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+            credentials: 'include', // 인증 정보를 포함
+          }
+        );
+
+        if (response.ok) {
+          const blob = await response.blob();
+          setProfileImageUrl(URL.createObjectURL(blob));
+        } else {
+          console.error(
+            `HTTP Error: ${response.status} - ${response.statusText}`
+          );
+        }
+      } catch (error) {
+        console.error('API 호출 오류:', error);
+      }
+    };
+
+    fetchProfileImage();
+    fetchGradeInfo(); // 등급 정보 호출
+  }, []);
   const features = [
     {
       icon: 'bi-info-circle',
@@ -54,7 +94,21 @@ const MyPageHome = () => {
         <div>
           <MyPageHeader
             title="마이페이지"
-            description={`${user?.nickname || ''}님, 환영합니다.`}
+            description={
+              <>
+                <div className="profile-container">
+                  <label htmlFor="profile-upload" className="profile-circle">
+                    <img
+                      src={profileImageUrl} // 백엔드에서 반환된 프로필 이미지 URL
+                      alt="프로필 이미지"
+                    />
+                  </label>
+                </div>
+                {`${user?.nickname || ''}님의 등급은 ${gradeInfo.grade} 등급입니다.`}
+                <br />
+                {`등급에 따른 포인트 적립률은 ${gradeInfo.rate}%입니다.`}
+              </>
+            }
           />
         </div>
 
@@ -63,11 +117,10 @@ const MyPageHome = () => {
             <div className="row gx-3 gy-4">
               {features.map((feature, index) => (
                 <div className="col-lg-6 col-xxl-4" key={index}>
-                  {/* 클릭 이벤트를 카드 전체에 적용 */}
                   <div
                     className="card bg-light border-0 h-100"
                     onClick={() => navigate(feature.link)}
-                    style={{ cursor: 'pointer' }} // 클릭 가능 포인터 추가
+                    style={{ cursor: 'pointer' }}
                   >
                     <div className="card-body text-center p-4 p-lg-5 pt-0 pt-lg-0">
                       <div

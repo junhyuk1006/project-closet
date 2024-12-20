@@ -1,5 +1,6 @@
 package com.project.dto;
 
+import com.project.domain.Users;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -40,4 +41,7 @@ public class UserDTO {
     private String role; // 역할
 
     private String token;
+
+    public UserDTO(Users user) {
+    }
 }

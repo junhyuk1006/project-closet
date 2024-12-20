@@ -5,7 +5,6 @@ import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -17,17 +16,18 @@ public class ItemDetail {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private int item_price;
+    private int itemPrice;
     private int views;
 
-    private String item_name;
-    private String item_category;
-    private String main_image;
-    private String detail_image;
+    @Column(name = "item_name")
+    private String itemName;
+    private String itemCategory;
+    private String mainImage;
+    private String detailImage;
     private String status;
 
     @CreationTimestamp
-    private Timestamp created_at;
+    private Timestamp createdAt;
 
     @OneToMany(mappedBy = "itemDetail")
     private List<Item> items;

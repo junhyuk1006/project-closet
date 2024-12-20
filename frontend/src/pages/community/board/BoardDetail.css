@@ -11,7 +11,7 @@
 }
 
 /* 제목 스타일 */
-.board-detail-header .board-title {
+.board-detail-container .board-detail-header .board-title {
   font-size: 26px;
   font-weight: 700;
   color: #333;
@@ -20,7 +20,7 @@
 }
 
 /* 작성자 정보 */
-.board-info {
+.board-detail-container .board-info {
   font-size: 14px;
   color: #666;
   display: flex;
@@ -29,16 +29,16 @@
   margin-top: 10px;
 }
 
-.board-info .board-author strong {
+.board-detail-container .board-info .board-author strong {
   color: #000;
 }
 
-.board-info .board-date {
+.board-detail-container .board-info .board-date {
   color: #666;
 }
 
 /* 구분선 */
-.divider {
+.board-detail-container .divider {
   border: none;
   height: 1px;
   background: #eaeaea;
@@ -46,24 +46,24 @@
 }
 
 /* 내용 스타일 */
-.board-content {
+.board-detail-container .board-content {
   margin: 20px 0;
   line-height: 1.8;
   font-size: 15px;
   color: #444;
 }
 
-.board-content p {
+.board-detail-container .board-content p {
   margin: 10px 0;
 }
 
 /* 이미지 스타일 */
-.board-image {
+.board-detail-container .board-image {
   margin-top: 20px;
   text-align: center;
 }
 
-.board-image .detail-image {
+.board-detail-container .board-image .detail-image {
   max-width: 100%;
   height: auto;
   border-radius: 10px;
@@ -71,12 +71,12 @@
 }
 
 /* 버튼 스타일 */
-.board-actions {
+.board-detail-container .board-actions {
   text-align: center;
   margin-top: 20px;
 }
 
-.board-actions .btn {
+.board-detail-container .board-actions .btn {
   padding: 8px 20px;
   font-size: 14px;
   color: #fff;
@@ -87,6 +87,6 @@
   transition: background-color 0.3s ease;
 }
 
-.board-actions .btn:hover {
+.board-detail-container .board-actions .btn:hover {
   background-color: #495057;
 }

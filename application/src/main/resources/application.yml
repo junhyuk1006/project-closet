@@ -1,4 +1,4 @@
-# 이메일 인증 설정
+  # 이메일 인증 설정
 spring:
   mail:
     username: "hyunu29@gmail.com" # 이메일 계정 ID (환경 변수로 설정)
@@ -128,3 +128,10 @@ server:
 jwt:
   secret-key: idv64f9MgCqXPwBwDriupFjKOd9xGIYJ # JWT 비밀키
   expiration-time: 3600000 # 만료 시간 (밀리초, 예: 1시간)
+
+
+  # Naver Pay API 설정
+naverpay:
+  client-id: "HN3GGCMDdTgGUfl0kFCo"       # 네이버페이 Client ID
+  client-secret: "dk5nR1JxcmM2MU1"        # 네이버페이 Client Secret
+  base-api-url: "https://dev.apis.naver.com" # 개발 환경용 API URL

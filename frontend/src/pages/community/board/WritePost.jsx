@@ -18,6 +18,14 @@ const WritePost = () => {
       return;
     }
 
+    const requestBody = {
+      boardTitle: title,
+      boardContent: content,
+      userId: user.id, // 사용자 ID 확인
+    };
+
+    console.log('Request Payload:', requestBody); // JSON 데이터 확인
+
     try {
       const response = await fetch('http://localhost:80/api/board/write', {
         method: 'POST',

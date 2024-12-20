@@ -10,7 +10,7 @@ import { useUser } from '../../../api/auth/UserContext'; // 사용자 정보 가
 import './BoardReply.css'; // 추가된 스타일링
 
 const BoardReply = () => {
-  const { id } = useParams(); // 게시글 ID 가져오기
+  const { boardId } = useParams(); // 게시글 ID 가져오기
   const { user } = useUser(); // 현재 로그인된 사용자 정보
   const [replies, setReplies] = useState([]);
   const [newReply, setNewReply] = useState('');
@@ -19,7 +19,7 @@ const BoardReply = () => {
   // 댓글 목록 불러오기
   const fetchReplies = async () => {
     try {
-      const data = await getRepliesByBoardId(id);
+      const data = await getRepliesByBoardId(boardId);
       setReplies(data);
     } catch (error) {
       console.error('댓글 불러오기 실패:', error);
@@ -29,13 +29,25 @@ const BoardReply = () => {
 
   // 댓글 등록
   const handleAddReply = async () => {
-    if (!user || !id || newReply.trim() === '') {
+    if (!user) {
+      alert('로그인을 먼저 해주세요.');
+      return;
+    }
+    if (!boardId) {
+      alert('게시글 ID가 존재하지 않습니다.');
+      return;
+    }
+    if (newReply.trim() === '') {
       alert('댓글 내용을 입력해 주세요.');
       return;
     }
+
     try {
-      // user.id를 추가하여 댓글 작성자 정보 포함
-      await addReply({ boardId: id, replyContent: newReply, userId: user.id });
+      await addReply({
+        boardId: boardId,
+        replyContent: newReply,
+        userId: user.id,
+      });
       setNewReply('');
       fetchReplies();
     } catch (error) {
@@ -48,9 +60,9 @@ const BoardReply = () => {
   const handleDeleteReply = async (replyId) => {
     if (window.confirm('정말 이 댓글을 삭제하시겠습니까?')) {
       try {
-        await deleteReply(replyId); // 삭제 요청
-        alert('댓글이 성공적으로 삭제되었습니다.'); // 성공 메시지
-        fetchReplies(); // 댓글 목록 갱신
+        const result = await deleteReply(replyId);
+        alert(result.message || '댓글이 성공적으로 삭제되었습니다.'); // 서버 메시지 표시
+        fetchReplies();
       } catch (error) {
         console.error('댓글 삭제 실패:', error.message);
         alert(error.message || '댓글 삭제 중 오류가 발생했습니다.');
@@ -69,7 +81,6 @@ const BoardReply = () => {
       return;
     }
     try {
-      // userId를 포함하여 요청
       await updateReply(replyId, {
         replyContent: editingReply.replyContent,
         userId: user.id,
@@ -84,7 +95,7 @@ const BoardReply = () => {
 
   useEffect(() => {
     fetchReplies();
-  }, [id]);
+  }, [boardId]);
 
   return (
     <div className="reply-container">
@@ -93,46 +104,53 @@ const BoardReply = () => {
         {replies.length > 0 ? (
           replies.map((reply) => (
             <div key={reply.id} className="reply-item">
-              {editingReply?.id === reply.id ? (
-                <input
-                  value={editingReply.replyContent}
-                  className="reply-input"
-                  onChange={(e) =>
-                    setEditingReply({
-                      ...editingReply,
-                      replyContent: e.target.value,
-                    })
-                  }
-                />
-              ) : (
-                <p className="reply-content">{reply.replyContent}</p>
-              )}
-              <div className="reply-actions">
-                {editingReply?.id === reply.id ? (
-                  <button
-                    className="reply-button"
-                    onClick={() => handleUpdateReply(reply.id)}
-                  >
-                    수정 완료
-                  </button>
-                ) : (
-                  user?.id === reply.userId && ( // 본인 댓글만 수정/삭제 가능
-                    <>
-                      <button
-                        className="reply-button"
-                        onClick={() => setEditingReply(reply)}
-                      >
-                        수정
-                      </button>
-                      <button
-                        className="reply-button reply-delete"
-                        onClick={() => handleDeleteReply(reply.id)}
-                      >
-                        삭제
-                      </button>
-                    </>
-                  )
-                )}
+              <div className="reply-content-wrapper">
+                <div>
+                  <p className="reply-writer">
+                    작성자: {reply.nickname || '익명'} {/* 작성자명 */}
+                  </p>
+                  {editingReply?.id === reply.id ? (
+                    <input
+                      value={editingReply.replyContent}
+                      className="reply-input"
+                      onChange={(e) =>
+                        setEditingReply({
+                          ...editingReply,
+                          replyContent: e.target.value,
+                        })
+                      }
+                    />
+                  ) : (
+                    <p className="reply-content">{reply.replyContent}</p>
+                  )}
+                </div>
+                <div className="reply-actions">
+                  {editingReply?.id === reply.id ? (
+                    <button
+                      className="reply-button"
+                      onClick={() => handleUpdateReply(reply.id)}
+                    >
+                      수정 완료
+                    </button>
+                  ) : (
+                    user?.id === reply.userId && ( // 본인 댓글만 수정/삭제 가능
+                      <>
+                        <button
+                          className="reply-button"
+                          onClick={() => setEditingReply(reply)}
+                        >
+                          수정
+                        </button>
+                        <button
+                          className="reply-button reply-delete"
+                          onClick={() => handleDeleteReply(reply.id)}
+                        >
+                          삭제
+                        </button>
+                      </>
+                    )
+                  )}
+                </div>
               </div>
             </div>
           ))

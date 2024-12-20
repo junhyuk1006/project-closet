@@ -5,6 +5,7 @@ import com.project.dto.BasketItemDTO;
 import com.project.repository.BasketRepository;
 import com.project.repository.ItemRepository;
 import com.project.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -43,5 +44,13 @@ public class BasketService {
             throw new NoSuchElementException("Basket item not found with id: " + id);
         }
         basketRepository.deleteById(id);
+    }
+
+    @Transactional
+    public boolean updateBasketStatus(List<Long> basketIds, String status) {
+        // basketIds가 비어있거나 status가 없으면 false 반환할 수도 있음. 필요 시 검증 로직 추가
+        int updatedCount = basketRepository.updateStatusForBaskets(basketIds, status);
+        // updatedCount가 basketIds 크기와 같다면 모든 항목 업데이트 성공으로 간주
+        return updatedCount == basketIds.size();
     }
 }

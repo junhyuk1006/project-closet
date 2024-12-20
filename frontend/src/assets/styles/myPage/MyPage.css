@@ -65,6 +65,7 @@
   padding: 10px;
   background-color: #f9f9f9; /* 배경색 */
   border-radius: 8px; /* 둥근 모서리 */
+  margin-bottom: 30px;
 }
 
 /* 각 항목 스타일 */
@@ -364,4 +365,231 @@
   color: black;
   border-color: #007bff;
   font-weight: bold; /* 활성화된 상태에서 bold */
+}
+
+/* 문의내역 */
+
+.inquiry-rounded-box {
+  width: 80%; /* 화면 크기에 비례하여 크기 조정 */
+  max-width: 800px; /* 최대 너비 */
+  height: 70%; /* 높이 비율 */
+  background-color: white; /* 배경색을 하얀색으로 설정 */
+  border-radius: 15px; /* 모서리 둥글기 */
+  padding: 20px;
+  color: black; /* 글자 색상 */
+  box-sizing: border-box; /* padding을 포함한 크기 계산 */
+  text-align: center; /* 글자를 중앙에 배치 */
+  border: 2px solid #b0b0b0; /* 회색 테두리 */
+
+  /* 화면 중앙에 위치시키기 위한 flexbox 스타일 */
+  display: block; /* 블록 배치 */
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto; /* 수평 중앙 정렬 */
+  margin-bottom: 50px;
+
+  /* 텍스트가 박스 밖으로 삐져나가지 않도록 설정 */
+  overflow-wrap: break-word; /* 긴 단어를 줄바꿈 */
+  word-wrap: break-word; /* 구형 브라우저 지원 */
+  word-break: break-word; /* 긴 텍스트 강제 줄바꿈 */
+  overflow: hidden; /* 내용이 박스를 넘지 않도록 */
+}
+
+/* 기본 스타일 유지 */
+.mypage-inquiry-type {
+  display: inline-block;
+  padding: 3px 8px;
+  font-size: 0.9rem;
+  background-color: #f2f2f2; /* 회색 배경 */
+  border-radius: 5px; /* 둥근 모서리 */
+  color: #333; /* 글자 색 */
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+/* 문의 유형 배지 스타일 */
+.mypage-inquiry-type {
+  display: inline-block;
+  padding: 3px 8px;
+  font-size: 0.9rem;
+  background-color: #f2f2f2; /* 회색 배경 */
+  border-radius: 5px; /* 둥근 모서리 */
+  color: #333; /* 글자 색 */
+  font-weight: bold;
+  margin-right: 10px;
+  word-wrap: break-word; /* 긴 텍스트 줄바꿈 처리 */
+  word-break: break-word; /* 긴 단어도 줄바꿈 처리 */
+  overflow-wrap: break-word; /* 텍스트가 넘지 않도록 처리 */
+  max-width: 100%; /* 너비가 넘어가지 않도록 설정 */
+  white-space: normal; /* 줄바꿈 허용 */
+}
+
+/* 답변 상태 배지 스타일 */
+.mypage-inquiry-status {
+  display: inline-block;
+  padding: 3px 8px;
+  font-size: 0.9rem;
+  background-color: #f2f2f2; /* 회색 배경 */
+  border-radius: 5px; /* 둥근 모서리 */
+  color: #333; /* 글자 색 */
+  font-weight: bold;
+  margin-right: 10px;
+  word-wrap: break-word; /* 긴 텍스트 줄바꿈 처리 */
+  word-break: break-word; /* 긴 단어도 줄바꿈 처리 */
+  overflow-wrap: break-word; /* 텍스트가 넘지 않도록 처리 */
+  max-width: 100%; /* 너비가 넘어가지 않도록 설정 */
+  white-space: normal; /* 줄바꿈 허용 */
+}
+/* 내용 스타일 */
+.mypage-inquiry-content {
+  display: block;
+  margin-bottom: 5px;
+  word-break: break-word; /* 긴 단어 줄바꿈 */
+}
+
+/* 날짜 스타일 */
+.mypage-inquiry-date {
+  display: block;
+  color: gray;
+  font-size: 0.9rem;
+  margin-top: 5px;
+}
+@media (max-width: 768px) {
+  .inquiry-rounded-box {
+    flex-direction: column; /* 세로 정렬 */
+    align-items: flex-start; /* 왼쪽 정렬 */
+  }
+
+  /* 내용 스타일 */
+  .mypage-inquiry-content {
+    margin-bottom: 5px; /* 요소 아래 여백 추가 */
+  }
+
+  /* 날짜 스타일 */
+  .mypage-inquiry-date {
+    width: 100%; /* 전체 너비 사용 */
+    margin-bottom: 5px; /* 요소 아래 여백 추가 */
+  }
+}
+
+/* 프로필 */
+.profile-circle {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: #f0f0f0;
+  border: 2px solid #ccc;
+  overflow: hidden;
+  display: flex; /* Flexbox로 중앙 정렬 */
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto; /* 부모 영향 최소화 */
+  margin-bottom: 10px;
+}
+
+.profile-circle img {
+  width: 100%; /* 원 안에 꽉 채움 */
+  height: 100%;
+  object-fit: cover; /* 비율 유지하며 원에 맞게 잘림 */
+}
+
+/* 마이페이지 - 리뷰 */
+/* 테이블 스타일 */
+.review-table {
+  width: 100%; /* 부모 박스에 맞춰 테이블 너비 조정 */
+  border-collapse: collapse; /* 테이블 셀 경계선 제거 */
+  font-size: 12px; /* 기본 폰트 크기 */
+}
+
+.review-table th,
+.review-table td {
+  padding: 10px; /* 셀 내부 여백 */
+  text-align: center; /* 내용 중앙 정렬 */
+  word-wrap: break-word; /* 긴 텍스트 줄바꿈 */
+  border: 1px solid #ddd; /* 셀 테두리 */
+}
+
+.review-table th {
+  font-weight: bold; /* 헤더 글자 강조 */
+  background-color: #f9f9f9; /* 헤더 배경색 */
+}
+
+/* 테이블 열 너비 조정 */
+.review-table th,
+.review-table td {
+  padding: 10px;
+  text-align: center;
+  word-wrap: break-word;
+  border: 1px solid #ddd;
+}
+
+/* 상품명 */
+.review-table td:nth-child(1),
+.review-table th:nth-child(1) {
+  width: 15%; /* 상품명 열 너비 */
+}
+
+/* 별점 */
+.review-table td:nth-child(3),
+.review-table th:nth-child(3) {
+  width: 8%; /* 별점 열 너비 */
+}
+
+/* 작성일 */
+.review-table td:nth-child(4),
+.review-table th:nth-child(4) {
+  width: 11%; /* 작성일 열 너비 */
+}
+
+/* 리뷰 (자동으로 남은 공간 채움) */
+.review-table td:nth-child(2),
+.review-table th:nth-child(2) {
+  width: auto; /* 리뷰 열은 남은 공간을 차지 */
+}
+
+/* 반응형 스타일 */
+.review-rounded-box {
+  width: 100%; /* 라운드 박스 크기 유지 */
+  max-width: 1200px;
+  height: auto;
+  background-color: white;
+  border-radius: 15px;
+  padding: 5px;
+  color: black;
+  box-sizing: border-box;
+  margin: 20px auto;
+  overflow-x: auto; /* 가로 스크롤 추가 */
+}
+
+@media (min-width: 768px) {
+  .review-table th,
+  .review-table td {
+    font-size: 14px; /* 태블릿에서 폰트 크기 */
+    padding: 10px;
+  }
+
+  .edit-button {
+    padding: 6px 10px;
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .review-table th,
+  .review-table td {
+    font-size: 14px; /* 데스크탑에서 폰트 크기 */
+    padding: 12px;
+  }
+
+  .edit-button {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+}
+
+.review-table tr:hover {
+  cursor: pointer; /* 포인터 커서 추가 */
+}
+.review-table thead tr:hover {
+  cursor: default; /* 기본 커서 */
 }
