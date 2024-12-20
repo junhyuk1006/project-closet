@@ -10,6 +10,37 @@ const MyPageHome = () => {
   const { user } = useUser();
   const [gradeInfo, setGradeInfo] = useState('');
   const [profileImageUrl, setProfileImageUrl] = useState('');
+  const handleProfileUpload = async (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const formData = new FormData();
+      formData.append('file', file);
+
+      try {
+        const response = await fetch(
+          'http://localhost:80/api/mypage/uploadProfileImage',
+          {
+            method: 'POST',
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+            body: formData,
+          }
+        );
+
+        if (response.ok) {
+          const fileName = await response.text(); // 반환된 파일명
+          window.location.reload();
+
+          console.log(`업로드 성공: ${fileName}`);
+        } else {
+          console.error('업로드 실패:', response.statusText);
+        }
+      } catch (error) {
+        console.error('업로드 중 오류:', error);
+      }
+    }
+  };
 
   const fetchGradeInfo = async () => {
     try {
@@ -103,6 +134,13 @@ const MyPageHome = () => {
                       alt="프로필 이미지"
                     />
                   </label>
+                  <input
+                    id="profile-upload"
+                    type="file"
+                    accept="image/*"
+                    style={{ display: 'none' }}
+                    onChange={handleProfileUpload} // 이벤트 핸들러
+                  />
                 </div>
                 {`${user?.nickname || ''}님의 등급은 ${gradeInfo.grade} 등급입니다.`}
                 <br />
