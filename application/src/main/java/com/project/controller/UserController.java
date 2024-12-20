@@ -156,7 +156,7 @@ public class UserController {
             ResponseDTO<String> responseDTO = ResponseDTO.<String>builder()
                     .status("success")
                     .message("아이디 찾기가 완료되었습니다.")
-                    .data(Collections.singletonList(username))
+                    .data(Collections.singletonList(username).toString())
                     .build();
 
             return ResponseEntity.ok().body(responseDTO);
