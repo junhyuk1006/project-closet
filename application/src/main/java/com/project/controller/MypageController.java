@@ -4,6 +4,7 @@ import com.project.domain.Address;
 import com.project.domain.Users;
 import com.project.domain.detail.ItemInquiry;
 import com.project.dto.*;
+import com.project.repository.AddressRepository;
 import com.project.service.MypageService;
 import com.project.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -46,6 +47,7 @@ public class MypageController {
 
     private final MypageService mypageService;
     private final UserService userService;
+    private final AddressRepository addressRepository;
 
     // 회원의 모든 등록 배송지 조회
     @GetMapping("/getAddress")
@@ -254,7 +256,42 @@ public class MypageController {
             return ResponseEntity.status(500).body("파일 업로드 실패: " + e.getMessage());
         }
     }
+
+    // 배송지 입력
+    @PostMapping("/addAddress")
+    public ResponseEntity<ResponseDTO<?>> addAddress(@RequestBody Address address, @AuthenticationPrincipal CustomUserDetail customUserDetail) {
+        Long userId = customUserDetail.getId();
+        try {
+            // 주소 등록 서비스 호출
+            mypageService.updateAddressByUserId(userId, address);
+
+            // 성공 응답 반환
+            ResponseDTO<String> response = ResponseDTO.<String>builder()
+                    .status("success")
+                    .message("주소가 성공적으로 등록되었습니다!")
+                    .data("주소가 등록되었습니다")
+                    .build();
+            return ResponseEntity.ok(response);
+        } catch (RuntimeException e) {
+            // 논리적 에러 (예: 최대 주소 제한 초과)
+            ResponseDTO<String> errorResponse = ResponseDTO.<String>builder()
+                    .status("error")
+                    .message(e.getMessage())
+                    .build();
+            return ResponseEntity.ok(errorResponse); // HTTP 200으로 에러 반환
+        } catch (Exception e) {
+            // 시스템 에러
+            ResponseDTO<String> errorResponse = ResponseDTO.<String>builder()
+                    .status("error")
+                    .message("주소 등록 중 문제가 발생했습니다.")
+                    .build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+        }
+    }
+
+
 }
+
 
 
 

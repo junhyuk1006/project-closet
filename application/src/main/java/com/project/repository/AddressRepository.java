@@ -29,4 +29,10 @@ public interface AddressRepository extends JpaRepository<Address, Long> {
             "END " +
             "WHERE a.userId = :userId")
     void switchRepresentativeAddress(@Param("id") long addressId, @Param("userId") long userId);
+
+    // 주소지 개수 카운트
+    @Query("SELECT COUNT(a) FROM Address a WHERE a.userId = :userId")
+    int addresscountByUserId(@Param("userId") Long userId);
+
+
 }

@@ -131,5 +131,34 @@ public class MypageService {
 
         return profileImageDir.resolve(fileName);
     }
+
+    // 주소지 등록
+    public void updateAddressByUserId(Long userId, Address address) {
+        // 1. 주소 개수 확인 (기존 주소가 3개 이상이면 예외 처리)
+        int addressCount = addressRepository.addresscountByUserId(userId); // 주소 개수 확인
+        if (addressCount >= 3) {
+            throw new RuntimeException("배송지는 최대 3개까지 등록할 수 있습니다. 기존 주소지를 삭제해주세요.");
+        }
+
+        // 2. 기존 주소 목록 조회
+        List<Address> existingAddresses = addressRepository.findByUserId(userId);
+
+        // 3. 기존 주소 중 대표 주소가 없다면, 새 주소를 대표 주소로 설정
+        if (existingAddresses.stream().noneMatch(a -> a.isRepresent() == true)) {
+            address.setRepresent(true);// 대표 주소로 설정
+        } else {
+            address.setRepresent(false); // 대표 주소가 이미 있으면 일반 주소로 설정
+        }
+
+        // 4. 새로운 주소 등록
+        // Address 엔티티에 userId를 설정
+        address.setUserId(userId);
+
+        // Address 엔티티를 JPA 리포지토리를 통해 저장
+        addressRepository.save(address);
+    }
+
+
+
 }
 
