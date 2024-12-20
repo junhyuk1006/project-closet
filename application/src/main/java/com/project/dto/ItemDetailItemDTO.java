@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Data
@@ -17,7 +18,7 @@ public class ItemDetailItemDTO {
     private String color;
     private String size;
     private String itemStatus;
-    private LocalDateTime itemCreatedAt;
+    private Timestamp itemCreatedAt;
 
     // ItemDetail 필드
     private Long itemDetailId;
@@ -28,5 +29,5 @@ public class ItemDetailItemDTO {
     private String mainImage;
     private String detailImage;
     private String itemDetailStatus;
-    private LocalDateTime itemDetailCreatedAt;
+    private Timestamp itemDetailCreatedAt;
 }

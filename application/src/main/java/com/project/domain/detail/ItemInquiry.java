@@ -4,9 +4,9 @@ import com.project.domain.Users;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.data.annotation.CreatedDate;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
+
 
 @Entity
 @Data
@@ -48,7 +48,7 @@ public class ItemInquiry {
     private Status status = Status.active;
 
     @CreationTimestamp
-    private LocalDateTime createdAt;
+    private Timestamp createdAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "id")

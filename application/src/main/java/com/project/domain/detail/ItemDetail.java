@@ -1,10 +1,11 @@
 package com.project.domain.detail;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Entity
@@ -26,8 +27,12 @@ public class ItemDetail {
     private String status;
 
     @CreationTimestamp
-    private LocalDateTime createdAt;
+    private Timestamp createdAt;
 
     @OneToMany(mappedBy = "itemDetail")
     private List<Item> items;
+
+    @OneToMany(mappedBy = "itemDetail" , cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<ItemReview> itemReview;
 }

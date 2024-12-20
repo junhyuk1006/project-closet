@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Data
@@ -19,7 +20,7 @@ public class ItemInquiryDTO {
     private ItemInquiry.InquiryType inquiryType; // 문의 유형
     private ItemInquiry.AnswerStatus answerStatus; // 답변 상태
     private ItemInquiry.Status status; // 관리 상태
-    private LocalDateTime createdAt; // 생성 시간
+    private Timestamp createdAt; // 생성 시간
 
     // 엔티티 데이터를 DTO로 변환하는 생성자
     public ItemInquiryDTO(ItemInquiry itemInquiry) {

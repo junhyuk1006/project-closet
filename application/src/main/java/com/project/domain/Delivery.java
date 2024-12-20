@@ -1,5 +1,6 @@
 package com.project.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -14,4 +15,8 @@ public class Delivery {
     private String deliveryNumber;
     private String deliveryStatus;
     private int deliveryFee;
+
+    @OneToOne(mappedBy = "delivery",fetch = FetchType.LAZY)
+    @JsonIgnore
+    private OrderHistory orderHistory;
 }

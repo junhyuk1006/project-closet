@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { call } from '../../api/auth/ApiService'; // useUser 훅 임포트
 import { useUser } from '../../api/auth/UserContext'; // useUser 훅 임포트
 import MyPageHeader from '../../components/myPage/MyPageHeader';
-import { RepeatOneSharp } from '@mui/icons-material';
-import AddressModal from './AddressModal';
+
+import DaumPostcode from 'react-daum-postcode'; // Kakao 우편번호 API 사용
 
 const MemberInfo = () => {
   const navigate = useNavigate();
@@ -13,7 +13,16 @@ const MemberInfo = () => {
   const { user, setUser } = useUser(); // UserContext에서 user와 setUser를 가져오기
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isPostcodeOpen, setIsPostcodeOpen] = useState(false); // 우편번호 검색 모달 상태
+  const [address, setAddress] = useState('');
+  const [detailedAddress, setDetailedAddress] = useState('');
+  const closePostcode = () => setIsPostcodeOpen(false);
 
+  // 모달 열기/닫기
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+  const openPostcode = () => setIsPostcodeOpen(true);
   const [bodyInfo, setBodyInfo] = useState({
     height: user?.height || '',
     weight: user?.weight || '',
@@ -30,7 +39,6 @@ const MemberInfo = () => {
     introduction: '',
   });
 
-  // 값 변경 시에 null 값 반영
   const handlePasswordChange = (e) => setPassword(e.target.value);
   const handleConfirmPasswordChange = (e) => setConfirmPassword(e.target.value);
   const handleChangeAddInfo = (e) => {
@@ -44,6 +52,12 @@ const MemberInfo = () => {
         [name]: value,
       }));
     }
+  };
+
+  // 우편번호 검색 완료 처리
+  const handleCompletePostcode = (data) => {
+    setAddress(data.address); // 검색된 주소를 상태에 설정
+    closePostcode(); // 우편번호 검색 창 닫기
   };
 
   const MultiFormHandler = async (e) => {
@@ -148,6 +162,35 @@ const MemberInfo = () => {
       setGeneralAddresses(general);
     } catch (error) {
       console.error('Error fetching data:', error);
+    }
+  };
+
+  const handleSubmitAddress = async (e) => {
+    e.preventDefault();
+
+    const fullAddress = `${address} ${detailedAddress}`;
+    const data = { address: fullAddress };
+
+    try {
+      const response = await call('/api/mypage/addAddress', 'POST', data);
+
+      if (response.status === 'success') {
+        alert(response.message);
+        setAddress('');
+        setDetailedAddress('');
+        fetchData();
+        setIsPostcodeOpen(false);
+        setIsModalOpen(false);
+      } else if (response.status === 'error') {
+        alert(response.message); // 에러 메시지 표시
+        setAddress('');
+        setDetailedAddress('');
+        setIsPostcodeOpen(false);
+        setIsModalOpen(false);
+      }
+    } catch (error) {
+      console.error('주소 등록 중 에러:', error);
+      alert('서버 요청 중 문제가 발생했습니다.');
     }
   };
 
@@ -550,9 +593,75 @@ const MemberInfo = () => {
           </>
         )}
         <div className="address-buttons">
-          <button className="delivery-button">배송지 등록하기</button>
+          <div className="address-buttons">
+            <button className="delivery-button" onClick={openModal}>
+              배송지 등록하기
+            </button>
+          </div>
         </div>
       </div>
+      {/* 배송지 등록 모달 */}
+      {isModalOpen && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h2>배송지 입력</h2>
+            <form onSubmit={handleSubmitAddress}>
+              <label htmlFor="address">
+                하단 우편번호 검색으로 주소를 입력해주세요.
+              </label>
+              <button
+                type="button"
+                className="postcode-button"
+                onClick={openPostcode}
+              >
+                우편번호 검색
+              </button>
+              <input
+                id="address"
+                type="text"
+                value={address}
+                placeholder="우편번호 검색을 하면 주소가 입력됩니다."
+                className="address-input"
+                readOnly
+              />
+
+              <input
+                id="detailedAddress"
+                type="text"
+                value={detailedAddress}
+                placeholder="상세주소를 입력하세요"
+                onChange={(e) => setDetailedAddress(e.target.value)}
+                className="address-input"
+              />
+              <div className="modal-actions">
+                <button type="submit" className="submit-button">
+                  등록
+                </button>
+                <button
+                  type="button"
+                  className="close-button"
+                  onClick={closeModal}
+                >
+                  닫기
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* 우편번호 검색 모달 */}
+      {isPostcodeOpen && (
+        <div className="postcode-modal">
+          <DaumPostcode
+            onComplete={handleCompletePostcode}
+            style={{ width: '100%', height: '300px' }}
+          />
+          <button className="postcode-close-button" onClick={closePostcode}>
+            닫기
+          </button>
+        </div>
+      )}
     </div>
   );
 };

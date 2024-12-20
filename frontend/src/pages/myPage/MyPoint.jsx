@@ -32,8 +32,8 @@ const MyPoint = () => {
   const fetchPoints = async (page) => {
     try {
       const response = await call(
-          `/api/point/getPointByUserid?page=${page}&size=${pageSize}`,
-          'GET'
+        `/api/point/getPointByUserid?page=${page}&size=${pageSize}`,
+        'GET'
       );
       setPoints(response.content);
       setTotalPages(response.totalPages);
@@ -52,48 +52,48 @@ const MyPoint = () => {
   };
 
   return (
-      <div>
-        <MyPageHeader
-            title="적립금 조회"
-            description="적립금은 사이트 내에서 상품 구매 시 현금처럼 사용할 수 있습니다."
-        />
-        <div className="point-label1">
-          나의 적립금: <strong>{totalPoints}p</strong>
-        </div>
-
-        <div className="point-list">
-          {points.map((point) => (
-              <div className="point-item" key={point.id}>
-                <div className="point-info">
-                  <div className="date">{point.createdAt}</div>
-                  <div className="description">{point.pointReason}</div>
-                </div>
-                <div
-                    className="points"
-                    style={{
-                      color:
-                          point.pointType === '적립'
-                              ? '#32A2F5'
-                              : point.pointType === '차감' || point.pointType === '만료'
-                                  ? '#ED623D'
-                                  : 'black',
-                    }}
-                >
-                  {point.pointType === '적립'
-                      ? `+${point.point}p`
-                      : `-${point.point}p`}
-                </div>
-              </div>
-          ))}
-        </div>
-
-        <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            blockSize={blockSize}
-            onPageChange={setCurrentPage}
-        />
+    <div>
+      <MyPageHeader
+        title="적립금 조회"
+        description="적립금은 사이트 내에서 상품 구매 시 현금처럼 사용할 수 있습니다."
+      />
+      <div className="point-label1">
+        나의 적립금: <strong>{totalPoints}p</strong>
       </div>
+
+      <div className="point-list">
+        {points.map((point) => (
+          <div className="point-item" key={point.id}>
+            <div className="point-info">
+              <div className="date">{point.createdAt}</div>
+              <div className="description">{point.pointReason}</div>
+            </div>
+            <div
+              className="points"
+              style={{
+                color:
+                  point.pointType === '적립'
+                    ? '#32A2F5'
+                    : point.pointType === '차감' || point.pointType === '만료'
+                      ? '#ED623D'
+                      : 'black',
+              }}
+            >
+              {point.pointType === '적립'
+                ? `+${point.point}p`
+                : `-${point.point}p`}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        blockSize={blockSize}
+        onPageChange={setCurrentPage}
+      />
+    </div>
   );
 };
 

@@ -23,7 +23,7 @@ ChartJS.register(
   Legend
 );
 
-const UserLevel = () => {
+const UserDashboard = () => {
   const [userMonth, setUserMonth] = useState([]);
   const [userDate, setUserDate] = useState(0);
 
@@ -34,12 +34,12 @@ const UserLevel = () => {
 
   useEffect(() => {
     fetchUserMonth();
+    fetchUserDate();
   }, []);
 
   const fetchUserMonth = () => {
     getUserMonth()
       .then((response) => {
-        console.log(response);
         setUserMonth(response);
       })
       .catch((error) => console.error(error));
@@ -253,4 +253,4 @@ const UserLevel = () => {
   );
 };
 
-export default UserLevel;
+export default UserDashboard;

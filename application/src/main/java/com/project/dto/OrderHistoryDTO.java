@@ -2,6 +2,7 @@ package com.project.dto;
 
 import lombok.Data;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -21,5 +22,5 @@ public class OrderHistoryDTO {
 
     private String paymentStatus;         // 결제 상태
     private String paymentMethod;         // 결제 수단
-    private LocalDateTime paymentDate;    // 결제일
+    private Timestamp paymentDate;    // 결제일
 }

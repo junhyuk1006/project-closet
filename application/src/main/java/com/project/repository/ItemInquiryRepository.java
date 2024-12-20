@@ -32,11 +32,13 @@ public interface ItemInquiryRepository extends JpaRepository<ItemInquiry, Long> 
     @Query(value = "SELECT new com.project.dto.UserItemInquiryDTO(" +
             "u.id, u.username, u.nickname, u.profileImage, " +
             "ir.id, ir.content, ir.inquiryType, ir.answerStatus, ir.status, ir.createdAt, " +
-            "a.id, a.answer, a.createdAt" +
+            "a.id, a.answer, a.createdAt, " +
+            "id.itemName" +
             ") " +
             "FROM ItemInquiry ir " +
             "JOIN ir.users u " +
             "LEFT JOIN ItemInquiryAnswer a ON a.itemInquiry = ir " +
+            "JOIN ir.itemDetail id " +
             "WHERE u.id = :userId",
             countQuery = "SELECT COUNT(ir) " +
                     "FROM ItemInquiry ir " +
@@ -44,5 +46,6 @@ public interface ItemInquiryRepository extends JpaRepository<ItemInquiry, Long> 
                     "LEFT JOIN ItemInquiryAnswer a ON a.itemInquiry = ir " +
                     "WHERE u.id = :userId")
     Page<UserItemInquiryDTO> findByUsers_Id(@Param("userId") Long userId, Pageable pageable);
+
 
 }

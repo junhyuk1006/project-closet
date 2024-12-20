@@ -1,38 +1,47 @@
-import React, { useState, useEffect } from 'react'; // useContext 임포트 추가
+import React, { useState, useEffect } from 'react';
 import { useUser } from '../../api/auth/UserContext';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { useNavigate } from 'react-router-dom';
 import MyPageHeader from '../../components/myPage/MyPageHeader';
-import { call } from '../../api/auth/ApiService'; // API 호출 함수
+import { call } from '../../api/auth/ApiService';
 
 const MyPageHome = () => {
   const navigate = useNavigate();
   const { user } = useUser();
   const [gradeInfo, setGradeInfo] = useState('');
-  const [profileImage, setProfileImage] = useState('');
+  const [profileImageUrl, setProfileImageUrl] = useState('');
+  const handleProfileUpload = async (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const formData = new FormData();
+      formData.append('file', file);
 
-  const handleImageChange = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return; // 파일이 선택되지 않은 경우
+      try {
+        const response = await fetch(
+          'http://localhost:80/api/mypage/uploadProfileImage',
+          {
+            method: 'POST',
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+            body: formData,
+          }
+        );
 
-    const fileName = file.name; // 파일명만 추출 (예: image.png)
+        if (response.ok) {
+          const fileName = await response.text(); // 반환된 파일명
+          window.location.reload();
 
-    try {
-      // 백엔드에 파일명 전송
-      const response = await call(
-        `/api/mypage/uploadProfile/${fileName}`, // 파일명만 전달
-        'POST',
-        null // Body가 필요 없음
-      );
-
-      // 백엔드 응답 처리
-      setProfileImage(`/images/profile/${fileName}`);
-      alert('프로필 이미지가 업데이트되었습니다!');
-    } catch (error) {
-      console.error('이미지 업로드 실패:', error);
-      alert('이미지 업로드에 실패했습니다.');
+          console.log(`업로드 성공: ${fileName}`);
+        } else {
+          console.error('업로드 실패:', response.statusText);
+        }
+      } catch (error) {
+        console.error('업로드 중 오류:', error);
+      }
     }
   };
+
   const fetchGradeInfo = async () => {
     try {
       const response = await call(`/api/mypage/findGradeByUser`, 'GET');
@@ -41,11 +50,36 @@ const MyPageHome = () => {
       console.error('에러발생 , 등급조회 에러', error);
     }
   };
-  // 사용자 정보와 등급 정보를 가져옴
   useEffect(() => {
+    const fetchProfileImage = async () => {
+      try {
+        const response = await fetch(
+          'http://localhost:80/api/mypage/getProfileImage',
+          {
+            method: 'GET',
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+            credentials: 'include', // 인증 정보를 포함
+          }
+        );
+
+        if (response.ok) {
+          const blob = await response.blob();
+          setProfileImageUrl(URL.createObjectURL(blob));
+        } else {
+          console.error(
+            `HTTP Error: ${response.status} - ${response.statusText}`
+          );
+        }
+      } catch (error) {
+        console.error('API 호출 오류:', error);
+      }
+    };
+
+    fetchProfileImage();
     fetchGradeInfo(); // 등급 정보 호출
   }, []);
-
   const features = [
     {
       icon: 'bi-info-circle',
@@ -93,21 +127,19 @@ const MyPageHome = () => {
             title="마이페이지"
             description={
               <>
-                {/* 프로필 이미지 업로드 및 표시 */}
                 <div className="profile-container">
                   <label htmlFor="profile-upload" className="profile-circle">
                     <img
-                      src={profileImage}
+                      src={profileImageUrl} // 백엔드에서 반환된 프로필 이미지 URL
                       alt="프로필 이미지"
-                      className="profile-image"
                     />
                   </label>
                   <input
-                    type="file"
                     id="profile-upload"
+                    type="file"
                     accept="image/*"
                     style={{ display: 'none' }}
-                    onChange={handleImageChange}
+                    onChange={handleProfileUpload} // 이벤트 핸들러
                   />
                 </div>
                 {`${user?.nickname || ''}님의 등급은 ${gradeInfo.grade} 등급입니다.`}
@@ -123,11 +155,10 @@ const MyPageHome = () => {
             <div className="row gx-3 gy-4">
               {features.map((feature, index) => (
                 <div className="col-lg-6 col-xxl-4" key={index}>
-                  {/* 클릭 이벤트를 카드 전체에 적용 */}
                   <div
                     className="card bg-light border-0 h-100"
                     onClick={() => navigate(feature.link)}
-                    style={{ cursor: 'pointer' }} // 클릭 가능 포인터 추가
+                    style={{ cursor: 'pointer' }}
                   >
                     <div className="card-body text-center p-4 p-lg-5 pt-0 pt-lg-0">
                       <div

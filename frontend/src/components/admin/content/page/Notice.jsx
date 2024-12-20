@@ -1,6 +1,106 @@
-import { Form, Button, Row, Col, Table } from 'react-bootstrap';
+import { useEffect, useState } from 'react';
+import { Form, Button, Row, Col, Table, Pagination } from 'react-bootstrap';
+import { getNotice } from '../../../../api/admin/page/page';
 
 const Notice = () => {
+  const [Notices, setNotices] = useState([]);
+  const [totalPages, setTotalPages] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [size, setSize] = useState(20);
+  const [pageGroup, setPageGroup] = useState(0);
+
+  // 검색 상태 하나의 객체로 관리
+  const [searchParams, setSearchParams] = useState({
+    searchKeyword: 'title',
+    searchInput: '',
+    startDate: '',
+    endDate: '',
+  });
+
+  useEffect(() => {
+    fetchNotice(currentPage, size, searchParams);
+  }, []);
+
+  const fetchNotice = (page, size, searchParams) => {
+    const params = {
+      page,
+      size,
+      ...searchParams,
+    };
+    getNotice(params)
+      .then((response) => {
+        setNotices(response.content);
+        setTotalPages(response.totalPages);
+      })
+      .catch((error) => console.error(error));
+  };
+
+  const updateSearchParams = (key, value) => {
+    setSearchParams((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
+  };
+
+  const setDateRange = (range) => {
+    const today = new Date();
+
+    switch (range) {
+      case 'today':
+        updateSearchParams('startDate', formatDate(today));
+        updateSearchParams('endDate', formatDate(today));
+        break;
+
+      case 'week':
+        const oneWeekAgo = new Date(today);
+        oneWeekAgo.setDate(today.getDate() - 7);
+        updateSearchParams('startDate', formatDate(oneWeekAgo));
+        updateSearchParams('endDate', formatDate(today));
+        break;
+
+      case 'month':
+        const oneMonthAgo = new Date(today);
+        oneMonthAgo.setMonth(today.getMonth() - 1);
+        updateSearchParams('startDate', formatDate(oneMonthAgo));
+        updateSearchParams('endDate', formatDate(today));
+        break;
+
+      case 'all':
+        updateSearchParams('startDate', '');
+        updateSearchParams('endDate', '');
+        break;
+
+      default:
+        break;
+    }
+  };
+
+  const formatDate = (date) => {
+    return date.toISOString().split('T')[0];
+  };
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    fetchNotice(page, size, searchParams);
+  };
+
+  const handleSearch = () => {
+    setCurrentPage(0);
+    fetchNotice(0, size, searchParams);
+  };
+
+  const handleReset = () => {
+    setSearchParams({
+      searchKeyword: 'email',
+      searchInput: '',
+      startDate: '',
+      endDate: '',
+      grade: '',
+    });
+    setCurrentPage(0);
+    setSize(20);
+  };
+
   return (
     <div>
       <h2>공지</h2>

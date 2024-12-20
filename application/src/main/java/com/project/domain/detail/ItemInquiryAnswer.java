@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Entity
@@ -18,7 +19,7 @@ public class ItemInquiryAnswer {
     private String answer;
 
     @CreationTimestamp
-    private LocalDateTime createdAt;
+    private Timestamp createdAt;
 
     @OneToOne
     @JoinColumn(name="item_inquiry_id", referencedColumnName = "id")
