@@ -199,7 +199,6 @@ function ReviewInput({ activeTab, userId, productId }) {
 
   return (
     <>
-      {/* 리뷰 css가 전역으로 적용되는 현상을 방지하기 위한 className을 적용하였습니다. */}
       <FetchAllReview item_id={productId} onReviewFetch={setReviews} />
       <div
         className={`tab-pane fade ${activeTab === 'reviews' ? 'show active' : ''}`}

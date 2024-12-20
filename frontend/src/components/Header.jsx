@@ -133,9 +133,11 @@ function Header({ user }) {
     autoplaySpeed: 3000,
   };
   useEffect(() => {
-    document.querySelectorAll('.left-top-bar .slick-slider button').forEach((elem) => {
-      elem.remove();
-    });
+    document
+      .querySelectorAll('.left-top-bar .slick-slider button')
+      .forEach((elem) => {
+        elem.remove();
+      });
   }, []);
 
   // 로그아웃
@@ -147,7 +149,11 @@ function Header({ user }) {
 
   return (
     <header className="header">
-      <Cart isCartOpen={isCartOpen} toggleCart={toggleCart} baskets={baskets} />
+      <Cart
+        isCartOpen={isCartOpen}
+        setIsCartOpen={setIsCartOpen}
+        baskets={baskets}
+      />
       <NoticeModal id={noticeId} onClose={() => setNoticeId(null)} />
 
       {/* 모바일 헤더 ( 화면 너비가 991px보다 작을 때 ) */}
@@ -167,7 +173,10 @@ function Header({ user }) {
 
           <div
             className="icon-header-item cl2 hov-cl1 trans-04 p-r-12 p-l-20 icon-header-noti-mobile js-show-cart"
-            data-notify={baskets.reduce((total, basket) => total + basket.itemCount, 0)}
+            data-notify={baskets.reduce(
+              (total, basket) => total + basket.itemCount,
+              0
+            )}
           >
             <i className="zmdi zmdi-shopping-cart"></i>
           </div>
@@ -182,7 +191,9 @@ function Header({ user }) {
           </a>
         </div>
 
-        <div className={`btn-show-menu-mobile hamburger hamburger--squeeze ${isMenuOpen ? 'is-active' : ''}`}>
+        <div
+          className={`btn-show-menu-mobile hamburger hamburger--squeeze ${isMenuOpen ? 'is-active' : ''}`}
+        >
           <div className="hamburger-box" onClick={toggleMobileMenu}>
             <div className="hamburger-inner"></div>
           </div>
@@ -198,7 +209,13 @@ function Header({ user }) {
       )}
 
       {/* 모바일 메뉴 */}
-      <MobileMenu isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} isLoggedIn={isLoggedIn} user={user} handleLogout={handleLogout} />
+      <MobileMenu
+        isMenuOpen={isMenuOpen}
+        setIsMenuOpen={setIsMenuOpen}
+        isLoggedIn={isLoggedIn}
+        user={user}
+        handleLogout={handleLogout}
+      />
 
       {/* Modal Search */}
       <div className="modal-search-header flex-c-m trans-04 js-hide-modal-search">
@@ -211,7 +228,12 @@ function Header({ user }) {
             <button className="flex-c-m trans-04">
               <i className="zmdi zmdi-search"></i>
             </button>
-            <input className="plh3" type="text" name="search" placeholder="Search..." />
+            <input
+              className="plh3"
+              type="text"
+              name="search"
+              placeholder="Search..."
+            />
           </form>
         </div>
       </div>
@@ -254,7 +276,11 @@ function Header({ user }) {
               </Link>
 
               {user ? (
-                <Link to="/Logout" className="flex-c-m trans-04 p-lr-25" onClick={handleLogout}>
+                <Link
+                  to="/Logout"
+                  className="flex-c-m trans-04 p-lr-25"
+                  onClick={handleLogout}
+                >
                   로그아웃
                 </Link>
               ) : (
@@ -289,7 +315,11 @@ function Header({ user }) {
             <div className="menu-desktop">
               <ul className="main-menu">
                 <li>
-                  <Dropdown onMouseEnter={toggleCategoryEnter} onMouseLeave={toggleCategoryLeave} show={isDesktopCategoryOpen}>
+                  <Dropdown
+                    onMouseEnter={toggleCategoryEnter}
+                    onMouseLeave={toggleCategoryLeave}
+                    show={isDesktopCategoryOpen}
+                  >
                     <Dropdown.Toggle variant="" id="">
                       <Link to="#">카테고리</Link>
                     </Dropdown.Toggle>
@@ -307,19 +337,27 @@ function Header({ user }) {
                   </Dropdown>
                 </li>
                 <li>
-                  <Link to="/ShoppingCart">장바구니</Link>
+                  <Link to="/ShoppingCart" onClick={isLoggedIn}>
+                    장바구니
+                  </Link>
                 </li>
                 <li className="label1" data-label1="hot">
                   <Link to="/Recommend">스타일링</Link>
                 </li>
                 <li>
-                  <Dropdown onMouseEnter={toggleCommunityEnter} onMouseLeave={toggleCommunityLeave} show={isDesktopCommunityOpen}>
+                  <Dropdown
+                    onMouseEnter={toggleCommunityEnter}
+                    onMouseLeave={toggleCommunityLeave}
+                    show={isDesktopCommunityOpen}
+                  >
                     <Dropdown.Toggle variant="" id="">
                       <Link to="#">커뮤니티</Link>
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
-                      <Dropdown.Item href="/Community">자유게시판</Dropdown.Item>
+                      <Dropdown.Item href="/Community">
+                        자유게시판
+                      </Dropdown.Item>
                       <Dropdown.Item href="/Coordi">코디자랑</Dropdown.Item>
                     </Dropdown.Menu>
                   </Dropdown>
@@ -344,7 +382,10 @@ function Header({ user }) {
                 value={inputValue}
               />
               <div className="icon-header-item cl2 hov-cl1 trans-04 p-l-20 p-r-12">
-                <i className="zmdi zmdi-search" onClick={() => toggleSearch(isSearching)}></i>
+                <i
+                  className="zmdi zmdi-search"
+                  onClick={() => toggleSearch(isSearching)}
+                ></i>
               </div>
 
               <Alarm />
@@ -357,9 +398,15 @@ function Header({ user }) {
                 }}
                 style={{ cursor: 'pointer' }}
                 data-notify={
-                  baskets.reduce((total, basket) => total + basket.itemCount, 0) > 9
+                  baskets.reduce(
+                    (total, basket) => total + basket.itemCount,
+                    0
+                  ) > 9
                     ? 9 + '+'
-                    : baskets.reduce((total, basket) => total + basket.itemCount, 0)
+                    : baskets.reduce(
+                        (total, basket) => total + basket.itemCount,
+                        0
+                      )
                 }
               >
                 <i className="zmdi zmdi-shopping-cart"></i>
