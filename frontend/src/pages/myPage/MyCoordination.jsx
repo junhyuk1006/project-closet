@@ -9,10 +9,7 @@ import '../../assets/styles/myPage/MyPage.css';
 const MyCoordination = () => {
   return (
     <div>
-      <MyPageHeader
-        title="나의 코디 조회"
-        description="내가 예약한 코디 신청 정보를 알 수 있습니다."
-      />{' '}
+      <MyPageHeader title="나의 코디 조회" description="내가 예약한 코디 신청 정보를 알 수 있습니다." />{' '}
       <div className="mypage-label1">코디 예약 현황</div>
       <div className="coordi-rounded-box">아아</div>
     </div>

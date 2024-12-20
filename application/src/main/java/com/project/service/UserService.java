@@ -169,4 +169,8 @@ public class UserService {
 
         return null;
     }
+
+    public void save(Users user) {
+        userRepository.save(user);
+    }
 }

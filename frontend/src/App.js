@@ -112,7 +112,10 @@ const AppRoutes = () => (
           {renderRoute('/MyReviews', <MyReviews />)} {/* 내정보 페이지 */}
           {renderRoute('/MyCoordination', <MyCoordination />)} {/* 내코디 페이지 */}
           {renderRoute('/MyInquirement', <MyInquirement />)} {/* 문의내역 페이지 */}
-          {renderRoute('/MyPurchaseHistory', <MyPurchaseHistory />)} {/* 구매내역 페이지 */}
+          {renderRoute(
+            '/MyPurchaseHistory',
+            <MyPurchaseHistory />
+          )} {/* 구매내역 페이지 */}
           {/* -------------------------------------------------------------------------- */}
           {/* -------------------------------------------------------------------------- */}
           {/* 상품 관련 페이지  */}
