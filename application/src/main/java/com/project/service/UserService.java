@@ -1,5 +1,7 @@
 package com.project.service;
 
+import com.project.dto.UserDTO;
+import com.project.dto.UserGradeDTO;
 import com.project.security.TokenProvider;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.http.ResponseEntity;
@@ -153,4 +155,18 @@ public class UserService {
         }
     }
 
+        if(user.isPresent()) {
+            UserGradeDTO userGradeDTO = new UserGradeDTO();
+            userGradeDTO.setGrade(user.get().getGrade().getGrade());
+            userGradeDTO.setRate(user.get().getGrade().getRate());
+
+            return userGradeDTO;
+        }
+
+        return null;
+    }
+
+    public void save(Users user) {
+        userRepository.save(user);
+    }
 }
