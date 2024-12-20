@@ -20,7 +20,6 @@ public class ItemDetail {
     private int itemPrice;
     private int views;
 
-    @Column(name = "item_name")
     private String itemName;
     private String itemCategory;
     private String mainImage;

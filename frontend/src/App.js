@@ -2,6 +2,7 @@
 import React from 'react';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import { UserProvider } from './api/auth/UserContext';
+import Videoroomtest from "./pages/Videoroomtest";
 
 // 외부 CSS 및 아이콘 라이브러리
 import 'bootstrap/dist/css/bootstrap.min.css'; // Bootstrap 스타일
@@ -48,6 +49,8 @@ import Agreement from './pages/main/Agreement';
 import Guide from './pages/main/Guide';
 import Privacy from './pages/main/Privacy';
 import PaymentResult from './pages/cart/PaymentResult';
+import ImageComponent from "./pages/cart/ImageComponent";
+import WebRTC from "./pages/WebRTC/WebRTC";
 
 /**
  * 공통적으로 사용하는 Route 생성 함수
@@ -185,11 +188,10 @@ const AppRoutes = () => (
           {/* ------------------------------------------------------------------- */}
           {/* ------------------------------------------------------------------- */}
           {/* 에러 페이지 */}
-          {renderRoute(
-            '/*',
-            <Page404 />,
-            false
-          )} {/* 에러 페이지 */}
+          {renderRoute('/*', <Page404 />, false)} {/* 에러 페이지 */}
+          {renderRoute('/Webrtc', <WebRTC />, false)}
+          {renderRoute('/ImageComponent', <ImageComponent />, false)}
+
         </Routes>
       </Router>
     </BasketProvider>

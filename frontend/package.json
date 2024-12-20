@@ -24,12 +24,16 @@
     "dotenv": "^16.4.7",
     "font-awesome": "^4.7.0",
     "framer-motion": "^11.12.0",
+    "janus-gateway": "^1.3.0",
     "jquery": "^3.7.1",
     "material-design-iconic-font": "^2.2.0",
+    "moment": "^2.30.1",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.6",
+    "react-calendar": "^5.1.0",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.3.1",
+    "react-draggable": "^4.4.6",
     "react-helmet": "^6.1.0",
     "react-icons": "^5.3.0",
     "react-modal": "^3.16.1",
@@ -39,10 +43,14 @@
     "react-slick": "^0.30.2",
     "react-toastify": "^10.0.6",
     "react-transition-group": "^4.4.5",
+    "simple-peer": "^9.11.1",
     "slick-carousel": "^1.8.1",
+    "socket.io-client": "^4.8.1",
     "spoqa-han-sans": "^3.3.0",
     "test": "file:",
-    "web-vitals": "^2.1.4"
+    "toastr": "^2.1.4",
+    "web-vitals": "^2.1.4",
+    "webrtc-adapter": "^9.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -84,3 +92,4 @@
     "source-map-loader": "^5.0.0"
   }
 }
+

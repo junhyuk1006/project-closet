@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Form, Button, Row, Col, Table, Pagination } from 'react-bootstrap';
+import { getNotice } from '../../../../api/admin/page/page';
 
 const Notice = () => {
   const [Notices, setNotices] = useState([]);
@@ -80,12 +81,12 @@ const Notice = () => {
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
-    fetchPointUser(page, size, searchParams);
+    fetchNotice(page, size, searchParams);
   };
 
   const handleSearch = () => {
     setCurrentPage(0);
-    fetchPointUser(0, size, searchParams);
+    fetchNotice(0, size, searchParams);
   };
 
   const handleReset = () => {

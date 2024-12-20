@@ -4,6 +4,8 @@ import com.project.domain.detail.ItemInquiry;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Data
@@ -22,10 +24,10 @@ public class UserItemInquiryDTO {
     private ItemInquiry.InquiryType inquiryType;
     private ItemInquiry.AnswerStatus answerStatus;
     private ItemInquiry.Status status;
-    private LocalDateTime createdAt;
+    private Timestamp createdAt;
 
     //Inquiry_Answer 필드
     private Long answerId;
     private String answer;
-    private LocalDateTime answerCreateAt;
+    private Timestamp answerCreateAt;
 }

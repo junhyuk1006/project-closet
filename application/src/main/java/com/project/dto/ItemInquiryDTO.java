@@ -1,14 +1,11 @@
 package com.project.dto;
 
 import com.project.domain.detail.ItemInquiry;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Data
@@ -16,30 +13,24 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class ItemInquiryDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    private Long userId;
-    private Long itemDetailId;
-    private String content;
-    private ItemInquiry.InquiryType inquiryType;
-    private ItemInquiry.AnswerStatus answerStatus  = ItemInquiry.AnswerStatus.Pending;
-    private ItemInquiry.Status status= ItemInquiry.Status.active;
-
-    @CreationTimestamp
-    private LocalDateTime createdAt;
+    private Long id; // ID 필드는 @Id와 @GeneratedValue 제거, DTO에서는 필요 없음
+    private Long userId; // 사용자 ID
+    private Long itemDetailId; // 상품 세부사항 ID
+    private String content; // 문의 내용
+    private ItemInquiry.InquiryType inquiryType; // 문의 유형
+    private ItemInquiry.AnswerStatus answerStatus; // 답변 상태
+    private ItemInquiry.Status status; // 관리 상태
+    private Timestamp createdAt; // 생성 시간
 
     // 엔티티 데이터를 DTO로 변환하는 생성자
     public ItemInquiryDTO(ItemInquiry itemInquiry) {
         this.id = itemInquiry.getId();
-        this.userId = itemInquiry.getUsers().getId(); // Users 엔티티의 ID
-        this.itemDetailId = itemInquiry.getItemDetailId();
+        this.userId = itemInquiry.getUsers() != null ? itemInquiry.getUsers().getId() : null; // Null 안전 처리
+        this.itemDetailId = itemInquiry.getItemDetail() != null ? itemInquiry.getItemDetail().getId() : null; // Null 안전 처리
         this.content = itemInquiry.getContent();
         this.inquiryType = itemInquiry.getInquiryType();
         this.answerStatus = itemInquiry.getAnswerStatus();
         this.status = itemInquiry.getStatus();
         this.createdAt = itemInquiry.getCreatedAt();
     }
-
 }

@@ -6,7 +6,6 @@ import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -22,13 +21,8 @@ public class ItemReview {
     private ItemDetail itemDetail;
 
     private int score;
-
-    @Column(name = "review_image") // 스네이크 케이스 컬럼 매핑
     private String reviewImage;
-
-    @Column(name = "review_content") // 스네이크 케이스 컬럼 매핑
     private String reviewContent;
-
     private String status = "active";
 
     @Column(name = "created_at") // 스네이크 케이스 컬럼 매핑

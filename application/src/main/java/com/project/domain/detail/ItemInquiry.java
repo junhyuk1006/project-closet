@@ -4,10 +4,9 @@ import com.project.domain.Users;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.data.annotation.CreatedDate;
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
+
 
 @Entity
 @Data
@@ -30,8 +29,8 @@ public class ItemInquiry {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "item_datail_id", referencedColumnName = "id", nullable = false)
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "item_detail_id", referencedColumnName = "id")
     private ItemDetail itemDetail;
 
     private String content;

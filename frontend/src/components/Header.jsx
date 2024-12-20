@@ -165,6 +165,7 @@ function Header({ user }) {
             href="#"
             className="dis-block icon-header-item cl2 hov-cl1 trans-04 p-r-12 p-l-20 icon-header-noti-mobile"
             data-notify="0"
+            style={{ display: 'none' }}
           >
             <i className="zmdi zmdi-favorite-outline"></i>
           </a>
@@ -385,6 +386,7 @@ function Header({ user }) {
                 to="#"
                 className="icon-header-item cl2 hov-cl1 trans-04 p-l-20 p-r-12 icon-header-noti"
                 data-notify="0"
+                style={{ display: 'none' }}
               >
                 <i className="zmdi zmdi-favorite-outline"></i>
               </Link>
