@@ -26,6 +26,8 @@ import MyInquirement from './pages/myPage/MyInquirement';
 import MyPageHome from './pages/myPage/MyPageHome';
 import MyPoint from './pages/myPage/MyPoint';
 import MyReviews from './pages/myPage/MyReviews';
+import MyCoordination from './pages/myPage/MyCoordination';
+import MyPurchaseHistory from './pages/myPage/MyPurchaseHistory';
 /** ./pages/Admin  */
 import Admin from './pages/admin/Admin';
 
@@ -108,8 +110,9 @@ const AppRoutes = () => (
           {renderRoute('/MyPoint', <MyPoint />)} {/* 포인트 페이지 */}
           {renderRoute('/MyMemberInfo', <MyMemberInfo />)} {/* 내정보 페이지 */}
           {renderRoute('/MyReviews', <MyReviews />)} {/* 내정보 페이지 */}
-          {/* 문의내역 페이지 */}
-          {renderRoute('/MyInquirement', <MyInquirement />)}
+          {renderRoute('/MyCoordination', <MyCoordination />)} {/* 내코디 페이지 */}
+          {renderRoute('/MyInquirement', <MyInquirement />)} {/* 문의내역 페이지 */}
+          {renderRoute('/MyPurchaseHistory', <MyPurchaseHistory />)} {/* 구매내역 페이지 */}
           {/* -------------------------------------------------------------------------- */}
           {/* -------------------------------------------------------------------------- */}
           {/* 상품 관련 페이지  */}
@@ -134,9 +137,9 @@ const AppRoutes = () => (
           {/* ------------------------------------------------------------------- */}
           {/* ------------------------------------------------------------------- */}
           {/* 에러 페이지 */}
-          {renderRoute('/*', <Page404 />, false)} {/* 에러 페이지 */}
           {renderRoute('/Webrtc', <WebRTC />, false)}
           {renderRoute('/ImageComponent', <ImageComponent />, false)}
+          {renderRoute('/*', <Page404 />, false)} {/* 에러 페이지 */}
         </Routes>
       </Router>
     </BasketProvider>

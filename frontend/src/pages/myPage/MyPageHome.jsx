@@ -91,13 +91,13 @@ const MyPageHome = () => {
       icon: 'bi-cart-check',
       title: '구매내역',
       text: '구매내역 조회',
-      link: '/PurchaseHistory',
+      link: '/MyPurchaseHistory',
     },
     {
       icon: 'bi-hearts',
       title: '코디조회',
       text: '코디예약, 코디조회',
-      link: '/Coordination',
+      link: '/MyCoordination',
     },
     {
       icon: 'bi-journal-text',
