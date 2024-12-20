@@ -1,6 +1,8 @@
 package com.project.controller.admin;
 
 import com.project.dto.AdminItemDTO;
+import com.project.dto.AdminItemDetailDTO;
+import com.project.dto.AdminReviewDTO;
 import com.project.dto.PageRequestDTO;
 import com.project.service.Admin.AdminItemService;
 import lombok.RequiredArgsConstructor;
@@ -20,9 +22,21 @@ public class AdminItemController {
 
     private final AdminItemService adminItemService;
 
+    @GetMapping("itemDetail")
+    public Page<AdminItemDetailDTO> getItemDetails(@PageableDefault(size = 20,direction = Sort.Direction.DESC) Pageable pageable,
+                                             @ModelAttribute PageRequestDTO pageRequestDTO) {
+        return adminItemService.getItemDetails(pageable, pageRequestDTO);
+    }
+
     @GetMapping("item")
-    public Page<AdminItemDTO> getItems(@PageableDefault(size = 20,direction = Sort.Direction.DESC) Pageable pageable,
-                                      @ModelAttribute PageRequestDTO pageRequestDTO) {
+    public Page<AdminItemDTO> getItems(@PageableDefault(size = 20,direction = Sort.Direction.DESC)Pageable pageable,
+                                       @ModelAttribute PageRequestDTO pageRequestDTO) {
         return adminItemService.getItems(pageable, pageRequestDTO);
+    }
+
+    @GetMapping("review")
+    public Page<AdminReviewDTO> getReview(@PageableDefault(size = 20,direction = Sort.Direction.DESC)Pageable pageable,
+                                          @ModelAttribute PageRequestDTO pageRequestDTO) {
+        return adminItemService.getReview(pageable, pageRequestDTO);
     }
 }

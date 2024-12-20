@@ -54,7 +54,7 @@ export default function Product({ products, activeCategory, activeFilter }) {
         )
         .sort((a, b) => {
           if (activeFilter === 'sortByRecent') {
-            return b.created_at - a.createdAt; // 최신순
+            return b.createdAt - a.createdAt; // 최신순
           } else if (activeFilter === 'sortByPriceDesc') {
             return (
               parseInt(b.itemPrice, 10) - // 높은 가격순
@@ -75,7 +75,7 @@ export default function Product({ products, activeCategory, activeFilter }) {
         .map((product) => (
           <div
             key={product.id}
-            className={`col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item ${product.item_category}`}
+            className={`col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item ${product.itemCategory}`}
           >
             <div className="block2">
               <div className="block2-pic hov-img0">

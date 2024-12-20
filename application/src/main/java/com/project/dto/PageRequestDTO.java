@@ -18,6 +18,8 @@ public class PageRequestDTO {
     private String grade;
     private Integer minPrice;
     private Integer maxPrice;
+    private Integer minCount;
+    private Integer maxCount;
     private String category;
     private String status;
 

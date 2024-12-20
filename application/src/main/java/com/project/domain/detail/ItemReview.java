@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 @Entity
 @Data
@@ -16,22 +16,18 @@ public class ItemReview {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "item_detail_id") // 스네이크 케이스 컬럼 매핑
-    private Long itemId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "item_detail_id",referencedColumnName = "id") // 스네이크 케이스 컬럼 매핑
+    private ItemDetail itemDetail;
 
     private int score;
-
-    @Column(name = "review_image") // 스네이크 케이스 컬럼 매핑
     private String reviewImage;
-
-    @Column(name = "review_content") // 스네이크 케이스 컬럼 매핑
     private String reviewContent;
-
     private String status = "active";
 
     @Column(name = "created_at") // 스네이크 케이스 컬럼 매핑
     @CreationTimestamp
-    private LocalDateTime createdAt;
+    private Timestamp createdAt;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "id") // 스네이크 케이스 컬럼 매핑

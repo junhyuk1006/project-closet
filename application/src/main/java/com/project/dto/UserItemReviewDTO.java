@@ -3,7 +3,7 @@ package com.project.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 @Data
 @AllArgsConstructor
@@ -16,7 +16,7 @@ public class UserItemReviewDTO {
     private String nickname;
     private String profileImage;
 
-    public UserItemReviewDTO(Long userId, String username, String nickname, String profileImage, Long reviewId, int score, String reviewImage, String reviewContent, String status, LocalDateTime createdAt) {
+    public UserItemReviewDTO(Long userId, String username, String nickname, String profileImage, Long reviewId, int score, String reviewImage, String reviewContent, String status, Timestamp createdAt) {
         UserId = userId;
         this.username = username;
         this.nickname = nickname;
@@ -36,12 +36,23 @@ public class UserItemReviewDTO {
     private String reviewImage;
     private String reviewContent;
     private String status;
-    private LocalDateTime createdAt;
+    private Timestamp createdAt;
 
     //Item field
     private String itemName;
 
 
-
-
+    public UserItemReviewDTO(Long userId, String username, String nickname, String profileImage, Long reviewId, int score, String reviewImage, String reviewContent, String status, Timestamp createdAt, String itemName) {
+        UserId = userId;
+        this.username = username;
+        this.nickname = nickname;
+        this.profileImage = profileImage;
+        ReviewId = reviewId;
+        this.score = score;
+        this.reviewImage = reviewImage;
+        this.reviewContent = reviewContent;
+        this.status = status;
+        this.createdAt = createdAt;
+        this.itemName = itemName;
+    }
 }

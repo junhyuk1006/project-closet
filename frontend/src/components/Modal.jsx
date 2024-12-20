@@ -121,12 +121,12 @@ function Modal({ isOpen, onClose, product }) {
             <div className="col-md-6 col-lg-5 p-b-30">
               <div className="p-r-50 p-t-5 p-lr-0-lg">
                 <h4 className="mtext-105 cl2 js-name-detail p-b-14">
-                  {product.item_name}
+                  {product.itemName}
                 </h4>
 
-                <span className="mtext-106 cl2">{product.item_price}원</span>
+                <span className="mtext-106 cl2">{product.itemPrice}원</span>
 
-                <p className="stext-102 cl3 p-t-23">{product.item_category}</p>
+                <p className="stext-102 cl3 p-t-23">{product.itemCategory}</p>
 
                 <div className="p-t-33">
                   <div className="flex-w flex-r-m p-b-10">
