@@ -1,11 +1,10 @@
 package com.project.service;
 
 import com.project.domain.Address;
+import com.project.domain.Reservation;
+import com.project.domain.Users;
 import com.project.dto.*;
-import com.project.repository.AddressRepository;
-import com.project.repository.ItemInquiryRepository;
-import com.project.repository.ReviewRepository;
-import com.project.repository.UserRepository;
+import com.project.repository.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -20,6 +19,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -35,6 +35,8 @@ public class MypageService {
     private final ReviewRepository reviewRepository;
     private final UserRepository userRepository;
     private final Path profileImageDir = Paths.get("C:/closetImage/profile/");
+    private final StylingRepository stylingRepository;
+
     // userId로 등록된 배송지 조회( 대표 배송지 + 일반 배송지)
     public List<Address> findByUserId(@RequestParam("userId") long userId) {
         return addressRepository.findByUserId(userId);
@@ -157,6 +159,26 @@ public class MypageService {
         // Address 엔티티를 JPA 리포지토리를 통해 저장
         addressRepository.save(address);
     }
+
+
+    public List<UserReservationDTO> getReservationsByUserId(Long userId) {
+
+            // 예약 리스트 조회
+            List<Reservation> reservations = stylingRepository.findAllByUser_Id(userId);
+
+            // DTO로 변환
+            return reservations.stream()
+                    .map(reservation -> UserReservationDTO.builder()
+                            .userId(reservation.getUser().getId()) // 예약한 사용자 ID
+                            .reservationId(reservation.getId()) // 예약 ID
+                            .coordiId(reservation.getCoordi() != null ? reservation.getCoordi().getId() : null) // 코디네이터 ID
+                            .nickname(reservation.getCoordi() != null ? reservation.getCoordi().getNickname() : null) // 코디네이터 닉네임
+                            .reservationDate(reservation.getReservationDate()) // 예약 날짜
+                            .reservationStatus(reservation.getReservationStatus()) // 예약 상태
+                            .build())
+                    .toList();
+        }
+
 
 
 }

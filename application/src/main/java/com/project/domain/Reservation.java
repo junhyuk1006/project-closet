@@ -14,11 +14,16 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne(fetch = FetchType.LAZY) // Users와의 다대일 관계 설정
-    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false) // user_id를 Users의 id에 매핑
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private Users user;
 
-    private long coordiId;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "coordi_id", referencedColumnName = "id", nullable = true) // coordi_id를 Users의 id에 매핑
+    private Users coordi; // 코디네이터 정보
+
+
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX", timezone = "UTC")
     private Timestamp reservationDate;
     private String reservationStatus;

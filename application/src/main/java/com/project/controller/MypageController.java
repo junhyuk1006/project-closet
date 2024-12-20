@@ -288,6 +288,25 @@ public class MypageController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
     }
+        // 마이페이지 - 나의 예약 목록
+        @GetMapping("/getMyReservation")
+        public ResponseEntity<ResponseDTO<List<UserReservationDTO>>> getMyReservation(
+                @AuthenticationPrincipal CustomUserDetail customUserDetail) {
+
+            Long userId = customUserDetail.getId(); // 인증된 사용자 ID 가져오기
+
+            // Service에서 예약 리스트 조회
+            List<UserReservationDTO> reservations = mypageService.getReservationsByUserId(userId);
+
+            // ResponseDTO 생성
+            ResponseDTO<List<UserReservationDTO>> responseDTO = ResponseDTO.<List<UserReservationDTO>>builder()
+                    .status("success")
+                    .message("예약 목록 조회 성공")
+                    .data(reservations)
+                    .build();
+
+            return ResponseEntity.ok(responseDTO);
+        }
 
 
 }
