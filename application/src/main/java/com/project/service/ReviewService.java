@@ -28,7 +28,7 @@ public class ReviewService {
         // DTO → 엔티티 변환
         ItemReview review = new ItemReview();
         review.setId(reviewDTO.getId());
-        review.setItemId(reviewDTO.getItemId());
+        //review.setItemDetailId(reviewDTO.getItemId());
         review.setScore(reviewDTO.getScore());
         review.setReviewImage(reviewDTO.getReviewImage());
         review.setReviewContent(reviewDTO.getReviewContent());

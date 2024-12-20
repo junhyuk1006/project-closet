@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Form, Button, Row, Col, Table, Pagination } from 'react-bootstrap';
-import { getItem } from '../../../../api/admin/item/item';
+import { getItemDetails } from '../../../../api/admin/item/item';
 const Item = () => {
   const [items, setItems] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
@@ -20,16 +20,16 @@ const Item = () => {
   });
 
   useEffect(() => {
-    fetchItem(currentPage, size, searchParams);
+    fetchItemDetail(currentPage, size, searchParams);
   }, []);
 
-  const fetchItem = (page, size, searchParams) => {
+  const fetchItemDetail = (page, size, searchParams) => {
     const params = {
       page,
       size,
       ...searchParams,
     };
-    getItem(params)
+    getItemDetails(params)
       .then((response) => {
         setItems(response.content);
         setTotalPages(response.totalPages);
@@ -83,12 +83,12 @@ const Item = () => {
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
-    fetchItem(page, size, searchParams);
+    fetchItemDetail(page, size, searchParams);
   };
 
   const handleSearch = () => {
     setCurrentPage(0);
-    fetchItem(0, size, searchParams);
+    fetchItemDetail(0, size, searchParams);
   };
 
   const handleReset = () => {
@@ -170,8 +170,8 @@ const Item = () => {
                   <option value="OuterWear">아우터</option>
                   <option value="Tops">상의</option>
                   <option value="Bottoms">하의</option>
-                  <option value="Sportswear">스포츠웨어어</option>
-                  <option value="Dresses">b</option>
+                  <option value="Sportswear">스포츠웨어</option>
+                  <option value="Dresses">드레스</option>
                 </Form.Control>
               </Form.Group>
             </Col>

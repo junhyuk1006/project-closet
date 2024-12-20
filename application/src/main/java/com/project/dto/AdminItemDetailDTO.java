@@ -7,15 +7,12 @@ import java.sql.Timestamp;
 
 @Data
 @AllArgsConstructor
-public class AdminItemDTO {
+public class AdminItemDetailDTO {
     private Long id;
-    private String detailImage;
+    private String mainImage;
+    private String itemName;
     private String itemCategory;
-    private String ItemName;
     private int itemPrice;
-    private String color;
-    private String size;
-    private int ItemCount;
     private String status;
     private Timestamp createdAt;
 }

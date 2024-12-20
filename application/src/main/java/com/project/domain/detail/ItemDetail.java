@@ -1,5 +1,6 @@
 package com.project.domain.detail;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
@@ -31,4 +32,8 @@ public class ItemDetail {
 
     @OneToMany(mappedBy = "itemDetail")
     private List<Item> items;
+
+    @OneToMany(mappedBy = "itemDetail" , cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<ItemReview> itemReview;
 }
