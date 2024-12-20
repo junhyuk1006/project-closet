@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Modal from '../../components/Modal';
 
@@ -6,6 +6,7 @@ export default function Product({ products, activeCategory, activeFilter }) {
   const [isLiked, setIsLiked] = useState({});
   const [isModalOpen, setModalOpen] = useState(false); // 모달 상태 관리
   const [selectedProduct, setSelectedProduct] = useState(null); // 선택한 제품의 상태
+  const [productId, setProductId] = useState(null); // 상품 id
   const navigate = useNavigate();
 
   const toggleLike = (id) => {
@@ -33,9 +34,16 @@ export default function Product({ products, activeCategory, activeFilter }) {
     setModalOpen(false);
   };
 
-  const handleNavigate = (product) => {
-    navigate(`/Detail`, { state: { productId: product.id } });
+  const handleNavigate = () => {
+    navigate(`/Detail/${productId}`);
   };
+
+  // 상품 id 상태값이 변경될 때마다 실행
+  useEffect(() => {
+    if (productId !== null) {
+      handleNavigate();
+    }
+  }, [productId]);
 
   return (
     <div className="row isotope-grid">
@@ -91,9 +99,10 @@ export default function Product({ products, activeCategory, activeFilter }) {
 
               <div className="block2-txt flex-w flex-t p-t-14">
                 <div className="block2-txt-child1 flex-col-l ">
+                  {/* <button className="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6" onClick={() => handleNavigate(product)}> */}
                   <button
                     className="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6"
-                    onClick={() => handleNavigate(product)}
+                    onClick={() => setProductId(product.id)}
                   >
                     {product.itemName}
                   </button>

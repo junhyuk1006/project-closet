@@ -11,12 +11,13 @@ import ItemInquiry from './ItemInquiry';
 import FetchCountReview from '../../api/review/FetchCountReview';
 import FetchCountInquiry from '../../api/inquiry/FetchCountInquiry';
 import { useCart } from '../../api/basket/BasketContext';
+import { call } from '../../api/auth/ApiService';
 
 function Detail() {
   const location = useLocation();
   const { user, loading } = useUser(); // useUser에서 loading 상태 가져오기
-  const productId = location.state?.productId || '';
-  const [idProducts, setIdProducts] = useState([]); // Fetch된 데이터 저장
+  const productId = location.pathname.split('/')[2];
+  const [product, setProduct] = useState([]); // Fetch된 데이터 저장
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isZoomed, setIsZoomed] = useState(false);
   const [activeTab, setActiveTab] = useState('description');
@@ -35,12 +36,24 @@ function Detail() {
     setBasket([]); // 초기화
   }, []);
 
+  // 컴포넌트 로드 시 id에 따른 상품 데이터를 가져옵니다.
+  useEffect(() => {
+    call(`/api/itemDetail/${productId}`)
+      .then((res) => {
+        console.log(res);
+        setProduct(res);
+      })
+      .catch((err) => {
+        console.error('상품 데이터를 가져오는 데 실패했습니다.' + err);
+      });
+  }, []);
+
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
 
   const handleFetch = (data) => {
-    setIdProducts(data);
+    setProduct(data);
   };
 
   const handleThumbnailClick = (index) => {
@@ -57,13 +70,13 @@ function Detail() {
 
   const handlePrev = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? idProducts.length - 1 : prevIndex - 1
+      prevIndex === 0 ? product.length - 1 : prevIndex - 1
     );
   };
 
   const handleNext = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex === idProducts.length - 1 ? 0 : prevIndex + 1
+      prevIndex === product.length - 1 ? 0 : prevIndex + 1
     );
   };
 
@@ -85,9 +98,9 @@ function Detail() {
       itemCount: quantity,
       size: selectedSize,
       color: selectedColor,
-      itemName: idProducts[0]?.itemName, // 필수 데이터 추가
-      itemPrice: idProducts[0]?.itemPrice, // 필수 데이터 추가
-      mainImage: idProducts[0]?.mainImage, // 필수 데이터 추가
+      itemName: product[0]?.itemName, // 필수 데이터 추가
+      itemPrice: product[0]?.itemPrice, // 필수 데이터 추가
+      mainImage: product[0]?.mainImage, // 필수 데이터 추가
     };
 
     try {
@@ -146,7 +159,7 @@ function Detail() {
 
           {/* 제품 이름 */}
           <span className="stext-109 cl4">
-            {idProducts[0]?.itemName || 'Loading...'}
+            {product[0]?.itemName || 'Loading...'}
           </span>
         </div>
       </div>
@@ -157,18 +170,16 @@ function Detail() {
             {/* 이미지 섹션 */}
             <div className="col-md-6 col-lg-7 p-b-30">
               <div className="p-l-25 p-r-30 p-lr-0-lg">
-                {idProducts.length > 0 && (
+                {product.length > 0 && (
                   <div className="flex">
                     {/* 썸네일 */}
                     <div className="thumbnail-list">
-                      {idProducts.slice(0, 3).map((product, index) => (
+                      {product.slice(0, 3).map((product, index) => (
                         <img
-                          key={index}
-                          src={`images/${product.mainImage}`} // 각 제품의 이미지 사용
+                          key={product.itemId}
+                          src={`/images/${product.mainImage}`} // 각 제품의 이미지 사용
                           alt={`Thumbnail ${index + 1}`}
-                          className={`thumbnail ${
-                            currentIndex === index ? 'active' : ''
-                          }`}
+                          className={`thumbnail ${currentIndex === index ? 'active' : ''}`}
                           onClick={() => handleThumbnailClick(index)}
                         />
                       ))}
@@ -180,7 +191,7 @@ function Detail() {
                         &#8249;
                       </button>
                       <img
-                        src={`images/${idProducts[0]?.mainImage || ''}`}
+                        src={`/images/${product[0]?.mainImage || ''}`}
                         alt="Main Product"
                         className="main-image"
                       />
@@ -201,15 +212,15 @@ function Detail() {
             <div className="col-md-6 col-lg-5 p-b-30">
               <div className="p-r-50 p-t-5 p-lr-0-lg">
                 <h4 className="mtext-105 cl2 js-name-detail p-b-14">
-                  {idProducts[0]?.itemName || 'Loading...'}
+                  {product[0]?.itemName || 'Loading...'}
                 </h4>
 
                 <span className="mtext-106 cl2">
-                  {idProducts[0]?.itemPrice?.toLocaleString()} 원
+                  {product[0]?.itemPrice?.toLocaleString()} 원
                 </span>
 
                 <p className="stext-102 cl3 p-t-23">
-                  {idProducts[0]?.itemCategory || 'No category available.'}
+                  {product[0]?.itemCategory || 'No category available.'}
                 </p>
 
                 {/* 수량 조정 */}
@@ -224,7 +235,7 @@ function Detail() {
                       >
                         <option>사이즈 선택</option>
                         {Array.from(
-                          new Set(idProducts.map((product) => product.size))
+                          new Set(product.map((product) => product.size))
                         ).map((uniqueSize, index) => (
                           <option key={index} value={uniqueSize}>
                             {uniqueSize}
@@ -244,7 +255,7 @@ function Detail() {
                       >
                         <option>색상 선택</option>
                         {Array.from(
-                          new Set(idProducts.map((product) => product.color))
+                          new Set(product.map((product) => product.color))
                         ).map((uniqueColor, index) => (
                           <option key={index} value={uniqueColor}>
                             {uniqueColor}
