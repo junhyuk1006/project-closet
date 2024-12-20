@@ -38,6 +38,8 @@ const MyPoint = () => {
         'GET'
       );
       setPoints(response.content);
+
+      setTotalPages(response.totalPages);
     } catch (error) {
       console.error('Error fetching points:', error);
     }

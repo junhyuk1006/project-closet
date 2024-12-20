@@ -13,6 +13,11 @@ const MemberInfo = () => {
   const { user, setUser } = useUser(); // UserContext에서 user와 setUser를 가져오기
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // 모달 열기/닫기
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   const [bodyInfo, setBodyInfo] = useState({
     height: user?.height || '',
@@ -550,9 +555,49 @@ const MemberInfo = () => {
           </>
         )}
         <div className="address-buttons">
-          <button className="delivery-button">배송지 등록하기</button>
+          <div className="address-buttons">
+            <button className="delivery-button" onClick={openModal}>
+              배송지 등록하기
+            </button>
+          </div>
         </div>
       </div>
+      {/* 모달 창 */}
+      {isModalOpen && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h2>배송지 입력</h2>
+            <form>
+              <label htmlFor="address">주소</label>
+              <input
+                id="address"
+                type="text"
+                placeholder="주소를 입력하세요"
+                className="address-input"
+              />
+              <button></button>
+              <input
+                id="address"
+                type="text"
+                placeholder="상세주소를 입력하세요"
+                className="address-input"
+              />
+              <div className="modal-actions">
+                <button
+                  type="button"
+                  className="close-button"
+                  onClick={closeModal}
+                >
+                  닫기
+                </button>
+                <button type="submit" className="submit-button">
+                  등록
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
