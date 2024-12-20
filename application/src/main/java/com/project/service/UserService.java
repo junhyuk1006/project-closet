@@ -155,10 +155,11 @@ public class UserService {
         }
     }
 
+
     // 마이페이지 - 등급 적립율 조회
     public UserGradeDTO findGradeByUserId(Long userId) {
         Optional<Users> user = userRepository.findById(userId);
-        if(user.isPresent()) {
+        if (user.isPresent()) {
             UserGradeDTO userGradeDTO = new UserGradeDTO();
             userGradeDTO.setGrade(user.get().getGrade().getGrade());
             userGradeDTO.setRate(user.get().getGrade().getRate());

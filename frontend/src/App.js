@@ -104,17 +104,18 @@ const AppRoutes = () => (
           {/* -------------------------------------------------------------------------- */}
           {/* -------------------------------------------------------------------------- */}
           {/* 마이페이지 */}
+          {renderRoute('/find-id', <FindIdForm />)} {/* 아이디 찾기 페이지*/}
+          {renderRoute('/reset-password', <ResetPasswordForm />)} {/* 비밀번호 초기화 */}
           {renderRoute('/MyPageHome', <MyPageHome />)} {/* 마이페이지 홈 */}
           {renderRoute('/MyPoint', <MyPoint />)} {/* 포인트 페이지 */}
           {renderRoute('/MyMemberInfo', <MyMemberInfo />)} {/* 내정보 페이지 */}
-          {renderRoute('/MyReviews', <MyReviews />)}
-          {renderRoute('/MyCoordination', <MyCoordination />)} {renderRoute('/find-id', <FindIdForm />)} {/* 아이디 찾기 페이지*/}
-          {renderRoute('/reset-password', <ResetPasswordForm />)} {/* 비밀번호 초기화 */}
-          {/* 문의내역 페이지 */}
-          {renderRoute('/MyInquirement', <MyInquirement />)}
-          {/* 문의내역 페이지 */}
-          {renderRoute('/MyPurchaseHistory', <MyPurchaseHistory />)}
-          MyPurchaseHistory
+          {renderRoute('/MyReviews', <MyReviews />)} {/* 내정보 페이지 */}
+          {renderRoute('/MyCoordination', <MyCoordination />)} {/* 내코디 페이지 */}
+          {renderRoute('/MyInquirement', <MyInquirement />)} {/* 문의내역 페이지 */}
+          {renderRoute(
+            '/MyPurchaseHistory',
+            <MyPurchaseHistory />
+          )} {/* 구매내역 페이지 */}
           {/* -------------------------------------------------------------------------- */}
           {/* -------------------------------------------------------------------------- */}
           {/* 상품 관련 페이지  */}
@@ -139,9 +140,9 @@ const AppRoutes = () => (
           {/* ------------------------------------------------------------------- */}
           {/* ------------------------------------------------------------------- */}
           {/* 에러 페이지 */}
-          {renderRoute('/*', <Page404 />, false)} {/* 에러 페이지 */}
           {renderRoute('/Webrtc', <WebRTC />, false)}
           {renderRoute('/ImageComponent', <ImageComponent />, false)}
+          {renderRoute('/*', <Page404 />, false)} {/* 에러 페이지 */}
         </Routes>
       </Router>
     </BasketProvider>
