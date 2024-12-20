@@ -16,6 +16,9 @@ import Home from './pages/main/Home';
 import Login from './pages/auth/Login';
 import OAuth2RedirectHandler from './pages/auth/OAuth2RedirectHandler ';
 import SignUp from './pages/auth/SignUp';
+import FindIdForm from './pages/auth/FindIdForm';
+import ResetPasswordForm from './pages/auth/ResetPasswordForm';
+import ChangePasswordForm from './pages/auth/ChangePasswordForm';
 
 /** ./pages/MyPage  */
 import MyMemberInfo from './pages/myPage/MyMemberInfo';
@@ -53,6 +56,7 @@ import Privacy from './pages/main/Privacy';
 import PaymentResult from './pages/cart/PaymentResult';
 import ImageComponent from './pages/cart/ImageComponent';
 import WebRTC from './pages/WebRTC/WebRTC';
+import Shop from './pages/shop/Shop';
 
 /**
  * 공통적으로 사용하는 Route 생성 함수
@@ -62,12 +66,7 @@ import WebRTC from './pages/WebRTC/WebRTC';
  * @returns {JSX.Element} - Route 컴포넌트
  */
 
-const renderRoute = (
-  path,
-  component,
-  includeHeaderFooter = true,
-  animationClass = 't03'
-) => (
+const renderRoute = (path, component, includeHeaderFooter = true, animationClass = 't03') => (
   <Route
     path={path}
     element={
@@ -91,54 +90,26 @@ const AppRoutes = () => (
         <Routes>
           {/* -------------------------------------------------------------------------- */}
           {/* 메인 페이지 */}
-          {renderRoute(
-            '/',
-            <Home />,
-            true,
-            't10'
-          )} {/* 메인 페이지 */}
-          {renderRoute(
-            '/guide',
-            <Guide />
-          )} {/* 이용안내 페이지 */}
-          {renderRoute(
-            '/agreement',
-            <Agreement />
-          )} {/* 이용약관 페이지 */}
-          {renderRoute(
-            '/privacy',
-            <Privacy />
-          )} {/* 개인정보처리방침 페이지 */}
+          {renderRoute('/', <Home />, true, 't10')} {/* 메인 페이지 */}
+          {renderRoute('/guide', <Guide />)} {/* 이용안내 페이지 */}
+          {renderRoute('/agreement', <Agreement />)} {/* 이용약관 페이지 */}
+          {renderRoute('/privacy', <Privacy />)} {/* 개인정보처리방침 페이지 */}
           {/* -------------------------------------------------------------------------- */}
           {/* -------------------------------------------------------------------------- */}
           {/* 회원 관련 페이지 */}
-          {renderRoute(
-            '/Login',
-            <Login />
-          )} {/* 로그인 페이지 */}
+          {renderRoute('/Login', <Login />)} {/* 로그인 페이지 */}
           <Route path="/oauth2/redirect" element={<OAuth2RedirectHandler />} />
-          {renderRoute(
-            '/SignUp',
-            <SignUp />
-          )} {/* 회원가입 페이지 */}
+          {renderRoute('/SignUp', <SignUp />)} {/* 회원가입 페이지 */}
+          {renderRoute('/change-password', <ChangePasswordForm />)} {/* 비밀번호 설정 페이지*/}
           {/* -------------------------------------------------------------------------- */}
           {/* -------------------------------------------------------------------------- */}
           {/* 마이페이지 */}
-          {renderRoute(
-            '/MyPageHome',
-            <MyPageHome />
-          )} {/* 마이페이지 홈 */}
-          {renderRoute(
-            '/MyPoint',
-            <MyPoint />
-          )} {/* 포인트 페이지 */}
-          {renderRoute(
-            '/MyMemberInfo',
-            <MyMemberInfo />
-          )} {/* 내정보 페이지 */}
+          {renderRoute('/MyPageHome', <MyPageHome />)} {/* 마이페이지 홈 */}
+          {renderRoute('/MyPoint', <MyPoint />)} {/* 포인트 페이지 */}
+          {renderRoute('/MyMemberInfo', <MyMemberInfo />)} {/* 내정보 페이지 */}
           {renderRoute('/MyReviews', <MyReviews />)}
-          {/* 내코디 페이지 */}
-          {renderRoute('/MyCoordination', <MyCoordination />)}{' '}
+          {renderRoute('/MyCoordination', <MyCoordination />)} {renderRoute('/find-id', <FindIdForm />)} {/* 아이디 찾기 페이지*/}
+          {renderRoute('/reset-password', <ResetPasswordForm />)} {/* 비밀번호 초기화 */}
           {/* 문의내역 페이지 */}
           {renderRoute('/MyInquirement', <MyInquirement />)}
           {/* 문의내역 페이지 */}
@@ -147,56 +118,28 @@ const AppRoutes = () => (
           {/* -------------------------------------------------------------------------- */}
           {/* -------------------------------------------------------------------------- */}
           {/* 상품 관련 페이지  */}
-          {renderRoute(
-            '/Detail/*',
-            <Detail />
-          )} {/* 상품 상세 페이지 */}
-          {renderRoute(
-            '/Recommend',
-            <Recommend />
-          )} {/* 추천 페이지 */}
-          {/* 장바구니 페이지 */}
-          {renderRoute('/ShoppingCart', <ShoppingCart />)}
+          {renderRoute('/shop', <Shop />)} {/* 상품 페이지 */}
+          {renderRoute('/Detail/*', <Detail />)} {/* 상품 상세 페이지 */}
+          {renderRoute('/Recommend', <Recommend />)} {/* 추천 페이지 */}
+          {renderRoute('/ShoppingCart', <ShoppingCart />)} {/* 장바구니 페이지 */}
           {renderRoute('/PaymentResult', <PaymentResult />, false)}
           {/* -------------------------------------------------------------------------- */}
           {/* -------------------------------------------------------------------------- */}
           {/* 커뮤니티 페이지 */}
-          {renderRoute(
-            '/Community',
-            <Board />
-          )} {/* 일반게시판 페이지 */}
-          {renderRoute(
-            '/WritePost',
-            <WritePost />
-          )} {/* 글 작성페이지 */}
-          {renderRoute('/board/:boardId', <BoardDetail />)}{' '}
-          {/* 글 상세페이지 */}
-          {renderRoute('/board/edit/:boardId', <EditPost />)}{' '}
-          {/* 글 수정페이지 */}
-          {renderRoute(
-            '/Coordi',
-            <Coordi />
-          )} {/* 코디자랑 페이지 */}
-          {renderRoute(
-            '/Upload',
-            <UploadForm />
-          )} {/* 코디업로드 페이지 */}
+          {renderRoute('/Community', <Board />)} {/* 일반게시판 페이지 */}
+          {renderRoute('/WritePost', <WritePost />)} {/* 글 작성페이지 */}
+          {renderRoute('/board/:boardId', <BoardDetail />)} {/* 글 상세페이지 */}
+          {renderRoute('/board/edit/:boardId', <EditPost />)} {/* 글 수정페이지 */}
+          {renderRoute('/Coordi', <Coordi />)} {/* 코디자랑 페이지 */}
+          {renderRoute('/Upload', <UploadForm />)} {/* 코디업로드 페이지 */}
           {/* -------------------------------------------------------------------------- */}
           {/* -------------------------------------------------------------------------- */}
           {/* 관리자 페이지 */}
-          {renderRoute(
-            '/admin/*',
-            <Admin />,
-            false
-          )} {/* 관리자 페이지 */}
+          {renderRoute('/admin/*', <Admin />, false)} {/* 관리자 페이지 */}
           {/* ------------------------------------------------------------------- */}
           {/* ------------------------------------------------------------------- */}
           {/* 에러 페이지 */}
-          {renderRoute(
-            '/*',
-            <Page404 />,
-            false
-          )} {/* 에러 페이지 */}
+          {renderRoute('/*', <Page404 />, false)} {/* 에러 페이지 */}
           {renderRoute('/Webrtc', <WebRTC />, false)}
           {renderRoute('/ImageComponent', <ImageComponent />, false)}
         </Routes>

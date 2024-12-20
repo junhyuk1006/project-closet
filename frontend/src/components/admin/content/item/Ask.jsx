@@ -212,7 +212,7 @@ const Ask = () => {
           <Row className="align-items-center">
             <Col xs={12}>
               <Form.Group controlId="levelSearch">
-                <Form.Label>답변상태태</Form.Label>
+                <Form.Label>답변상태</Form.Label>
                 <div>
                   <Form.Check
                     inline
@@ -232,7 +232,7 @@ const Ask = () => {
                     type="radio"
                     name="status"
                     value="active"
-                    checked={searchParams.status === 'active'}
+                    checked={searchParams.status === 'Pending'}
                     onChange={(e) => {
                       updateSearchParams('status', e.target.value);
                     }}
@@ -243,7 +243,7 @@ const Ask = () => {
                     type="radio"
                     name="status"
                     value="inactive"
-                    checked={searchParams.status === 'inactive'}
+                    checked={searchParams.status === 'Answered'}
                     onChange={(e) => {
                       updateSearchParams('status', e.target.value);
                     }}
@@ -267,13 +267,13 @@ const Ask = () => {
         <thead>
           <tr>
             <th>번호</th>
-            <th>이미지</th>
+            <th>이메일</th>
+            <th>닉네임</th>
+            <th>문의유형</th>
             <th>상품명</th>
             <th>내용</th>
-            <th>작성자</th>
-            <th>작성일</th>
             <th>답변상태</th>
-            <th>상태</th>
+            <th>문의날짜</th>
           </tr>
         </thead>
         <tbody>

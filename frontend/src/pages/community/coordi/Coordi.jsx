@@ -183,11 +183,12 @@ const Album = () => {
                     style={{ cursor: 'pointer' }}
                   >
                     <img
-                      src={`/images/${coordi.coordiImage}`}
+                      src={`http://localhost:80/api/images/${coordi.coordiImage}`}
                       className="card-img-top"
                       alt={coordi.coordiTitle}
                       style={{ height: '350px', objectFit: 'cover' }}
                     />
+
                     <div className="card-body">
                       <h5 className="card-title">{coordi.coordiTitle}</h5>
                       <p className="card-text">
@@ -220,7 +221,7 @@ const Album = () => {
           </Modal.Header>
           <Modal.Body>
             <img
-              src={`/images/${selectedCoordi.coordiImage}`}
+              src={`http://localhost:80/api/images/${selectedCoordi.coordiImage}`}
               alt={selectedCoordi.coordiTitle}
               style={{ width: '100%', height: 'auto' }}
             />
@@ -235,11 +236,7 @@ const Album = () => {
           </Modal.Body>
           <Modal.Footer>
             {/* 좋아요 버튼 */}
-            <Button
-              variant="light"
-              onClick={handleLikeToggle}
-              disabled={!user} // 로그인 안한 경우 좋아요 불가능
-            >
+            <Button variant="light" onClick={handleLikeToggle}>
               {liked ? (
                 <FaHeart style={{ color: 'red' }} />
               ) : (

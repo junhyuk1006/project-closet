@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 
 import com.project.domain.Users;
 
+import java.util.Optional;
+
 
 @Repository
 public interface UserRepository extends JpaRepository<Users, Long> {
@@ -43,5 +45,6 @@ public interface UserRepository extends JpaRepository<Users, Long> {
   @Query("UPDATE Users u SET u.profileImage = :profileImage, u.name = :name, u.phone = :phone, u.style = :style, u.introduction = :introduction WHERE u.id = :userId")
   void changeAddInfo(@Param("userId") Long userId,@Param("profileImage") String profileImage, @Param("name") String name, @Param("phone") String phone, @Param("style") String style,@Param("introduction") String introduction);
 
-
+  Optional<Users> findByEmail(String email);
+  Optional<Users> findByUsernameAndEmail(String username, String email);
 }

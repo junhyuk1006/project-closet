@@ -1,9 +1,7 @@
 package com.project.service.Admin;
 
-import com.project.dto.AdminItemDTO;
-import com.project.dto.AdminItemDetailDTO;
-import com.project.dto.AdminReviewDTO;
-import com.project.dto.PageRequestDTO;
+import com.project.dto.*;
+import com.project.repository.admin.AdminAskRepository;
 import com.project.repository.admin.AdminItemDetailRepository;
 import com.project.repository.admin.AdminItemRepository;
 import com.project.repository.admin.AdminReviewRepository;
@@ -18,6 +16,7 @@ public class AdminItemService {
     private final AdminItemDetailRepository adminItemDetailRepository;
     private final AdminItemRepository adminItemRepository;
     private final AdminReviewRepository adminReviewRepository;
+    private final AdminAskRepository adminAskRepository;
 
     public Page<AdminItemDetailDTO> getItemDetails(Pageable pageable, PageRequestDTO pageRequestDTO) {
         return adminItemDetailRepository.findItemDetail(pageable,
@@ -49,5 +48,14 @@ public class AdminItemService {
                 pageRequestDTO.getSearchInput(),
                 pageRequestDTO.getStartDate(),
                 pageRequestDTO.getEndDate());
+    }
+
+    public Page<AdminAskDTO> getAsk(Pageable pageable, PageRequestDTO pageRequestDTO) {
+        return adminAskRepository.findAsk(pageable,
+                pageRequestDTO.getSearchKeyword(),
+                pageRequestDTO.getSearchInput(),
+                pageRequestDTO.getStartDate(),
+                pageRequestDTO.getEndDate(),
+                pageRequestDTO.getStatus());
     }
 }

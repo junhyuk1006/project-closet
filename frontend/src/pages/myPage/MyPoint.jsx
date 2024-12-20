@@ -1,19 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import MyPageHeader from '../../components/myPage/MyPageHeader';
-import Pagination from '../../pages/public/Pagination'; // 분리된 Pagination 컴포넌트 임포트
+import Pagination from '../../pages/public/Pagination'; // 수정된 Pagination 컴포넌트
 import { call } from '../../api/auth/ApiService';
 import { useUser } from '../../api/auth/UserContext';
 import '../../assets/styles/myPage/MyPage.css';
 
 const MyPoint = () => {
   const [points, setPoints] = useState([]);
-  const [totalPoints, setTotalPoints] = useState(0); // 나의 적립금
+  const [totalPoints, setTotalPoints] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
   const { user, loading } = useUser();
   const pageSize = 6;
-  const blockSize = 5; // 한 블록에 표시할 페이지 수
+  const blockSize = 5;
 
   useEffect(() => {
     if (!loading && user) {
@@ -23,14 +22,13 @@ const MyPoint = () => {
   }, [loading, user, currentPage]);
 
   if (loading) {
+    return <div>로딩 중...</div>;
   }
 
-  // 로그인되지 않은 경우 처리
   if (!user || !user.id) {
-    return user;
+    return <div>로그인이 필요합니다.</div>;
   }
 
-  const userId = user.id;
   const fetchPoints = async (page) => {
     try {
       const response = await call(
@@ -38,7 +36,6 @@ const MyPoint = () => {
         'GET'
       );
       setPoints(response.content);
-
       setTotalPages(response.totalPages);
     } catch (error) {
       console.error('Error fetching points:', error);
@@ -46,10 +43,9 @@ const MyPoint = () => {
   };
 
   const fetchTotalPoints = async () => {
-    console.log(userId);
     try {
       const response = await call(`/api/point/getTotalPointByUserid`, 'GET');
-      setTotalPoints(response); // 백엔드에서 "totalPoints" 필드로 전달된 값
+      setTotalPoints(response);
     } catch (error) {
       console.error('Error fetching total points:', error);
     }
@@ -61,7 +57,6 @@ const MyPoint = () => {
         title="적립금 조회"
         description="적립금은 사이트 내에서 상품 구매 시 현금처럼 사용할 수 있습니다."
       />
-      {/* 나의 적립금 표시 */}
       <div className="point-label1">
         나의 적립금: <strong>{totalPoints}p</strong>
       </div>
@@ -95,7 +90,6 @@ const MyPoint = () => {
         ))}
       </div>
 
-      {/* Pagination 컴포넌트 사용 */}
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}

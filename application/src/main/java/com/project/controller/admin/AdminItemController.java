@@ -1,9 +1,6 @@
 package com.project.controller.admin;
 
-import com.project.dto.AdminItemDTO;
-import com.project.dto.AdminItemDetailDTO;
-import com.project.dto.AdminReviewDTO;
-import com.project.dto.PageRequestDTO;
+import com.project.dto.*;
 import com.project.service.Admin.AdminItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -38,5 +35,11 @@ public class AdminItemController {
     public Page<AdminReviewDTO> getReview(@PageableDefault(size = 20,direction = Sort.Direction.DESC)Pageable pageable,
                                           @ModelAttribute PageRequestDTO pageRequestDTO) {
         return adminItemService.getReview(pageable, pageRequestDTO);
+    }
+
+    @GetMapping("ask")
+    public Page<AdminAskDTO> getAsk(@PageableDefault(size = 20,direction = Sort.Direction.DESC)Pageable pageable,
+                                    @ModelAttribute PageRequestDTO pageRequestDTO) {
+        return adminItemService.getAsk(pageable, pageRequestDTO);
     }
 }

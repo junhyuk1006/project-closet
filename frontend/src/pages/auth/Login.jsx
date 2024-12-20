@@ -186,29 +186,51 @@ const LoginForm = () => {
             {loading ? '로그인 중...' : '로그인'}
           </button>
           <hr className="my-4" />
-          {/* OAuth2 네이버 로그인 버튼 추가 */}
-          <button type="button" onClick={() => handleOAuthLogin('naver')}>
-            <img
-              src={NaverImage} // 네이버 로고 URL
-              alt="Naver Logo"
-              width="175"
-              height="45"
-            />
-          </button>
-          &nbsp;&nbsp;
-          {/* OAuth2 카카오 로그인 버튼 추가 */}
-          <button type="button" onClick={() => handleOAuthLogin('kakao')}>
-            <img
-              src={KaKaoImage} // 카카오 로고 URL
-              alt="Kakao Logo"
-              width="175"
-              height="45"
-            />
-          </button>
+          <div className="social-login mt-3">
+            {/* OAuth2 네이버 로그인 버튼 추가 */}
+            <button type="button" onClick={() => handleOAuthLogin('naver')}>
+              <img
+                src={NaverImage} // 네이버 로고 URL
+                alt="Naver Logo"
+                width="175"
+                height="45"
+              />
+            </button>
+            &nbsp;&nbsp;
+            {/* OAuth2 카카오 로그인 버튼 추가 */}
+            <button type="button" onClick={() => handleOAuthLogin('kakao')}>
+              <img
+                src={KaKaoImage} // 카카오 로고 URL
+                alt="Kakao Logo"
+                width="175"
+                height="45"
+              />
+            </button>
+          </div>
           <hr className="my-4" />
-          <a onClick={goToSignUp} className="btn btn-secondary w-100 py-2">
-            회원가입
-          </a>
+          <div className="text-center mt-3">
+            <a
+              onClick={() => navigator('/find-id')}
+              className="auth-link"
+              role="button"
+            >
+              아이디 찾기
+            </a>
+            <span className="mx-2">|</span> {/* 구분선 */}
+            <a
+              onClick={() => navigator('/reset-password')}
+              className="auth-link"
+              role="button"
+            >
+              비밀번호 찾기
+            </a>
+          </div>
+          <div className="text-center mt-2">
+            <span>아직 회원이 아니신가요? </span>
+            <a onClick={goToSignUp} className="signup-link" role="button">
+              회원가입
+            </a>
+          </div>
           <p className="mt-5 mb-3 text-body-secondary">&copy; 2024</p>
         </form>
       </main>

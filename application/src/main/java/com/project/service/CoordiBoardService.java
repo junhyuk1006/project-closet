@@ -21,8 +21,10 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CoordiBoardService {
 
-    private static final String FRONTEND_IMAGES_PATH =
-            System.getProperty("user.dir") + "/../frontend/public/images";
+    // 백엔드의 정적 리소스 이미지 경로로 변경
+    private static final String BACKEND_IMAGES_PATH =
+            System.getProperty("user.dir") + "/src/main/resources/static/images";
+
 
     private final CoordiBoardRepository coordiBoardRepository;
     private final UserRepository userRepository;
@@ -32,7 +34,7 @@ public class CoordiBoardService {
     // 코디 저장
     public CoordiBoardDTO saveCoordi(MultipartFile image, String description, Long userId, String title) throws IOException {
         // 파일 업로드 로직
-        String fileName = fileService.uploadFile(image, FRONTEND_IMAGES_PATH);
+        String fileName = fileService.uploadFile(image, BACKEND_IMAGES_PATH);
 
         // 사용자 조회
         Users user = userRepository.findById(userId)
@@ -94,7 +96,7 @@ public class CoordiBoardService {
 
         if (image != null) {
             // 이미지 업데이트
-            String fileName = fileService.uploadFile(image, FRONTEND_IMAGES_PATH);
+            String fileName = fileService.uploadFile(image, BACKEND_IMAGES_PATH);
             coordiBoard.setCoordiImage(fileName);
         }
 
