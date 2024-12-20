@@ -49,6 +49,9 @@ const MyInquirement = () => {
         {myInquiries.length > 0 ? (
           myInquiries.map((inquiry) => (
             <div key={inquiry.inquiryId} className="inquiry-container">
+              <div>
+                <span className="mypage-item-name"> {inquiry.itemName}</span>
+              </div>
               {/* 제목과 상태를 한 줄에 정렬 */}
               <div
                 className="inquiry-main"
@@ -84,7 +87,6 @@ const MyInquirement = () => {
                       ? '답변 완료'
                       : '답변 대기'}
                   </span>
-
                   <span className="mypage-inquiry-content">
                     {inquiry.inquiryContent}
                   </span>

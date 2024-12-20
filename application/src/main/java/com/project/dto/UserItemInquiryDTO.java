@@ -14,6 +14,23 @@ public class UserItemInquiryDTO {
 
     //Users 필드
     private Long userId;
+
+    public UserItemInquiryDTO(Long userId, String username, String nickname, String profileImage, Long inquiryId, String inquiryContent, ItemInquiry.InquiryType inquiryType, ItemInquiry.AnswerStatus answerStatus, ItemInquiry.Status status, Timestamp createdAt, Long answerId, String answer, Timestamp answerCreateAt) {
+        this.userId = userId;
+        this.username = username;
+        this.nickname = nickname;
+        this.profileImage = profileImage;
+        InquiryId = inquiryId;
+        InquiryContent = inquiryContent;
+        this.inquiryType = inquiryType;
+        this.answerStatus = answerStatus;
+        this.status = status;
+        this.createdAt = createdAt;
+        this.answerId = answerId;
+        this.answer = answer;
+        this.answerCreateAt = answerCreateAt;
+    }
+
     private String username;
     private String nickname;
     private String profileImage;
@@ -30,4 +47,7 @@ public class UserItemInquiryDTO {
     private Long answerId;
     private String answer;
     private Timestamp answerCreateAt;
+
+    //Item _Detail
+    private String itemName;
 }

@@ -699,3 +699,8 @@ label[for='address'] {
   margin-bottom: 10px;
   display: block; /* block으로 설정해야 여백이 제대로 적용됨 */
 }
+.mypage-item-name {
+  display: block;
+  text-align: left;
+  font-weight: bold; /* 강조 */
+}
