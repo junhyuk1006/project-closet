@@ -38,6 +38,8 @@ public class PointController {
         return ResponseEntity.ok("success");
     }
 
+
+
     @GetMapping("/getPointByUserid")
     public ResponseEntity<Page<PointDTO>> getPointByUserid(
             @AuthenticationPrincipal CustomUserDetail userDetail,
@@ -51,8 +53,10 @@ public class PointController {
     }
 
     @RequestMapping(value = "/getTotalPointByUserid", method = {RequestMethod.GET, RequestMethod.POST})
-    public int getTotalPointByUserId(@RequestParam(required = false) Long userId,
+    public int getTotalPointByUserId(@AuthenticationPrincipal CustomUserDetail customUserDetail,
                                      @RequestBody(required = false) Map<String, Long> body) {
+
+        Long userId = customUserDetail.getId();
         try {
             // 1. userId가 @RequestParam으로 전달된 경우
             if (userId != null) {

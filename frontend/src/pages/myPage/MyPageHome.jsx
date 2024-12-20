@@ -4,13 +4,35 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import { useNavigate } from 'react-router-dom';
 import MyPageHeader from '../../components/myPage/MyPageHeader';
 import { call } from '../../api/auth/ApiService'; // API 호출 함수
-import { RepeatOneSharp } from '@mui/icons-material';
 
 const MyPageHome = () => {
   const navigate = useNavigate();
   const { user } = useUser();
   const [gradeInfo, setGradeInfo] = useState('');
+  const [profileImage, setProfileImage] = useState('');
 
+  const handleImageChange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return; // 파일이 선택되지 않은 경우
+
+    const fileName = file.name; // 파일명만 추출 (예: image.png)
+
+    try {
+      // 백엔드에 파일명 전송
+      const response = await call(
+        `/api/mypage/uploadProfile/${fileName}`, // 파일명만 전달
+        'POST',
+        null // Body가 필요 없음
+      );
+
+      // 백엔드 응답 처리
+      setProfileImage(`/images/profile/${fileName}`);
+      alert('프로필 이미지가 업데이트되었습니다!');
+    } catch (error) {
+      console.error('이미지 업로드 실패:', error);
+      alert('이미지 업로드에 실패했습니다.');
+    }
+  };
   const fetchGradeInfo = async () => {
     try {
       const response = await call(`/api/mypage/findGradeByUser`, 'GET');
@@ -71,9 +93,26 @@ const MyPageHome = () => {
             title="마이페이지"
             description={
               <>
+                {/* 프로필 이미지 업로드 및 표시 */}
+                <div className="profile-container">
+                  <label htmlFor="profile-upload" className="profile-circle">
+                    <img
+                      src={profileImage}
+                      alt="프로필 이미지"
+                      className="profile-image"
+                    />
+                  </label>
+                  <input
+                    type="file"
+                    id="profile-upload"
+                    accept="image/*"
+                    style={{ display: 'none' }}
+                    onChange={handleImageChange}
+                  />
+                </div>
                 {`${user?.nickname || ''}님의 등급은 ${gradeInfo.grade} 등급입니다.`}
                 <br />
-                {`(${gradeInfo.rate}%)`}
+                {`등급에 따른 포인트 적립률은 ${gradeInfo.rate}%입니다.`}
               </>
             }
           />

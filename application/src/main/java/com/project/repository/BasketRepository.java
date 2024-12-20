@@ -16,7 +16,7 @@ public interface BasketRepository extends JpaRepository<Basket, Long> {
 
     @Query("SELECT new com.project.dto.BasketItemDTO(" +
            "b.id, b.isRecommendation, b.itemCount, b.size, b.color, b.status," +
-           "u.id, i.id, i.item_price, i.item_name, i.item_category, i.main_image)" +
+           "u.id, i.id, i.itemPrice, i.itemName, i.itemCategory, i.mainImage)" +
            "FROM Basket b " +
            "JOIN b.users u " +
            "JOIN b.itemDetail i WHERE u.id = :userId")

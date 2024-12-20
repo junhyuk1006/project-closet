@@ -16,17 +16,17 @@ public class ItemDetail {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private int item_price;
+    private int itemPrice;
     private int views;
 
-    private String item_name;
-    private String item_category;
-    private String main_image;
-    private String detail_image;
+    private String itemName;
+    private String itemCategory;
+    private String mainImage;
+    private String detailImage;
     private String status;
 
     @CreationTimestamp
-    private LocalDateTime created_at;
+    private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "itemDetail")
     private List<Item> items;

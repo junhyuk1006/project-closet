@@ -4,6 +4,7 @@ import { call } from '../../api/auth/ApiService'; // useUser 훅 임포트
 import { useUser } from '../../api/auth/UserContext'; // useUser 훅 임포트
 import MyPageHeader from '../../components/myPage/MyPageHeader';
 import { RepeatOneSharp } from '@mui/icons-material';
+import AddressModal from './AddressModal';
 
 const MemberInfo = () => {
   const navigate = useNavigate();
@@ -12,6 +13,7 @@ const MemberInfo = () => {
   const { user, setUser } = useUser(); // UserContext에서 user와 setUser를 가져오기
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+
   const [bodyInfo, setBodyInfo] = useState({
     height: user?.height || '',
     weight: user?.weight || '',
@@ -227,7 +229,9 @@ const MemberInfo = () => {
   return (
     <div>
       <div>
-        <MyPageHeader title="회원정보" description="회원정보 등록 및 수정" />
+        <MyPageHeader title="회원정보" description="회원정보 등록 및 수정">
+          <div className="profile-circle"></div>
+        </MyPageHeader>
       </div>
       <div className="mypage-label1">회원정보</div>
       <div className="memberInfo-rounded-box">

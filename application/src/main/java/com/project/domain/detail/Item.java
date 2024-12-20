@@ -16,17 +16,17 @@ public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private int item_count;
+    private int itemCount;
 
     private String color;
     private String size;
-    //private String item_name;
+    //private String itemName;
     //private String item_category;
     //private int item_price;
     private String status;
 
     @CreationTimestamp
-    private LocalDateTime created_at;
+    private LocalDateTime createdAt;
 
     @ManyToOne
     @JoinColumn(name = "item_detail_id")

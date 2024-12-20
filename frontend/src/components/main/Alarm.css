@@ -1,0 +1,7 @@
+.draggable-modal .modal-dialog {
+    position: absolute; /* 위치 고정 */
+    margin: 0; /* 기본 중앙 정렬 제거 */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

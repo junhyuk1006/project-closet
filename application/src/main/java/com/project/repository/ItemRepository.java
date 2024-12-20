@@ -11,7 +11,7 @@ import com.project.dto.ItemAllDTO;
 
 @Repository
 public interface ItemRepository extends JpaRepository<ItemDetail, Long> {
-    @Query("SELECT new com.project.dto.ItemAllDTO(i.id, i.item_name, i.item_category, i.item_price, i.main_image, i.detail_image, i.views, i.status) " +
+    @Query("SELECT new com.project.dto.ItemAllDTO(i.id, i.itemName, i.itemCategory, i.itemPrice, i.mainImage, i.detailImage, i.views, i.status) " +
             "FROM ItemDetail i " +
             "WHERE i.status = 'active' ")
     Page<ItemAllDTO> findAllByStatusActive(Pageable pageable);

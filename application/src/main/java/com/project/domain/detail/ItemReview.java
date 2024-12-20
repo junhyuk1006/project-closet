@@ -9,26 +9,27 @@ import java.time.LocalDateTime;
 
 @Entity
 @Data
-@Table(name="item_review")
+@Table(name = "item_review") // 테이블 이름
 public class ItemReview {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "item_detail_id") // DB 컬럼과 매핑
-    private Long itemId;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "item_detail_id", referencedColumnName = "id")
+    private ItemDetail itemDetail;
 
     private int score;
-    private String review_image;
-    private String review_content;
+    private String reviewImage;
+    private String reviewContent;
     private String status = "active";
 
+    @Column(name = "created_at") // 스네이크 케이스 컬럼 매핑
     @CreationTimestamp
-    private LocalDateTime created_at;
+    private LocalDateTime createdAt;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JoinColumn(name = "user_id", referencedColumnName = "id") // 스네이크 케이스 컬럼 매핑
     private Users users;
-
 }
