@@ -16,8 +16,9 @@ public class ItemReview {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "item_detail_id") // 스네이크 케이스 컬럼 매핑
-    private Long itemId;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "item_detail_id", referencedColumnName = "id")
+    private ItemDetail itemDetail;
 
     private int score;
     private String reviewImage;

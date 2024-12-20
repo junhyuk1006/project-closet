@@ -4,6 +4,7 @@ import com.project.domain.detail.ItemInquiry;
 import com.project.dto.ItemInquiryDTO;
 import com.project.dto.UserItemInquiryDTO;
 import com.project.repository.ItemInquiryRepository;
+import com.project.repository.ItemRepository;
 import com.project.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ public class ItemInquiryService {
 
     private final ItemInquiryRepository itemInquiryRepository;
     private final UserRepository userRepository;
+    private final ItemRepository itemRepository;
 
     public List<UserItemInquiryDTO> findAll(Long itemId){return itemInquiryRepository.findByUserId(itemId);}
     public Long countInquiriesByItemId(Long itemId) {return itemInquiryRepository.countInquiriesByItemId(itemId);}
@@ -25,7 +27,6 @@ public class ItemInquiryService {
         // DTO → 엔티티 변환
         ItemInquiry inquiry = new ItemInquiry();
         inquiry.setId(ItemInquiryDTO.getId());
-        inquiry.setItemDetailId(ItemInquiryDTO.getItemDetailId());
         inquiry.setContent(ItemInquiryDTO.getContent());
         inquiry.setInquiryType(ItemInquiryDTO.getInquiryType());
         inquiry.setAnswerStatus(ItemInquiryDTO.getAnswerStatus());
@@ -35,6 +36,9 @@ public class ItemInquiryService {
         // 유저 설정
         inquiry.setUsers(userRepository.findById(ItemInquiryDTO.getUserId())
                 .orElseThrow(() -> new RuntimeException("User not found")));
+
+        inquiry.setItemDetail(itemRepository.findById(ItemInquiryDTO.getItemDetailId())
+                .orElseThrow(() -> new RuntimeException("Item not found")));
 
         // 엔티티 저장
         itemInquiryRepository.save(inquiry);

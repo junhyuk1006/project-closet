@@ -20,21 +20,18 @@ public class ReviewController {
 
     private final ReviewService reviewService;
 
-    @ResponseStatus(HttpStatus.OK)
     @PostMapping("/saveReview")
-    public ResponseEntity<List<String>> saveReview(@RequestBody ReviewDTO review) {
-        List<String> response = new ArrayList<>();
+    public ResponseEntity<Map<String, String>> saveReview(@RequestBody ReviewDTO review) {
+        Map<String, String> response = new HashMap<>();
         try {
-            reviewService.saveReview(review);
-            response.add("message: Review saved successfully.");
+            reviewService.saveReview(review); // 데이터 저장
+            response.put("message", "Review saved successfully.");
             return ResponseEntity.ok(response);
         } catch (IllegalStateException e) {
-            // 중복 리뷰 예외 처리
-            response.add("message: " + e.getMessage());
+            response.put("message", "Duplicate review: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
         } catch (Exception e) {
-            // 기타 예외 처리
-            response.add("message: An error occurred while saving the review.");
+            response.put("message", " " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }

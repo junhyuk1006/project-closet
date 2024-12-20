@@ -20,7 +20,7 @@ public class ReviewDTO {
     private Long id;
 
     private Long userId;
-    private Long itemId;
+    private Long itemDetailId;
     private int score;
     private String reviewImage;
     private String reviewContent;

@@ -24,6 +24,7 @@
     "dotenv": "^16.4.7",
     "font-awesome": "^4.7.0",
     "framer-motion": "^11.12.0",
+    "janus-gateway": "^1.3.0",
     "jquery": "^3.7.1",
     "material-design-iconic-font": "^2.2.0",
     "moment": "^2.30.1",
@@ -48,7 +49,8 @@
     "spoqa-han-sans": "^3.3.0",
     "test": "file:",
     "toastr": "^2.1.4",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "webrtc-adapter": "^9.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -90,3 +92,4 @@
     "source-map-loader": "^5.0.0"
   }
 }
+

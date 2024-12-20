@@ -33,6 +33,7 @@ function ReviewInput({ activeTab, userId, productId }) {
       );
       const data = await response.json();
       setReviews(data);
+      console.log("asdasd",setReviews(data));
     } catch (error) {
       console.error('리뷰 데이터를 가져오는 중 오류 발생:', error);
     }
@@ -150,7 +151,7 @@ function ReviewInput({ activeTab, userId, productId }) {
       /** 리뷰 저장 데이터 (Json 형태) */
       const reviewData = {
         userId: userId,
-        itemId: productId,
+        itemDetailId: productId,
         score,
         reviewImage: reviewImage || null,
         reviewContent: reviewContent,
@@ -211,7 +212,7 @@ function ReviewInput({ activeTab, userId, productId }) {
               {/** 리뷰 목록 렌더링 */}
               {currentReviews.map((review) => (
                 <div
-                  key={review.reviewId}
+                  key={review.id}
                   className="flex-w-review flex-t p-bst-68"
                 >
                   <div className="wrap-pic-s size-109 bor0 of-hidden m-r-18 m-t-6">
@@ -237,10 +238,10 @@ function ReviewInput({ activeTab, userId, productId }) {
                               style={{ fontSize: 25, cursor: 'pointer' }}
                               onClick={(e) => {
                                 e.stopPropagation();
-                                toggleDropdown(review.reviewId);
+                                toggleDropdown(review.id);
                               }}
                             />
-                            {dropdownStates[review.reviewId] && (
+                            {dropdownStates[review.id] && (
                               <div
                                 className="dropdown-menu"
                                 onClick={handleDropdownClick}
@@ -248,7 +249,7 @@ function ReviewInput({ activeTab, userId, productId }) {
                                 {review.status === 'inactive' ? (
                                   <button
                                     onClick={() =>
-                                      handleActivate(review.reviewId)
+                                      handleActivate(review.id)
                                     }
                                     className="dropdown-item"
                                   >
@@ -264,7 +265,7 @@ function ReviewInput({ activeTab, userId, productId }) {
                                         );
                                         if (updatedContent)
                                           handleUpdate(
-                                            review.reviewId,
+                                            review.id,
                                             updatedContent
                                           );
                                       }}
@@ -274,7 +275,7 @@ function ReviewInput({ activeTab, userId, productId }) {
                                     </button>
                                     <button
                                       onClick={() =>
-                                        handleDeactivate(review.reviewId)
+                                        handleDeactivate(review.id)
                                       }
                                       className="dropdown-item"
                                     >

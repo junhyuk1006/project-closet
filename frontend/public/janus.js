@@ -22,6 +22,10 @@
 	OTHER DEALINGS IN THE SOFTWARE.
  */
 
+import $ from 'jquery';
+import adapter from 'webrtc-adapter';
+window.jQuery = $; // jQuery를 전역으로 설정
+
 // List of sessions
 Janus.sessions = {};
 
@@ -3632,3 +3636,7 @@ function Janus(gatewayCallbacks) {
 		return (trickle === false) ? false : true;
 	}
 }
+
+export { Janus };
+
+
