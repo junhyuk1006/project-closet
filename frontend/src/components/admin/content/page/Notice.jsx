@@ -3,7 +3,7 @@ import { Form, Button, Row, Col, Table, Pagination } from 'react-bootstrap';
 import { getNotice } from '../../../../api/admin/page/page';
 
 const Notice = () => {
-  const [Notices, setNotices] = useState([]);
+  const [notices, setNotices] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
   const [size, setSize] = useState(20);
@@ -120,16 +120,31 @@ const Notice = () => {
             <Col xs={12} md={4} lg={3}>
               <Form.Group controlId="searchKeyword">
                 <Form.Label>검색어</Form.Label>
-                <Form.Control as="select">
-                  <option>제목</option>
-                  <option>내용</option>
+                <Form.Control
+                  as="select"
+                  name="searchKeyword"
+                  value={searchParams.searchKeyword}
+                  onChange={(e) =>
+                    updateSearchParams('searchKeyword', e.target.value)
+                  }
+                >
+                  <option value="title">제목</option>
+                  <option value="content">내용</option>
                 </Form.Control>
               </Form.Group>
             </Col>
             <Col xs={12} md={8} lg={6}>
               <Form.Group controlId="searchInput">
                 <Form.Label>검색값</Form.Label>
-                <Form.Control type="text" placeholder="검색어 입력" />
+                <Form.Control
+                  name="searchInput"
+                  value={searchParams.searchInput}
+                  type="text"
+                  placeholder="검색어 입력"
+                  onChange={(e) =>
+                    updateSearchParams('searchInput', e.target.value)
+                  }
+                />
               </Form.Group>
             </Col>
           </Row>
@@ -139,8 +154,23 @@ const Notice = () => {
               <Form.Group controlId="dateRange">
                 <Form.Label>기간검색(작성일)</Form.Label>
                 <div className="d-flex align-items-center">
-                  <Form.Control type="date" className="me-2" />
-                  <Form.Control type="date" />
+                  <Form.Control
+                    type="date"
+                    name="startDate"
+                    value={searchParams.startDate}
+                    className="me-2"
+                    onChange={(e) =>
+                      updateSearchParams('startDate', e.target.value)
+                    }
+                  />
+                  <Form.Control
+                    type="date"
+                    name="endDate"
+                    value={searchParams.endDate}
+                    onChange={(e) =>
+                      updateSearchParams('endDate', e.target.value)
+                    }
+                  />
                 </div>
               </Form.Group>
             </Col>
@@ -150,19 +180,41 @@ const Notice = () => {
             <Col xs={12} md={6} lg={4}>
               <Form.Group>
                 <div className="d-flex gap-2">
-                  <Button variant="outline-dark">오늘</Button>
-                  <Button variant="outline-dark">일주일</Button>
-                  <Button variant="outline-dark">한 달</Button>
-                  <Button variant="outline-dark">전체</Button>
+                  <Button
+                    variant="outline-dark"
+                    onClick={() => setDateRange('today')}
+                  >
+                    오늘
+                  </Button>
+                  <Button
+                    variant="outline-dark"
+                    onClick={() => setDateRange('week')}
+                  >
+                    일주일
+                  </Button>
+                  <Button
+                    variant="outline-dark"
+                    onClick={() => setDateRange('month')}
+                  >
+                    한 달
+                  </Button>
+                  <Button
+                    variant="outline-dark"
+                    onClick={() => setDateRange('all')}
+                  >
+                    전체
+                  </Button>
                 </div>
               </Form.Group>
             </Col>
           </Row>
           <div className="d-flex justify-content-end mt-3">
-            <Button variant="dark" className="me-2">
+            <Button variant="dark" className="me-2" onClick={handleSearch}>
               검색
             </Button>
-            <Button variant="outline-secondary">초기화</Button>
+            <Button variant="outline-secondary" onClick={handleReset}>
+              초기화
+            </Button>
           </div>
         </Form>
       </div>
@@ -177,20 +229,58 @@ const Notice = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>Cell</td>
-            <td>Cell</td>
-            <td>Cell</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Cell</td>
-            <td>Cell</td>
-            <td>Cell</td>
-          </tr>
+          {notices.map((notice, index) => (
+            <tr key={notice.id}>
+              <td>{index + 1 + currentPage * size}</td>
+              <td>{notice.email}</td>
+              <td>{notice.nickname}</td>
+              <td>{notice.pointReason}</td>
+              <td>{notice.pointType}</td>
+              <td>{notice.createdAt}</td>
+              <td>{notice.deletedAt}</td>
+              <td>{notice.point}</td>
+              <td>{notice.status}</td>
+            </tr>
+          ))}
         </tbody>
       </Table>
+      <div className="d-flex justify-content-center mt-5">
+        {/* Pagination */}
+        <Pagination>
+          {/** 이전 그룹 버튼 */}
+          <Pagination.Prev
+            hidden={pageGroup === 0}
+            onClick={() => setPageGroup(pageGroup - 1)}
+          >
+            이전
+          </Pagination.Prev>
+          {/** 현재 그룹의 페이지 번호 */}
+          {Array.from(
+            { length: Math.min(10, totalPages - pageGroup * 10) },
+            (_, i) => {
+              const pageNumber = pageGroup * 10 + i;
+              return (
+                <Pagination.Item
+                  key={pageNumber}
+                  active={pageNumber === currentPage}
+                  className={`custom-page-item ${pageNumber === currentPage ? 'custom-active' : ''}`}
+                  onClick={() => handlePageChange(pageNumber)}
+                >
+                  {pageNumber + 1}
+                </Pagination.Item>
+              );
+            }
+          )}
+
+          {/** 다음 그룹 버튼 */}
+          <Pagination.Next
+            hidden={(pageGroup + 1) * 10 >= totalPages}
+            onClick={() => setPageGroup(pageGroup + 1)}
+          >
+            다음
+          </Pagination.Next>
+        </Pagination>
+      </div>
     </div>
   );
 };
