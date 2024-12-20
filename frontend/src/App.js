@@ -2,7 +2,7 @@
 import React from 'react';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import { UserProvider } from './api/auth/UserContext';
-import Videoroomtest from "./pages/Videoroomtest";
+import Videoroomtest from './pages/Videoroomtest';
 
 // 외부 CSS 및 아이콘 라이브러리
 import 'bootstrap/dist/css/bootstrap.min.css'; // Bootstrap 스타일
@@ -23,6 +23,8 @@ import MyInquirement from './pages/myPage/MyInquirement';
 import MyPageHome from './pages/myPage/MyPageHome';
 import MyPoint from './pages/myPage/MyPoint';
 import MyReviews from './pages/myPage/MyReviews';
+import MyCoordination from './pages/myPage/MyCoordination';
+import MyPurchaseHistory from './pages/myPage/MyPurchaseHistory';
 /** ./pages/Admin  */
 import Admin from './pages/admin/Admin';
 
@@ -49,8 +51,8 @@ import Agreement from './pages/main/Agreement';
 import Guide from './pages/main/Guide';
 import Privacy from './pages/main/Privacy';
 import PaymentResult from './pages/cart/PaymentResult';
-import ImageComponent from "./pages/cart/ImageComponent";
-import WebRTC from "./pages/WebRTC/WebRTC";
+import ImageComponent from './pages/cart/ImageComponent';
+import WebRTC from './pages/WebRTC/WebRTC';
 
 /**
  * 공통적으로 사용하는 Route 생성 함수
@@ -134,12 +136,14 @@ const AppRoutes = () => (
             '/MyMemberInfo',
             <MyMemberInfo />
           )} {/* 내정보 페이지 */}
-          {renderRoute(
-            '/MyReviews',
-            <MyReviews />
-          )} {/* 내정보 페이지 */}
+          {renderRoute('/MyReviews', <MyReviews />)}
+          {/* 내코디 페이지 */}
+          {renderRoute('/MyCoordination', <MyCoordination />)}{' '}
           {/* 문의내역 페이지 */}
           {renderRoute('/MyInquirement', <MyInquirement />)}
+          {/* 문의내역 페이지 */}
+          {renderRoute('/MyPurchaseHistory', <MyPurchaseHistory />)}
+          MyPurchaseHistory
           {/* -------------------------------------------------------------------------- */}
           {/* -------------------------------------------------------------------------- */}
           {/* 상품 관련 페이지  */}
@@ -188,10 +192,13 @@ const AppRoutes = () => (
           {/* ------------------------------------------------------------------- */}
           {/* ------------------------------------------------------------------- */}
           {/* 에러 페이지 */}
-          {renderRoute('/*', <Page404 />, false)} {/* 에러 페이지 */}
+          {renderRoute(
+            '/*',
+            <Page404 />,
+            false
+          )} {/* 에러 페이지 */}
           {renderRoute('/Webrtc', <WebRTC />, false)}
           {renderRoute('/ImageComponent', <ImageComponent />, false)}
-
         </Routes>
       </Router>
     </BasketProvider>

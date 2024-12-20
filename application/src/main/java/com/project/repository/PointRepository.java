@@ -17,8 +17,9 @@ public interface PointRepository  extends JpaRepository<Point, Long> {
             "p.id, u.id, p.point, p.pointReason, p.pointType, " +
             "p.pointInsertType, p.createdAt, p.deletedAt, p.status) " +
             "FROM Point p " +
-            "Join p.user u " +
-            "WHERE p.user.id = :userId")
+            "JOIN p.user u " +
+            "WHERE p.user.id = :userId " +
+            "ORDER BY p.createdAt DESC")
     Page<PointDTO> findByUserId(long userId, Pageable pageable);
 
     /** 이전 쿼리문과 기능은 같으나 가독성을 향상시킴 */

@@ -70,7 +70,10 @@ const MyPoint = () => {
         {points.map((point) => (
           <div className="point-item" key={point.id}>
             <div className="point-info">
-              <div className="date">{point.createdAt}</div>
+              <div className="date">
+                {new Date(point.createdAt).toLocaleDateString()}
+              </div>
+
               <div className="description">{point.pointReason}</div>
             </div>
             <div
