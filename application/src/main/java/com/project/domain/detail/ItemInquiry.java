@@ -30,7 +30,10 @@ public class ItemInquiry {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long itemDetailId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "item_datail_id", referencedColumnName = "id", nullable = false)
+    private ItemDetail itemDetail;
+
     private String content;
 
     @Enumerated(EnumType.STRING) // ENUM 값을 문자열로 저장
