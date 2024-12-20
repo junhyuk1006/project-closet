@@ -706,11 +706,10 @@ label[for='address'] {
 }
 
 /* 나의 코디*/
-
 .coordi-rounded-box {
   width: 80%; /* 화면 크기에 비례하여 크기 조정 */
   max-width: 800px; /* 최대 너비 */
-  height: 70%; /* 높이 비율 */
+  min-height: 70px; /* 최소 높이 */
   background-color: white; /* 배경색을 하얀색으로 설정 */
   border-radius: 15px; /* 모서리 둥글기 */
   padding: 20px;
@@ -732,29 +731,37 @@ label[for='address'] {
   word-break: break-word; /* 긴 텍스트 강제 줄바꿈 */
   overflow: hidden;
 }
-
 @media (min-width: 768px) {
   .coordi-rounded-box {
     width: 70%; /* 화면 크기에 비례하여 크기 조정 */
     max-width: 600px; /* 최대 너비 */
-    height: 40%; /* 높이 비율 */
-    max-height: 300px; /* 최대 높이 */
+    min-height: 300px; /* 최소 높이 */
     border-radius: 20px; /* 둥글기 증가 */
     margin-bottom: 50px;
   }
 }
 
-/* 화면 크기가 1024px 이상일 때 (데스크탑 이상) */
 @media (min-width: 1024px) {
   .coordi-rounded-box {
     width: 60%; /* 화면 크기에 비례하여 크기 조정 */
     max-width: 1000px; /* 최대 너비 */
-    height: 60%; /* 높이 비율 */
-
-    /* 00px -> 500px 임의 수정 */
-    max-height: 500px; /* 최대 높이 */
+    min-height: 400px; /* 최소 높이 */
     border-radius: 25px; /* 둥글기 증가 */
     margin-bottom: 50px;
   }
 }
-/* 내용이 박스를 넘지 않도록 */
+.reservation-row {
+  display: grid; /* Grid Layout 사용 */
+  grid-template-columns: repeat(4, 1fr); /* 4등분으로 나눔 */
+  gap: 10px; /* 각 셀 간격 */
+  margin-bottom: 10px;
+}
+
+.reservation-id-box {
+  background-color: #f3f6f8; /* 회색 배경 */
+  color: black; /* 글자 색상 */
+  border-radius: 10px; /* 둥근 모서리 */
+  padding: 10px 15px; /* 내부 여백 */
+  font-size: 14px; /* 글자 크기 */
+  text-align: left; /* 텍스트 왼쪽 정렬 */
+}

@@ -6,6 +6,7 @@ import { useUser } from '../../api/auth/UserContext';
 import '../../assets/styles/myPage/MyPage.css';
 
 const MyCoordination = () => {
+  const { user } = useUser();
   const [reservations, setReservations] = useState([]);
   const [error, setError] = useState(null);
 
@@ -27,18 +28,34 @@ const MyCoordination = () => {
     <div>
       <MyPageHeader title="나의 코디 조회" description="내가 예약한 코디 신청 정보를 알 수 있습니다." />
       <div className="mypage-label1">코디 예약 현황</div>
+
       <div className="coordi-rounded-box">
+        <hr className="my-4" />
         {error && <div className="error-message">{error}</div>}
         {reservations.length > 0 ? (
           reservations.map((reservation, index) => (
             <div key={index} className="reservation-item">
-              <p>예약번호: {reservation.reservationId}</p>
-              <p>내가 선택한 코디 : {reservation.nickname}</p>
+              <div className="reservation-row">
+                <div className="reservation-id-box">예약번호: {reservation.reservationId}</div>
+                <div className="reservation-id-box">예약번호: {reservation.reservationStatus}</div>
+              </div>
+
               <p>
-                예약 날짜:
-                {new Date(reservation.reservationDate).toLocaleDateString()}
+                {`${user?.nickname || ''}님이 예약하신 코디네이터는`}
+                {reservation.nickname}
+                입니다. 예약 날짜:{' '}
+                {new Date(reservation.reservationDate).toLocaleString('ko-KR', {
+                  year: 'numeric',
+                  month: '2-digit',
+                  day: '2-digit',
+                  hour: '2-digit',
+                  minute: '2-digit',
+
+                  hour12: false, // 24시간 형식
+                })}
               </p>
-              <p>상태: {reservation.reservationStatus}</p>
+
+              <hr className="my-4" />
             </div>
           ))
         ) : (
