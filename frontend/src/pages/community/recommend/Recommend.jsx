@@ -46,7 +46,7 @@ function Recommend() {
           <div className="row">
             {[
               {
-                id: 23,
+                id: 329,
                 image: '/images/about-02.jpg',
                 title: '고객 맞춤형 스타일링',
                 details: [
@@ -56,7 +56,7 @@ function Recommend() {
                 ],
               },
               {
-                id: 24,
+                id: 330,
                 image: '/images/blog-02.jpg',
                 title: '직장인 스타일링',
                 details: [
@@ -66,7 +66,7 @@ function Recommend() {
                 ],
               },
               {
-                id: 658,
+                id: 331,
                 image: '/images/gallery-09.jpg',
                 title: '자유로운 분위기의 스타일링',
                 details: [
@@ -91,9 +91,9 @@ function Recommend() {
                       <li key={i}>{detail}</li>
                     ))}
                   </ul>
-                  <a href="#" className="coordinator">
+                  {/* <a href="#" className="coordinator">
                     코디네이터 정보
-                  </a>
+                  </a> */}
                   <a
                     href="#"
                     className="book-now"
