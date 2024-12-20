@@ -105,7 +105,7 @@ logging:
     org:
       springframework:
         jdbc: DEBUG # Spring JDBC 로깅 레벨
-        security: DEBUG # Spring Security 로깅 레벨
+#        security: DEBUG # Spring Security 로깅 레벨
   file:
     name: /home/ec2-user/application.log # 로그 파일 저장 위치
 

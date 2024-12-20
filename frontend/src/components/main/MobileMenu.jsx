@@ -17,6 +17,7 @@ export default function MobileMenu({
     },
     [setIsMenuOpen]
   );
+
   return (
     <div
       className={`menu-mobile ${isMenuOpen ? 'dis-block show-menu-mobile' : ''}`}
