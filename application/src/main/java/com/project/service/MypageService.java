@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.data.domain.Pageable;
@@ -36,6 +37,7 @@ public class MypageService {
     private final UserRepository userRepository;
     private final Path profileImageDir = Paths.get("C:/closetImage/profile/");
     private final StylingRepository stylingRepository;
+    private final OrderHistoryRepository orderHistoryRepository;
 
     // userId로 등록된 배송지 조회( 대표 배송지 + 일반 배송지)
     public List<Address> findByUserId(@RequestParam("userId") long userId) {
@@ -179,6 +181,9 @@ public class MypageService {
                     .toList();
         }
 
+        public List<OrderDetailHistoryDeliveryDTO> getOrdersByUserId(Long userId) {
+            return orderHistoryRepository.findOrdersByUserId(userId);
+        }
 
 
 }

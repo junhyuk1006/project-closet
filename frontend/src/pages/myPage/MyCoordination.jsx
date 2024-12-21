@@ -26,7 +26,7 @@ const MyCoordination = () => {
 
   return (
     <div>
-      <MyPageHeader title="나의 코디 조회" description="내가 예약한 코디 신청 정보를 알 수 있습니다." />
+      <MyPageHeader title="나의 코디 조회" description="내가 예약한 코디 신청 정보를 알 수 있습니다. 10분 이상 늦을 시, 노쇼로 간주됩니다" />
       <div className="mypage-label1">코디 예약 현황</div>
 
       <div className="coordi-rounded-box">
@@ -37,20 +37,20 @@ const MyCoordination = () => {
             <div key={index} className="reservation-item">
               <div className="reservation-row">
                 <div className="reservation-id-box">예약번호: {reservation.reservationId}</div>
-                <div className="reservation-id-box">예약번호: {reservation.reservationStatus}</div>
+                <div className="reservation-id-box">예약상태: {reservation.reservationStatus}</div>
               </div>
-
               <p>
-                {`${user?.nickname || ''}님이 예약하신 코디네이터는`}
-                {reservation.nickname}
-                입니다. 예약 날짜:{' '}
+                {`${user?.nickname || ''}님이 예약하신 코디네이터는 `}
+                <span>&lt;{reservation.nickname}&gt;</span>
+                입니다.
+                <br />
+                스타일링 예약 날짜:{' '}
                 {new Date(reservation.reservationDate).toLocaleString('ko-KR', {
                   year: 'numeric',
                   month: '2-digit',
                   day: '2-digit',
                   hour: '2-digit',
                   minute: '2-digit',
-
                   hour12: false, // 24시간 형식
                 })}
               </p>
