@@ -133,7 +133,8 @@ export const me = async () => {
     }
 
     const data = await response.json();
-    console.log('data: ' + data);
+    console.log(`[id: ${data.id}]`);
+    console.log(`[username: ${data.username}]로 로그인 중`);
     return data; // 사용자 데이터 반환
   } catch (err) {
     console.error('Failed to fetch user data:', err.message);

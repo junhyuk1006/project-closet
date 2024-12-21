@@ -2,6 +2,7 @@ package com.project.domain;
 
 import java.util.List;
 
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
 
@@ -17,10 +18,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
-import lombok.Data;
 
 import java.sql.Timestamp;
 
@@ -31,6 +28,7 @@ import java.sql.Timestamp;
 @DynamicInsert
 @Data
 @Table(name = "users")
+@ToString(exclude = {"point", "orderList", "password", "grade"}) // 로그 출력 시 순환참조 문제 방지
 public class Users {
 
     @Id

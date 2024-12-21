@@ -17,7 +17,7 @@ export default function Book({ isOpen, setIsOpen, coordiId, user }) {
     new Date().getTime() + 1000 * 60 * 60 * 24
   );
   const [select, setSelect] = useState(9); // 선택 시간
-  // const [mark, setMark] = useState([]); // 예약 날짜 배열
+  // const [mark, setMark] = useState([]); // 예약일자 상태
   const mark = ['2024-12-23', '2024-12-26'];
 
   // 스타일링 예약 함수
@@ -26,11 +26,21 @@ export default function Book({ isOpen, setIsOpen, coordiId, user }) {
     const date = new Date(value);
     date.setHours(select, 0, 0, 0);
 
+    // 로컬 시간으로 ISO 8601 형식 문자열 생성
+    const pad = (num) => String(num).padStart(2, '0'); // 숫자 두 자리로 패딩
+    const localDateTime = `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(
+      date.getDate()
+    )}T${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(
+      date.getSeconds()
+    )}.${String(date.getMilliseconds()).padStart(3, '0')}`;
+
+    console.log(localDateTime); // 로컬 시간 ISO 형식 (예: "2024-12-22T12:00:00.000")
+
     // reservation 테이블에 저장할 데이터를 객체에 저장
     const reservation = {
       userId: user.id,
       coordiId: coordiId,
-      reservationDate: date,
+      reservationDate: localDateTime,
     };
     console.log(reservation);
 
@@ -120,22 +130,19 @@ export default function Book({ isOpen, setIsOpen, coordiId, user }) {
               let html = [];
               // 현재 날짜가 post 작성한 날짜 배열(mark)에 있다면, dot div 추가
               if (mark.find((x) => x === moment(date).format('YYYY-MM-DD'))) {
-                console.log(mark);
                 html.push(<div className={styles.dot}></div>);
               }
               // 다른 조건을 주어서 html.push 에 추가적인 html 태그를 적용할 수 있음.
               return (
-                <>
-                  <div
-                    style={{
-                      position: 'absolute',
-                      display: 'flex',
-                      transform: 'translateX(150%)',
-                    }}
-                  >
-                    {html}
-                  </div>
-                </>
+                <div
+                  style={{
+                    position: 'absolute',
+                    display: 'flex',
+                    transform: 'translateX(150%)',
+                  }}
+                >
+                  {html}
+                </div>
               );
             }}
           />

@@ -66,7 +66,12 @@ import Shop from './pages/shop/Shop';
  * @returns {JSX.Element} - Route 컴포넌트
  */
 
-const renderRoute = (path, component, includeHeaderFooter = true, animationClass = 't03') => (
+const renderRoute = (
+  path,
+  component,
+  includeHeaderFooter = true,
+  animationClass = 't03'
+) => (
   <Route
     path={path}
     element={
@@ -100,37 +105,42 @@ const AppRoutes = () => (
           {renderRoute('/Login', <Login />)} {/* 로그인 페이지 */}
           <Route path="/oauth2/redirect" element={<OAuth2RedirectHandler />} />
           {renderRoute('/SignUp', <SignUp />)} {/* 회원가입 페이지 */}
-          {renderRoute('/change-password', <ChangePasswordForm />)} {/* 비밀번호 설정 페이지*/}
+          {renderRoute('/change-password', <ChangePasswordForm />)}{' '}
+          {/* 비밀번호 설정 페이지*/}
           {/* -------------------------------------------------------------------------- */}
           {/* -------------------------------------------------------------------------- */}
           {/* 마이페이지 */}
           {renderRoute('/find-id', <FindIdForm />)} {/* 아이디 찾기 페이지*/}
-          {renderRoute('/reset-password', <ResetPasswordForm />)} {/* 비밀번호 초기화 */}
+          {renderRoute('/reset-password', <ResetPasswordForm />)}{' '}
+          {/* 비밀번호 초기화 */}
           {renderRoute('/MyPageHome', <MyPageHome />)} {/* 마이페이지 홈 */}
           {renderRoute('/MyPoint', <MyPoint />)} {/* 포인트 페이지 */}
           {renderRoute('/MyMemberInfo', <MyMemberInfo />)} {/* 내정보 페이지 */}
           {renderRoute('/MyReviews', <MyReviews />)} {/* 내정보 페이지 */}
-          {renderRoute('/MyCoordination', <MyCoordination />)} {/* 내코디 페이지 */}
-          {renderRoute('/MyInquirement', <MyInquirement />)} {/* 문의내역 페이지 */}
-          {renderRoute(
-            '/MyPurchaseHistory',
-            <MyPurchaseHistory />
-          )} {/* 구매내역 페이지 */}
+          {renderRoute('/MyCoordination', <MyCoordination />)}{' '}
+          {/* 내코디 페이지 */}
+          {renderRoute('/MyInquirement', <MyInquirement />)}{' '}
+          {/* 문의내역 페이지 */}
+          {renderRoute('/MyPurchaseHistory', <MyPurchaseHistory />)}{' '}
+          {/* 구매내역 페이지 */}
           {/* -------------------------------------------------------------------------- */}
           {/* -------------------------------------------------------------------------- */}
           {/* 상품 관련 페이지  */}
           {renderRoute('/shop', <Shop />)} {/* 상품 페이지 */}
           {renderRoute('/Detail/*', <Detail />)} {/* 상품 상세 페이지 */}
           {renderRoute('/Recommend', <Recommend />)} {/* 추천 페이지 */}
-          {renderRoute('/ShoppingCart', <ShoppingCart />)} {/* 장바구니 페이지 */}
+          {renderRoute('/ShoppingCart', <ShoppingCart />)}{' '}
+          {/* 장바구니 페이지 */}
           {renderRoute('/PaymentResult', <PaymentResult />, false)}
           {/* -------------------------------------------------------------------------- */}
           {/* -------------------------------------------------------------------------- */}
           {/* 커뮤니티 페이지 */}
           {renderRoute('/Community', <Board />)} {/* 일반게시판 페이지 */}
           {renderRoute('/WritePost', <WritePost />)} {/* 글 작성페이지 */}
-          {renderRoute('/board/:boardId', <BoardDetail />)} {/* 글 상세페이지 */}
-          {renderRoute('/board/edit/:boardId', <EditPost />)} {/* 글 수정페이지 */}
+          {renderRoute('/board/:boardId', <BoardDetail />)}{' '}
+          {/* 글 상세페이지 */}
+          {renderRoute('/board/edit/:boardId', <EditPost />)}{' '}
+          {/* 글 수정페이지 */}
           {renderRoute('/Coordi', <Coordi />)} {/* 코디자랑 페이지 */}
           {renderRoute('/Upload', <UploadForm />)} {/* 코디업로드 페이지 */}
           {/* -------------------------------------------------------------------------- */}
