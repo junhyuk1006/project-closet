@@ -308,7 +308,35 @@ public class MypageController {
             return ResponseEntity.ok(responseDTO);
         }
 
+    // 마이페이지 - 주문내역조회
+    @GetMapping("/getOrderInfo")
+    public ResponseEntity<ResponseDTO<List<OrderDetailHistoryDeliveryDTO>>> getOrdersByUserId(@AuthenticationPrincipal CustomUserDetail customUserDetail) {
 
+        Long userId = customUserDetail.getId();
+
+        try {
+            // 서비스 호출
+            List<OrderDetailHistoryDeliveryDTO> orders = mypageService.getOrdersByUserId(userId);
+
+            // 성공 응답 생성
+            ResponseDTO<List<OrderDetailHistoryDeliveryDTO>> response = ResponseDTO.<List<OrderDetailHistoryDeliveryDTO>>builder()
+                    .status("success")
+                    .message("주문 내역 조회 성공")
+                    .data(orders)
+                    .build();
+
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            // 에러 응답 생성
+            ResponseDTO<List<OrderDetailHistoryDeliveryDTO>> response = ResponseDTO.<List<OrderDetailHistoryDeliveryDTO>>builder()
+                    .status("error")
+                    .message("주문 내역 조회 실패")
+                    .error(e.getMessage())
+                    .build();
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
 }
 
 
