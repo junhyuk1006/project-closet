@@ -27,7 +27,7 @@ const Album = () => {
   useEffect(() => {
     const fetchCoordiData = async () => {
       try {
-        const response = await fetch('http://localhost/api/coordi/list', {
+        const response = await fetch('http://localhost:8090/api/coordi/list', {
           method: 'GET',
           headers: {
             // Authorization이 꼭 필요한지 여부는 상황에 따라 달라질 수 있습니다.
@@ -63,7 +63,7 @@ const Album = () => {
       // 좋아요 상태 조회
       try {
         const res = await fetch(
-          `http://localhost/api/coordi/like/status?coordiBoardId=${coordi.id}&userId=${user.id}`,
+          `http://localhost:8090/api/coordi/like/status?coordiBoardId=${coordi.id}&userId=${user.id}`,
           {
             method: 'GET',
             headers: {
@@ -94,7 +94,7 @@ const Album = () => {
       return;
     }
     try {
-      const res = await fetch('http://localhost/api/coordi/like', {
+      const res = await fetch('http://localhost:8090/api/coordi/like', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -128,7 +128,7 @@ const Album = () => {
 
     try {
       const res = await fetch(
-        `http://localhost/api/coordi/${selectedCoordi.id}`,
+        `http://localhost:8090/api/coordi/${selectedCoordi.id}`,
         {
           method: 'DELETE',
           headers: {
@@ -183,7 +183,7 @@ const Album = () => {
                     style={{ cursor: 'pointer' }}
                   >
                     <img
-                      src={`http://localhost:80/api/images/${coordi.coordiImage}`}
+                      src={`http://localhost:8090/api/images/${coordi.coordiImage}`}
                       className="card-img-top"
                       alt={coordi.coordiTitle}
                       style={{ height: '350px', objectFit: 'cover' }}
@@ -221,7 +221,7 @@ const Album = () => {
           </Modal.Header>
           <Modal.Body>
             <img
-              src={`http://localhost:80/api/images/${selectedCoordi.coordiImage}`}
+              src={`http://localhost:8090/api/images/${selectedCoordi.coordiImage}`}
               alt={selectedCoordi.coordiTitle}
               style={{ width: '100%', height: 'auto' }}
             />

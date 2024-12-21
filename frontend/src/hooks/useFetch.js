@@ -16,7 +16,7 @@ export default function useFetch(url) {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch(`http://localhost:80${url}`);
+        const response = await fetch(`http://localhost:8090${url}`);
         if (!response.ok) {
           throw new Error(`HTTP 에러 (!response.ok): ${response.status}`);
         }

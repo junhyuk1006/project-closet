@@ -55,7 +55,7 @@ function Header({ user }) {
   useEffect(() => {
     const getNotices = async () => {
       try {
-        const newNotices = await call('/notices');
+        const newNotices = await call('/api/notices');
         // 공지사항 데이터가 없는 경우
         if (newNotices.length === 0) {
           console.log('공지사항이 없습니다.');

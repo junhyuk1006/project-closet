@@ -105,7 +105,7 @@ function Detail() {
 
     try {
       const response = await fetch(
-        `http://localhost:80/api/basket/saveBasket`,
+        `http://localhost:8090/api/basket/saveBasket`,
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },

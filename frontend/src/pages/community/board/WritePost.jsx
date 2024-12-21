@@ -27,7 +27,7 @@ const WritePost = () => {
     console.log('Request Payload:', requestBody); // JSON 데이터 확인
 
     try {
-      const response = await fetch('http://localhost:80/api/board/write', {
+      const response = await fetch('http://localhost:8090/api/board/write', {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,

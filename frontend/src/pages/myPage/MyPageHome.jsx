@@ -18,7 +18,7 @@ const MyPageHome = () => {
 
       try {
         const response = await fetch(
-          'http://localhost:80/api/mypage/uploadProfileImage',
+          'http://localhost:8090/api/mypage/uploadProfileImage',
           {
             method: 'POST',
             headers: {
@@ -54,7 +54,7 @@ const MyPageHome = () => {
     const fetchProfileImage = async () => {
       try {
         const response = await fetch(
-          'http://localhost:80/api/mypage/getProfileImage',
+          'http://localhost:8090/api/mypage/getProfileImage',
           {
             method: 'GET',
             headers: {

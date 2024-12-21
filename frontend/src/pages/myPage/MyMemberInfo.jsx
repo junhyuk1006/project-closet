@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { call } from '../../api/auth/ApiService'; // useUser 훅 임포트
 import { useUser } from '../../api/auth/UserContext'; // useUser 훅 임포트
 import MyPageHeader from '../../components/myPage/MyPageHeader';
@@ -7,7 +6,6 @@ import MyPageHeader from '../../components/myPage/MyPageHeader';
 import DaumPostcode from 'react-daum-postcode'; // Kakao 우편번호 API 사용
 
 const MemberInfo = () => {
-  const navigate = useNavigate();
   const [representativeAddress, setRepresentativeAddress] = useState(null);
   const [generalAddresses, setGeneralAddresses] = useState([]);
   const { user, setUser } = useUser(); // UserContext에서 user와 setUser를 가져오기
@@ -255,7 +253,7 @@ const MemberInfo = () => {
 
   // 일반 주소 삭제
   const DeleteGeneralAddress = (id) => {
-    fetch(`http://localhost:80/api/mypage/deleteAddress/${id}`, {
+    fetch(`http://localhost:8090/api/mypage/deleteAddress/${id}`, {
       method: 'DELETE',
       cache: 'no-store',
     })

@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 /** custom css 및 react icon */
-import '../../assets/styles/detailItem/ReviewInput.css';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
-import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import LockIcon from '@mui/icons-material/Lock';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import '../../assets/styles/detailItem/ReviewInput.css';
 
 /** api */
 import FetchIdProduct from '../../api/item/FetchIdProduct';
@@ -65,7 +64,7 @@ function ItemInquiry({ activeTab, userId, productId }) {
   const fetchInquiries = async () => {
     try {
       const response = await fetch(
-        `http://localhost/api/inquiry/getInquiries/${productId}`
+        `http://localhost:8090/api/inquiry/getInquiries/${productId}`
       );
       if (!response.ok) {
         throw new Error(`Error: ${response.statusText}`);
@@ -97,7 +96,7 @@ function ItemInquiry({ activeTab, userId, productId }) {
 
       /** 문의 저장 API 호출 */
       const response = await fetch(
-        'http://localhost:80/api/inquiry/saveInquiry',
+        'http://localhost:8090/api/inquiry/saveInquiry',
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -123,7 +122,7 @@ function ItemInquiry({ activeTab, userId, productId }) {
   const handleDeactivate = async (InquiryId) => {
     try {
       const response = await fetch(
-        `http://localhost:80/api/inquiry/deactivateInquiry/${InquiryId}`,
+        `http://localhost:8090/api/inquiry/deactivateInquiry/${InquiryId}`,
         {
           method: 'PATCH',
           headers: { 'Content-Type': 'application/json' },
@@ -145,7 +144,7 @@ function ItemInquiry({ activeTab, userId, productId }) {
   const handleActivate = async (InquiryId) => {
     try {
       const response = await fetch(
-        `http://localhost:80/api/inquiry/activateInquiry/${InquiryId}`,
+        `http://localhost:8090/api/inquiry/activateInquiry/${InquiryId}`,
         {
           method: 'PATCH',
           headers: { 'Content-Type': 'application/json' },

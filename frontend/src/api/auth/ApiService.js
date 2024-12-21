@@ -1,6 +1,6 @@
 import 'react-toastify/dist/ReactToastify.css';
 
-const API_BASE_URL = 'http://localhost:80'; // 서버 URL
+const API_BASE_URL = 'http://localhost:8090'; // 서버 URL
 
 /**
  * API 호출을 처리하는 함수입니다.
@@ -73,7 +73,7 @@ export const signin = async (userDTO) => {
 
 export const signup = async (data) => {
   try {
-    const response = await fetch('http://localhost:80/api/auth/signup', {
+    const response = await fetch('http://localhost:8090/api/auth/signup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),

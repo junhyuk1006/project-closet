@@ -16,7 +16,7 @@ const ResetPasswordForm = () => {
 
     try {
       const response = await fetch(
-        `http://localhost/api/auth/reset-password?email=${email}&username=${username}`,
+        `http://localhost:8090/api/auth/reset-password?email=${email}&username=${username}`,
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },

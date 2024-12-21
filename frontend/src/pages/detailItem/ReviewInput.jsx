@@ -81,7 +81,7 @@ function ReviewInput({ activeTab, userId, productId }) {
     try {
       const updatedData = { reviewContent: updatedContent };
       const response = await fetch(
-        `http://localhost:80/api/updateReview/${reviewId}`,
+        `http://localhost:8090/api/updateReview/${reviewId}`,
         {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
@@ -102,7 +102,7 @@ function ReviewInput({ activeTab, userId, productId }) {
   const handleDeactivate = async (reviewId) => {
     try {
       const response = await fetch(
-        `http://localhost:80/api/deactivateReview/${reviewId}`,
+        `http://localhost:8090/api/deactivateReview/${reviewId}`,
         {
           method: 'PATCH',
           headers: { 'Content-Type': 'application/json' },
@@ -123,7 +123,7 @@ function ReviewInput({ activeTab, userId, productId }) {
   const handleActivate = async (reviewId) => {
     try {
       const response = await fetch(
-        `http://localhost:80/api/activateReview/${reviewId}`,
+        `http://localhost:8090/api/activateReview/${reviewId}`,
         {
           method: 'PATCH',
           headers: { 'Content-Type': 'application/json' },
@@ -159,7 +159,7 @@ function ReviewInput({ activeTab, userId, productId }) {
       };
 
       /** 리뷰 저장 API */
-      const response = await fetch('http://localhost:80/api/saveReview', {
+      const response = await fetch('http://localhost:8090/api/saveReview', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(reviewData),

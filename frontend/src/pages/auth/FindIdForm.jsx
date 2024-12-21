@@ -14,7 +14,7 @@ const FindIdForm = () => {
     setFoundId(null);
     try {
       const response = await fetch(
-        `http://localhost/api/auth/find-username?email=${email}`,
+        `http://localhost:8090/api/auth/find-username?email=${email}`,
         {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },

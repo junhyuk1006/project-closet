@@ -1,23 +1,21 @@
-import {useEffect} from "react";
+import { useEffect } from 'react';
 
-function FetchInquiry ({ item_id, onInquiryFetch }) {
-    useEffect(() => {
-        fetch(`http://localhost:80/api/inquiry/getInquiries/${item_id}`)
-            .then((response) => {
-                if(!response.ok){
-                    throw new Error("Network response was not ok")
-                }
-                return response.json();
-            })
-            .then((data) => {
-                if(data) {
-                    onInquiryFetch(data);
-                }
-            })
-            .catch((error) =>
-                console.log("Error fetching item data:", error)
-            );
-    }, [onInquiryFetch])
-    return null;
+function FetchInquiry({ item_id, onInquiryFetch }) {
+  useEffect(() => {
+    fetch(`http://localhost:8090/api/inquiry/getInquiries/${item_id}`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        if (data) {
+          onInquiryFetch(data);
+        }
+      })
+      .catch((error) => console.log('Error fetching item data:', error));
+  }, [onInquiryFetch]);
+  return null;
 }
-export default FetchInquiry
+export default FetchInquiry;

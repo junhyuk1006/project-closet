@@ -54,7 +54,7 @@ const UploadForm = () => {
     console.log('user.id:', user.id);
 
     try {
-      const response = await fetch('http://localhost/api/coordi/upload', {
+      const response = await fetch('http://localhost:8090/api/coordi/upload', {
         method: 'POST',
         body: formData,
         headers: {

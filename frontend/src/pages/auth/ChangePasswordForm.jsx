@@ -32,7 +32,7 @@ const ChangePasswordForm = () => {
 
     try {
       const response = await fetch(
-        'http://localhost/api/auth/change-password',
+        'http://localhost:8090/api/auth/change-password',
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },

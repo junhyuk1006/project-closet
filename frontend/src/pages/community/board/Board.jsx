@@ -138,7 +138,7 @@ const Board = () => {
                               <img
                                 src={
                                   item.boardImage
-                                    ? `http://localhost/images/${item.boardImage}`
+                                    ? `http://localhost:8090/images/${item.boardImage}`
                                     : 'https://bootdey.com/img/Content/avatar/avatar7.png'
                                 }
                                 alt={item.boardTitle}

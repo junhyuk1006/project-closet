@@ -43,13 +43,16 @@ export const updateBoard = async (boardId, updatedData) => {
 
 // 글 삭제
 export const deleteBoard = async (boardId) => {
-  const response = await fetch(`http://localhost/api/board/delete/${boardId}`, {
-    method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${localStorage.getItem('token')}`,
-    },
-  });
+  const response = await fetch(
+    `http://localhost:8090/api/board/delete/${boardId}`,
+    {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    }
+  );
 
   if (!response.ok) {
     const errorMessage = await response.text();
