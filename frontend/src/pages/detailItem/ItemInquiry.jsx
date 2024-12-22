@@ -68,8 +68,8 @@ function ItemInquiry({ activeTab, userId, productId }) {
       if (!response.ok) {
         throw new Error(`Error: ${response.statusText}`);
       }
-      const data = await response.json();
-      setInquiries(Array.isArray(data) ? data : []);
+
+      setInquiries(Array.isArray(response) ? response : []);
     } catch (error) {
       console.error('문의 데이터를 가져오는 중 오류 발생:', error);
       setInquiries([]);
@@ -94,18 +94,17 @@ function ItemInquiry({ activeTab, userId, productId }) {
       };
 
       /** 문의 저장 API 호출 */
-      const response = await call('/inquiry/saveInquiry', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(inquiryData),
-      });
+      const response = await call(
+        '/inquiry/saveInquiry',
+        'POST',
+        JSON.stringify(inquiryData)
+      );
 
-      const result = await response.json();
       if (!response.ok) {
-        alert(result.message || '문의 저장 실패');
+        alert(response.message || '문의 저장 실패');
       }
 
-      alert(result.message);
+      alert(response.message);
       setInquiryContent('');
       await fetchInquiries(); // 최신 데이터 불러오기
     } catch (error) {
@@ -117,11 +116,10 @@ function ItemInquiry({ activeTab, userId, productId }) {
   /** 문의 비활성화 API 호출 */
   const handleDeactivate = async (InquiryId) => {
     try {
-      const response = await call(`/inquiry/deactivateInquiry/${InquiryId}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-      });
+      const response = await call(
+        `/inquiry/deactivateInquiry/${InquiryId}`,
+        'PATCH'
+      );
 
       if (!response.ok) throw new Error('문의 비활성화 실패');
       alert('문의가 성공적으로 비활성화되었습니다.');
@@ -136,11 +134,10 @@ function ItemInquiry({ activeTab, userId, productId }) {
   /** 문의 활성화 API 호출 */
   const handleActivate = async (InquiryId) => {
     try {
-      const response = await call(`/inquiry/activateInquiry/${InquiryId}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-      });
+      const response = await call(
+        `/inquiry/activateInquiry/${InquiryId}`,
+        'PATCH'
+      );
 
       if (!response.ok) throw new Error('문의 활성화 실패');
       alert('문의가 성공적으로 활성화되었습니다.');
@@ -167,7 +164,7 @@ function ItemInquiry({ activeTab, userId, productId }) {
   return (
     <>
       {/** 상품 ID를 기반으로 상품 데이터 가져오기 */}
-      <FetchIdProduct item_id={productId} onReviewFetch={setInquiries} />
+      <FetchIdProduct id={productId} onItemFetch={setInquiries} />
       <div
         className={`tab-pane fade ${activeTab === 'inquiry' ? 'show active' : ''}`}
         id="inquiry"

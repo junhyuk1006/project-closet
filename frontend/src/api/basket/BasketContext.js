@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useCallback } from 'react';
+import { call } from '../auth/ApiService';
 
 const BasketContext = createContext();
 
@@ -9,14 +10,11 @@ export const BasketProvider = ({ children }) => {
 
   const fetchBaskets = useCallback(async (userId) => {
     try {
-      const response = await fetch(
-        `http://13.209.5.239/api/basket/getBasket/${userId}`
-      );
+      const response = await call(`/basket/getBasket/${userId}`);
       if (!response.ok) {
         throw new Error('Failed to fetch baskets');
       }
-      const data = await response.json();
-      setBaskets(data); // 상태 업데이트
+      setBaskets(response); // 상태 업데이트
     } catch (error) {
       console.error('Error fetching baskets:', error);
     }
@@ -24,12 +22,7 @@ export const BasketProvider = ({ children }) => {
 
   const removeFromCart = useCallback(async (basketId) => {
     try {
-      const response = await fetch(
-        `http://13.209.5.239/api/basket/remove/${basketId}`,
-        {
-          method: 'DELETE',
-        }
-      );
+      const response = await call(`/basket/remove/${basketId}`, 'DELETE');
       if (!response.ok) {
         throw new Error('Failed to remove item');
       }

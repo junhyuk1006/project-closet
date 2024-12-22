@@ -80,11 +80,11 @@ function ReviewInput({ activeTab, userId, productId }) {
   const handleUpdate = async (reviewId, updatedContent) => {
     try {
       const updatedData = { reviewContent: updatedContent };
-      const response = await call(`/updateReview/${reviewId}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(updatedData),
-      });
+      const response = await call(
+        `/updateReview/${reviewId}`,
+        'PUT',
+        JSON.stringify(updatedData)
+      );
 
       if (!response.ok) throw new Error('리뷰 업데이트 실패');
       alert('리뷰가 성공적으로 업데이트되었습니다.');
@@ -98,11 +98,7 @@ function ReviewInput({ activeTab, userId, productId }) {
   /** 리뷰 비활성화 핸들러 */
   const handleDeactivate = async (reviewId) => {
     try {
-      const response = await call(`/deactivateReview/${reviewId}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-      });
+      const response = await call(`/deactivateReview/${reviewId}`, 'PATCH');
 
       if (!response.ok) throw new Error('리뷰 비활성화 실패');
       alert('리뷰가 성공적으로 비활성화되었습니다.');
@@ -116,11 +112,7 @@ function ReviewInput({ activeTab, userId, productId }) {
   /** 리뷰 활성화 핸들러 */
   const handleActivate = async (reviewId) => {
     try {
-      const response = await call(`/activateReview/${reviewId}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-      });
+      const response = await call(`/activateReview/${reviewId}`, 'PATCH');
 
       if (!response.ok) throw new Error('리뷰 활성화 실패');
       alert('리뷰가 성공적으로 활성화되었습니다.');
@@ -150,19 +142,18 @@ function ReviewInput({ activeTab, userId, productId }) {
       };
 
       /** 리뷰 저장 API */
-      const response = await call('/saveReview', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(reviewData),
-      });
+      const response = await call(
+        '/saveReview',
+        'POST',
+        JSON.stringify(reviewData)
+      );
 
-      const result = await response.json();
       if (!response.ok) {
-        alert(result.message || '리뷰 저장 실패');
+        alert(response.message || '리뷰 저장 실패');
         return;
       }
 
-      alert(result.message);
+      alert(response.message);
       setReviewContent('');
       setScore(0);
       await fetchReviews();
@@ -191,7 +182,7 @@ function ReviewInput({ activeTab, userId, productId }) {
 
   return (
     <>
-      <FetchAllReview item_id={productId} onReviewFetch={setReviews} />
+      <FetchAllReview itemId={productId} onReviewFetch={setReviews} />
       <div
         className={`tab-pane fade ${activeTab === 'reviews' ? 'show active' : ''}`}
         id="reviews"

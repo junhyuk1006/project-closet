@@ -28,18 +28,15 @@ const WritePost = () => {
     console.log('Request Payload:', requestBody); // JSON 데이터 확인
 
     try {
-      const response = await call('/board/write', {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
+      const response = await call(
+        '/board/write',
+        'POST',
+        JSON.stringify({
           boardTitle: title,
           boardContent: content,
           userId: user.id, // 사용자 ID 추가
-        }),
-      });
+        })
+      );
 
       if (response.ok) {
         alert('글이 작성되었습니다.');

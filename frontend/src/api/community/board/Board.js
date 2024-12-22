@@ -3,12 +3,7 @@ import { call } from '../../../api/auth/ApiService';
 
 // 게시판 목록 조회
 export const getAllboard = async () => {
-  return await fetchAPI('/api/board/list', {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
+  return await call('/board/list');
 };
 
 // 게시판 상세 조회
@@ -18,38 +13,23 @@ export const getBoardDetail = async (boardId) => {
 
 // 검색 요청 API
 export const searchBoards = async (keyword, condition) => {
-  return await fetchAPI(
-    `/api/board/search?keyword=${encodeURIComponent(keyword)}&condition=${encodeURIComponent(condition)}`,
-    {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }
+  return await call(
+    `/board/search?keyword=${encodeURIComponent(keyword)}&condition=${encodeURIComponent(condition)}`
   );
 };
 
 // 글 수정
 export const updateBoard = async (boardId, updatedData) => {
-  return await fetchAPI(`/api/board/update/${boardId}`, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${localStorage.getItem('token')}`,
-    },
-    body: JSON.stringify(updatedData),
-  });
+  return await call(
+    `/board/update/${boardId}`,
+    'PUT',
+    JSON.stringify(updatedData)
+  );
 };
 
 // 글 삭제
 export const deleteBoard = async (boardId) => {
-  const response = await call(`/board/delete/${boardId}`, {
-    method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${localStorage.getItem('token')}`,
-    },
-  });
+  const response = await call(`/board/delete/${boardId}`, 'DELETE');
 
   if (!response.ok) {
     const errorMessage = await response.text();

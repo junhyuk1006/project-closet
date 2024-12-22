@@ -1,26 +1,17 @@
-import { useEffect } from 'react';
 import { call } from '../auth/ApiService';
 
-function FetchIdProduct({ id, onItemFetch }) {
-  useEffect(() => {
-    if (id) {
-      call(`/itemDetail/${id}`)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          return response.json();
-        })
-        .then((data) => {
-          if (onItemFetch) {
-            onItemFetch(data);
-          }
-        })
-        .catch((error) => console.log('Error fetching item data:', error));
+export default async function FetchIdProduct({ id, onItemFetch }) {
+  try {
+    const response = await call(`/itemDetail/${id}`);
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
     }
-  }, [id]);
 
-  return null; // UI 렌더링 없음
+    if (onItemFetch) {
+      onItemFetch(response);
+    }
+  } catch (error) {
+    console.log('Error fetching item data:', error);
+  }
 }
-
-export default FetchIdProduct;

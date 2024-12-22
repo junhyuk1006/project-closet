@@ -104,22 +104,20 @@ function Detail() {
     };
 
     try {
-      const response = await call(`/basket/saveBasket`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(basketData),
-      });
+      const response = await call(
+        `/basket/saveBasket`,
+        'POST',
+        JSON.stringify(basketData)
+      );
 
       if (!response.ok) {
         throw new Error('Failed to save basket');
       }
 
-      const data = await response.json();
-
       // 전역 상태 업데이트
       addToCart({
         ...basketData,
-        basketId: data.basketId, // 서버에서 반환된 basketId 추가
+        basketId: response.basketId, // 서버에서 반환된 basketId 추가
       });
 
       window.location.reload();

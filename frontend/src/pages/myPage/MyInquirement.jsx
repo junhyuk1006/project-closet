@@ -14,8 +14,7 @@ const MyInquirement = () => {
   const fetchMyInquiries = async (page) => {
     try {
       const response = await call(
-        `/api/mypage/getInquiriesByUser?page=${page}&size=${pageSize}`,
-        'GET'
+        `/mypage/getInquiriesByUser?page=${page}&size=${pageSize}`
       );
       setMyInquiries(response?.data?.content || []);
       setTotalPages(response?.data?.totalPages || 0);

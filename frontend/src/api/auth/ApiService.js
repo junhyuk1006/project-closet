@@ -46,7 +46,8 @@ export const call = async (api, method = 'GET', request = null) => {
       return null;
     }
   } catch (error) {
-    console.error('API 호출 중 오류 발생:', error);
+    console.error('API 호출 중 오류 발생: ');
+    console.error(error);
     throw error;
   }
 };
@@ -73,24 +74,22 @@ export const signin = async (userDTO) => {
 
 export const signup = async (data) => {
   try {
-    const response = await call('/auth/signup', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    });
+    const response = await call('/auth/signup', 'POST', JSON.stringify(data));
 
     if (!response.ok) {
-      const errorData = await response.json();
       return {
         success: false,
-        message: errorData.message || '회원가입에 실패했습니다.',
+        message: response.error || '회원가입에 실패했습니다.',
       };
     }
 
     return { success: true, message: '회원가입에 성공했습니다!' };
   } catch (error) {
     console.error('API 호출 중 오류 발생:', error);
-    return { success: false, message: '서버와의 연결에 실패했습니다.' };
+    return {
+      success: false,
+      message: error.message || '서버와의 연결에 실패했습니다.',
+    };
   }
 };
 
@@ -116,28 +115,19 @@ export const me = async () => {
       throw new Error('Authentication token not found.');
     }
 
-    const response = await call(`/auth/me`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`, // 토큰 설정
-      },
-    });
+    const response = await call(`/auth/me`);
 
     if (!response.ok) {
-      const errorData = await response.json();
       throw new Error(
-        errorData.message ||
-          `Error: ${response.status} - ${response.statusText}`
+        response || `Error: ${response.status} - ${response.statusText}`
       );
     }
 
-    const data = await response.json();
-    console.log(`[id: ${data.id}]`);
-    console.log(`[username: ${data.username}]로 로그인 중`);
-    return data; // 사용자 데이터 반환
+    console.log(`[id: ${response.id}]`);
+    console.log(`[username: ${response.username}]로 로그인 중`);
+    return response; // 사용자 데이터 반환
   } catch (err) {
-    console.error('Failed to fetch user data:', err.message);
+    console.error('Failed to fetch user data:', err);
     return null; // 에러 발생 시 null 반환
   }
 };
@@ -193,10 +183,7 @@ export const verifyCode = async (email, code) => {
  */
 export const checkUsername = async (username) => {
   try {
-    const isAvailable = await call(
-      `/auth/check-username?username=${username}`,
-      'GET'
-    );
+    const isAvailable = await call(`/auth/check-username?username=${username}`);
     console.log('아이디 중복 검사 응답:', isAvailable); // 디버깅 로그 추가
     return isAvailable; // true 또는 false 반환
   } catch (error) {
@@ -213,10 +200,7 @@ export const checkUsername = async (username) => {
  */
 export const checkNickname = async (nickname) => {
   try {
-    const isAvailable = await call(
-      `/api/auth/check-nickname?nickname=${nickname}`,
-      'GET'
-    );
+    const isAvailable = await call(`/auth/check-nickname?nickname=${nickname}`);
     console.log('닉네임 중복 검사 응답:', isAvailable); // 디버깅 로그 추가
     return isAvailable; // true 또는 false 반환
   } catch (error) {

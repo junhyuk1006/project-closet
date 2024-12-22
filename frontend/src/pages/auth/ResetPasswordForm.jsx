@@ -18,17 +18,13 @@ const ResetPasswordForm = () => {
     try {
       const response = await call(
         `/auth/reset-password?email=${email}&username=${username}`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-        }
+        'POST'
       );
-      const data = await response.json();
 
       if (!response.ok) {
         const errorToShow =
-          data.error ||
-          data.message ||
+          response.error ||
+          response.message ||
           '비밀번호 재설정 링크 전송에 실패했습니다.';
         throw new Error(errorToShow);
       }

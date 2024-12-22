@@ -55,13 +55,7 @@ const UploadForm = () => {
     console.log('user.id:', user.id);
 
     try {
-      const response = await call('/coordi/upload', {
-        method: 'POST',
-        body: formData,
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`, // Authorization 헤더 추가
-        },
-      });
+      const response = await call('/coordi/upload', 'POST', formData);
 
       if (response.ok) {
         alert('코디가 성공적으로 업로드되었습니다!');

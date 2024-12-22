@@ -1,18 +1,18 @@
 import { call } from '../auth/ApiService';
 
-export const FetchGetBasket = async ({ userId, onGetFetch }) => {
+export default async function FetchGetBasket({ userId, onGetFetch }) {
   try {
     if (userId) {
       const response = await call(`/basket/getBasket/${userId}`);
       if (!response.ok) {
         throw new Error('getBasket API response error');
       }
-      const data = await response.json();
+
       if (onGetFetch) {
-        onGetFetch(data);
+        onGetFetch(response);
       }
     }
   } catch (error) {
     console.error('getBasket Fetch Error: ', error);
   }
-};
+}

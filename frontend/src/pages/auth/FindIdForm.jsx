@@ -14,20 +14,16 @@ const FindIdForm = () => {
     setErrorMessage('');
     setFoundId(null);
     try {
-      const response = await call(`/auth/find-username?email=${email}`, {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
-      });
-      const data = await response.json();
+      const response = await call(`/auth/find-username?email=${email}`);
 
       if (!response.ok) {
         const errorToShow =
-          data.error || data.message || '아이디를 찾을 수 없습니다.';
+          response.error || response.message || '아이디를 찾을 수 없습니다.';
         throw new Error(errorToShow);
       }
 
       // 성공 시 아이디 표시
-      setFoundId(data.data[0]);
+      setFoundId(response.data[0]);
     } catch (error) {
       setErrorMessage(error.message);
     }

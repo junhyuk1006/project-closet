@@ -2,13 +2,11 @@ import { call } from '../auth/ApiService';
 
 export const savePoint = async (PointData) => {
   try {
-    const response = await call(`/point/saveReviewPoint`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(PointData),
-    });
+    const response = await call(
+      `/point/saveReviewPoint`,
+      'POST',
+      JSON.stringify(PointData)
+    );
 
     if (!response.ok) {
       throw new Error('Failed to save point');

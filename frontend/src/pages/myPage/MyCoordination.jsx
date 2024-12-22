@@ -12,7 +12,7 @@ const MyCoordination = () => {
 
   const fetchReservations = async () => {
     try {
-      const response = await call('/mypage/getMyReservation', 'GET');
+      const response = await call('/mypage/getMyReservation');
       setReservations(response.data); // API의 응답 구조에 따라 수정
     } catch (error) {
       console.error('Error fetching reservations:', error);

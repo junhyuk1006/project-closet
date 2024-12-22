@@ -32,15 +32,15 @@ const ChangePasswordForm = () => {
     }
 
     try {
-      const response = await call('/auth/change-password', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ token, newPassword }),
-      });
-      const data = await response.json();
+      const response = await call(
+        '/auth/change-password',
+        'POST',
+        JSON.stringify({ token, newPassword })
+      );
+
       if (!response.ok) {
         const errorToShow =
-          data.error || data.message || '비밀번호 변경에 실패했습니다.';
+          response.error || response.message || '비밀번호 변경에 실패했습니다.';
         throw new Error(errorToShow);
       }
       setSuccessMessage(

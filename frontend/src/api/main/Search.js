@@ -1,10 +1,13 @@
+import { call } from '../auth/ApiService';
+
 // 검색 폼 제출
-export default function Search({ inputValue }) {
-  fetch(`http://13.209.5.239/api/product?key=${inputValue}`, {
-    method: 'POST',
-    body: JSON.stringify({ key: inputValue }),
-  }).then((res) => {
-    console.log(res);
-    return res.json();
-  });
+export default async function Search({ inputValue }) {
+  const response = await call(
+    `/product?key=${inputValue}`,
+    'POST',
+    JSON.stringify({ key: inputValue })
+  );
+
+  console.log(response);
+  return response;
 }

@@ -149,10 +149,7 @@ const MemberInfo = () => {
 
   const fetchData = async () => {
     try {
-      const address = await call(
-        `/api/mypage/getAddress?userId=${user?.id}`,
-        'GET'
-      );
+      const address = await call(`/mypage/getAddress?userId=${user?.id}`);
       const representative = address.find((addr) => addr.isRepresent === true);
       const general = address.filter((addr) => addr.isRepresent !== true);
 
@@ -253,10 +250,7 @@ const MemberInfo = () => {
 
   // 일반 주소 삭제
   const DeleteGeneralAddress = (id) => {
-    call(`/mypage/deleteAddress/${id}`, {
-      method: 'DELETE',
-      cache: 'no-store',
-    })
+    call(`/mypage/deleteAddress/${id}`, 'DELETE', { cache: 'no-store' })
       .then((response) => {
         if (response.ok) {
           fetchData(); // 변경 후 데이터를 다시 가져와 상태 업데이트
