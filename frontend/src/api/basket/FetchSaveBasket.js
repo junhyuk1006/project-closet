@@ -1,15 +1,14 @@
+import { call } from '../auth/ApiService';
+
 export const fetchSaveBasket = async ({ basketData, onSaveFetch }) => {
   try {
-    const response = await fetch(
-      `http://localhost:8090/api/basket/saveBasket`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(basketData),
-      }
-    );
+    const response = await call(`/basket/saveBasket`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(basketData),
+    });
 
     if (!response.ok) {
       throw new Error('Failed to save basket');

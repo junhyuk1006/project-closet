@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
+import { call } from '../auth/ApiService';
 
 function FetchAllReview({ item_id, onReviewFetch }) {
   useEffect(() => {
-    fetch(`http://localhost:8090/api/findAllReview/${item_id}`)
+    call(`/findAllReview/${item_id}`)
       .then((response) => {
         if (!response.ok) {
           throw new Error('Network response was not ok');

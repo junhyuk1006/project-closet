@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Find.css'; // 기존 CSS 사용
+import { call } from '../../api/auth/ApiService';
 
 const ResetPasswordForm = () => {
   const [email, setEmail] = useState('');
@@ -15,8 +16,8 @@ const ResetPasswordForm = () => {
     setSuccessMessage('');
 
     try {
-      const response = await fetch(
-        `http://localhost:8090/api/auth/reset-password?email=${email}&username=${username}`,
+      const response = await call(
+        `/auth/reset-password?email=${email}&username=${username}`,
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },

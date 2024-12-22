@@ -44,7 +44,7 @@ const MyPoint = () => {
 
   const fetchTotalPoints = async () => {
     try {
-      const response = await call(`/api/point/getTotalPointByUserid`, 'GET');
+      const response = await call(`/point/getTotalPointByUserid`, 'GET');
       setTotalPoints(response);
     } catch (error) {
       console.error('Error fetching total points:', error);

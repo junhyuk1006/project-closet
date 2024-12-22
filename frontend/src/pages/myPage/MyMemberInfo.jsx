@@ -80,7 +80,7 @@ const MemberInfo = () => {
       }
 
       try {
-        const response = await call('/api/mypage/changePwd', 'PUT', {
+        const response = await call('/mypage/changePwd', 'PUT', {
           password,
         });
 
@@ -99,7 +99,7 @@ const MemberInfo = () => {
 
     if (formName === 'changebodyInfo') {
       try {
-        const response = await call('/api/mypage/changeBodyInfo', 'PUT', {
+        const response = await call('/mypage/changeBodyInfo', 'PUT', {
           height: bodyInfo.height,
           weight: bodyInfo.weight,
           size: bodyInfo.size,
@@ -123,7 +123,7 @@ const MemberInfo = () => {
       const confirmPassword = data.confirmPassword?.trim(); // 입력값 가져오기
 
       try {
-        const response = await call(`/api/mypage/changeAddInfo`, 'PUT', {
+        const response = await call(`/mypage/changeAddInfo`, 'PUT', {
           name: addInfo.name,
           phone: addInfo.phone1 + addInfo.phone2 + addInfo.phone3,
           style: addInfo.style,
@@ -170,7 +170,7 @@ const MemberInfo = () => {
     const data = { address: fullAddress };
 
     try {
-      const response = await call('/api/mypage/addAddress', 'POST', data);
+      const response = await call('/mypage/addAddress', 'POST', data);
 
       if (response.status === 'success') {
         alert(response.message);
@@ -226,7 +226,7 @@ const MemberInfo = () => {
 
   const switchRepresentativeAddress = async (id) => {
     try {
-      await call(`/api/mypage/switchRepresentativeAddress/${id}`, 'PUT');
+      await call(`/mypage/switchRepresentativeAddress/${id}`, 'PUT');
       alert('대표 주소지가 변경되었습니다.');
       fetchData(); // 데이터 새로고침
     } catch (error) {
@@ -239,7 +239,7 @@ const MemberInfo = () => {
   const DeleteRepresentativeAddress = async (id) => {
     if (generalAddresses.length === 0) {
       try {
-        await call(`/api/mypage/deleteAddress/${id}`, 'DELETE');
+        await call(`/mypage/deleteAddress/${id}`, 'DELETE');
         fetchData(); // 변경 후 데이터 다시 가져오기
       } catch (error) {
         console.error('Error deleting address:', error);
@@ -253,7 +253,7 @@ const MemberInfo = () => {
 
   // 일반 주소 삭제
   const DeleteGeneralAddress = (id) => {
-    fetch(`http://localhost:8090/api/mypage/deleteAddress/${id}`, {
+    call(`/mypage/deleteAddress/${id}`, {
       method: 'DELETE',
       cache: 'no-store',
     })

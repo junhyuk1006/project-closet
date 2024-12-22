@@ -52,12 +52,12 @@ spring:
             authorization-grant-type: authorization_code # 인증 코드 방식
             client-id: 1d03b543cc496c9406b87e165db19b2c # 카카오 앱 클라이언트 ID (환경 변수로 설정)
             scope: profile_nickname,account_email # 요청할 OAuth2 권한 범위
-            redirect-uri: http://localhost:8090/login/oauth2/code/kakao # 리디렉션 URI
+            redirect-uri: http://13.209.5.239:8090/login/oauth2/code/kakao # 리디렉션 URI
             client-name: Kakao # 클라이언트 이름
           naver:
             client-id: DvFLuTam14KDBYXb4Ddz # 네이버 앱 클라이언트 ID (환경 변수로 설정)
             client-name: Naver # 클라이언트 이름
-            redirect-uri: http://localhost:8090/login/oauth2/code/naver # 리디렉션 URI
+            redirect-uri: http://13.209.5.239:8090/login/oauth2/code/naver # 리디렉션 URI
             authorization-grant-type: authorization_code # 인증 코드 방식
             scope: name,email # 요청할 OAuth2 권한 범위
             client-secret: _K3HnFtgDQ # 네이버 앱 클라이언트 비밀키 (환경 변수로 설정)

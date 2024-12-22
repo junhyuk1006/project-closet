@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../../../api/auth/UserContext'; // useUser 사용
 import './WritePost.css'; // 스타일 파일 추가
+import { call } from '../../../api/auth/ApiService';
 
 const WritePost = () => {
   const [title, setTitle] = useState('');
@@ -27,7 +28,7 @@ const WritePost = () => {
     console.log('Request Payload:', requestBody); // JSON 데이터 확인
 
     try {
-      const response = await fetch('http://localhost:8090/api/board/write', {
+      const response = await call('/board/write', {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,

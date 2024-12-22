@@ -31,7 +31,7 @@ function ReviewInput({ activeTab, userId, productId }) {
   /** 특정 상품에 대한 리뷰 데이터를 가져오는 함수 */
   const fetchReviews = async () => {
     try {
-      const response = await call(`/api/findAllReview/${productId}`);
+      const response = await call(`/findAllReview/${productId}`);
       setReviews(response);
       console.log('리뷰 데이터를 성공적으로 불러왔습니다.');
       console.log(response);
@@ -80,14 +80,11 @@ function ReviewInput({ activeTab, userId, productId }) {
   const handleUpdate = async (reviewId, updatedContent) => {
     try {
       const updatedData = { reviewContent: updatedContent };
-      const response = await fetch(
-        `http://localhost:8090/api/updateReview/${reviewId}`,
-        {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(updatedData),
-        }
-      );
+      const response = await call(`/updateReview/${reviewId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatedData),
+      });
 
       if (!response.ok) throw new Error('리뷰 업데이트 실패');
       alert('리뷰가 성공적으로 업데이트되었습니다.');
@@ -101,14 +98,11 @@ function ReviewInput({ activeTab, userId, productId }) {
   /** 리뷰 비활성화 핸들러 */
   const handleDeactivate = async (reviewId) => {
     try {
-      const response = await fetch(
-        `http://localhost:8090/api/deactivateReview/${reviewId}`,
-        {
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' },
-          credentials: 'include',
-        }
-      );
+      const response = await call(`/deactivateReview/${reviewId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+      });
 
       if (!response.ok) throw new Error('리뷰 비활성화 실패');
       alert('리뷰가 성공적으로 비활성화되었습니다.');
@@ -122,14 +116,11 @@ function ReviewInput({ activeTab, userId, productId }) {
   /** 리뷰 활성화 핸들러 */
   const handleActivate = async (reviewId) => {
     try {
-      const response = await fetch(
-        `http://localhost:8090/api/activateReview/${reviewId}`,
-        {
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' },
-          credentials: 'include',
-        }
-      );
+      const response = await call(`/activateReview/${reviewId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+      });
 
       if (!response.ok) throw new Error('리뷰 활성화 실패');
       alert('리뷰가 성공적으로 활성화되었습니다.');
@@ -159,7 +150,7 @@ function ReviewInput({ activeTab, userId, productId }) {
       };
 
       /** 리뷰 저장 API */
-      const response = await fetch('http://localhost:8090/api/saveReview', {
+      const response = await call('/saveReview', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(reviewData),

@@ -38,7 +38,7 @@ function Detail() {
 
   // 컴포넌트 로드 시 id에 따른 상품 데이터를 가져옵니다.
   useEffect(() => {
-    call(`/api/itemDetail/${productId}`)
+    call(`/itemDetail/${productId}`)
       .then((res) => {
         console.log(res);
         setProduct(res);
@@ -104,14 +104,11 @@ function Detail() {
     };
 
     try {
-      const response = await fetch(
-        `http://localhost:8090/api/basket/saveBasket`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(basketData),
-        }
-      );
+      const response = await call(`/basket/saveBasket`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(basketData),
+      });
 
       if (!response.ok) {
         throw new Error('Failed to save basket');

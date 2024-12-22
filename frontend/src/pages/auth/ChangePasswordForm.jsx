@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Find.css';
+import { call } from '../../api/auth/ApiService';
 
 const ChangePasswordForm = () => {
   const [newPassword, setNewPassword] = useState('');
@@ -31,14 +32,11 @@ const ChangePasswordForm = () => {
     }
 
     try {
-      const response = await fetch(
-        'http://localhost:8090/api/auth/change-password',
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ token, newPassword }),
-        }
-      );
+      const response = await call('/auth/change-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token, newPassword }),
+      });
       const data = await response.json();
       if (!response.ok) {
         const errorToShow =

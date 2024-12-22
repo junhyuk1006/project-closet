@@ -13,7 +13,7 @@ const MyPurchaseHistory = () => {
   // API 데이터 호출 및 그룹화
   const fetchPurchaseHistory = async () => {
     try {
-      const response = await call('/api/mypage/getOrderInfo', 'GET');
+      const response = await call('/mypage/getOrderInfo', 'GET');
 
       console.log('Raw response data:', response);
 
@@ -24,7 +24,15 @@ const MyPurchaseHistory = () => {
 
       // 그룹화 로직
       const grouped = purchaseData.reduce((acc, item) => {
-        const { orderHistoryId, orderNumber, totalPaymentAmount, paymentStatus, paymentDate, deliveryNumber, deliveryStatus } = item;
+        const {
+          orderHistoryId,
+          orderNumber,
+          totalPaymentAmount,
+          paymentStatus,
+          paymentDate,
+          deliveryNumber,
+          deliveryStatus,
+        } = item;
 
         if (!acc[orderHistoryId]) {
           acc[orderHistoryId] = {
@@ -65,23 +73,35 @@ const MyPurchaseHistory = () => {
   // 렌더링
   return (
     <div>
-      <MyPageHeader title="구매 내역 조회" description="적립금은 사이트 내에서 상품 구매 시 현금처럼 사용할 수 있습니다." />
+      <MyPageHeader
+        title="구매 내역 조회"
+        description="적립금은 사이트 내에서 상품 구매 시 현금처럼 사용할 수 있습니다."
+      />
 
       {error && <p className="error-message">{error}</p>}
       {groupedPurchases.length > 0 ? (
         groupedPurchases.map((purchase) => (
           <div className="purchase-rounded-box" key={purchase.orderHistoryId}>
             <div className="purchase-info">
-              <div className="order-number-box">주문번호 : {purchase.orderNumber}</div>
-              <div className="payment-status">{purchase.paymentStatus === 'COMPLETED' ? '결제완료' : purchase.paymentStatus}</div>
+              <div className="order-number-box">
+                주문번호 : {purchase.orderNumber}
+              </div>
+              <div className="payment-status">
+                {purchase.paymentStatus === 'COMPLETED'
+                  ? '결제완료'
+                  : purchase.paymentStatus}
+              </div>
               <div className="delivery-status">{purchase.deliveryStatus}</div>
             </div>
-            <div className="purchase-date">결제날짜: {purchase.paymentDate}</div>
+            <div className="purchase-date">
+              결제날짜: {purchase.paymentDate}
+            </div>
             <h3>상품 목록:</h3>
             <ul>
               {purchase.orderDetails.map((item, idx) => (
                 <li key={idx}>
-                  {item.itemName} ({item.color}, {item.size}) - {item.itemCount}개 - {item.itemPrice}원
+                  {item.itemName} ({item.color}, {item.size}) - {item.itemCount}
+                  개 - {item.itemPrice}원
                 </li>
               ))}
             </ul>

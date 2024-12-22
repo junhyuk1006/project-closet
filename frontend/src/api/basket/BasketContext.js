@@ -10,7 +10,7 @@ export const BasketProvider = ({ children }) => {
   const fetchBaskets = useCallback(async (userId) => {
     try {
       const response = await fetch(
-        `http://localhost:8090/api/basket/getBasket/${userId}`
+        `http://13.209.5.239/api/basket/getBasket/${userId}`
       );
       if (!response.ok) {
         throw new Error('Failed to fetch baskets');
@@ -25,7 +25,7 @@ export const BasketProvider = ({ children }) => {
   const removeFromCart = useCallback(async (basketId) => {
     try {
       const response = await fetch(
-        `http://localhost:8090/api/basket/remove/${basketId}`,
+        `http://13.209.5.239/api/basket/remove/${basketId}`,
         {
           method: 'DELETE',
         }

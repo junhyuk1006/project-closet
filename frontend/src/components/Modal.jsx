@@ -13,22 +13,6 @@ function Modal({ isOpen, onClose, product }) {
   const { quantity, increaseQuantity, decreaseQuantity } =
     useProductQuantity(1);
 
-  // useEffect(() => {
-  //   if (productId) {
-  //     async function getProduct() {
-  //       try {
-  //         const data = await fetch(
-  //           `http://localhost:8090/api/itemDetail/${productId}`
-  //         ).then((data) => data.json());
-  //         setProducts('data:' + data);
-  //       } catch (error) {
-  //         console.error('Failed to fetch product details:', error);
-  //       }
-  //     }
-  //     getProduct();
-  //   }
-  // }, [productId]);
-
   const thumbnails = [
     `images/${product.mainImage}`,
     `images/${product.detailImage}`,

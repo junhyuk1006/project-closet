@@ -34,7 +34,7 @@ src/
 |
 ├── components/                 # 재사용 가능한 UI 컴포넌트
 │   ├── MyPage/                 # 마이페이지 디렉터리
-│   │   └── MyPageHeader.jsx    마이페이지 공통 헤더 
+│   │   └── MyPageHeader.jsx    마이페이지 공통 헤더
 │   │
 │   ├── Rating/                 # 평점 파일
 │   │   └── StarRating.jsx      Star 모양의 평점
@@ -46,7 +46,7 @@ src/
 |
 ├── hooks/                      # 커스텀 훅
 │   ├── Animation/              # 애니메이션 디렉터리
-│   │   └── Animation.js        공통 애니메이션 
+│   │   └── Animation.js        공통 애니메이션
 │   │
 │   ├── Category/               # 카테고리 디렉터리
 │   │   └── Category.js         공통 카테고리
@@ -118,18 +118,16 @@ src/
 └── ...
 ```
 
-
-
-
-
 <br><br>
+
 ## React 디렉토리 기본 경로설명
 
 1. src/api/
+
 ```plaintext
 설명
-    - api/ 
-        - 디렉토리는 서버와의 통신 로직(API 호출)을 관리 
+    - api/
+        - 디렉토리는 서버와의 통신 로직(API 호출)을 관리
         - 각 기능별로 파일을 분리하여 모듈화.
 
     - EX.
@@ -142,10 +140,11 @@ src/
 ```
 
 <br>예시
+
 ```plaintext
 export const login = async (credentials) => {
     try {
-        const response = await fetch("http://localhost:80/api/auth/login", {
+        const response = await fetch("http://13.209.5.239:80/api/auth/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -164,9 +163,8 @@ export const login = async (credentials) => {
 };
 ```
 
+<br><br> 2. src/assets/
 
-<br><br>
-2. src/assets/
 ```plaintext
 설명
     - 정적 리소스(이미지, 스타일 등)를 저장.
@@ -179,9 +177,11 @@ export const login = async (credentials) => {
 이유
     1. 모든 정적 자원을 한 디렉토리에 모아 관리하면, 파일을 쉽게 찾고 유지보수함.
 ```
+
 <br><br>
 
 3. src/components/
+
 ```plaintext
 설명
     - 프로젝트에서 재사용 가능한 공통 UI 컴포넌트를 저장
@@ -192,8 +192,8 @@ export const login = async (credentials) => {
     2. 공통 컴포넌트를 한 디렉토리에 모아두면, 다른 개발자와 협업 시 구조를 쉽게 이해할 수 있음
 ```
 
-
 <br>예시
+
 ```plaintext
 import Button from "../components/Button";
 

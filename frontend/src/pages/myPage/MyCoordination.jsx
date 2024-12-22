@@ -12,7 +12,7 @@ const MyCoordination = () => {
 
   const fetchReservations = async () => {
     try {
-      const response = await call('/api/mypage/getMyReservation', 'GET');
+      const response = await call('/mypage/getMyReservation', 'GET');
       setReservations(response.data); // API의 응답 구조에 따라 수정
     } catch (error) {
       console.error('Error fetching reservations:', error);
@@ -26,7 +26,10 @@ const MyCoordination = () => {
 
   return (
     <div>
-      <MyPageHeader title="나의 코디 조회" description="내가 예약한 코디 신청 정보를 알 수 있습니다. 10분 이상 늦을 시, 노쇼로 간주됩니다" />
+      <MyPageHeader
+        title="나의 코디 조회"
+        description="내가 예약한 코디 신청 정보를 알 수 있습니다. 10분 이상 늦을 시, 노쇼로 간주됩니다"
+      />
       <div className="mypage-label1">코디 예약 현황</div>
 
       <div className="coordi-rounded-box">
@@ -36,8 +39,12 @@ const MyCoordination = () => {
           reservations.map((reservation, index) => (
             <div key={index} className="reservation-item">
               <div className="reservation-row">
-                <div className="reservation-id-box">예약번호: {reservation.reservationId}</div>
-                <div className="reservation-id-box">예약상태: {reservation.reservationStatus}</div>
+                <div className="reservation-id-box">
+                  예약번호: {reservation.reservationId}
+                </div>
+                <div className="reservation-id-box">
+                  예약상태: {reservation.reservationStatus}
+                </div>
               </div>
               <p>
                 {`${user?.nickname || ''}님이 예약하신 코디네이터는 `}

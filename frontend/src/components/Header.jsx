@@ -41,7 +41,7 @@ function Header({ user }) {
     if (user) {
       async function fetchBaskets() {
         try {
-          const newBaskets = await call(`/api/basket/getBasket/` + user.id); // 비동기 처리
+          const newBaskets = await call(`/basket/getBasket/` + user.id); // 비동기 처리
           setBaskets(newBaskets);
         } catch (err) {
           console.error('장바구니 데이터를 가져오는 데 실패했습니다:', err);
@@ -55,7 +55,7 @@ function Header({ user }) {
   useEffect(() => {
     const getNotices = async () => {
       try {
-        const newNotices = await call('/api/notices');
+        const newNotices = await call('/notices');
         // 공지사항 데이터가 없는 경우
         if (newNotices.length === 0) {
           console.log('공지사항이 없습니다.');

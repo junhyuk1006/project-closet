@@ -13,7 +13,7 @@ export const getAllboard = async () => {
 
 // 게시판 상세 조회
 export const getBoardDetail = async (boardId) => {
-  return await call(`/api/board/${boardId}`);
+  return await call(`/board/${boardId}`);
 };
 
 // 검색 요청 API
@@ -43,16 +43,13 @@ export const updateBoard = async (boardId, updatedData) => {
 
 // 글 삭제
 export const deleteBoard = async (boardId) => {
-  const response = await fetch(
-    `http://localhost:8090/api/board/delete/${boardId}`,
-    {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-    }
-  );
+  const response = await call(`/board/delete/${boardId}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
+  });
 
   if (!response.ok) {
     const errorMessage = await response.text();

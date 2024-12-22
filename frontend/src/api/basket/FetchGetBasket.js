@@ -1,9 +1,9 @@
+import { call } from '../auth/ApiService';
+
 export const FetchGetBasket = async ({ userId, onGetFetch }) => {
   try {
     if (userId) {
-      const response = await fetch(
-        `http://localhost:8090/api/basket/getBasket/${userId}`
-      );
+      const response = await call(`/basket/getBasket/${userId}`);
       if (!response.ok) {
         throw new Error('getBasket API response error');
       }

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Find.css';
+import { call } from '../../api/auth/ApiService';
 
 const FindIdForm = () => {
   const [email, setEmail] = useState('');
@@ -13,13 +14,10 @@ const FindIdForm = () => {
     setErrorMessage('');
     setFoundId(null);
     try {
-      const response = await fetch(
-        `http://localhost:8090/api/auth/find-username?email=${email}`,
-        {
-          method: 'GET',
-          headers: { 'Content-Type': 'application/json' },
-        }
-      );
+      const response = await call(`/auth/find-username?email=${email}`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+      });
       const data = await response.json();
 
       if (!response.ok) {

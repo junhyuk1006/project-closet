@@ -97,7 +97,7 @@ function PaymentResult() {
         pointInsertType: 'purchase',
       };
       await axios.post(
-        'http://localhost:8090/api/point/saveReviewPoint',
+        'http://13.209.5.239/api/point/saveReviewPoint',
         pointData
       );
       saveLog(`포인트 ${points} 차감 성공`);
@@ -111,7 +111,7 @@ function PaymentResult() {
   const saveOrder = async (orderData) => {
     try {
       const response = await axios.post(
-        'http://localhost:8090/api/orders',
+        'http://13.209.5.239/api/orders',
         orderData
       );
       return { success: true, data: response.data };
@@ -128,7 +128,7 @@ function PaymentResult() {
     try {
       const payload = { basketIds, status };
       const response = await axios.patch(
-        'http://localhost:8090/api/basket/updateStatus',
+        'http://13.209.5.239/api/basket/updateStatus',
         payload
       );
       if (response.data && response.data.success) {

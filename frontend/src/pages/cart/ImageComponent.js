@@ -2,7 +2,7 @@ import React from 'react';
 
 const ImageComponent = () => {
   const filename = 'blog-03.jpg'; // 고정된 파일 이름
-  const imageUrl = `http://localhost:8090/api/images/${filename}`; // 백엔드 이미지 API URL
+  const imageUrl = `http://13.209.5.239/api/images/${filename}`; // 백엔드 이미지 API URL
 
   return (
     <div>

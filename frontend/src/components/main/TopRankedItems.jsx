@@ -1,22 +1,32 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import useFetch from '../../hooks/useFetch';
 
 // import CSS
 import '../../assets/styles/main/TopRankedItems.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Slider from 'react-slick';
+import { call } from '../../api/auth/ApiService';
 
 export default function TopRankedItems() {
   const [category, setCategory] = useState('itemPrice'); // 카멜케이스로 수정
   const [subject, setSubject] = useState('week'); // 주간, 월간 랭킹 등을 위한 상태값
+  const [rankedItems, setRankedItems] = useState([]); // 순위 상위권 상품 상태
 
-  const {
-    data: rankedItems = [],
-    error,
-    loading,
-  } = useFetch(`/api/items/top/itemName`);
+  // 순위 상위권 상품 가져오는 함수
+  const fetchTopItems = async () => {
+    try {
+      const response = await call('/items/top/itemName');
+      setRankedItems(response);
+    } catch (error) {
+      console.error('Error fetching reservations:', error);
+    }
+  };
+
+  // 페이지 로드 시 함수 호출
+  useEffect(() => {
+    fetchTopItems();
+  }, []);
 
   // 날짜 필터링에 따른 소제목 한글화
   const titleBySubject = {
@@ -51,8 +61,8 @@ export default function TopRankedItems() {
     }
   }, []);
 
-  if (loading) return <div>로딩 중...</div>;
-  if (error) return <div>에러가 발생했습니다: {error.message}</div>;
+  // if (loading) return <div>로딩 중...</div>;
+  // if (error) return <div>에러가 발생했습니다: {error.message}</div>;
 
   return (
     <div className="sec-banner bg0 p-t-80 p-b-50">

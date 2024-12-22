@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
+import { call } from '../auth/ApiService';
 
 function FetchAllProduct({ onItemFetch }) {
   useEffect(() => {
-    fetch('http://localhost:8090/api/itemAll')
+    call('/itemAll')
       .then((response) => {
         if (!response.ok) {
           throw new Error('Network response was not ok');

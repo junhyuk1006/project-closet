@@ -17,16 +17,13 @@ const MyPageHome = () => {
       formData.append('file', file);
 
       try {
-        const response = await fetch(
-          'http://localhost:8090/api/mypage/uploadProfileImage',
-          {
-            method: 'POST',
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem('token')}`,
-            },
-            body: formData,
-          }
-        );
+        const response = await call('/mypage/uploadProfileImage', {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+          body: formData,
+        });
 
         if (response.ok) {
           const fileName = await response.text(); // 반환된 파일명
@@ -44,7 +41,7 @@ const MyPageHome = () => {
 
   const fetchGradeInfo = async () => {
     try {
-      const response = await call(`/api/mypage/findGradeByUser`, 'GET');
+      const response = await call(`/mypage/findGradeByUser`, 'GET');
       setGradeInfo(response.data);
     } catch (error) {
       console.error('에러발생 , 등급조회 에러', error);
@@ -53,16 +50,13 @@ const MyPageHome = () => {
   useEffect(() => {
     const fetchProfileImage = async () => {
       try {
-        const response = await fetch(
-          'http://localhost:8090/api/mypage/getProfileImage',
-          {
-            method: 'GET',
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem('token')}`,
-            },
-            credentials: 'include', // 인증 정보를 포함
-          }
-        );
+        const response = await call('/mypage/getProfileImage', {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+          credentials: 'include', // 인증 정보를 포함
+        });
 
         if (response.ok) {
           const blob = await response.blob();

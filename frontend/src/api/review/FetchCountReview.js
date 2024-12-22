@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { call } from '../auth/ApiService';
 
 function FetchCountReview({ itemId, onCountFetch }) {
   useEffect(() => {
-    fetch(`http://localhost:8090/api/countReview/${itemId}`)
+    call(`/countReview/${itemId}`)
       .then((response) => {
         if (!response.ok) {
           throw new Error('error');

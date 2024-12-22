@@ -8,6 +8,7 @@ import '../../assets/styles/detailItem/ReviewInput.css';
 
 /** api */
 import FetchIdProduct from '../../api/item/FetchIdProduct';
+import { call } from '../../api/auth/ApiService';
 
 function ItemInquiry({ activeTab, userId, productId }) {
   /** 리뷰, 드롭다운 상태, 폼 입력 상태를 관리하기 위한 state */
@@ -63,9 +64,7 @@ function ItemInquiry({ activeTab, userId, productId }) {
   /** 상품 문의 목록 API 호출 */
   const fetchInquiries = async () => {
     try {
-      const response = await fetch(
-        `http://localhost:8090/api/inquiry/getInquiries/${productId}`
-      );
+      const response = await call(`/inquiry/getInquiries/${productId}`);
       if (!response.ok) {
         throw new Error(`Error: ${response.statusText}`);
       }
@@ -95,14 +94,11 @@ function ItemInquiry({ activeTab, userId, productId }) {
       };
 
       /** 문의 저장 API 호출 */
-      const response = await fetch(
-        'http://localhost:8090/api/inquiry/saveInquiry',
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(inquiryData),
-        }
-      );
+      const response = await call('/inquiry/saveInquiry', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(inquiryData),
+      });
 
       const result = await response.json();
       if (!response.ok) {
@@ -121,14 +117,11 @@ function ItemInquiry({ activeTab, userId, productId }) {
   /** 문의 비활성화 API 호출 */
   const handleDeactivate = async (InquiryId) => {
     try {
-      const response = await fetch(
-        `http://localhost:8090/api/inquiry/deactivateInquiry/${InquiryId}`,
-        {
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' },
-          credentials: 'include',
-        }
-      );
+      const response = await call(`/inquiry/deactivateInquiry/${InquiryId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+      });
 
       if (!response.ok) throw new Error('문의 비활성화 실패');
       alert('문의가 성공적으로 비활성화되었습니다.');
@@ -143,14 +136,11 @@ function ItemInquiry({ activeTab, userId, productId }) {
   /** 문의 활성화 API 호출 */
   const handleActivate = async (InquiryId) => {
     try {
-      const response = await fetch(
-        `http://localhost:8090/api/inquiry/activateInquiry/${InquiryId}`,
-        {
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' },
-          credentials: 'include',
-        }
-      );
+      const response = await call(`/inquiry/activateInquiry/${InquiryId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+      });
 
       if (!response.ok) throw new Error('문의 활성화 실패');
       alert('문의가 성공적으로 활성화되었습니다.');
