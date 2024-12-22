@@ -86,7 +86,7 @@ function ReviewInput({ activeTab, userId, productId }) {
         JSON.stringify(updatedData)
       );
 
-      if (!response.ok) throw new Error('리뷰 업데이트 실패');
+      // if (!response.ok) throw new Error('리뷰 업데이트 실패');
       alert('리뷰가 성공적으로 업데이트되었습니다.');
       fetchReviews();
       setDropdownStates({});
@@ -100,7 +100,7 @@ function ReviewInput({ activeTab, userId, productId }) {
     try {
       const response = await call(`/deactivateReview/${reviewId}`, 'PATCH');
 
-      if (!response.ok) throw new Error('리뷰 비활성화 실패');
+      // if (!response.ok) throw new Error('리뷰 비활성화 실패');
       alert('리뷰가 성공적으로 비활성화되었습니다.');
       fetchReviews();
       setDropdownStates({});
@@ -114,7 +114,7 @@ function ReviewInput({ activeTab, userId, productId }) {
     try {
       const response = await call(`/activateReview/${reviewId}`, 'PATCH');
 
-      if (!response.ok) throw new Error('리뷰 활성화 실패');
+      // if (!response.ok) throw new Error('리뷰 활성화 실패');
       alert('리뷰가 성공적으로 활성화되었습니다.');
       fetchReviews();
       setDropdownStates({});

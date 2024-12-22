@@ -12,7 +12,7 @@ export const BasketProvider = ({ children }) => {
     try {
       const response = await call(`/basket/getBasket/${userId}`);
       if (!response.ok) {
-        throw new Error('Failed to fetch baskets');
+        // throw new Error('Failed to fetch baskets');
       }
       setBaskets(response); // 상태 업데이트
     } catch (error) {
@@ -24,7 +24,7 @@ export const BasketProvider = ({ children }) => {
     try {
       const response = await call(`/basket/remove/${basketId}`, 'DELETE');
       if (!response.ok) {
-        throw new Error('Failed to remove item');
+        // throw new Error('Failed to remove item');
       }
       setBaskets((prev) => prev.filter((item) => item.basketId !== basketId));
     } catch (error) {

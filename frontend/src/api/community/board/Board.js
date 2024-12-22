@@ -33,7 +33,7 @@ export const deleteBoard = async (boardId) => {
 
   if (!response.ok) {
     const errorMessage = await response.text();
-    throw new Error(errorMessage || '삭제 실패');
+    // throw new Error(errorMessage || '삭제 실패');
   }
 
   return await response.text(); // 서버에서 반환된 "삭제 성공" 메시지 반환

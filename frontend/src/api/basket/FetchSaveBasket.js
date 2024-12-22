@@ -9,7 +9,7 @@ export default async function fetchSaveBasket({ basketData, onSaveFetch }) {
     );
 
     if (!response.ok) {
-      throw new Error('Failed to save basket');
+      // throw new Error('Failed to save basket');
     }
 
     if (onSaveFetch) {

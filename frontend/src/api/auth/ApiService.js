@@ -112,15 +112,15 @@ export const me = async () => {
     // 로컬 스토리지에서 토큰 가져오기
     const token = localStorage.getItem('token');
     if (!token) {
-      throw new Error('Authentication token not found.');
+      // throw new Error('Authentication token not found.');
     }
 
     const response = await call(`/auth/me`);
 
     if (!response.ok) {
-      throw new Error(
-        response || `Error: ${response.status} - ${response.statusText}`
-      );
+      // throw new Error(
+      //   response || `Error: ${response.status} - ${response.statusText}`
+      // );
     }
 
     console.log(`[id: ${response.id}]`);
@@ -143,7 +143,7 @@ export const sendCode = async (email) => {
     // 이메일 중복 검사
     const isAvailable = await checkEmail(email);
     if (!isAvailable) {
-      throw new Error('이미 사용 중인 이메일입니다.');
+      // throw new Error('이미 사용 중인 이메일입니다.');
     }
 
     // 중복이 없을 경우 인증 코드 전송

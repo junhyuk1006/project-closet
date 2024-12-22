@@ -1,11 +1,12 @@
 import { call } from '../auth/ApiService';
 
-export default async function FetchInquiry({ itemId, onInquiryFetch }) {
+export default async function FetchInquiry({ itemId, onInquiryFetch } = {}) {
   try {
     const response = await call(`/inquiry/getInquiries/${itemId}`);
+    console.log(response);
 
     if (!response.ok) {
-      throw new Error('Network response was not ok');
+      // throw new Error('Network response was not ok');
     }
 
     if (response) {

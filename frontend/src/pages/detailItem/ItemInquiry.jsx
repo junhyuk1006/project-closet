@@ -66,7 +66,7 @@ function ItemInquiry({ activeTab, userId, productId }) {
     try {
       const response = await call(`/inquiry/getInquiries/${productId}`);
       if (!response.ok) {
-        throw new Error(`Error: ${response.statusText}`);
+        // throw new Error(`Error: ${response.statusText}`);
       }
 
       setInquiries(Array.isArray(response) ? response : []);
@@ -121,7 +121,7 @@ function ItemInquiry({ activeTab, userId, productId }) {
         'PATCH'
       );
 
-      if (!response.ok) throw new Error('문의 비활성화 실패');
+      // if (!response.ok) throw new Error('문의 비활성화 실패');
       alert('문의가 성공적으로 비활성화되었습니다.');
       fetchInquiries();
       setDropdownStates({}); // 드롭다운 상태 초기화
@@ -139,7 +139,7 @@ function ItemInquiry({ activeTab, userId, productId }) {
         'PATCH'
       );
 
-      if (!response.ok) throw new Error('문의 활성화 실패');
+      // if (!response.ok) throw new Error('문의 활성화 실패');
       alert('문의가 성공적으로 활성화되었습니다.');
       fetchInquiries();
       setDropdownStates({});

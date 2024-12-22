@@ -26,7 +26,7 @@ const ResetPasswordForm = () => {
           response.error ||
           response.message ||
           '비밀번호 재설정 링크 전송에 실패했습니다.';
-        throw new Error(errorToShow);
+        // throw new Error(errorToShow);
       }
 
       setSuccessMessage('비밀번호 재설정 링크가 이메일로 전송되었습니다.');

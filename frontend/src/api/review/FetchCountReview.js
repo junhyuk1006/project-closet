@@ -1,10 +1,16 @@
 import { call } from '../auth/ApiService';
 
-export default async function FetchCountReview({ itemId, onCountFetch }) {
+export default async function FetchCountReview({ itemId, onCountFetch } = {}) {
+  if (itemId === undefined) {
+    return;
+  }
+
   try {
     const response = await call(`/countReview/${itemId}`);
+    console.log(response);
+
     if (!response.ok) {
-      throw new Error('error');
+      // throw new Error('error');
     }
 
     if (onCountFetch) {

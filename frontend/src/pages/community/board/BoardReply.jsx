@@ -43,11 +43,13 @@ const BoardReply = () => {
     }
 
     try {
-      await addReply({
-        boardId: boardId,
-        replyContent: newReply,
-        userId: user.id,
-      });
+      await addReply(
+        JSON.stringify({
+          boardId: boardId,
+          replyContent: newReply,
+          userId: user.id,
+        })
+      );
       setNewReply('');
       fetchReplies();
     } catch (error) {
@@ -81,10 +83,13 @@ const BoardReply = () => {
       return;
     }
     try {
-      await updateReply(replyId, {
-        replyContent: editingReply.replyContent,
-        userId: user.id,
-      });
+      await updateReply(
+        replyId,
+        JSON.stringify({
+          replyContent: editingReply.replyContent,
+          userId: user.id,
+        })
+      );
       setEditingReply(null);
       fetchReplies();
     } catch (error) {

@@ -1,11 +1,12 @@
 import { call } from '../auth/ApiService';
 
-export default async function FetchAllProduct({ onItemFetch }) {
+export default async function FetchAllProduct({ onItemFetch } = {}) {
   try {
     const response = await call('/itemAll');
+    console.log(response);
 
     if (!response.ok) {
-      throw new Error('Network response was not ok');
+      // throw new Error('Network response was not ok');
     }
 
     if (onItemFetch) {

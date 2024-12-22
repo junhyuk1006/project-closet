@@ -19,7 +19,7 @@ const FindIdForm = () => {
       if (!response.ok) {
         const errorToShow =
           response.error || response.message || '아이디를 찾을 수 없습니다.';
-        throw new Error(errorToShow);
+        // throw new Error(errorToShow);
       }
 
       // 성공 시 아이디 표시

@@ -1,10 +1,16 @@
 import { call } from '../auth/ApiService';
 
-export default async function FetchAllReview({ itemId, onReviewFetch }) {
+export default async function FetchAllReview({ itemId, onReviewFetch } = {}) {
+  if (itemId === undefined) {
+    return;
+  }
+
   try {
     const response = await call(`/findAllReview/${itemId}`);
+    console.log(response);
+
     if (!response.ok) {
-      throw new Error('Network response was not ok');
+      // throw new Error('Network response was not ok');
     }
 
     if (Array.isArray(response)) {

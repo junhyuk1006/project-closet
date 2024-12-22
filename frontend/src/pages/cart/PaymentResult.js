@@ -125,19 +125,15 @@ function PaymentResult() {
   const updateBasketStatus = async (basketIds, status) => {
     console.log('updateBasketStatus Start:  ', basketIds, status);
 
-    try {
-      const payload = { basketIds, status };
-      const response = await axios.patch(
-        'http://13.209.5.239/api/basket/updateStatus',
-        payload
-      );
-      if (response.data && response.data.success) {
-        return true;
-      } else {
-        throw new Error('Failed to update basket status');
-      }
-    } catch (error) {
-      throw error;
+    const payload = { basketIds, status };
+    const response = await axios.patch(
+      'http://13.209.5.239/api/basket/updateStatus',
+      payload
+    );
+    if (response.data && response.data.success) {
+      return true;
+    } else {
+      // throw new Error('Failed to update basket status');
     }
   };
 

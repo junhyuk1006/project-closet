@@ -19,7 +19,7 @@ const MyPurchaseHistory = () => {
 
       const purchaseData = response?.data || []; // 데이터 추출
       if (!Array.isArray(purchaseData) || purchaseData.length === 0) {
-        throw new Error('No purchase data available.');
+        // throw new Error('No purchase data available.');
       }
 
       // 그룹화 로직

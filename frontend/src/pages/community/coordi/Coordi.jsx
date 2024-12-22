@@ -30,7 +30,7 @@ const Album = () => {
         const response = await call('/coordi/list');
         console.log(response);
         if (!response.ok) {
-          throw new Error('Failed to fetch coordi data');
+          // throw new Error('Failed to fetch coordi data');
         }
         setCoordiData(response); // 코디 데이터를 상태로 설정
       } catch (error) {
@@ -60,7 +60,7 @@ const Album = () => {
           `/coordi/like/status?coordiBoardId=${coordi.id}&userId=${user.id}`
         );
         if (!likeData.ok) {
-          throw new Error('Failed to fetch like status');
+          // throw new Error('Failed to fetch like status');
         }
 
         setLiked(likeData.liked);
@@ -91,7 +91,7 @@ const Album = () => {
         })
       );
       if (!likeData.ok) {
-        throw new Error('Failed to toggle like');
+        // throw new Error('Failed to toggle like');
       }
 
       setLiked(likeData.liked);
@@ -115,7 +115,7 @@ const Album = () => {
     try {
       const res = await call(`/coordi/${selectedCoordi.id}`, 'DELETE');
       if (!res.ok) {
-        throw new Error('Failed to delete coordi');
+        // throw new Error('Failed to delete coordi');
       }
       alert('삭제되었습니다.');
       handleClose();

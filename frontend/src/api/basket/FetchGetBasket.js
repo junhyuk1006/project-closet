@@ -5,7 +5,7 @@ export default async function FetchGetBasket({ userId, onGetFetch }) {
     if (userId) {
       const response = await call(`/basket/getBasket/${userId}`);
       if (!response.ok) {
-        throw new Error('getBasket API response error');
+        // throw new Error('getBasket API response error');
       }
 
       if (onGetFetch) {
