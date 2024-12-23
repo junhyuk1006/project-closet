@@ -124,12 +124,6 @@ function Cart({ isCartOpen, setIsCartOpen }) {
               >
                 장바구니 이동
               </Link>
-              <button
-                className="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10"
-                onClick={closeCart}
-              >
-                주문하기
-              </button>
             </div>
           </div>
         </div>
