@@ -173,10 +173,9 @@ function Header({ user }) {
 
           <div
             className="icon-header-item cl2 hov-cl1 trans-04 p-r-12 p-l-20 icon-header-noti-mobile js-show-cart"
-            data-notify={baskets.reduce(
-              (total, basket) => total + basket.itemCount,
-              0
-            )}
+            data-notify={baskets
+              .filter((basket) => basket.status === 'active')
+              .reduce((total, basket) => total + basket.itemCount, 0)}
           >
             <i className="zmdi zmdi-shopping-cart"></i>
           </div>
@@ -398,15 +397,13 @@ function Header({ user }) {
                 }}
                 style={{ cursor: 'pointer' }}
                 data-notify={
-                  baskets.reduce(
-                    (total, basket) => total + basket.itemCount,
-                    0
-                  ) > 9
+                  baskets
+                    .filter((basket) => basket.status === 'active')
+                    .reduce((total, basket) => total + basket.itemCount, 0) > 9
                     ? 9 + '+'
-                    : baskets.reduce(
-                        (total, basket) => total + basket.itemCount,
-                        0
-                      )
+                    : baskets
+                        .filter((basket) => basket.status === 'active')
+                        .reduce((total, basket) => total + basket.itemCount, 0)
                 }
               >
                 <i className="zmdi zmdi-shopping-cart"></i>
