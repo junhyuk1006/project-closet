@@ -214,7 +214,7 @@ function ReviewInput({ activeTab, userId, productId }) {
                 <div key={review.id} className="flex-w-review flex-t p-bst-68">
                   <div className="wrap-pic-s size-109 bor0 of-hidden m-r-18 m-t-6">
                     <img
-                      src={`images/${review.profileImage}`}
+                      src="/images/basic.png"
                       alt={review.nickname}
                     />
                   </div>

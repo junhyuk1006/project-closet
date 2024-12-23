@@ -207,7 +207,7 @@ function ItemInquiry({ activeTab, userId, productId }) {
                   >
                     <div className="wrap-pic-s size-109 bor0 of-hidden m-r-18 m-t-6">
                       <img
-                        src={`images/${inquiry.profileImage}`}
+                        src="/images/basic.png"
                         alt={inquiry.nickname}
                       />
                     </div>
