@@ -29,7 +29,7 @@ const FindIdForm = () => {
       }
 
       // 성공 시 아이디 표시
-      setFoundId(data.data[0]);
+      setFoundId(data.data);
     } catch (error) {
       setErrorMessage(error.message);
     }

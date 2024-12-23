@@ -21,9 +21,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CoordiBoardService {
 
-    // 백엔드의 정적 리소스 이미지 경로로 변경
-    private static final String BACKEND_IMAGES_PATH =
-            System.getProperty("user.dir") + "/src/main/resources/static/images";
+    // 정적 리소스 이미지 경로를 변경
+    private static final String BACKEND_IMAGES_PATH = "C:/closetImage/coordi";
 
 
     private final CoordiBoardRepository coordiBoardRepository;
