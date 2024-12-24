@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { useUser } from '../../api/auth/UserContext';
 import '../../assets/styles/components/main.css';
 import '../../assets/styles/components/util.css';
@@ -16,7 +16,12 @@ import { call } from '../../api/auth/ApiService';
 function Detail() {
   const location = useLocation();
   const { user, loading } = useUser(); // useUser에서 loading 상태 가져오기
-  const [productId, setProductId] = useState(null);
+  // ----------------------------------------------------------------
+  // URL parameter로 받은 productId를 state로 관리합니다.
+  const params = useParams();
+  const { productId } = params;
+  const [currentProductId, setCurrentProductId] = useState(null);
+  // ----------------------------------------------------------------
   const [product, setProduct] = useState([]); // Fetch된 데이터 저장
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isZoomed, setIsZoomed] = useState(false);
@@ -32,11 +37,12 @@ function Detail() {
 
   const userId = user?.id || '';
 
+  // productId가 truthy일 경우 상태를 저장합니다.
   useEffect(() => {
-    setProductId(location.pathname.split('/')[2]);
-    // fetchCountReview(productId).then((data) => setCountReview(data));
-    // fetchCountInquiry(productId).then((data) => setCountInquiry(data));
-  }, [location.pathname]);
+    if (productId) {
+      setCurrentProductId(productId);
+    }
+  }, [productId]);
 
   useEffect(() => {
     setBasket([]); // 초기화
@@ -44,17 +50,51 @@ function Detail() {
 
   // 컴포넌트 로드 시 id에 따른 상품 데이터를 가져옵니다.
   useEffect(() => {
-    if (productId) {
-      call(`/itemDetail/${productId}`)
-        .then((res) => {
-          console.log(res);
-          setProduct(res);
-        })
-        .catch((err) => {
+    async function fetchDetail() {
+      if (currentProductId) {
+        try {
+          const response = await call(`/itemDetail/${currentProductId}`);
+
+          await console.log(response);
+          setProduct(response);
+        } catch (err) {
           console.error('상품 데이터를 가져오는 데 실패했습니다.' + err);
-        });
+        }
+      }
     }
-  }, []);
+    fetchDetail();
+  }, [currentProductId]);
+
+  // 컴포넌트 로드 시 리뷰 개수를 가져옵니다.
+  useEffect(() => {
+    async function fetchReviewCount() {
+      try {
+        const response = await call(`/countReview/${currentProductId}`);
+
+        setCountReview(response);
+      } catch (error) {
+        console.error('this error is', error);
+      }
+    }
+
+    fetchReviewCount();
+  }, [currentProductId]);
+
+  useEffect(() => {
+    async function fetchInquiryCount() {
+      try {
+        const response = await call(
+          `/inquiry/getCountInquiries/${currentProductId}`
+        );
+
+        setCountInquiry(response);
+      } catch (error) {
+        console.error('this error(Count Inquiry): ', error);
+      }
+    }
+
+    fetchInquiryCount();
+  });
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
@@ -102,7 +142,7 @@ function Detail() {
 
     const basketData = {
       userId: userId,
-      itemDetailId: productId,
+      itemDetailId: currentProductId,
       itemCount: quantity,
       size: selectedSize,
       color: selectedColor,
@@ -136,15 +176,16 @@ function Detail() {
     }
   };
 
+  if (!currentProductId) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <>
-      {productId && (
+      {currentProductId && (
         <>
           <div className="container">
             <div className="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
-              {/* Fetch 컴포넌트 */}
-              <FetchIdProduct id={productId} onItemFetch={handleFetch} />
-
               {/* 크럼브 데이터 */}
               <a href="/" className="stext-109 cl8 hov-cl1 trans-04">
                 Home
@@ -375,10 +416,6 @@ function Detail() {
                       </button>
                     </li>
                     <li className="nav-item p-b-10">
-                      <FetchCountReview
-                        itemId={productId}
-                        onCountFetch={setCountReview}
-                      />
                       <button
                         className={`nav-link ${activeTab === 'reviews' ? 'active' : ''}`}
                         onClick={() => handleTabClick('reviews')}
@@ -387,10 +424,6 @@ function Detail() {
                       </button>
                     </li>
                     <li className="nav-item p-b-10">
-                      <FetchCountInquiry
-                        itemId={productId}
-                        onCountFetch={setCountInquiry}
-                      />
                       <button
                         className={`nav-link ${activeTab === 'QnA' ? 'active' : ''}`}
                         onClick={() => handleTabClick('inquiry')}
@@ -480,18 +513,18 @@ function Detail() {
                       </div>
                     </div>
 
-                    {/** Reviews Tab */}
+                    {/* * Reviews Tab */}
                     <ReviewInput
                       activeTab={activeTab}
                       userId={userId}
-                      productId={productId}
+                      productId={currentProductId}
                     />
 
                     {/** Inquiry Tab */}
                     <ItemInquiry
                       activeTab={activeTab}
                       userId={userId}
-                      productId={productId}
+                      productId={currentProductId}
                     />
                   </div>
                 </div>

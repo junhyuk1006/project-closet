@@ -1,7 +1,7 @@
 import { call } from '../auth/ApiService';
 
 export default async function FetchAllReview({ itemId, onReviewFetch } = {}) {
-  if (itemId === undefined) {
+  if (!itemId) {
     return;
   }
 
