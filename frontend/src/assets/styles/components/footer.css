@@ -1,0 +1,327 @@
+/* Footer 전역 스타일 */
+footer ul {
+  padding: 0 !important; /* footer의 리스트에서 padding-left 제거 */
+}
+
+footer li {
+  color: #b5b5b5;
+}
+
+footer a {
+  color: #333;
+}
+
+footer .btn-container {
+  display: flex;
+  gap: 20px;
+}
+
+footer .btn-container .btn-box {
+  width: 150px;
+  height: 50px;
+  background-color: #fff;
+  align-content: center;
+  font-size: 13px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+footer .btn-container .btn-elements {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+}
+
+footer .btn-container img {
+  width: 30px;
+  height: 30px;
+}
+
+footer .section::after {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 1px;
+  background-color: #ccc;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+footer .footer-links {
+  display: flex;
+  gap: 30px;
+}
+
+footer .footer-links a {
+  color: #ddd;
+}
+
+footer .footer-links a:hover {
+  color: #fff;
+}
+
+/* 이용안내 스타일 */
+.guide-subtitle {
+  padding-top: 120px;
+  padding-bottom: 30px;
+  margin-bottom: 30px;
+  text-align: center;
+  color: #000;
+  border-bottom: 1px solid #ddd;
+}
+
+.guide-link {
+  font-size: 17px;
+  line-height: 2;
+  border-right: 1px solid #ddd;
+}
+
+.guide-link a {
+  color: #888;
+}
+
+.guide-link .active-link {
+  color: #444;
+  border-bottom: 2px solid #000;
+}
+
+.guide-link a:hover {
+  color: #444;
+}
+
+.guide-content {
+  font-size: 17px;
+  line-height: 2;
+}
+
+.guide-box {
+  padding-bottom: 30px;
+  margin-bottom: 30px;
+  border-bottom: 1px solid #ddd;
+}
+
+.end {
+  margin-bottom: 0;
+  border-bottom: none;
+}
+
+.guide-box h5 {
+  margin-bottom: 20px;
+  color: #000;
+}
+
+.guide-box p {
+  font-size: 15px;
+  color: #888;
+  line-height: 1.8;
+}
+
+.guide-order .order-step {
+  margin-left: 15px;
+}
+
+.guide-order .order-step p {
+  font-size: 14px;
+}
+
+.guide-signup span {
+  display: block;
+  font-size: 13px;
+  font-weight: bold;
+  color: #777;
+  margin-left: 15px;
+  margin-bottom: 10px;
+}
+
+.guide-payment .payment-box {
+  margin-bottom: 30px;
+}
+
+.guide-payment .payment-subtitle {
+  font-weight: bold;
+  padding-bottom: 5px;
+}
+
+.guide-delivery span {
+  display: block;
+  font-size: 13px;
+  font-weight: bold;
+  color: #777;
+  margin-left: 15px;
+}
+
+.guide-exchange span {
+  display: block;
+  font-size: 13px;
+  font-weight: bold;
+  color: #777;
+  margin-left: 15px;
+}
+
+.point-description {
+  margin-left: 3%;
+}
+
+/* 이용약관 스타일 */
+.agreement-subtitle {
+  padding-top: 120px;
+  padding-bottom: 30px;
+  margin-bottom: 30px;
+  text-align: center;
+  color: #000;
+}
+
+.agreement-link {
+  font-size: 17px;
+  line-height: 2;
+  border-right: 1px solid #ddd;
+}
+
+.agreement-link a {
+  color: #888;
+}
+
+.agreement-link .active-link {
+  color: #444;
+  border-bottom: 2px solid #000;
+}
+
+.agreement-link a:hover {
+  color: #444;
+}
+
+.agreement-content {
+  font-size: 17px;
+  line-height: 2;
+}
+
+.agreement-box {
+  padding-bottom: 30px;
+  margin-bottom: 30px;
+}
+
+.agreement-box h4 {
+  margin-bottom: 10px;
+}
+
+.agreement-box ul {
+  padding-left: 0;
+  margin-left: 30px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.agreement-box li {
+  list-style-type: square;
+}
+
+.agreement-box h5 {
+  margin-bottom: 20px;
+  color: #000;
+}
+
+.agreement-box p {
+  font-size: 15px;
+  color: #888;
+  line-height: 1.8;
+}
+
+.selected-btn {
+  background-color: #5b5b5b;
+  color: #e4e4e4;
+}
+
+/* 개인정보처리방침 스타일 */
+.privacy-subtitle {
+  padding-top: 120px;
+  padding-bottom: 30px;
+  margin-bottom: 30px;
+  text-align: center;
+  color: #000;
+  border-bottom: 1px solid #ddd;
+}
+
+.privacy-link {
+  font-size: 17px;
+  line-height: 2;
+  border-right: 1px solid #ddd;
+}
+
+.privacy-link a {
+  color: #888;
+}
+
+.privacy-link .active-link {
+  color: #444;
+  border-bottom: 2px solid #000;
+}
+
+.privacy-link a:hover {
+  color: #444;
+}
+
+.privacy-content {
+  font-size: 17px;
+  line-height: 2;
+}
+
+.privacy-box {
+  padding-bottom: 30px;
+  margin-bottom: 30px;
+}
+
+.privacy-box h4 {
+  margin-bottom: 10px;
+}
+
+.privacy-box ul {
+  padding-left: 0;
+  margin-left: 30px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  list-style-position: inside;
+}
+
+.privacy-box li {
+  list-style-type: auto;
+}
+
+.privacy-box li li,
+.privacy-box ul ul li {
+  list-style-type: lower-roman;
+}
+
+.privacy-box li li li {
+  list-style-type: disc;
+}
+
+.privacy-box h5 {
+  margin-bottom: 20px;
+  color: #000;
+}
+
+.privacy-box p {
+  font-size: 15px;
+  color: #888;
+  line-height: 1.8;
+}
+
+.privacy-box table {
+  border-collapse: collapse;
+  width: 100%;
+  border: 1px solid #7d7d7d;
+  font-size: 15px;
+}
+
+.privacy-box table th,
+.privacy-box table td {
+  border: 1px solid #ebebeb;
+  padding: 10px;
+  text-align: left;
+  line-height: 1.8;
+}
+
+.privacy-box table th {
+  background-color: #fbfbfb;
+}

@@ -1,17 +1,20 @@
 package com.project.repository;
 
-import com.project.domain.Item;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-/**
- *  매퍼 (혹은 레포지토리) 객체가 생성될 디렉토리입니다.
- *  테스트 파일이며, 매퍼 파일을 생성했다면 지우시면 됩니다.
- *
- *  참고) Mybatis 사용 시 Mapper, JPA 사용 시 Repository 객체명을 사용합니다.
- */
+import com.project.domain.detail.ItemDetail;
+import com.project.dto.ItemAllDTO;
 
 @Repository
-public interface ItemRepository extends JpaRepository<Item, Long> {
-    // 기본적으로 findAll() 메서드 제공
+public interface ItemRepository extends JpaRepository<ItemDetail, Long> {
+    @Query("SELECT new com.project.dto.ItemAllDTO(i.id, i.itemName, i.itemCategory, i.itemPrice, i.mainImage, i.detailImage, i.views, i.status) " +
+            "FROM ItemDetail i " +
+            "WHERE i.status = 'active' ")
+    Page<ItemAllDTO> findAllByStatusActive(Pageable pageable);
+
 }
+

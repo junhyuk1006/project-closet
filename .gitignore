@@ -10,10 +10,8 @@
 *.rej
 .DS_Store
 Thumbs.db
-.idea
-package.json
-package-lock.json
-cozastore-master
+/.idea
+node_modules
 
 # 환경 설정 파일 (Environment Files)
 .env
@@ -90,3 +88,5 @@ frontend/.vscode/
 # 패키지 락 파일
 frontend/package-lock.json
 frontend/yarn.lock
+node_modules
+node_modules

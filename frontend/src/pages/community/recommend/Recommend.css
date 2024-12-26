@@ -1,0 +1,114 @@
+@import url('../../../../node_modules/spoqa-han-sans/css/SpoqaHanSansNeo.css');
+
+body {
+  font-family: 'Spoqa Han Sans Neo', sans-serif;
+}
+
+/* Modal open 시 배경 클릭 방지 */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 2000;
+}
+
+.recommend-title {
+  margin-top: 150px;
+  font-size: 24px; /* 글꼴 크기 */
+  font-weight: bold; /* 굵은 텍스트 */
+  margin-bottom: 30px;
+  text-align: center; /* 텍스트 가운데 정렬 */
+}
+
+/* 공통 컨테이너 스타일 */
+.single-offers {
+  border: 1px solid #ddd; /* 경계선 */
+  border-radius: 5px; /* 약간의 곡선 */
+  overflow: hidden; /* 경계선 넘어가는 이미지 숨김 */
+  text-align: center; /* 텍스트 가운데 정렬 */
+  background-color: #fff; /* 배경색 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 약간의 그림자 */
+}
+
+/* 이미지 스타일 */
+.single-offers .about_thumb img {
+  width: 100%; /* 이미지가 컨테이너 가로를 꽉 채움 */
+  height: auto; /* 비율 유지 */
+  display: block; /* 이미지 아래 여백 제거 */
+}
+
+/* 텍스트 스타일 */
+.single-offers h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 15px 10px 10px; /* 텍스트 상단 여백 */
+  color: #333;
+}
+
+/* 목록 스타일 */
+.single-offers ul {
+  list-style: none; /* 기본 리스트 스타일 제거 */
+  padding: 0;
+  margin: 10px 20px;
+  text-align: left; /* 왼쪽 정렬 */
+}
+
+.single-offers ul li {
+  font-size: 14px;
+  color: #666;
+  margin: 5px 0; /* 각 항목 간 여백 */
+  display: flex;
+  align-items: center;
+}
+
+.single-offers ul li::before {
+  content: '●'; /* 리스트 앞에 점 추가 */
+  font-size: 10px;
+  color: #666; /* 점 색상 */
+  margin-right: 8px;
+}
+
+/* 버튼 스타일 */
+.single-offers .book-now {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #007bff;
+  border: 2px solid #007bff;
+  padding: 10px 20px;
+  margin: 15px 0 20px;
+  border-radius: 5px;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.3s ease-in-out;
+}
+
+.single-offers .coordinator {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #007bff;
+  border: 2px solid #007bff;
+  padding: 10px 20px;
+  margin: 15px 0 20px;
+  border-radius: 5px;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.3s ease-in-out;
+  margin-right: 15px;
+}
+
+.single-offers .book-now:hover {
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+}
+
+.single-offers .coordinator:hover {
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+}

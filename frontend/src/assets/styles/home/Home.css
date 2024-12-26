@@ -1,0 +1,30 @@
+.panel-filter .wrap-filter {
+  /* width: 65% !important; */ /* 필터의 총 너비 */
+  margin-left: auto !important; /* 필터 패널이 우측으로 붙도록 설정 */
+}
+
+.panel-filter .wrap-filter .filter-col1,
+.panel-filter .wrap-filter .filter-col2,
+.panel-filter .wrap-filter .filter-col4 {
+  width: 33% !important; /* 필터의 각 메뉴 너비를 동일하게 설정 */
+}
+
+.panel-filter .wrap-filter .filter-col1 ul,
+.panel-filter .wrap-filter .filter-col2 ul {
+  padding-left: 1rem !important; /* 필터 패널의 하위 글자 공백을 절반으로 감소 */
+}
+
+/* Animation.css 오버라이딩 */
+/* fade-in 효과 */
+.fade-in {
+  opacity: 1;
+}
+
+/* 각 애니메이션 클래스와 fade-in 조합 */
+.animsition.t03.fade-in {
+  transition: opacity 0.3s ease-out;
+}
+
+.animsition.t10.fade-in {
+  transition: opacity 1s ease-out;
+}

@@ -1,0 +1,140 @@
+.flex {
+    display: flex;
+    gap: 10px;
+}
+
+.thumbnail-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.thumbnail {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color 0.3s;
+}
+
+.thumbnail.active {
+    border-color: #6c7ae0;
+}
+
+.main-image img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.custom-select {
+    font-family: Poppins-Regular;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px 15px;
+    font-size: 14px;
+    color: #333;
+    width: 100%;
+    position: relative;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24'%3E%3Cpath fill='%23999' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px 12px;
+    cursor: pointer;
+}
+
+.custom-select:hover {
+    border-color: #bbb;
+}
+
+.custom-select:focus {
+    outline: none;
+    border-color: #6c7ae0;
+    box-shadow: 0 0 5px rgba(108, 122, 224, 0.5);
+}
+
+/* Button Styling */
+.btn-add-to-cart {
+    background-color: #6c7ae0;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-top: 20px;
+    width: 100%;
+    text-align: center;
+}
+
+.btn-add-to-cart:hover {
+    background-color: #5a64d1;
+}
+
+.thumbnail-list {
+    display: flex;
+    flex-direction: column;
+    margin-right: 20px;
+}
+
+.thumbnail {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 5px;
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+.thumbnail.active {
+    border-color: #6c7ae0;
+}
+
+.main-image-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.main-image {
+    width: 100%;
+    max-width: 700px;
+    height: auto;
+    display: block;
+    border-radius: 5px; /* Optional for rounded corners */
+}
+
+.nav-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    color: white;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2; /* Ensures it stays on top of the image */
+    transition: background 0.3s;
+}
+
+.nav-arrow:hover {
+    background: rgba(0, 0, 0, 0.8); /* Darker on hover */
+}
+
+.nav-arrow.prev {
+    left: 0; /* Distance from the left inside the image */
+}
+
+.nav-arrow.next {
+    right: 0; /* Distance from the right inside the image */
+}

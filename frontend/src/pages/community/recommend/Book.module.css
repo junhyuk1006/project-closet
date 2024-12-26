@@ -1,0 +1,48 @@
+.container {
+  position: relative;
+}
+.calendar-container {
+  width: 40%;
+  min-width: 500px;
+  margin: 0 30%;
+  background-color: #fff;
+  border: 1px solid #000;
+  position: absolute;
+  z-index: 3000;
+  top: -30px;
+}
+.calendar-container .calendar-title {
+  margin-top: 40px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: #000;
+}
+
+.btn-blue {
+  background-color: #6890ff;
+  color: #fff;
+}
+.btn-blue:hover {
+  background-color: #356bff;
+}
+.btn-red {
+  background-color: #ff8383;
+  color: #fff;
+}
+.btn-red:hover {
+  background-color: #ff5656;
+}
+
+.b-r-10 {
+  border-radius: 10px;
+}
+
+.dot {
+  height: 8px;
+  width: 8px;
+  background-color: #f87171;
+  border-radius: 50%;
+  display: flex;
+  margin-left: 1px;
+}

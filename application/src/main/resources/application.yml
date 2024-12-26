@@ -1,27 +1,30 @@
-# 이메일 인증 설정
+  # 이메일 인증 설정
 spring:
   mail:
-    username: ${EMAIL_ID} # 이메일 계정 ID (환경 변수로 설정)
+    username: "hyunu29@gmail.com" # 이메일 계정 ID (환경 변수로 설정)
     properties:
       mail:
         smtp:
           starttls:
-            enable: 'true' # STARTTLS 활성화
-            required: 'true' # STARTTLS 필수
-          auth: 'true' # SMTP 인증 활성화
+            enable: "true" # STARTTLS 활성화
+            required: "true" # STARTTLS 필수
+          auth: "true" # SMTP 인증 활성화
     host: smtp.gmail.com # SMTP 서버 주소
-    password: ${EMAIL_PW} # 이메일 계정 비밀번호 (환경 변수로 설정)
-    port: '587' # SMTP 서버 포트
+    password: "riiw xqky hibv yfpq" # 이메일 계정 비밀번호 (환경 변수로 설정)
+    port: "587" # SMTP 서버 포트
 
   # JPA 및 Hibernate 설정
   jpa:
     hibernate:
-      ddl-auto: update # 스키마 자동 업데이트
+      ddl-auto: validate # 스키마 자동 업데이트
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl
     properties:
       hibernate:
-        format_sql: 'true' # 출력되는 SQL 포맷팅 활성화
+        format_sql: "true" # 출력되는 SQL 포맷팅 활성화
         dialect: org.hibernate.dialect.MySQLDialect # Hibernate가 사용할 MySQL 방언
-    show-sql: 'true' # 실행된 SQL 쿼리 로깅 활성화
+    show-sql: "false" # 실행된 SQL 쿼리 로깅 활성화
+
 
   # 데이터 소스 및 HikariCP(DB 연결 풀) 설정
   datasource:
@@ -30,14 +33,14 @@ spring:
     username: admin # DB 사용자 이름 (환경 변수로 설정 해주셈)
     driver-class-name: com.mysql.cj.jdbc.Driver # DB Driver Class Name
     hikari:
-      idle-timeout: '300000' # 연결 풀에서 유휴 상태의 커넥션 유지 시간 (밀리초)
+      idle-timeout: "300000" # 연결 풀에서 유휴 상태의 커넥션 유지 시간 (밀리초)
       pool-name: HikariCP # 연결 풀 이름
-      validation-timeout: '3000' # 커넥션 유효성 검사 타임아웃 (밀리초)
-      maximum-pool-size: '20' # 연결 풀 최대 크기
-      connection-timeout: '30000' # 커넥션 타임아웃 (밀리초)
-      max-lifetime: '1500000' # 커넥션의 최대 수명 (밀리초)
+      validation-timeout: "3000" # 커넥션 유효성 검사 타임아웃 (밀리초)
+      maximum-pool-size: "20" # 연결 풀 최대 크기
+      connection-timeout: "30000" # 커넥션 타임아웃 (밀리초)
+      max-lifetime: "1500000" # 커넥션의 최대 수명 (밀리초)
       connection-test-query: SELECT 1 FROM DUAL # 커넥션 유효성 검사용 쿼리
-      minimum-idle: '5' # 연결 풀 최소 유휴 커넥션 수
+      minimum-idle: "5" # 연결 풀 최소 유휴 커넥션 수
 
 
   # Spring Security OAuth2 설정
@@ -47,21 +50,21 @@ spring:
         registration:
           kakao:
             authorization-grant-type: authorization_code # 인증 코드 방식
-            client-id: ${KAKAO_ID} # 카카오 앱 클라이언트 ID (환경 변수로 설정)
+            client-id: 1d03b543cc496c9406b87e165db19b2c # 카카오 앱 클라이언트 ID (환경 변수로 설정)
             scope: profile_nickname,account_email # 요청할 OAuth2 권한 범위
-            redirect-uri: '{baseUrl}/login/oauth2/code/kakao' # 리디렉션 URI
+            redirect-uri: http://13.209.5.239:8090/login/oauth2/code/kakao # 리디렉션 URI
             client-name: Kakao # 클라이언트 이름
           naver:
-            client-id: ${NAVER_ID} # 네이버 앱 클라이언트 ID (환경 변수로 설정)
+            client-id: DvFLuTam14KDBYXb4Ddz # 네이버 앱 클라이언트 ID (환경 변수로 설정)
             client-name: Naver # 클라이언트 이름
-            redirect-uri: '{baseUrl}/login/oauth2/code/naver' # 리디렉션 URI
+            redirect-uri: http://13.209.5.239:8090/login/oauth2/code/naver # 리디렉션 URI
             authorization-grant-type: authorization_code # 인증 코드 방식
             scope: name,email # 요청할 OAuth2 권한 범위
-            client-secret: ${NAVER_PW} # 네이버 앱 클라이언트 비밀키 (환경 변수로 설정)
+            client-secret: _K3HnFtgDQ # 네이버 앱 클라이언트 비밀키 (환경 변수로 설정)
           google:
             client-id: ${GOOGLE_ID} # 구글 앱 클라이언트 ID (환경 변수로 설정)
             client-secret: ${GOOGLE_PW} # 구글 앱 클라이언트 비밀키 (환경 변수로 설정)
-            redirect-uri: '{baseUrl}/login/oauth2/code/google' # 리디렉션 URI
+            redirect-uri: "{baseUrl}/login/oauth2/code/google" # 리디렉션 URI
             scope: email,profile # 요청할 OAuth2 권한 범위
         provider:
           naver:
@@ -78,13 +81,13 @@ spring:
   # 파일 업로드 설정
   servlet:
     multipart:
-      enabled: 'true' # 파일 업로드 활성화
+      enabled: "true" # 파일 업로드 활성화
       max-request-size: 10MB # 최대 요청 크기
       max-file-size: 10MB # 업로드 파일의 최대 크기
 
   # 트랜잭션 설정
   transaction:
-    default-timeout: '30' # 트랜잭션 타임아웃 (초)
+    default-timeout: "30" # 트랜잭션 타임아웃 (초)
 
   # 애플리케이션 이름 및 설정 파일 로드
   application:
@@ -102,7 +105,7 @@ logging:
     org:
       springframework:
         jdbc: DEBUG # Spring JDBC 로깅 레벨
-        security: DEBUG # Spring Security 로깅 레벨
+#        security: DEBUG # Spring Security 로깅 레벨
   file:
     name: /home/ec2-user/application.log # 로그 파일 저장 위치
 
@@ -111,8 +114,26 @@ server:
   servlet:
     encoding:
       charset: UTF-8 # 문자 인코딩
-      enabled: 'true' # 문자 인코딩 활성화
-      force: 'true' # 강제 인코딩
-  port: '80' # 서버 포트
+      enabled: "true" # 문자 인코딩 활성화
+      force: "true" # 강제 인코딩
+  port: "8090" # 서버 포트
   tomcat:
-    connection-timeout: '5000' # 요청 연결 타임아웃 (밀리초)
+    connection-timeout: "5000" # 요청 연결 타임아웃 (밀리초)
+  error:
+    include-message: always
+    include-binding-errors: always
+    whitelabel:
+      enabled: false
+# JWT 설정
+jwt:
+  secret-key: idv64f9MgCqXPwBwDriupFjKOd9xGIYJ # JWT 비밀키
+  expiration-time: 3600000 # 만료 시간 (밀리초, 예: 1시간)
+
+
+  # Naver Pay API 설정
+naverpay:
+  client-id: "HN3GGCMDdTgGUfl0kFCo"       # 네이버페이 Client ID
+  client-secret: "dk5nR1JxcmM2MU1"        # 네이버페이 Client Secret
+  base-api-url: "https://dev.apis.naver.com" # 개발 환경용 API URL
+
+

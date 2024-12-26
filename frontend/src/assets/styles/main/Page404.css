@@ -1,0 +1,57 @@
+img[alt='logo'] {
+  width: 140px;
+  height: auto;
+  margin-top: 50px;
+  margin-bottom: 20px;
+  align-items: start;
+}
+.error-page {
+  width: 90%;
+  height: 100vh;
+}
+.error-page h1 {
+  font-size: 6rem;
+  font-weight: bold;
+  color: #ff6b6b;
+}
+.error-page p {
+  line-height: 2;
+  font-size: 1.25rem;
+  color: #6c757d;
+}
+.flex {
+  justify-content: space-between;
+}
+@media (min-width: 1001px) {
+  .max-width {
+    max-width: 300px;
+  }
+}
+@media (max-width: 1000px) {
+  .max-width {
+    max-width: calc(300px);
+  }
+}
+@media (max-width: 768px) {
+  .max-width {
+    max-width: 250px;
+  }
+  .error-page p {
+    font-size: 1rem;
+  }
+}
+.error-page .search-button {
+  width: 90px;
+  height: 40px;
+  margin-left: auto;
+}
+.search-wrapper {
+  display: flex;
+}
+.w-85p {
+  width: 85%;
+}
+
+.h-50 {
+  height: 50px;
+}

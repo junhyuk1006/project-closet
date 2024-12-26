@@ -1,0 +1,354 @@
+/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+[ Header Desktop ]*/
+.logo img {
+  width: auto !important;
+  height: 41.6px;
+}
+
+.notice-link {
+  color: #b8d5ff;
+}
+
+/*------------------------------------------------------------------
+[ 카테고리 ]*/
+.main-menu > li:hover > a {
+  text-decoration: none;
+  color: #333;
+}
+
+.main-menu > li a:hover {
+  text-decoration: none;
+  color: #6c7ae0;
+}
+
+/* dropdown 컴포넌트의 버튼 스타일 */
+.dropdown button {
+  margin: 0;
+  padding: 0;
+  background-color: initial !important; /* 기본 스타일로 되돌리기 */
+  color: initial !important;
+  border: initial !important;
+  cursor: default;
+}
+
+/* dropdown 컴포넌트의 링크 스타일 */
+.dropdown button > a {
+  font-family: Poppins-Medium;
+  font-size: 14px;
+  color: #333;
+  padding: 5px 0px;
+  cursor: default;
+  transition: all 0.4s;
+  -webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+}
+.dropdown a.dropdown-item {
+  font-size: 14px;
+}
+.dropdown-menu:active {
+  --bs-dropdown-link-active-bg: #efefff;
+}
+
+/* dropdown 화살표 제거 */
+.dropdown-toggle::after {
+  content: none;
+}
+
+/* 카테고리 label */
+.icon-header-noti::after {
+  content: attr(data-notify);
+  font-family: Poppins-Regular;
+  font-size: 12px;
+  color: #fff;
+  line-height: 15px;
+  text-align: center;
+
+  display: block;
+  position: absolute;
+  top: -7px;
+  right: 0;
+  min-width: 15px;
+  height: 15px;
+  padding: 0 3px;
+  border-radius: 50%;
+  background-color: #717fe0;
+}
+
+/*------------------------------------------------------------------
+[ 검색창 ]*/
+.header-search {
+  background-color: #eee;
+  opacity: 0.7;
+  width: 50%;
+  height: 70%;
+  color: #232323;
+  padding: 5px 10px;
+  border-radius: 7px;
+}
+
+.label1::after {
+  top: 7px;
+}
+
+/*[ Header Desktop end ]
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
+
+/*================================================================*/
+
+/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+[ Header Mobile ]*/
+
+.wrap-header-mobile {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  position: relative;
+  z-index: 3000;
+  align-items: center;
+  height: 50px;
+  background-color: #fff;
+  padding: 5px 15px;
+  display: none;
+
+  box-shadow: 0 0px 3px 0px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0 0px 3px 0px rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: 0 0px 3px 0px rgba(0, 0, 0, 0.2);
+  -o-box-shadow: 0 0px 3px 0px rgba(0, 0, 0, 0.2);
+  -ms-box-shadow: 0 0px 3px 0px rgba(0, 0, 0, 0.2);
+}
+
+/*------------------------------------------------------------------
+[ Logo mobile ]*/
+.logo-mobile {
+  display: block;
+  position: relative;
+  height: 80%;
+  padding-right: 25px;
+  -webkit-flex-grow: 1;
+  -moz-flex-grow: 1;
+  flex-grow: 1;
+}
+
+.logo-mobile img {
+  max-width: calc(100% - 20px);
+  max-height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+/*------------------------------------------------------------------
+[ btn show menu ]*/
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 2000;
+}
+
+.hamburger {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  align-items: center;
+  padding: 0;
+  -webkit-transform: scale(0.7);
+  -moz-transform: scale(0.7);
+  -ms-transform: scale(0.7);
+  -o-transform: scale(0.7);
+  transform: scale(0.7);
+}
+
+.hamburger:hover {
+  opacity: 1;
+}
+
+/*---------------------------------------------*/
+@media (max-width: 991px) {
+  .wrap-header-mobile {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+  .container-menu-desktop {
+    display: none;
+  }
+}
+
+/*==================================================================
+[ Menu mobile ]*/
+.menu-mobile {
+  display: block;
+  position: absolute;
+  z-index: 2500;
+  top: 0;
+  left: 0;
+  width: 100%;
+  transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.5, 1);
+  transform: translateY(-90%);
+}
+
+.menu-mobile ul {
+  padding-left: 0;
+}
+
+.menu-mobile.show-menu-mobile {
+  transform: translateY(50px);
+}
+
+/* 모바일 Topbar */
+.left-top-bar {
+  justify-content: flex-start;
+  width: 80%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.right-top-bar {
+  justify-content: flex-end;
+}
+
+/* 모바일 드롭다운 메뉴 */
+.main-menu-m {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: #717fe0;
+}
+
+.main-menu-m > li > a {
+  font-family: Poppins-Medium;
+  font-size: 14px;
+  color: white;
+  line-height: 2.8;
+  padding: 8px 20px 8px 20px;
+}
+
+.main-menu-m > li {
+  color: white;
+  position: relative;
+}
+
+.arrow-main-menu-m {
+  font-size: 14px;
+  color: #fff;
+
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: 10px;
+  top: 2px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.arrow-main-menu-m i {
+  transform-origin: center;
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.turn-arrow-main-menu-m i {
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+
+/* 모바일 전용 카테고리 라벨 (HOT 등) */
+.label1-mobile {
+  position: relative;
+}
+
+.label1-mobile::after {
+  content: attr(data-label1);
+  font-family: Poppins-Regular;
+  font-size: 10px;
+  line-height: 15px;
+  color: #fff;
+  text-transform: uppercase;
+  text-align: center;
+
+  display: block;
+  position: absolute;
+  top: -5px;
+  left: 65px;
+  height: 15px;
+  min-width: 32px;
+  border-radius: 7px;
+  padding: 0 4px;
+  background-color: #f74877;
+}
+
+.label1-mobile.rs1::after {
+  top: calc(50% - 8px);
+  right: auto;
+  left: 90%;
+}
+
+.icon-header-noti-mobile::after {
+  content: attr(data-notify);
+  font-family: Poppins-Regular;
+  font-size: 12px;
+  color: #fff;
+  line-height: 15px;
+  text-align: center;
+
+  display: block;
+  position: absolute;
+  top: -7px;
+  right: 0px;
+  min-width: 15px;
+  height: 15px;
+  padding: 0 3px;
+  border-radius: 50%;
+  background-color: #717fe0;
+}
+
+/*---------------------------------------------*/
+.sub-menu-m {
+  background-color: #fff;
+  padding: 10px 15px 10px 32px;
+  display: none;
+}
+
+.sub-menu-m a {
+  font-family: Poppins-Regular;
+  font-size: 14px;
+  color: #666;
+  line-height: 2.5;
+  padding: 5px 0 5px 0;
+}
+
+.sub-menu-m a:hover {
+  text-decoration: none;
+  color: #555555;
+}
+
+@media (min-width: 992px) {
+  .menu-mobile {
+    display: none;
+  }
+}
+
+/*[ Header Mobile end ]
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
