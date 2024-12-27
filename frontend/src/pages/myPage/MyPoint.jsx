@@ -32,8 +32,7 @@ const MyPoint = () => {
   const fetchPoints = async (page) => {
     try {
       const response = await call(
-        `/api/point/getPointByUserid?page=${page}&size=${pageSize}`,
-        'GET'
+        `/point/getPointByUserid?page=${page}&size=${pageSize}`
       );
       setPoints(response.content);
       setTotalPages(response.totalPages);
@@ -44,7 +43,7 @@ const MyPoint = () => {
 
   const fetchTotalPoints = async () => {
     try {
-      const response = await call(`/api/point/getTotalPointByUserid`, 'GET');
+      const response = await call(`/point/getTotalPointByUserid`);
       setTotalPoints(response);
     } catch (error) {
       console.error('Error fetching total points:', error);

@@ -1,22 +1,18 @@
-import React, { useEffect } from 'react';
+import { call } from '../auth/ApiService';
 
-function FetchAllProduct({ onItemFetch }) {
-  useEffect(() => {
-    fetch('http://localhost:80/api/itemAll')
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then((data) => {
-        if (onItemFetch) {
-          onItemFetch(data);
-        }
-      })
-      .catch((error) => console.log('Error fetching item data:', error));
-  }, [onItemFetch]);
-  return null;
+export default async function FetchAllProduct({ onItemFetch } = {}) {
+  try {
+    const response = await call('/itemAll');
+    console.log(response);
+
+    if (!response.ok) {
+      // throw new Error('Network response was not ok');
+    }
+
+    if (onItemFetch) {
+      onItemFetch(response);
+    }
+  } catch (error) {
+    console.log('Error fetching item data:', error);
+  }
 }
-
-export default FetchAllProduct;

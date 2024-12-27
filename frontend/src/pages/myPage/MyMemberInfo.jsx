@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { call } from '../../api/auth/ApiService'; // useUser 훅 임포트
 import { useUser } from '../../api/auth/UserContext'; // useUser 훅 임포트
 import MyPageHeader from '../../components/myPage/MyPageHeader';
@@ -7,7 +6,6 @@ import MyPageHeader from '../../components/myPage/MyPageHeader';
 import DaumPostcode from 'react-daum-postcode'; // Kakao 우편번호 API 사용
 
 const MemberInfo = () => {
-  const navigate = useNavigate();
   const [representativeAddress, setRepresentativeAddress] = useState(null);
   const [generalAddresses, setGeneralAddresses] = useState([]);
   const { user, setUser } = useUser(); // UserContext에서 user와 setUser를 가져오기
@@ -82,7 +80,7 @@ const MemberInfo = () => {
       }
 
       try {
-        const response = await call('/api/mypage/changePwd', 'PUT', {
+        const response = await call('/mypage/changePwd', 'PUT', {
           password,
         });
 
@@ -101,7 +99,7 @@ const MemberInfo = () => {
 
     if (formName === 'changebodyInfo') {
       try {
-        const response = await call('/api/mypage/changeBodyInfo', 'PUT', {
+        const response = await call('/mypage/changeBodyInfo', 'PUT', {
           height: bodyInfo.height,
           weight: bodyInfo.weight,
           size: bodyInfo.size,
@@ -125,7 +123,7 @@ const MemberInfo = () => {
       const confirmPassword = data.confirmPassword?.trim(); // 입력값 가져오기
 
       try {
-        const response = await call(`/api/mypage/changeAddInfo`, 'PUT', {
+        const response = await call(`/mypage/changeAddInfo`, 'PUT', {
           name: addInfo.name,
           phone: addInfo.phone1 + addInfo.phone2 + addInfo.phone3,
           style: addInfo.style,
@@ -151,10 +149,7 @@ const MemberInfo = () => {
 
   const fetchData = async () => {
     try {
-      const address = await call(
-        `/api/mypage/getAddress?userId=${user?.id}`,
-        'GET'
-      );
+      const address = await call(`/mypage/getAddress?userId=${user?.id}`);
       const representative = address.find((addr) => addr.isRepresent === true);
       const general = address.filter((addr) => addr.isRepresent !== true);
 
@@ -172,7 +167,7 @@ const MemberInfo = () => {
     const data = { address: fullAddress };
 
     try {
-      const response = await call('/api/mypage/addAddress', 'POST', data);
+      const response = await call('/mypage/addAddress', 'POST', data);
 
       if (response.status === 'success') {
         alert(response.message);
@@ -228,7 +223,7 @@ const MemberInfo = () => {
 
   const switchRepresentativeAddress = async (id) => {
     try {
-      await call(`/api/mypage/switchRepresentativeAddress/${id}`, 'PUT');
+      await call(`/mypage/switchRepresentativeAddress/${id}`, 'PUT');
       alert('대표 주소지가 변경되었습니다.');
       fetchData(); // 데이터 새로고침
     } catch (error) {
@@ -241,7 +236,7 @@ const MemberInfo = () => {
   const DeleteRepresentativeAddress = async (id) => {
     if (generalAddresses.length === 0) {
       try {
-        await call(`/api/mypage/deleteAddress/${id}`, 'DELETE');
+        await call(`/mypage/deleteAddress/${id}`, 'DELETE');
         fetchData(); // 변경 후 데이터 다시 가져오기
       } catch (error) {
         console.error('Error deleting address:', error);
@@ -255,10 +250,7 @@ const MemberInfo = () => {
 
   // 일반 주소 삭제
   const DeleteGeneralAddress = (id) => {
-    fetch(`http://localhost:80/api/mypage/deleteAddress/${id}`, {
-      method: 'DELETE',
-      cache: 'no-store',
-    })
+    call(`/mypage/deleteAddress/${id}`, 'DELETE', { cache: 'no-store' })
       .then((response) => {
         if (response.ok) {
           fetchData(); // 변경 후 데이터를 다시 가져와 상태 업데이트

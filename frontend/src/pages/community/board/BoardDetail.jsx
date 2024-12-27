@@ -72,7 +72,7 @@ const BoardDetail = () => {
         {boardDetail.boardImage && (
           <div className="board-image">
             <img
-              src={`http://localhost/images/${boardDetail.boardImage}`}
+              src={`http://13.209.5.239/images/${boardDetail.boardImage}`}
               alt="게시글 이미지"
               className="detail-image"
             />

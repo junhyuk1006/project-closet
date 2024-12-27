@@ -41,7 +41,7 @@ function Header({ user }) {
     if (user) {
       async function fetchBaskets() {
         try {
-          const newBaskets = await call(`/api/basket/getBasket/` + user.id); // 비동기 처리
+          const newBaskets = await call(`/basket/getBasket/` + user.id); // 비동기 처리
           setBaskets(newBaskets);
         } catch (err) {
           console.error('장바구니 데이터를 가져오는 데 실패했습니다:', err);

@@ -10,25 +10,13 @@ import useProductQuantity from '../hooks/useProductQuantity';
 function Modal({ isOpen, onClose, product }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isZoomed, setIsZoomed] = useState(false); // 확대 보기 상태
-  const { quantity, increaseQuantity, decreaseQuantity } = useProductQuantity(1);
+  const { quantity, increaseQuantity, decreaseQuantity } =
+    useProductQuantity(1);
 
-  // useEffect(() => {
-  //   if (productId) {
-  //     async function getProduct() {
-  //       try {
-  //         const data = await fetch(
-  //           `http://localhost:80/api/itemDetail/${productId}`
-  //         ).then((data) => data.json());
-  //         setProducts('data:' + data);
-  //       } catch (error) {
-  //         console.error('Failed to fetch product details:', error);
-  //       }
-  //     }
-  //     getProduct();
-  //   }
-  // }, [productId]);
-
-  const thumbnails = [`images/${product.mainImage}`, `images/${product.detailImage}`];
+  const thumbnails = [
+    `images/${product.mainImage}`,
+    `images/${product.detailImage}`,
+  ];
 
   if (!isOpen) return null;
 
@@ -37,11 +25,15 @@ function Modal({ isOpen, onClose, product }) {
   };
 
   const handlePrev = () => {
-    setCurrentIndex((prevIndex) => (prevIndex === 0 ? thumbnails.length - 1 : prevIndex - 1));
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? thumbnails.length - 1 : prevIndex - 1
+    );
   };
 
   const handleNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex === thumbnails.length - 1 ? 0 : prevIndex + 1));
+    setCurrentIndex((prevIndex) =>
+      prevIndex === thumbnails.length - 1 ? 0 : prevIndex + 1
+    );
   };
 
   const toggleZoom = () => {
@@ -54,7 +46,10 @@ function Modal({ isOpen, onClose, product }) {
 
       <div className="container">
         <div className="bg0 p-t-60 p-b-30 p-lr-15-lg how-pos3-parent">
-          <button className="how-pos3 hov3 trans-04 js-hide-modal1" onClick={onClose}>
+          <button
+            className="how-pos3 hov3 trans-04 js-hide-modal1"
+            onClick={onClose}
+          >
             <img src="images/icons/icon-close.png" alt="CLOSE" />
           </button>
 
@@ -81,7 +76,11 @@ function Modal({ isOpen, onClose, product }) {
                     <button className="nav-arrow prev" onClick={handlePrev}>
                       &#8249;
                     </button>
-                    <img src={thumbnails[currentIndex]} alt="Main Product" className="main-image" />
+                    <img
+                      src={thumbnails[currentIndex]}
+                      alt="Main Product"
+                      className="main-image"
+                    />
                     <button className="nav-arrow next" onClick={handleNext}>
                       &#8250;
                     </button>
@@ -92,16 +91,24 @@ function Modal({ isOpen, onClose, product }) {
 
             {isZoomed && (
               <div className="zoom-overlay" onClick={toggleZoom}>
-                <img src={thumbnails[currentIndex]} alt="Zoomed Product" className="zoomed-image" />
+                <img
+                  src={thumbnails[currentIndex]}
+                  alt="Zoomed Product"
+                  className="zoomed-image"
+                />
               </div>
             )}
 
             {/* Right Column for Product Details */}
             <div className="col-md-6 col-lg-5 p-b-30">
               <div className="p-r-50 p-t-5 p-lr-0-lg">
-                <h4 className="mtext-105 cl2 js-name-detail p-b-14">{product.itemName}</h4>
+                <h4 className="mtext-105 cl2 js-name-detail p-b-14">
+                  {product.itemName}
+                </h4>
 
-                <span className="mtext-106 cl2">{product.itemPrice.toLocaleString()}원</span>
+                <span className="mtext-106 cl2">
+                  {product.itemPrice.toLocaleString()}원
+                </span>
 
                 <p className="stext-102 cl3 p-t-23">{product.itemCategory}</p>
 
@@ -160,7 +167,9 @@ function Modal({ isOpen, onClose, product }) {
                         </div>
                       </div>
 
-                      <button className="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">장바구니</button>
+                      <button className="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
+                        장바구니
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -175,13 +184,22 @@ function Modal({ isOpen, onClose, product }) {
                       <i className="zmdi zmdi-favorite"></i>
                     </a>
                   </div>
-                  <a href="#" className="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 tooltip100">
+                  <a
+                    href="#"
+                    className="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 tooltip100"
+                  >
                     <i className="fa fa-facebook"></i>
                   </a>
-                  <a href="#" className="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 tooltip100">
+                  <a
+                    href="#"
+                    className="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 tooltip100"
+                  >
                     <i className="fa fa-twitter"></i>
                   </a>
-                  <a href="#" className="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 tooltip100">
+                  <a
+                    href="#"
+                    className="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 tooltip100"
+                  >
                     <i className="fa fa-google-plus"></i>
                   </a>
                 </div>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './UploadForm.css';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../../../api/auth/UserContext'; // 유저 데이터 가져오기 위한 훅
+import { call } from '../../../api/auth/ApiService';
 
 const UploadForm = () => {
   const [title, setTitle] = useState(''); // 코디 제목(스타일) 상태
@@ -54,13 +55,7 @@ const UploadForm = () => {
     console.log('user.id:', user.id);
 
     try {
-      const response = await fetch('http://localhost/api/coordi/upload', {
-        method: 'POST',
-        body: formData,
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`, // Authorization 헤더 추가
-        },
-      });
+      const response = await call('/coordi/upload', 'POST', formData);
 
       if (response.ok) {
         alert('코디가 성공적으로 업로드되었습니다!');

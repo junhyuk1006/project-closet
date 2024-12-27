@@ -4,6 +4,7 @@ import { useUser } from '../../../api/auth/UserContext';
 import { useNavigate } from 'react-router-dom';
 import { Modal, Button } from 'react-bootstrap';
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
+import { call } from '../../../api/auth/ApiService';
 
 const Album = () => {
   const { user } = useUser(); // 유저 정보 가져오기
@@ -17,7 +18,6 @@ const Album = () => {
   const handleUploadClick = () => {
     if (!user) {
       alert('로그인이 필요합니다.');
-      navigate(-1); // 뒤로가기
       return;
     }
     navigate('/upload'); // 업로드 페이지로 이동
@@ -27,18 +27,12 @@ const Album = () => {
   useEffect(() => {
     const fetchCoordiData = async () => {
       try {
-        const response = await fetch('http://localhost/api/coordi/list', {
-          method: 'GET',
-          headers: {
-            // Authorization이 꼭 필요한지 여부는 상황에 따라 달라질 수 있습니다.
-            'Content-Type': 'application/json',
-          },
-        });
+        const response = await call('/coordi/list');
+        console.log(response);
         if (!response.ok) {
-          throw new Error('Failed to fetch coordi data');
+          // throw new Error('Failed to fetch coordi data');
         }
-        const data = await response.json();
-        setCoordiData(data); // 코디 데이터를 상태로 설정
+        setCoordiData(response); // 코디 데이터를 상태로 설정
       } catch (error) {
         console.error('코디 데이터를 가져오는 중 오류:', error);
       }
@@ -62,19 +56,13 @@ const Album = () => {
     if (user) {
       // 좋아요 상태 조회
       try {
-        const res = await fetch(
-          `http://localhost/api/coordi/like/status?coordiBoardId=${coordi.id}&userId=${user.id}`,
-          {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          }
+        const likeData = await call(
+          `/coordi/like/status?coordiBoardId=${coordi.id}&userId=${user.id}`
         );
-        if (!res.ok) {
-          throw new Error('Failed to fetch like status');
+        if (!likeData.ok) {
+          // throw new Error('Failed to fetch like status');
         }
-        const likeData = await res.json();
+
         setLiked(likeData.liked);
         setLikeCount(likeData.likeCount);
       } catch (err) {
@@ -94,20 +82,18 @@ const Album = () => {
       return;
     }
     try {
-      const res = await fetch('http://localhost/api/coordi/like', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
+      const likeData = await call(
+        '/coordi/like',
+        'POST',
+        JSON.stringify({
           coordiBoardId: selectedCoordi.id,
           userId: user.id,
-        }),
-      });
-      if (!res.ok) {
-        throw new Error('Failed to toggle like');
+        })
+      );
+      if (!likeData.ok) {
+        // throw new Error('Failed to toggle like');
       }
-      const likeData = await res.json();
+
       setLiked(likeData.liked);
       setLikeCount(likeData.likeCount);
       // 메인 페이지의 리스트도 좋아요 수 업데이트 필요 시 여기서 처리할 수 있음
@@ -127,19 +113,9 @@ const Album = () => {
     if (!confirmDelete) return;
 
     try {
-      const res = await fetch(
-        `http://localhost/api/coordi/${selectedCoordi.id}`,
-        {
-          method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json',
-            // 필요하다면 Authorization 헤더 추가
-            // Authorization: `Bearer ${localStorage.getItem('token')}`
-          },
-        }
-      );
+      const res = await call(`/coordi/${selectedCoordi.id}`, 'DELETE');
       if (!res.ok) {
-        throw new Error('Failed to delete coordi');
+        // throw new Error('Failed to delete coordi');
       }
       alert('삭제되었습니다.');
       handleClose();
@@ -183,7 +159,7 @@ const Album = () => {
                     style={{ cursor: 'pointer' }}
                   >
                     <img
-                      src={`http://localhost:80/api/images/${coordi.coordiImage}`}
+                      src={`http://13.209.5.239/api/images/${coordi.coordiImage}`}
                       className="card-img-top"
                       alt={coordi.coordiTitle}
                       style={{ height: '350px', objectFit: 'cover' }}
@@ -221,7 +197,7 @@ const Album = () => {
           </Modal.Header>
           <Modal.Body>
             <img
-              src={`http://localhost:80/api/images/${selectedCoordi.coordiImage}`}
+              src={`http://13.209.5.239/api/images/${selectedCoordi.coordiImage}`}
               alt={selectedCoordi.coordiTitle}
               style={{ width: '100%', height: 'auto' }}
             />

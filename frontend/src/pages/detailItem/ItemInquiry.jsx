@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 /** custom css 및 react icon */
-import '../../assets/styles/detailItem/ReviewInput.css';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
-import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import LockIcon from '@mui/icons-material/Lock';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import '../../assets/styles/detailItem/ReviewInput.css';
 
 /** api */
 import FetchIdProduct from '../../api/item/FetchIdProduct';
+import { call } from '../../api/auth/ApiService';
 
 function ItemInquiry({ activeTab, userId, productId }) {
   /** 리뷰, 드롭다운 상태, 폼 입력 상태를 관리하기 위한 state */
@@ -64,14 +64,12 @@ function ItemInquiry({ activeTab, userId, productId }) {
   /** 상품 문의 목록 API 호출 */
   const fetchInquiries = async () => {
     try {
-      const response = await fetch(
-        `http://localhost/api/inquiry/getInquiries/${productId}`
-      );
+      const response = await call(`/inquiry/getInquiries/${productId}`);
       if (!response.ok) {
-        throw new Error(`Error: ${response.statusText}`);
+        // throw new Error(`Error: ${response.statusText}`);
       }
-      const data = await response.json();
-      setInquiries(Array.isArray(data) ? data : []);
+
+      setInquiries(Array.isArray(response) ? response : []);
     } catch (error) {
       console.error('문의 데이터를 가져오는 중 오류 발생:', error);
       setInquiries([]);
@@ -96,21 +94,17 @@ function ItemInquiry({ activeTab, userId, productId }) {
       };
 
       /** 문의 저장 API 호출 */
-      const response = await fetch(
-        'http://localhost:80/api/inquiry/saveInquiry',
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(inquiryData),
-        }
+      const response = await call(
+        '/inquiry/saveInquiry',
+        'POST',
+        JSON.stringify(inquiryData)
       );
 
-      const result = await response.json();
       if (!response.ok) {
-        alert(result.message || '문의 저장 실패');
+        alert(response.message || '문의 저장 실패');
       }
 
-      alert(result.message);
+      alert(response.message);
       setInquiryContent('');
       await fetchInquiries(); // 최신 데이터 불러오기
     } catch (error) {
@@ -122,16 +116,12 @@ function ItemInquiry({ activeTab, userId, productId }) {
   /** 문의 비활성화 API 호출 */
   const handleDeactivate = async (InquiryId) => {
     try {
-      const response = await fetch(
-        `http://localhost:80/api/inquiry/deactivateInquiry/${InquiryId}`,
-        {
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' },
-          credentials: 'include',
-        }
+      const response = await call(
+        `/inquiry/deactivateInquiry/${InquiryId}`,
+        'PATCH'
       );
 
-      if (!response.ok) throw new Error('문의 비활성화 실패');
+      // if (!response.ok) throw new Error('문의 비활성화 실패');
       alert('문의가 성공적으로 비활성화되었습니다.');
       fetchInquiries();
       setDropdownStates({}); // 드롭다운 상태 초기화
@@ -144,16 +134,12 @@ function ItemInquiry({ activeTab, userId, productId }) {
   /** 문의 활성화 API 호출 */
   const handleActivate = async (InquiryId) => {
     try {
-      const response = await fetch(
-        `http://localhost:80/api/inquiry/activateInquiry/${InquiryId}`,
-        {
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' },
-          credentials: 'include',
-        }
+      const response = await call(
+        `/inquiry/activateInquiry/${InquiryId}`,
+        'PATCH'
       );
 
-      if (!response.ok) throw new Error('문의 활성화 실패');
+      // if (!response.ok) throw new Error('문의 활성화 실패');
       alert('문의가 성공적으로 활성화되었습니다.');
       fetchInquiries();
       setDropdownStates({});
@@ -175,212 +161,223 @@ function ItemInquiry({ activeTab, userId, productId }) {
     return () => document.removeEventListener('click', handleClickOutside); // 이벤트 해제
   }, [productId, activeTab]);
 
+  if (!productId) {
+    return <div>loading...</div>;
+  }
+
   return (
     <>
-      {/** 상품 ID를 기반으로 상품 데이터 가져오기 */}
-      <FetchIdProduct item_id={productId} onReviewFetch={setInquiries} />
-      <div
-        className={`tab-pane fade ${activeTab === 'inquiry' ? 'show active' : ''}`}
-        id="inquiry"
-        role="tabpanel"
-      >
-        <div className="row">
-          <div className="col-sm-10 col-md-8 col-lg-6 m-lr-auto">
-            <div className="p-b-30 m-lr-15-sm">
-              {/** 문의 목록 렌더링 */}
-              {currentInquires.map((inquiry) => (
-                <div key={inquiry.inquiryId} className="inquiry-container">
-                  <div
-                    className="inquiry-main flex-w-review flex-t p-bst-68"
-                    style={{
-                      cursor:
-                        inquiry.answerStatus === 'Answered'
-                          ? 'pointer'
-                          : 'default',
-                    }}
-                    onClick={() =>
-                      handleInquiryClick(
-                        inquiry.inquiryId,
-                        inquiry.answerStatus
-                      )
-                    }
-                  >
-                    <div className="wrap-pic-s size-109 bor0 of-hidden m-r-18 m-t-6">
-                      <img
-                        src="/images/basic.png"
-                        alt={inquiry.nickname}
-                      />
-                    </div>
-                    <div className="size-207">
-                      <div className="flex-w-review flex-sb-m p-b-17-review">
-                        <span className="mtext-107 cl2 p-r-20">
-                          {inquiry.nickname}
-                        </span>
-                        {inquiry.inquiryType && (
-                          <span className="inquiry-type-badge">
-                            {(() => {
-                              switch (inquiry.inquiryType) {
-                                case 'ProductInquiry':
-                                  return '상품문의';
-                                case 'ExchangeInquiry':
-                                  return '교환문의';
-                                case 'ReturnInquiry':
-                                  return '반품문의';
-                                case 'OtherInquiry':
-                                  return '기타문의';
-                                default:
-                                  return inquiry.inquiryType;
-                              }
-                            })()}
-                          </span>
-                        )}
-                        {inquiry.answerStatus && (
-                          <span className="inquiry-answerStatus-badge">
-                            {(() => {
-                              switch (inquiry.answerStatus) {
-                                case 'Pending':
-                                  return '답변 대기';
-                                case 'Answered':
-                                  return '답변 완료';
-                                default:
-                                  return inquiry.answerStatus;
-                              }
-                            })()}
-                          </span>
-                        )}
-                        <div
-                          className="menu-icon-wrapper"
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          {userId && inquiry.userId === userId && (
-                            <>
-                              <MoreHorizIcon
-                                style={{ fontSize: 25, cursor: 'pointer' }}
-                                onClick={() =>
-                                  toggleDropdown(inquiry.inquiryId)
-                                }
-                              />
-                              {dropdownStates[inquiry.inquiryId] && (
-                                <div className="dropdown-menu">
-                                  {inquiry.status === 'inactive' ? (
-                                    <button
-                                      onClick={() =>
-                                        handleActivate(inquiry.inquiryId)
-                                      }
-                                      className="dropdown-item"
-                                    >
-                                      활성화
-                                    </button>
-                                  ) : (
-                                    <button
-                                      onClick={() =>
-                                        handleDeactivate(inquiry.inquiryId)
-                                      }
-                                      className="dropdown-item"
-                                    >
-                                      비활성화
-                                    </button>
+      {productId && (
+        <>
+          <div
+            className={`tab-pane fade ${activeTab === 'inquiry' ? 'show active' : ''}`}
+            id="inquiry"
+            role="tabpanel"
+          >
+            <div className="row">
+              <div className="col-sm-10 col-md-8 col-lg-6 m-lr-auto">
+                <div className="p-b-30 m-lr-15-sm">
+                  {/** 문의 목록 렌더링 */}
+                  {currentInquires.map((inquiry) => (
+                    <div key={inquiry.inquiryId} className="inquiry-container">
+                      <div
+                        className="inquiry-main flex-w-review flex-t p-bst-68"
+                        style={{
+                          cursor:
+                            inquiry.answerStatus === 'Answered'
+                              ? 'pointer'
+                              : 'default',
+                        }}
+                        onClick={() =>
+                          handleInquiryClick(
+                            inquiry.inquiryId,
+                            inquiry.answerStatus
+                          )
+                        }
+                      >
+                        <div className="wrap-pic-s size-109 bor0 of-hidden m-r-18 m-t-6">
+                          <img
+                            src={`images/${inquiry.profileImage}`}
+                            alt={inquiry.nickname}
+                          />
+                        </div>
+                        <div className="size-207">
+                          <div className="flex-w-review flex-sb-m p-b-17-review">
+                            <span className="mtext-107 cl2 p-r-20">
+                              {inquiry.nickname}
+                            </span>
+                            {inquiry.inquiryType && (
+                              <span className="inquiry-type-badge">
+                                {(() => {
+                                  switch (inquiry.inquiryType) {
+                                    case 'ProductInquiry':
+                                      return '상품문의';
+                                    case 'ExchangeInquiry':
+                                      return '교환문의';
+                                    case 'ReturnInquiry':
+                                      return '반품문의';
+                                    case 'OtherInquiry':
+                                      return '기타문의';
+                                    default:
+                                      return inquiry.inquiryType;
+                                  }
+                                })()}
+                              </span>
+                            )}
+                            {inquiry.answerStatus && (
+                              <span className="inquiry-answerStatus-badge">
+                                {(() => {
+                                  switch (inquiry.answerStatus) {
+                                    case 'Pending':
+                                      return '답변 대기';
+                                    case 'Answered':
+                                      return '답변 완료';
+                                    default:
+                                      return inquiry.answerStatus;
+                                  }
+                                })()}
+                              </span>
+                            )}
+                            <div
+                              className="menu-icon-wrapper"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              {userId && inquiry.userId === userId && (
+                                <>
+                                  <MoreHorizIcon
+                                    style={{ fontSize: 25, cursor: 'pointer' }}
+                                    onClick={() =>
+                                      toggleDropdown(inquiry.inquiryId)
+                                    }
+                                  />
+                                  {dropdownStates[inquiry.inquiryId] && (
+                                    <div className="dropdown-menu">
+                                      {inquiry.status === 'inactive' ? (
+                                        <button
+                                          onClick={() =>
+                                            handleActivate(inquiry.inquiryId)
+                                          }
+                                          className="dropdown-item"
+                                        >
+                                          활성화
+                                        </button>
+                                      ) : (
+                                        <button
+                                          onClick={() =>
+                                            handleDeactivate(inquiry.inquiryId)
+                                          }
+                                          className="dropdown-item"
+                                        >
+                                          비활성화
+                                        </button>
+                                      )}
+                                    </div>
                                   )}
-                                </div>
+                                </>
                               )}
-                            </>
-                          )}
+                            </div>
+                          </div>
+                          <div className="review-content-wrapper">
+                            {inquiry.status === 'inactive' ? (
+                              <p className="stext-102 cl6">
+                                <LockIcon /> 해당 문의는 사용자의 요청에 따라
+                                비활성화되었습니다.
+                              </p>
+                            ) : (
+                              <p className="stext-102 cl6">
+                                {inquiry.inquiryContent}
+                              </p>
+                            )}
+                          </div>
                         </div>
                       </div>
-                      <div className="review-content-wrapper">
-                        {inquiry.status === 'inactive' ? (
-                          <p className="stext-102 cl6">
-                            <LockIcon /> 해당 문의는 사용자의 요청에 따라
-                            비활성화되었습니다.
-                          </p>
-                        ) : (
-                          <p className="stext-102 cl6">
-                            {inquiry.inquiryContent}
-                          </p>
+
+                      {/** 답변 영역 렌더링 */}
+                      {inquiry.status === 'active' &&
+                        inquiry.answerStatus === 'Answered' &&
+                        showAnswers[inquiry.inquiryId] && (
+                          <div className="answer-content">
+                            <h6>관리자 답변:</h6>
+                            <p>
+                              {inquiry.answer
+                                ? inquiry.answer
+                                : '답변 내용이 없습니다.'}
+                            </p>
+                          </div>
                         )}
+                    </div>
+                  ))}
+
+                  {/** 페이지네이션 */}
+                  <div className="pagination">
+                    {Array.from({ length: totalPages }, (_, i) => (
+                      <button
+                        key={i + 1}
+                        onClick={() => handlePageChange(i + 1)}
+                        className={currentPage === i + 1 ? 'active' : ''}
+                      >
+                        {i + 1}
+                      </button>
+                    ))}
+                  </div>
+
+                  {/** 문의 작성 폼 */}
+                  <form onSubmit={handleSubmit} className="w-full">
+                    <h5 className="mtext-108 cl2 p-b-7">문의 작성</h5>
+                    <div className="stext-102 cl6">
+                      <p className="inquiry-info-text">
+                        <ArrowRightIcon /> 문의 작성 후 목록에서 관리
+                        가능합니다.
+                      </p>
+                      <ArrowRightIcon />
+                      답변 완료된 문의는 클릭하여 답변 확인이 가능합니다.
+                    </div>
+                    <input type="hidden" value={userId || ''} name="userId" />
+                    <input
+                      type="hidden"
+                      value={productId || ''}
+                      name="productId"
+                    />
+                    <div className="flex-w flex-m p-t-50 p-b-23">
+                      <div className="inquiry-type-dropdown">
+                        <label htmlFor="inquiry-type" style={{ width: '100%' }}>
+                          문의 유형
+                        </label>
+                        <select
+                          id="inquiry-type"
+                          value={inquiryType}
+                          onChange={handleInquiryTypeChange}
+                          className="size-110-inquiry bor8 stext-102 cl2 p-lr-20 p-tb-10"
+                        >
+                          <option value="ProductInquiry">상품문의</option>
+                          <option value="ExchangeInquiry">교환문의</option>
+                          <option value="ReturnInquiry">반품문의</option>
+                          <option value="OtherInquiry">기타문의</option>
+                        </select>
                       </div>
                     </div>
-                  </div>
-
-                  {/** 답변 영역 렌더링 */}
-                  {inquiry.status === 'active' &&
-                    inquiry.answerStatus === 'Answered' &&
-                    showAnswers[inquiry.inquiryId] && (
-                      <div className="answer-content">
-                        <h6>관리자 답변:</h6>
-                        <p>
-                          {inquiry.answer
-                            ? inquiry.answer
-                            : '답변 내용이 없습니다.'}
-                        </p>
+                    <div className="row p-b-25">
+                      <div className="col-12 p-b-5">
+                        <textarea
+                          className="size-110 bor8 stext-102 cl2 p-lr-20 p-tb-10"
+                          value={inquiryContent}
+                          onChange={(e) => setInquiryContent(e.target.value)}
+                        ></textarea>
                       </div>
-                    )}
-                </div>
-              ))}
-
-              {/** 페이지네이션 */}
-              <div className="pagination">
-                {Array.from({ length: totalPages }, (_, i) => (
-                  <button
-                    key={i + 1}
-                    onClick={() => handlePageChange(i + 1)}
-                    className={currentPage === i + 1 ? 'active' : ''}
-                  >
-                    {i + 1}
-                  </button>
-                ))}
-              </div>
-
-              {/** 문의 작성 폼 */}
-              <form onSubmit={handleSubmit} className="w-full">
-                <h5 className="mtext-108 cl2 p-b-7">문의 작성</h5>
-                <div className="stext-102 cl6">
-                  <p className="inquiry-info-text">
-                    <ArrowRightIcon /> 문의 작성 후 목록에서 관리 가능합니다.
-                  </p>
-                  <ArrowRightIcon />
-                  답변 완료된 문의는 클릭하여 답변 확인이 가능합니다.
-                </div>
-                <input type="hidden" value={userId || ''} name="userId" />
-                <input type="hidden" value={productId || ''} name="productId" />
-                <div className="flex-w flex-m p-t-50 p-b-23">
-                  <div className="inquiry-type-dropdown">
-                    <label htmlFor="inquiry-type" style={{ width: '100%' }}>
-                      문의 유형
-                    </label>
-                    <select
-                      id="inquiry-type"
-                      value={inquiryType}
-                      onChange={handleInquiryTypeChange}
-                      className="size-110-inquiry bor8 stext-102 cl2 p-lr-20 p-tb-10"
+                    </div>
+                    <button
+                      className="flex-c-m stext-101 cl0 size-112 bg7 bor11 hov-btn3 p-lr-15 trans-04 m-b-10"
+                      type="submit"
                     >
-                      <option value="ProductInquiry">상품문의</option>
-                      <option value="ExchangeInquiry">교환문의</option>
-                      <option value="ReturnInquiry">반품문의</option>
-                      <option value="OtherInquiry">기타문의</option>
-                    </select>
-                  </div>
+                      작성하기
+                    </button>
+                  </form>
                 </div>
-                <div className="row p-b-25">
-                  <div className="col-12 p-b-5">
-                    <textarea
-                      className="size-110 bor8 stext-102 cl2 p-lr-20 p-tb-10"
-                      value={inquiryContent}
-                      onChange={(e) => setInquiryContent(e.target.value)}
-                    ></textarea>
-                  </div>
-                </div>
-                <button
-                  className="flex-c-m stext-101 cl0 size-112 bg7 bor11 hov-btn3 p-lr-15 trans-04 m-b-10"
-                  type="submit"
-                >
-                  작성하기
-                </button>
-              </form>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
+        </>
+      )}
     </>
   );
 }

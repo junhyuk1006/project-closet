@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Find.css';
+import { call } from '../../api/auth/ApiService';
 
 const ChangePasswordForm = () => {
   const [newPassword, setNewPassword] = useState('');
@@ -31,19 +32,16 @@ const ChangePasswordForm = () => {
     }
 
     try {
-      const response = await fetch(
-        'http://localhost/api/auth/change-password',
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ token, newPassword }),
-        }
+      const response = await call(
+        '/auth/change-password',
+        'POST',
+        JSON.stringify({ token, newPassword })
       );
-      const data = await response.json();
+
       if (!response.ok) {
         const errorToShow =
-          data.error || data.message || '비밀번호 변경에 실패했습니다.';
-        throw new Error(errorToShow);
+          response.error || response.message || '비밀번호 변경에 실패했습니다.';
+        // throw new Error(errorToShow);
       }
       setSuccessMessage(
         '비밀번호가 성공적으로 변경되었습니다. 다시 로그인해주세요.'

@@ -1,18 +1,18 @@
-export const savePoint = async (PointData) => {
-    try {
-        const response = await fetch(`http://localhost:80/api/point/saveReviewPoint`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(PointData),
-        });
+import { call } from '../auth/ApiService';
 
-        if (!response.ok) {
-            throw new Error("Failed to save point");
-        }
-        const result = await response.text();
-    } catch (error) {
-        console.error("Error saving point:", error);
+export async function savePoint(PointData) {
+  try {
+    const response = await call(
+      `/point/saveReviewPoint`,
+      'POST',
+      JSON.stringify(PointData)
+    );
+    console.log(response);
+
+    if (!response.ok) {
+      // throw new Error('Failed to save point');
     }
-};
+  } catch (error) {
+    console.error('Error saving point:', error);
+  }
+}

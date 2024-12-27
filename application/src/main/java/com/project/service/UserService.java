@@ -131,7 +131,7 @@ public class UserService {
         String token = tokenProvider.createPasswordResetToken(user);
 
         // 실제 비밀번호 재설정 페이지의 호스트/도메인에 맞춰 URL을 구성
-        String resetLink = "http://localhost:3000/change-password?token=" + token;
+        String resetLink = "http://13.209.5.239:3000/change-password?token=" + token;
 
         // 이메일 전송
         sendEmail(

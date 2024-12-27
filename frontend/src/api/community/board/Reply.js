@@ -1,37 +1,19 @@
+import { call } from '../../auth/ApiService';
 import { fetchAPI } from '../common/config';
 
 // 댓글 조회
 export const getRepliesByBoardId = async (boardId) => {
-  return await fetchAPI(`/api/replies/board/${boardId}`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${localStorage.getItem('token')}`,
-    },
-  });
+  return await call(`/replies/board/${boardId}`);
 };
 
 // 댓글 등록
 export const addReply = async (replyData) => {
-  return await fetchAPI('/api/replies', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${localStorage.getItem('token')}`,
-    },
-    body: JSON.stringify(replyData),
-  });
+  return await call('/replies', 'POST', JSON.stringify(replyData));
 };
 
 // 댓글 삭제
 export const deleteReply = async (replyId) => {
-  const data = await fetchAPI(`/api/replies/${replyId}`, {
-    method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${localStorage.getItem('token')}`,
-    },
-  });
+  const data = await call(`/replies/${replyId}`, 'DELETE');
 
   // JSON 또는 텍스트에 맞춰 메시지를 반환
   if (typeof data === 'string') {
@@ -42,12 +24,5 @@ export const deleteReply = async (replyId) => {
 
 // 댓글 수정
 export const updateReply = async (replyId, updatedData) => {
-  return await fetchAPI(`/api/replies/${replyId}`, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${localStorage.getItem('token')}`,
-    },
-    body: JSON.stringify(updatedData),
-  });
+  return await call(`/replies/${replyId}`, 'PUT', JSON.stringify(updatedData));
 };

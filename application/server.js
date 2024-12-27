@@ -21,5 +21,5 @@ app.get('*', (req, res) => {
 // 서버 실행
 const PORT = process.env.PORT || 3000; // 원하는 포트로 변경 가능
 app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+    console.log(`Server running on http://13.209.5.239:${PORT}`);
 });

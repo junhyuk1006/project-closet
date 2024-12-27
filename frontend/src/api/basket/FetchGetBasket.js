@@ -1,16 +1,18 @@
-export const FetchGetBasket = async ({ userId, onGetFetch }) => {
-    try {
-        if (userId) {
-            const response = await fetch(`http://localhost:80/api/basket/getBasket/${userId}`);
-            if (!response.ok) {
-                throw new Error("getBasket API response error");
-            }
-            const data = await response.json();
-            if (onGetFetch) {
-                onGetFetch(data);
-            }
-        }
-    } catch (error) {
-        console.error("getBasket Fetch Error: ", error);
+import { call } from '../auth/ApiService';
+
+export default async function FetchGetBasket({ userId, onGetFetch }) {
+  try {
+    if (userId) {
+      const response = await call(`/basket/getBasket/${userId}`);
+      if (!response.ok) {
+        // throw new Error('getBasket API response error');
+      }
+
+      if (onGetFetch) {
+        onGetFetch(response);
+      }
     }
-};
+  } catch (error) {
+    console.error('getBasket Fetch Error: ', error);
+  }
+}

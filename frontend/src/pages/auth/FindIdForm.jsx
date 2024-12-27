@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Find.css';
+import { call } from '../../api/auth/ApiService';
 
 const FindIdForm = () => {
   const [email, setEmail] = useState('');
@@ -13,19 +14,12 @@ const FindIdForm = () => {
     setErrorMessage('');
     setFoundId(null);
     try {
-      const response = await fetch(
-        `http://localhost/api/auth/find-username?email=${email}`,
-        {
-          method: 'GET',
-          headers: { 'Content-Type': 'application/json' },
-        }
-      );
-      const data = await response.json();
+      const response = await call(`/auth/find-username?email=${email}`);
 
       if (!response.ok) {
         const errorToShow =
-          data.error || data.message || '아이디를 찾을 수 없습니다.';
-        throw new Error(errorToShow);
+          response.error || response.message || '아이디를 찾을 수 없습니다.';
+        // throw new Error(errorToShow);
       }
 
       // 성공 시 아이디 표시

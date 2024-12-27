@@ -21,8 +21,7 @@ const MyReviews = () => {
   const fetchMyReviews = async (page) => {
     try {
       const response = await call(
-        `/api/mypage/getMyReviews?page=${page}&size=${pageSize}`,
-        'GET'
+        `/mypage/getMyReviews?page=${page}&size=${pageSize}`
       );
 
       // 응답 데이터 처리

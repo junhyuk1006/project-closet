@@ -31,7 +31,7 @@ function ReviewInput({ activeTab, userId, productId }) {
   /** 특정 상품에 대한 리뷰 데이터를 가져오는 함수 */
   const fetchReviews = async () => {
     try {
-      const response = await call(`/api/findAllReview/${productId}`);
+      const response = await call(`/findAllReview/${productId}`);
       setReviews(response);
       console.log('리뷰 데이터를 성공적으로 불러왔습니다.');
       console.log(response);
@@ -80,16 +80,13 @@ function ReviewInput({ activeTab, userId, productId }) {
   const handleUpdate = async (reviewId, updatedContent) => {
     try {
       const updatedData = { reviewContent: updatedContent };
-      const response = await fetch(
-        `http://localhost:80/api/updateReview/${reviewId}`,
-        {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(updatedData),
-        }
+      const response = await call(
+        `/updateReview/${reviewId}`,
+        'PUT',
+        JSON.stringify(updatedData)
       );
 
-      if (!response.ok) throw new Error('리뷰 업데이트 실패');
+      // if (!response.ok) throw new Error('리뷰 업데이트 실패');
       alert('리뷰가 성공적으로 업데이트되었습니다.');
       fetchReviews();
       setDropdownStates({});
@@ -101,16 +98,9 @@ function ReviewInput({ activeTab, userId, productId }) {
   /** 리뷰 비활성화 핸들러 */
   const handleDeactivate = async (reviewId) => {
     try {
-      const response = await fetch(
-        `http://localhost:80/api/deactivateReview/${reviewId}`,
-        {
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' },
-          credentials: 'include',
-        }
-      );
+      const response = await call(`/deactivateReview/${reviewId}`, 'PATCH');
 
-      if (!response.ok) throw new Error('리뷰 비활성화 실패');
+      // if (!response.ok) throw new Error('리뷰 비활성화 실패');
       alert('리뷰가 성공적으로 비활성화되었습니다.');
       fetchReviews();
       setDropdownStates({});
@@ -122,16 +112,9 @@ function ReviewInput({ activeTab, userId, productId }) {
   /** 리뷰 활성화 핸들러 */
   const handleActivate = async (reviewId) => {
     try {
-      const response = await fetch(
-        `http://localhost:80/api/activateReview/${reviewId}`,
-        {
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' },
-          credentials: 'include',
-        }
-      );
+      const response = await call(`/activateReview/${reviewId}`, 'PATCH');
 
-      if (!response.ok) throw new Error('리뷰 활성화 실패');
+      // if (!response.ok) throw new Error('리뷰 활성화 실패');
       alert('리뷰가 성공적으로 활성화되었습니다.');
       fetchReviews();
       setDropdownStates({});
@@ -159,19 +142,18 @@ function ReviewInput({ activeTab, userId, productId }) {
       };
 
       /** 리뷰 저장 API */
-      const response = await fetch('http://localhost:80/api/saveReview', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(reviewData),
-      });
+      const response = await call(
+        '/saveReview',
+        'POST',
+        JSON.stringify(reviewData)
+      );
 
-      const result = await response.json();
       if (!response.ok) {
-        alert(result.message || '리뷰 저장 실패');
+        alert(response.message || '리뷰 저장 실패');
         return;
       }
 
-      alert(result.message);
+      alert(response.message);
       setReviewContent('');
       setScore(0);
       await fetchReviews();
@@ -198,156 +180,174 @@ function ReviewInput({ activeTab, userId, productId }) {
     setScore(score);
   };
 
+  if (!productId) {
+    return <div>loading...</div>;
+  }
+
   return (
     <>
-      <FetchAllReview item_id={productId} onReviewFetch={setReviews} />
-      <div
-        className={`tab-pane fade ${activeTab === 'reviews' ? 'show active' : ''}`}
-        id="reviews"
-        role="tabpanel"
-      >
-        <div className="row">
-          <div className="col-sm-10 col-md-8 col-lg-6 m-lr-auto">
-            <div className="p-b-30 m-lr-15-sm">
-              {/** 리뷰 목록 렌더링 */}
-              {currentReviews.map((review) => (
-                <div key={review.id} className="flex-w-review flex-t p-bst-68">
-                  <div className="wrap-pic-s size-109 bor0 of-hidden m-r-18 m-t-6">
-                    <img
-                      src="/images/basic.png"
-                      alt={review.nickname}
-                    />
-                  </div>
-                  <div className="size-207">
-                    <div className="flex-w-review flex-sb-m p-b-17-review">
-                      <span className="mtext-107 cl2 p-r-20">
-                        {review.nickname}
-                      </span>
-                      <span className="fs-18 cl11">
-                        {Array.from({ length: review.score }, (_, i) => (
-                          <i key={i} className="zmdi zmdi-star"></i>
-                        ))}
-                      </span>
-                      <div className="menu-icon-wrapper">
-                        {userId && review.userId === userId && (
-                          <>
-                            <MoreHorizIcon
-                              style={{ fontSize: 25, cursor: 'pointer' }}
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                toggleDropdown(review.id);
-                              }}
-                            />
-                            {dropdownStates[review.id] && (
-                              <div
-                                className="dropdown-menu"
-                                onClick={handleDropdownClick}
-                              >
-                                {review.status === 'inactive' ? (
-                                  <button
-                                    onClick={() => handleActivate(review.id)}
-                                    className="dropdown-item"
+      {productId && (
+        <>
+          <div
+            className={`tab-pane fade ${activeTab === 'reviews' ? 'show active' : ''}`}
+            id="reviews"
+            role="tabpanel"
+          >
+            <div className="row">
+              <div className="col-sm-10 col-md-8 col-lg-6 m-lr-auto">
+                <div className="p-b-30 m-lr-15-sm">
+                  {/** 리뷰 목록 렌더링 */}
+                  {currentReviews.map((review) => (
+                    <div
+                      key={review.id}
+                      className="flex-w-review flex-t p-bst-68"
+                    >
+                      <div className="wrap-pic-s size-109 bor0 of-hidden m-r-18 m-t-6">
+                        <img
+                          src={`images/${review.profileImage}`}
+                          alt={review.nickname}
+                        />
+                      </div>
+                      <div className="size-207">
+                        <div className="flex-w-review flex-sb-m p-b-17-review">
+                          <span className="mtext-107 cl2 p-r-20">
+                            {review.nickname}
+                          </span>
+                          <span className="fs-18 cl11">
+                            {Array.from({ length: review.score }, (_, i) => (
+                              <i key={i} className="zmdi zmdi-star"></i>
+                            ))}
+                          </span>
+                          <div className="menu-icon-wrapper">
+                            {userId && review.userId === userId && (
+                              <>
+                                <MoreHorizIcon
+                                  style={{ fontSize: 25, cursor: 'pointer' }}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    toggleDropdown(review.id);
+                                  }}
+                                />
+                                {dropdownStates[review.id] && (
+                                  <div
+                                    className="dropdown-menu"
+                                    onClick={handleDropdownClick}
                                   >
-                                    활성화
-                                  </button>
-                                ) : (
-                                  <>
-                                    <button
-                                      onClick={() => {
-                                        const updatedContent = prompt(
-                                          '수정할 내용을 입력하세요:',
-                                          review.reviewContent
-                                        );
-                                        if (updatedContent)
-                                          handleUpdate(
-                                            review.id,
-                                            updatedContent
-                                          );
-                                      }}
-                                      className="dropdown-item"
-                                    >
-                                      수정
-                                    </button>
-                                    <button
-                                      onClick={() =>
-                                        handleDeactivate(review.id)
-                                      }
-                                      className="dropdown-item"
-                                    >
-                                      비활성화
-                                    </button>
-                                  </>
+                                    {review.status === 'inactive' ? (
+                                      <button
+                                        onClick={() =>
+                                          handleActivate(review.id)
+                                        }
+                                        className="dropdown-item"
+                                      >
+                                        활성화
+                                      </button>
+                                    ) : (
+                                      <>
+                                        <button
+                                          onClick={() => {
+                                            const updatedContent = prompt(
+                                              '수정할 내용을 입력하세요:',
+                                              review.reviewContent
+                                            );
+                                            if (updatedContent)
+                                              handleUpdate(
+                                                review.id,
+                                                updatedContent
+                                              );
+                                          }}
+                                          className="dropdown-item"
+                                        >
+                                          수정
+                                        </button>
+                                        <button
+                                          onClick={() =>
+                                            handleDeactivate(review.id)
+                                          }
+                                          className="dropdown-item"
+                                        >
+                                          비활성화
+                                        </button>
+                                      </>
+                                    )}
+                                  </div>
                                 )}
-                              </div>
+                              </>
                             )}
-                          </>
-                        )}
+                          </div>
+                        </div>
+                        <div className="review-content-wrapper">
+                          {review.status === 'inactive' ? (
+                            <p className="stext-102 cl6">
+                              <LockIcon />
+                              해당 리뷰는 유저의 요청에 의해 비활성화되었습니다.
+                            </p>
+                          ) : (
+                            <p className="stext-102 cl6">
+                              {review.reviewContent}
+                            </p>
+                          )}
+                        </div>
                       </div>
                     </div>
-                    <div className="review-content-wrapper">
-                      {review.status === 'inactive' ? (
-                        <p className="stext-102 cl6">
-                          <LockIcon />
-                          해당 리뷰는 유저의 요청에 의해 비활성화되었습니다.
-                        </p>
-                      ) : (
-                        <p className="stext-102 cl6">{review.reviewContent}</p>
-                      )}
+                  ))}
+
+                  {/** 페이지네이션 */}
+                  <div className="pagination">
+                    {Array.from({ length: totalPages }, (_, i) => (
+                      <button
+                        key={i + 1}
+                        onClick={() => handlePageChange(i + 1)}
+                        className={currentPage === i + 1 ? 'active' : ''}
+                      >
+                        {i + 1}
+                      </button>
+                    ))}
+                  </div>
+
+                  {/** 리뷰 작성 폼 */}
+                  <form onSubmit={handleSubmit} className="w-full">
+                    <h5 className="mtext-108 cl2 p-b-7">Review Info</h5>
+                    <p className="stext-102 cl6">
+                      <ArrowRightIcon />
+                      리뷰 작성을 하여도 리뷰 박스 오른쪽 상단 메뉴를 통해
+                      비활성화가 가능합니다.
+                    </p>
+                    <input type="hidden" value={userId || ''} name="userId" />
+                    <input
+                      type="hidden"
+                      value={productId || ''}
+                      name="productId"
+                    />
+                    <div className="flex-w flex-m p-t-50 p-b-23">
+                      <span className="stext-102 cl3 m-r-16">별점</span>
+                      <StarRating
+                        totalStars={5}
+                        onRatingChange={handleRatingChange}
+                      />
                     </div>
-                  </div>
+                    <div className="row p-b-25">
+                      <div className="col-12 p-b-5">
+                        <textarea
+                          className="size-110 bor8 stext-102 cl2 p-lr-20 p-tb-10"
+                          value={reviewContent}
+                          onChange={(e) => setReviewContent(e.target.value)}
+                        ></textarea>
+                      </div>
+                    </div>
+                    <button
+                      className="flex-c-m stext-101 cl0 size-112 bg7 bor11 hov-btn3 p-lr-15 trans-04 m-b-10"
+                      type="submit"
+                    >
+                      리뷰 작성
+                    </button>
+                  </form>
                 </div>
-              ))}
-
-              {/** 페이지네이션 */}
-              <div className="pagination">
-                {Array.from({ length: totalPages }, (_, i) => (
-                  <button
-                    key={i + 1}
-                    onClick={() => handlePageChange(i + 1)}
-                    className={currentPage === i + 1 ? 'active' : ''}
-                  >
-                    {i + 1}
-                  </button>
-                ))}
               </div>
-
-              {/** 리뷰 작성 폼 */}
-              <form onSubmit={handleSubmit} className="w-full">
-                <h5 className="mtext-108 cl2 p-b-7">Review Info</h5>
-                <p className="stext-102 cl6">
-                  <ArrowRightIcon />
-                  리뷰 작성을 하여도 리뷰 박스 오른쪽 상단 메뉴를 통해
-                  비활성화가 가능합니다.
-                </p>
-                <input type="hidden" value={userId || ''} name="userId" />
-                <input type="hidden" value={productId || ''} name="productId" />
-                <div className="flex-w flex-m p-t-50 p-b-23">
-                  <span className="stext-102 cl3 m-r-16">별점</span>
-                  <StarRating
-                    totalStars={5}
-                    onRatingChange={handleRatingChange}
-                  />
-                </div>
-                <div className="row p-b-25">
-                  <div className="col-12 p-b-5">
-                    <textarea
-                      className="size-110 bor8 stext-102 cl2 p-lr-20 p-tb-10"
-                      value={reviewContent}
-                      onChange={(e) => setReviewContent(e.target.value)}
-                    ></textarea>
-                  </div>
-                </div>
-                <button
-                  className="flex-c-m stext-101 cl0 size-112 bg7 bor11 hov-btn3 p-lr-15 trans-04 m-b-10"
-                  type="submit"
-                >
-                  리뷰 작성
-                </button>
-              </form>
             </div>
           </div>
-        </div>
-      </div>
+        </>
+      )}
     </>
   );
 }

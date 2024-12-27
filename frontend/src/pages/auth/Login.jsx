@@ -43,11 +43,11 @@ const LoginForm = () => {
     }
   };
 
-  // OAuth2 로그인 버튼 클릭시 백엔드 OAuth2 인증 엔드 엔드포인트로 리디렉션
+  // OAuth2 로그인 버튼 클릭시 백엔드 OAuth2 인증 엔드 엔드포인트로 리다이렉트
   const handleOAuthLogin = (provider) => {
     const oauthUrls = {
-      naver: 'http://localhost/oauth2/authorization/naver',
-      kakao: 'http://localhost/oauth2/authorization/kakao',
+      naver: 'http://13.209.5.239:8090/oauth2/authorization/naver',
+      kakao: 'http://13.209.5.239:8090/oauth2/authorization/kakao',
     };
 
     if (provider && oauthUrls[provider]) {

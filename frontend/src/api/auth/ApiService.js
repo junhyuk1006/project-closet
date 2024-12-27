@@ -1,6 +1,6 @@
 import 'react-toastify/dist/ReactToastify.css';
 
-const API_BASE_URL = 'http://localhost:80'; // 서버 URL
+const API_BASE_URL = 'http://13.209.5.239/api'; // 서버 URL
 
 /**
  * API 호출을 처리하는 함수입니다.
@@ -46,7 +46,8 @@ export const call = async (api, method = 'GET', request = null) => {
       return null;
     }
   } catch (error) {
-    console.error('API 호출 중 오류 발생:', error);
+    console.error('API 호출 중 오류 발생: ');
+    console.error(error);
     throw error;
   }
 };
@@ -59,7 +60,7 @@ export const call = async (api, method = 'GET', request = null) => {
  */
 export const signin = async (userDTO) => {
   try {
-    const response = await call('/api/auth/signin', 'POST', userDTO);
+    const response = await call('/auth/signin', 'POST', userDTO);
     localStorage.setItem('token', response.token); // 토큰을 로컬 저장소에 저장
     alert('로그인에 성공했습니다!'); // 성공 팝업 표시
 
@@ -73,24 +74,22 @@ export const signin = async (userDTO) => {
 
 export const signup = async (data) => {
   try {
-    const response = await fetch('http://localhost:80/api/auth/signup', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    });
+    const response = await call('/auth/signup', 'POST', JSON.stringify(data));
 
     if (!response.ok) {
-      const errorData = await response.json();
       return {
         success: false,
-        message: errorData.message || '회원가입에 실패했습니다.',
+        message: response.error || '회원가입에 실패했습니다.',
       };
     }
 
     return { success: true, message: '회원가입에 성공했습니다!' };
   } catch (error) {
     console.error('API 호출 중 오류 발생:', error);
-    return { success: false, message: '서버와의 연결에 실패했습니다.' };
+    return {
+      success: false,
+      message: error.message || '서버와의 연결에 실패했습니다.',
+    };
   }
 };
 
@@ -113,31 +112,22 @@ export const me = async () => {
     // 로컬 스토리지에서 토큰 가져오기
     const token = localStorage.getItem('token');
     if (!token) {
-      throw new Error('Authentication token not found.');
+      // throw new Error('Authentication token not found.');
     }
 
-    const response = await fetch(`${API_BASE_URL}/api/auth/me`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`, // 토큰 설정
-      },
-    });
+    const response = await call(`/auth/me`);
 
     if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(
-        errorData.message ||
-          `Error: ${response.status} - ${response.statusText}`
-      );
+      // throw new Error(
+      //   response || `Error: ${response.status} - ${response.statusText}`
+      // );
     }
 
-    const data = await response.json();
-    console.log(`[id: ${data.id}]`);
-    console.log(`[username: ${data.username}]로 로그인 중`);
-    return data; // 사용자 데이터 반환
+    console.log(`[id: ${response.id}]`);
+    console.log(`[username: ${response.username}]로 로그인 중`);
+    return response; // 사용자 데이터 반환
   } catch (err) {
-    console.error('Failed to fetch user data:', err.message);
+    console.error('Failed to fetch user data:', err);
     return null; // 에러 발생 시 null 반환
   }
 };
@@ -153,11 +143,11 @@ export const sendCode = async (email) => {
     // 이메일 중복 검사
     const isAvailable = await checkEmail(email);
     if (!isAvailable) {
-      throw new Error('이미 사용 중인 이메일입니다.');
+      // throw new Error('이미 사용 중인 이메일입니다.');
     }
 
     // 중복이 없을 경우 인증 코드 전송
-    const response = await call(`/api/email/sendCode`, 'POST', { email });
+    const response = await call(`/email/sendCode`, 'POST', { email });
     return response; // 성공 메시지 반환
   } catch (error) {
     console.error('인증 코드 전송 실패:', error);
@@ -174,7 +164,7 @@ export const sendCode = async (email) => {
  */
 export const verifyCode = async (email, code) => {
   try {
-    const response = await call(`/api/email/verifyCode`, 'POST', {
+    const response = await call(`/email/verifyCode`, 'POST', {
       email,
       code,
     });
@@ -193,10 +183,7 @@ export const verifyCode = async (email, code) => {
  */
 export const checkUsername = async (username) => {
   try {
-    const isAvailable = await call(
-      `/api/auth/check-username?username=${username}`,
-      'GET'
-    );
+    const isAvailable = await call(`/auth/check-username?username=${username}`);
     console.log('아이디 중복 검사 응답:', isAvailable); // 디버깅 로그 추가
     return isAvailable; // true 또는 false 반환
   } catch (error) {
@@ -213,10 +200,7 @@ export const checkUsername = async (username) => {
  */
 export const checkNickname = async (nickname) => {
   try {
-    const isAvailable = await call(
-      `/api/auth/check-nickname?nickname=${nickname}`,
-      'GET'
-    );
+    const isAvailable = await call(`/auth/check-nickname?nickname=${nickname}`);
     console.log('닉네임 중복 검사 응답:', isAvailable); // 디버깅 로그 추가
     return isAvailable; // true 또는 false 반환
   } catch (error) {
@@ -233,7 +217,7 @@ export const checkNickname = async (nickname) => {
  */
 export const checkEmail = async (email) => {
   try {
-    const response = await call(`/api/auth/check-email?email=${email}`, 'GET');
+    const response = await call(`/auth/check-email?email=${email}`, 'GET');
     console.log('이메일 중복 검사 응답:', response); // 디버깅 로그
     return response; // true 또는 false 반환
   } catch (error) {

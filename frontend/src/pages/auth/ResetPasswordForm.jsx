@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Find.css'; // 기존 CSS 사용
+import { call } from '../../api/auth/ApiService';
 
 const ResetPasswordForm = () => {
   const [email, setEmail] = useState('');
@@ -15,21 +16,17 @@ const ResetPasswordForm = () => {
     setSuccessMessage('');
 
     try {
-      const response = await fetch(
-        `http://localhost/api/auth/reset-password?email=${email}&username=${username}`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-        }
+      const response = await call(
+        `/auth/reset-password?email=${email}&username=${username}`,
+        'POST'
       );
-      const data = await response.json();
 
       if (!response.ok) {
         const errorToShow =
-          data.error ||
-          data.message ||
+          response.error ||
+          response.message ||
           '비밀번호 재설정 링크 전송에 실패했습니다.';
-        throw new Error(errorToShow);
+        // throw new Error(errorToShow);
       }
 
       setSuccessMessage('비밀번호 재설정 링크가 이메일로 전송되었습니다.');

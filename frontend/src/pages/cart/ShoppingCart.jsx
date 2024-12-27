@@ -53,7 +53,7 @@ function ShoppingCart() {
 
   const fetchTotalPoints = async () => {
     try {
-      const response = await call('/api/point/getTotalPointByUserid', 'POST', {
+      const response = await call('/point/getTotalPointByUserid', 'POST', {
         userId: user.id,
       });
       setTotalPoints(response);
@@ -147,7 +147,7 @@ function ShoppingCart() {
         totalPayAmount: finalPrice,
         taxScopeAmount: finalPrice,
         taxExScopeAmount: '0',
-        returnUrl: 'http://localhost:3000/PaymentResult',
+        returnUrl: 'http://13.209.5.239/PaymentResult',
       });
     } else {
       console.error('Naver Pay SDK is not loaded.');
