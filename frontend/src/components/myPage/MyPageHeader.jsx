@@ -5,7 +5,8 @@ const MyPageHeader = ({ title, description }) => {
     <div>
       <header className="py-5">
         <div className="container px-lg-5">
-          <div className="p-4 p-lg-5 bg-light rounded-3 text-center">
+          <div className="p-4 p-lg-5 bg-light rounded-3 text-center" style={{marginTop: "60px"}}
+          >
             <div className="m-4 m-lg-5">
               <h1 className="display-5 fw-bold">{title}</h1>
               <p className="fs-6 mt-3">{description}</p>

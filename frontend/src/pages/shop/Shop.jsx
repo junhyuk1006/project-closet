@@ -3,7 +3,7 @@ export default function Shop() {
     <>
       <div className="bg0 m-t-23 p-b-140">
         <div className="container">
-          <div className="flex-w flex-sb-m p-b-52">
+          <div className="flex-w flex-sb-m p-b-52" style={{marginTop:"120px"}}>
             <div className="flex-w flex-l-m filter-tope-group m-tb-10">
               <button
                 className="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1"
