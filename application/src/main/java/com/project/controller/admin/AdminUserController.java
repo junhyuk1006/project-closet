@@ -44,6 +44,11 @@ public class AdminUserController {
 
     @PostMapping("grade")
     public List<Grade> updateGrade(@RequestBody List<Grade> grades) {
+        // 등급 수정 시 order_history 테이블의 point_earned_amount 컬럼과
+        // point_used_amount 컬럼값에 null값을 가지고 있는 행들이 존재하였음.
+        // OrderHistory 엔티티의 자료형이 int이기 때문에 null 값을 담을 수 없어 오류가 남
+        // Grade를 업데이트 하였는데 OrderHistory 쪽에서 오류가 나는 이유는 아직 발견하지 못함.
+        // order_history 테이블의 null 값들을 모두 0으로 수정 후 해결
         return adminUserService.updateGrades(grades);
     }
 
