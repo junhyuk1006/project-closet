@@ -30,6 +30,7 @@ const UserGrade = () => {
       }
     );
     // .filter((grade) => grade.grade !== '');
+    console.log(updateGrades);
     updateGrade(updateGrades);
     alert('저장되었습니다!');
     fetchGrades();
