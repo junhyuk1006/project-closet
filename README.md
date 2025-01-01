@@ -5,7 +5,7 @@
 ## 팀원
 |팀원|역할 (담당 페이지)|etc|
 |-|-|-|
-|[이정민](https://github.com/NAMEJM-sys)|||
+|[이정민](https://github.com/NAMEJM-sys)|DB설계, 교환·반품, 적립금, 상세페이지, 결제API, 코디추천(WebRTC), 장바구니||
 |[이상혁](https://github.com/lsh0131)|||
 |[정보영](https://github.com/BY-ee)|||
 |[최윤영](https://github.com/codeychoi)|||
