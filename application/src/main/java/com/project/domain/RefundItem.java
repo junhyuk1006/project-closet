@@ -22,5 +22,6 @@ public class RefundItem {
     private String refundDeliveryNumber;
     private Timestamp requestedAt;
     private Timestamp completedAt;
+    private String description;
 
 }

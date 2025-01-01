@@ -34,6 +34,11 @@ public class AdminOrderController {
         return adminOrderService.getExchange(pageable,pageRequestDTO);
     }
 
+    @GetMapping("refund")
+    public Page<AdminRefundDTO> getRefund(@PageableDefault(size = 20,direction = Sort.Direction.DESC)Pageable pageable, @ModelAttribute PageRequestDTO pageRequestDTO) {
+        return adminOrderService.getRefund(pageable,pageRequestDTO);
+    }
+
     @GetMapping("month")
     public List<AdminOrderMonthDTO> getOrderMonth(){
         return adminOrderService.getOrderMonth();
