@@ -9,10 +9,11 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 public class AdminRefundDTO {
     private Long id;
+    private String email;
     private Timestamp orderDate;
     private Timestamp requestedDate;
-    private int orderNo;
+    private int orderNumber;
     private String refundImage;
     private String itemName;
-    private String refundDescription;
+    private String description;
 }

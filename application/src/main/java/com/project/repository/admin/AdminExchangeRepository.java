@@ -14,11 +14,11 @@ import java.sql.Timestamp;
 @Repository
 public interface AdminExchangeRepository extends JpaRepository<ExchangeItem,Long> {
     @Query("SELECT new com.project.dto.AdminExchangeDTO(" +
-            "e.id, oh.paymentDate,e.requestedAt,oh.orderNumber,e.exchangeImage,od.itemName,e.description)" +
+            "e.id,u.email, oh.paymentDate,e.requestedAt,oh.orderNumber,e.exchangeImage,od.itemName,e.description)" +
             "FROM ExchangeItem e " +
-            "LEFT JOIN e.orderHistory oh " +
-            "LEFT JOIN oh.orderDetails od " +
-            "LEFT JOIN oh.user u " +
+            "JOIN e.orderHistory oh " +
+            "JOIN oh.orderDetails od " +
+            "JOIN oh.user u " +
             "WHERE ((:searchKeyword IS NULL OR :searchInput = '') OR " +
             "(:searchKeyword ='orderNo' AND CONCAT('', oh.orderNumber) LIKE CONCAT('%',:searchInput,'%')) OR " +
             "(:searchKeyword ='email' AND u.email LIKE CONCAT('%',:searchInput,'%')) OR " +

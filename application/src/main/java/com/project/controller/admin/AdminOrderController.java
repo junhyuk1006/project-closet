@@ -31,6 +31,7 @@ public class AdminOrderController {
 
     @GetMapping("exchange")
     public Page<AdminExchangeDTO> getExchange(@PageableDefault(size = 20,direction = Sort.Direction.DESC)Pageable pageable, @ModelAttribute PageRequestDTO pageRequestDTO) {
+        System.out.println(pageRequestDTO.getSearchInput());
         return adminOrderService.getExchange(pageable,pageRequestDTO);
     }
 

@@ -9,10 +9,11 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 public class AdminExchangeDTO {
     private Long id;
+    private String email;
     private Timestamp orderDate;
     private Timestamp requestedDate;
-    private int orderNo;
+    private int orderNumber;
     private String exchangeImage;
     private String itemName;
-    private String exchangeDescription;
+    private String description;
 }

@@ -14,11 +14,11 @@ import java.sql.Timestamp;
 @Repository
 public interface AdminRefundRepository extends JpaRepository<RefundItem, Long> {
     @Query("SELECT new com.project.dto.AdminRefundDTO(" +
-            "r.id, oh.paymentDate,r.requestedAt,oh.orderNumber,r.refundImage,od.itemName,r.description)" +
+            "r.id,u.email, oh.paymentDate,r.requestedAt,oh.orderNumber,r.refundImage,od.itemName,r.description)" +
             "FROM RefundItem r " +
-            "LEFT JOIN r.orderHistory oh " +
-            "LEFT JOIN oh.orderDetails od " +
-            "LEFT JOIN oh.user u " +
+            "JOIN r.orderHistory oh " +
+            "JOIN oh.orderDetails od " +
+            "JOIN oh.user u " +
             "WHERE ((:searchKeyword IS NULL OR :searchInput = '') OR " +
             "(:searchKeyword ='orderNo' AND CONCAT('', oh.orderNumber) LIKE CONCAT('%',:searchInput,'%')) OR " +
             "(:searchKeyword ='email' AND u.email LIKE CONCAT('%',:searchInput,'%')) OR " +
