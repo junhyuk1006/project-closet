@@ -2,10 +2,7 @@ package com.project.service.Admin;
 
 import com.project.domain.Grade;
 import com.project.domain.Users;
-import com.project.dto.AdminPointDTO;
-import com.project.dto.AdminUserDTO;
-import com.project.dto.AdminUserMonthDTO;
-import com.project.dto.PageRequestDTO;
+import com.project.dto.*;
 import com.project.repository.UserRepository;
 import com.project.repository.admin.AdminGradeRepository;
 import com.project.repository.admin.AdminPointRepository;
@@ -80,5 +77,16 @@ public class AdminUserService {
             endDate = Timestamp.valueOf(endDateTime);
         }
         return adminUserRepository.findUserDate(startDate,endDate);
+    }
+
+    public AdminUserTodayDTO getUserToday(Timestamp date) {
+        LocalDateTime plusDateTime = date.toLocalDateTime();
+        plusDateTime = plusDateTime.plusDays(1);
+        Timestamp endDate = Timestamp.valueOf(plusDateTime);
+
+        int todayUser = adminUserRepository.findUserDate(date,endDate);
+        int totalUser = adminUserRepository.findUserDate(null,null);
+
+        return new AdminUserTodayDTO(todayUser,totalUser);
     }
 }

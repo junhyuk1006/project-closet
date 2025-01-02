@@ -50,4 +50,5 @@ public interface AdminUserRepository extends JpaRepository<Users, Long> {
             "WHERE (:startDate IS NULL OR :endDate IS NULL) OR " +
             "u.createdAt BETWEEN :startDate AND :endDate")
     int findUserDate(@Param("startDate") Timestamp startDate, @Param("endDate") Timestamp endDate);
+
 }

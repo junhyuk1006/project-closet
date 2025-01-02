@@ -1,13 +1,32 @@
+import React, { useEffect, useState } from 'react';
 import { Table, Row, Col } from 'react-bootstrap';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 import ChartDataLabels from 'chartjs-plugin-datalabels'; // 플러그인 import
 import '../../../assets/styles/admin/admin.css';
+import { getMainUser } from '../../../api/admin/main/main';
 
 // Chart.js 모듈 등록
 ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels);
 
 const Dashboard = () => {
+  const [userToday, setUserToday] = useState([]);
+
+  useEffect(() => {
+    const today = new Date();
+    const formattedDate = today.toISOString().split('T')[0]; // 'YYYY-MM-DD' 형식
+    fetchMainUser(formattedDate);
+    console.log(formattedDate);
+  }, []);
+
+  const fetchMainUser = (date) => {
+    getMainUser(date)
+      .then((response) => {
+        setUserToday(response);
+      })
+      .catch((error) => console.error(error));
+  };
+
   const chartData = {
     labels: ['Tops', 'Bottoms', 'Outerwear', 'Skirts', 'Dresses', 'Sportswear'], // 옷의 종류
     datasets: [
@@ -187,11 +206,11 @@ const Dashboard = () => {
         <tbody>
           <tr>
             <td>회원가입 수</td>
-            <td>21</td>
+            <td>{userToday.todayUser}</td>
           </tr>
           <tr>
             <td>총 유저 수</td>
-            <td>2,623</td>
+            <td>{userToday.totalUser}</td>
           </tr>
         </tbody>
       </Table>
