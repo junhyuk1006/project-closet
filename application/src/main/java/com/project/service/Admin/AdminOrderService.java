@@ -1,8 +1,9 @@
 package com.project.service.Admin;
 
 import com.project.dto.*;
-import com.project.repository.admin.AdminDeliveryRepository;
+import com.project.repository.admin.AdminExchangeRepository;
 import com.project.repository.admin.AdminOrderRepository;
+import com.project.repository.admin.AdminRefundRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,7 +17,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AdminOrderService {
     private final AdminOrderRepository adminOrderRepository;
-    private final AdminDeliveryRepository adminDeliveryRepository;
+    private final AdminExchangeRepository adminExchangeRepository;
+    private final AdminRefundRepository adminRefundRepository;
 
     public Page<AdminOrderDTO> getOrder(Pageable pageable, PageRequestDTO pageRequestDTO) {
         return adminOrderRepository.findOrder(pageable,
@@ -28,6 +30,22 @@ public class AdminOrderService {
 
     public Page<AdminDeliveryDTO> getDelivery(Pageable pageable, PageRequestDTO pageRequestDTO) {
         return adminOrderRepository.findDelivery(pageable,
+                pageRequestDTO.getSearchKeyword(),
+                pageRequestDTO.getSearchInput(),
+                pageRequestDTO.getStartDate(),
+                pageRequestDTO.getEndDate());
+    }
+
+    public Page<AdminExchangeDTO> getExchange(Pageable pageable, PageRequestDTO pageRequestDTO) {
+        return adminExchangeRepository.findExchange(pageable,
+                pageRequestDTO.getSearchKeyword(),
+                pageRequestDTO.getSearchInput(),
+                pageRequestDTO.getStartDate(),
+                pageRequestDTO.getEndDate());
+    }
+
+    public Page<AdminRefundDTO> getRefund(Pageable pageable, PageRequestDTO pageRequestDTO) {
+        return adminRefundRepository.findRefund(pageable,
                 pageRequestDTO.getSearchKeyword(),
                 pageRequestDTO.getSearchInput(),
                 pageRequestDTO.getStartDate(),

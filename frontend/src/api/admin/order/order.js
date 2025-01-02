@@ -16,6 +16,22 @@ export const getDelivery = async (params) => {
   });
 };
 
+export const getExchange = async (params) => {
+  const queryString = new URLSearchParams(params).toString();
+  return await fetchAPI(`/api/admin/order/exchange?${queryString}`, {
+    method: 'GET',
+    header: { 'Content-type': 'application/json' },
+  });
+};
+
+export const getRefund = async (params) => {
+  const queryString = new URLSearchParams(params).toString();
+  return await fetchAPI(`/api/admin/order/refund?${queryString}`, {
+    method: 'GET',
+    header: { 'Content-type': 'application/json' },
+  });
+};
+
 export const getOrderMonth = async () => {
   return await fetchAPI('/api/admin/order/month', {
     method: 'GET',
